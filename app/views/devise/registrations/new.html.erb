@@ -1,9 +1,9 @@
-<div class="row sign_up_in_page">
-  <div class="col sign_up_in_page_front">
+<div class="sign_up_in_page">
+  <div class="sign_up_in_page_front">
     <h2>trima</h2>
     <p>is a travel platform</p>
   </div>
-  <div class="col sign_up_in_page_end">
+  <div class="sign_up_in_page_end">
     <h3>Create a account</h3>
     <!-- = form_for(resource, as: resource_name, url: user_registration_path(resource_name)) do |f|  -->
     <%= form_with model: @user, url: user_registration_path(@user), id: 'new_user', class: 'new_user', local: true do |f| %>
@@ -23,7 +23,7 @@
       </div>
 
       <div class="form-group">
-        <%= f.submit "Sign up", class: "btn btn-key-color w-100" %>
+        <%= f.submit "Sign up", class: "submit button" %>
       </div>
     <% end %>
     <div class="another_way_btn_box">

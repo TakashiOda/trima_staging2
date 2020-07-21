@@ -13,11 +13,17 @@
  *= require_tree .
  *= require_self
  */
+ $colors: (
+    ButtonColor: #258e4f,
+    MainKeyColor: #258e4f,
+    SubKeyColor: #36d475,
+);
 
 /*基本css************************************/
 body {
   margin: 0 !important;
   width: 100vw;
+  padding-top: 45px;
 }
 ul {list-style: none !important;padding: 0;
 }
@@ -33,12 +39,25 @@ a:hover {opacity: 0.8;}
   color: red;
   text-align: center;
 }
+.form-group {
+    width: 100%;
+    margin-bottom: 18px;
+}
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid gainsboro;
+    border-radius: 8px;
+}
 /*header************************************/
 header {
-  background: #4fb160;
-  // width: 100vw;
-  padding: 5px 20px;
+  background: #146f23;
+  padding: 0px;
   height: 45px;
+  position: fixed;
+  top: 0;
+  width: 100%;
   .header_inner {
     height: 100%;
     display: flex;
@@ -49,23 +68,46 @@ header {
   a#logo {
     color: #fff;
     font-size: 18px;
+    margin-left: 30px;
   }
   ul.header__links {
     display: flex;
+    margin-right: 15px;
     li {
       margin: 0 7px;
       a {color: #fff;}
     }
   }
 }
+/* footer****************************/
+.footer_pc {
+  background: #398045;
+  padding: 30px 60px;
+}
+.footer_contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.footer_content_links {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
 /*sign_up************************************/
 
 .sign_up_in_page {
-  width: 100vw;
+  width: 100%;
+  display: flex;
 }
 .sign_up_in_page_front {
-  // background: aqua;
-  background-image: url("../images/biei.jpg");
+  background-image: url("biei.jpg");
+  // background-image: url("../images/biei.jpg");
   background-size: cover;
   padding: 60px;
   width: 50%;
@@ -87,7 +129,15 @@ form#new_user {
 .form-group input {
   border-radius: 10px;
 }
-
+.button {
+  color: #fff;
+  background: #146e24;
+  padding: 7px 20px;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 17px;
+}
 .btn-key-color {
   background: #4fb15f;
   color: #fff;
