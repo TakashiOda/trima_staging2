@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_21_063318) do
+ActiveRecord::Schema.define(version: 2020_07_21_071135) do
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.string "apply_lang"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

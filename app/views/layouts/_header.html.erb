@@ -1,3 +1,46 @@
-<header>
-  <p>this is header</p>
+<header class="navbar navbar-expand-md">
+  <div class="container">
+    <%= link_to "Trima", root_path, id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <%= link_to(user_path(current_user), class: 'header_mypage_link') do %>
+            <li>
+              <% if current_user.avatar? %>
+                <%= image_tag current_user.avatar.to_s, class: 'header_avatar' %>
+              <% else %>
+                <%= image_tag 'user_image_default.jpg', class: 'header_avatar' %>
+              <% end %>
+            </li>
+            <li class="header_username">
+              <% if current_user.first_name && current_user.last_name %>
+                <%= current_user.first_name %><%= current_user.last_name %>
+              <% else %>
+                My Page
+              <% end %>
+
+            </li>
+          <% end %>
+        <% else %>
+          <li><%= link_to "About", "#" %></li>
+          <li><%=link_to "Sign Up", new_user_registration_path %></li>
+          <li><%=link_to "Sign In", users_sign_in_path %></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
 </header>
+<style>
+  header.navbar.navbar-expand-md {
+    background: #4fb160;
+  }
+  header.navbar.navbar-expand-md div.container a#logo {
+    color: #fff!important;
+    font-size: 18px;
+  }
+  ul.nav.navbar-nav.navbar-right a{
+    color: #fff!important;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+</style>

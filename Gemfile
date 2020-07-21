@@ -17,6 +17,12 @@ gem 'devise','4.7.2'
 gem 'devise_token_auth'
 gem 'rack-cors'
 gem 'dotenv-rails'
+gem 'seed-fu'
+gem 'carrierwave'
+gem 'rmagick'
+gem 'fog-aws'
+gem 'kaminari'
+gem 'rails-i18n'
 
 group :development, :test do
   gem 'byebug',"11.1.3", platforms: [:mri, :mingw, :x64_mingw]
