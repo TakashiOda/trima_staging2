@@ -1,15 +1,23 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
-  </div>
+  <v-app id="app">
+    <Header/>
+    <!-- <h1>This is app.vue</h1> -->
+    <Top/>
+  </v-app>
 </template>
 
 <script>
+import Header from "./components/shared/Header";
+import Top from "./components/Top";
 export default {
   data: function () {
     return {
-      message: "Hello Vue!"
+      // message: "Hello Vue!"
     }
+  },
+  components: {
+    Header,
+    Top,
   }
 }
 </script>
