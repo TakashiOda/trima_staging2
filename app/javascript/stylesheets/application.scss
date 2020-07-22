@@ -31,6 +31,24 @@ body.erb_body.add_padding_top {padding-top: 45px;}
 ul {list-style: none !important;padding: 0;
 }
 a {text-decoration: none;}
+.button {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  box-sizing: border-box;
+}
+.btn-submit {
+  color: #fff;
+  background: #146e24;
+}
+.btn-cansel {
+  color: #fff;
+  background: gray;
+}
 a:hover {opacity: 0.8;}
 .notice {
   background: #37cd4f63;
@@ -55,7 +73,9 @@ a:hover {opacity: 0.8;}
     border: 1px solid gainsboro;
     border-radius: 8px;
 }
-.form-group input {
+.form-group input,
+.form-group textarea,
+ {
   border-radius: 10px;
   box-sizing: border-box;
 }
@@ -207,16 +227,6 @@ form#new_user {
   font-size: 10px;
 }
 
-.button {
-  color: #fff;
-  background: #146e24;
-  padding: 7px 20px;
-  border: none;
-  border-radius: 10px;
-  width: 100%;
-  font-size: 17px;
-  box-sizing: border-box;
-}
 .btn-key-color {
   background: #4fb15f;
   color: #fff;
@@ -325,10 +335,15 @@ img.user_avatar {
   }
 }
 
-/*user show************************************/
+/*user edit************************************/
+.form-group.user_edit_image_box {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
 .user_edit_image_box_inside {
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: 100%;
   padding: 4px;
   background: linear-gradient(45deg,#2bb561,#7bff17);
   border-radius: 50%;
@@ -338,4 +353,27 @@ img.user_avatar {
   border-radius: 50%;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+input#post_image {
+    display: none;
+}
+div#user_edit_image_upload_btn_box {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    bottom: -7px;
+    right: -6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+span#user_edit_image_upload_btn {
+    background: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 9px;
+    border-radius: 50%;
+    svg {margin: auto;}
 }

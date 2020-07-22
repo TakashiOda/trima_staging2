@@ -58,22 +58,17 @@
             </div>
             <div class="form_btns">
               <div class="row">
-                <div class="col">
-                  <%= link_to "cansel", user_path(current_user), class: "btn btn-cansel w-100" %>
+                <div class="col-half">
+                  <%= link_to "cansel", user_path(current_user), class: "button btn-cansel" %>
                 </div>
-                <div class="col">
-                  <%= form.submit('Update',class: 'btn btn-submit w-100') %>
+                <div class="col-half">
+                  <%= form.submit('Update',class: 'button btn-submit') %>
                 </div>
               </div>
             </div>
           <% end %>
         <!-- </form> -->
       </div>
-    </div>
-  </div>
-  <div class="user_show_end_side col-2">
-    <div>
-      <p>right-side-bar</p>
     </div>
   </div>
 </div>
@@ -105,5 +100,12 @@
   }
   .hidden {
     display: none;
+  }
+  .user_show_content {
+    padding: 0px;
+  }
+  .user_show_content_down {
+    margin: 20px 0;
+    padding: 20px 130px 70px 50px;
   }
 </style>
