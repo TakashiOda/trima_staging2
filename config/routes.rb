@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  get 'users/index'
-  get 'users/show'
-  get 'users/edit'
+  # get 'users/index'
+  # get 'users/show'
+  # get 'users/edit'
   root to: 'home#index'
-  get "about", :to => "home#about"
+  get "thank_you_for_registration", :to => 'static_pages#after_registration_send_email'
+  get "about", to: 'home#about_page_for_user', as: :about_user
+  # get "about", :to => "home#about"
   devise_scope :user do
     get "users/sign_in", :to => "users/sessions#new"
     # post "users/sign_in", :to => "users/sessions#create"
