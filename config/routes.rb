@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # get 'users/show'
   # get 'users/edit'
   root to: 'home#index'
-  get "thank_you_for_registration", :to => 'static_pages#after_registration_send_email'
+  get "thank_you_for_registration", :to => 'home#after_registration_send_email'
   get "about", to: 'home#about_page_for_user', as: :about_user
   # get "about", :to => "home#about"
   devise_scope :user do
