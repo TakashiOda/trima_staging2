@@ -27,7 +27,10 @@ body.erb_body {
   // padding-bottom:100px;
   // position: relative;
 }
-body.erb_body.add_padding_top {padding-top: 45px;}
+body.erb_body.add_padding_top {padding-top: 0px;}
+.body_content {
+    // padding-top: 50px;
+}
 ul {list-style: none !important;padding: 0;
 }
 a {text-decoration: none;}
@@ -156,6 +159,8 @@ img.header_avatar {
   width: 100%;
   // position: absolute;
   // bottom: 0;
+  // position: fixed;
+    // bottom: 0;
 }
 .footer_contents {
   display: flex;
@@ -190,6 +195,44 @@ img.header_avatar {
   color: #b9b9b9;
   font-weight: bold;
 }
+
+
+/*home************************************/
+.home_contents__top {
+  background-image: url("../images/home_bg_biei_dark.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  height: 350px;
+  padding: 50px 8%;
+}
+.home_contents__itembox {
+    display: flex;
+    justify-content: center;
+    padding: 30px 11%;
+}
+.itembox__inner {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+.itembox__inner__items ul {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    li {
+      width: 25%;
+      margin: 7px;
+    }
+    img {
+      width: 150px;
+      border-radius: 6px;
+      box-shadow: 2px 3px 3px #bfbfbf;
+    }
+    /* flex-wrap: wrap; */
+}
+
 /*sign_up************************************/
 
 .sign_up_in_page {
