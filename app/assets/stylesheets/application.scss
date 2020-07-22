@@ -20,11 +20,13 @@
 );
 
 /*基本css************************************/
-body {
+body.erb_body {
   margin: 0 !important;
   width: 100vw;
-  padding-top: 45px;
+  // padding-bottom:100px;
+  // position: relative;
 }
+body.erb_body.add_padding_top {padding-top: 45px;}
 ul {list-style: none !important;padding: 0;
 }
 a {text-decoration: none;}
@@ -33,11 +35,15 @@ a:hover {opacity: 0.8;}
   background: #37cd4f63;
   color: green;
   text-align: center;
+  margin: 0;
+  padding: 5px;
 }
 .alert {
   background: #cd373763;
   color: red;
   text-align: center;
+  margin: 0;
+  padding: 5px;
 }
 .form-group {
     width: 100%;
@@ -50,9 +56,26 @@ a:hover {opacity: 0.8;}
     border: 1px solid gainsboro;
     border-radius: 8px;
 }
+.form-group input {
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+.form-group.button {
+    margin-top: 30px;
+}
+form label {
+    font-size: 12px;
+    color: #8a8a8a;
+    font-weight: bold;
+}
+
+.child_position_center {
+  display: flex;
+  justify-content: center;
+}
 /*header************************************/
-header {
-  background: #146f23;
+header.erb_header {
+  background: #2bb562;
   padding: 0px;
   height: 45px;
   position: fixed;
@@ -73,31 +96,69 @@ header {
   ul.header__links {
     display: flex;
     margin-right: 15px;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 3px;
+    a.header_mypage_link {
+      display: flex;
+      align-items: center;
+    }
     li {
       margin: 0 7px;
       a {color: #fff;}
     }
   }
 }
+img.header_avatar {
+    width: 25px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    padding: 2px;
+    background: #e4e4e4;
+}
 /* footer****************************/
 .footer_pc {
-  background: #398045;
-  padding: 30px 60px;
+  background: #3e3e3e;
+  padding: 20px 0px 15px;
+  color: #fff;
+  // position: fixed;
+  // bottom: 0;
+  width: 100%;
+  // position: absolute;
+  // bottom: 0;
 }
 .footer_contents {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 25px;
+  // align-items: center;
+  .footer_content_title h4 {
+    margin: 10px 0 0 0;
+    font-size: 40px;
+  }
 }
 .footer_content_links {
   display: flex;
   margin-top: 20px;
-  width: 100%;
+  // width: 100%;
   ul {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin: 0 20px;
+    li {
+      a {color: #8a8a8a;}
+    }
   }
+}
+.footer_copyright_box {
+  margin-top: 10px;
+  padding: 0 25px;
+}
+.footer_copyright_box span {
+  font-size: 10px;
+  color: #b9b9b9;
+  font-weight: bold;
 }
 /*sign_up************************************/
 
@@ -106,14 +167,23 @@ header {
   display: flex;
 }
 .sign_up_in_page_front {
-  background-image: url("biei.jpg");
+  background-image: url("biei_dark.jpg");
   // background-image: url("../images/biei.jpg");
   background-size: cover;
   padding: 60px;
   width: 50%;
+  color: #fff;
+  h2 {
+    font-size: 45px;
+    margin: 0;
+  }
+  p {
+    font-size: 35px;
+    margin: 0;
+  }
 }
 .sign_up_in_page_end {
-  padding: 60px;
+  padding: 40px 60px;
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -126,9 +196,7 @@ form#new_user {
 .supplement_text {
   font-size: 10px;
 }
-.form-group input {
-  border-radius: 10px;
-}
+
 .button {
   color: #fff;
   background: #146e24;
@@ -137,6 +205,7 @@ form#new_user {
   border-radius: 10px;
   width: 100%;
   font-size: 17px;
+  box-sizing: border-box;
 }
 .btn-key-color {
   background: #4fb15f;

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  get 'users/index'
+  get 'users/show'
+  get 'users/edit'
   root to: 'home#index'
-
+  get "about", :to => "home#about"
   devise_scope :user do
     get "users/sign_in", :to => "users/sessions#new"
     # post "users/sign_in", :to => "users/sessions#create"
@@ -14,6 +17,6 @@ Rails.application.routes.draw do
     :unlocks     => "users/unlocks"
   }
 
-  # resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: [:index, :show, :edit, :update]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

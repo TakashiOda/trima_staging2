@@ -7,7 +7,7 @@
 </template>
 
 <script>
-// import Header from "./components/shared/Header";
+import Header from "./components/shared/Header";
 import Top from "./components/Top";
 export default {
   data: function () {
@@ -16,7 +16,7 @@ export default {
     }
   },
   components: {
-    // Header,
+    Header,
     Top,
   }
 }

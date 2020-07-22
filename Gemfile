@@ -37,6 +37,7 @@ group :development do
   gem "pry", "0.13.1"
   gem 'pry-rails'
   gem 'foreman'
+  gem 'pry-remote'
 end
 
 group :production do

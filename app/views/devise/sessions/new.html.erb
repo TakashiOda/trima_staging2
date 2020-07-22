@@ -1,26 +1,40 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: users_sign_in_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="row sign_up_in_page">
+  <div class="col sign_up_in_page_front">
+    <h2>trima</h2>
+    <p>is a travel platform</p>
   </div>
+  <div class="col sign_up_in_page_end">
+    <h3>Sign In</h3>
+     <!-- form_for(resource, as: resource_name, url: user_session_path(resource_name)) do |f| %> -->
+    <%= form_with model: @user, url: user_session_path(@user), id: 'new_user', class: 'new_user', local: true do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="form-group">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password %>
+        <div id="password_input_box">
+          <%= f.password_field :password, autocomplete: "current-password", class: "form-control" , :data => {:toggle=>"password"} %>
+        </div>
+      </div>
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <div class="form-group button">
+        <%= f.submit "Sign in", class: "submit button" %>
+      </div>
+    <% end %>
+    <div class="another_way_btn_box">
+      <%= link_to "Sign up", new_user_registration_path %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
+    <div class="didnt_recieve_btn_box">
+      <%= link_to "Forget Password?", new_user_password_path %><br />
+      <%= link_to "Didn't receive unlock instructions?", new_user_unlock_path %>
+    </div>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

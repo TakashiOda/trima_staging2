@@ -8,8 +8,10 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
   </head>
 
-  <body>
-    <%= render 'layouts/header'%>
+  <body class="erb_body <%= "add_padding_top" unless controller.action_name == "about" %>">
+    <% unless controller.action_name == "about" %>
+      <%= render 'layouts/header'%>
+    <% end %>
     <% if notice %>
       <p class="notice"><%= notice %></p>
     <% end %>
@@ -19,6 +21,8 @@
     <div class="body_content">
       <%= yield %>
     </div>
-    <%= render 'layouts/footer' %>
+    <% unless controller.controller_name == "home" && controller.action_name == "about" %>
+      <%= render 'layouts/footer' %>
+    <% end %>
   </body>
 </html>
