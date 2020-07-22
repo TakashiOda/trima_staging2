@@ -3,8 +3,7 @@
 <p>You can confirm your account email through the link below:</p>
 
 <p>
-  <%= url_for(host: "trima-staging2.herokuapp.com",
-              controller: 'users/confirmations',
+  <%= url_for(controller: 'users/confirmations',
               action: 'create',
-              confirmation_token: @token %>
+              confirmation_token: @token) %>
 </p>
