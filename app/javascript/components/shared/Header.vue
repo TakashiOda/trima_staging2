@@ -27,9 +27,8 @@
       <v-btn text>trima</v-btn>
       <!-- <v-toolbar-title>trima</v-toolbar-title> -->
       <v-spacer></v-spacer>
-      <v-btn text>About</v-btn>
+      <v-btn text>How to Use</v-btn>
       <v-btn text>Sign Up</v-btn>
-      <v-btn text>Sign In</v-btn>
     </v-app-bar>
   </header>
 </template>

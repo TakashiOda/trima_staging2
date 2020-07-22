@@ -34,13 +34,14 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'localhost', port: 5000 }
+  config.action_mailer.default_url_options = { host: ENV['PRODUCTION_HOST'] }
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 5000 }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => 'smtp.gmail.com',
-    :port => 587,
-    :user_name => 'cedarsdev01@gmail.com',
-    :password => 'Cedars4112',
+    :address => ENV['DEV_MAILER_ADDRESS'],
+    :port => ENV['DEV_MAILER_ADDRESS'],
+    :user_name => ENV['DEV_MAILER_USER_NAME'],
+    :password => ENV['DEV_MAILER_PASSWORD'],
     :authentication => :plain,
     :enable_starttls_auto => true
   }
