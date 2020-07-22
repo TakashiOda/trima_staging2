@@ -24,7 +24,8 @@
     </v-navigation-drawer>
     <v-app-bar color="#F9A825" dark app>
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>trima</v-toolbar-title>
+      <v-btn text>trima</v-btn>
+      <!-- <v-toolbar-title>trima</v-toolbar-title> -->
       <v-spacer></v-spacer>
       <v-btn text>About</v-btn>
       <v-btn text>Sign Up</v-btn>
