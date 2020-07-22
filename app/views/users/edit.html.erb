@@ -1,2 +1,109 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<div class="container user_show container-fluid row">
+  <div class="user_show_side col-2">
+    <%= render 'users/user_page_front_sidebar' %>
+  </div>
+  <div class="user_show_content col-8">
+    <div class="user_show_content_down">
+      <div class="user_show_info_items_box">
+        <!-- <form> -->
+          <%= form_for(@user) do |form| %>
+            <div class="form-group user_edit_image_box">
+              <div class="user_edit_image_box_inside">
+                <img id="user_image_prev" src="#" class="hidden" />
+                <% if current_user.persisted? && current_user.avatar? %>
+                  <%= image_tag current_user.avatar.to_s, class: 'user_present_image', id: 'user_present_image' %>
+                <% else %>
+                  <%= image_tag 'default_images/no_avatar_image.png', class: 'user_present_image', id: 'user_present_image' %>
+                  <%= form.hidden_field :avatar_cache %>
+                <% end %>
+              </div>
+              <div id="user_edit_image_upload_btn_box">
+                <%= form.file_field :avatar, id: 'post_image' %>
+                <span id="user_edit_image_upload_btn" onclick="image_input_btn()"><i class="fas fa-camera"></i></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= form.label "Username" %>
+              <%= form.text_field :username, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-half">
+                  <%= form.label "First Name" %>
+                  <%= form.text_field :first_name, class: "form-control" %>
+                </div>
+                <div class="col-half">
+                  <%= form.label "Last Name" %>
+                  <%= form.text_field :last_name, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-half">
+                  <%= form.label "Nationality" %>
+                  <%= form.collection_select :country_id, Country.all, :id, :name,{prompt: "Select Nationality"}, class: "form-control" %>
+                </div>
+                <div class="col-half">
+                  <%= form.label "Language" %>
+                  <%= form.collection_select :language_id, Language.all, :id, :name,{prompt: "Select Nationality"}, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= form.label "Profile" %>
+              <%= form.text_area :profile_text, size: "20x5", class: "form-control" %>
+            </div>
+            <div class="form_btns">
+              <div class="row">
+                <div class="col">
+                  <%= link_to "cansel", user_path(current_user), class: "btn btn-cansel w-100" %>
+                </div>
+                <div class="col">
+                  <%= form.submit('Update',class: 'btn btn-submit w-100') %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <!-- </form> -->
+      </div>
+    </div>
+  </div>
+  <div class="user_show_end_side col-2">
+    <div>
+      <p>right-side-bar</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const selectElement = document.querySelector('#post_image');
+  function image_input_btn() {
+    selectElement.click();
+  }
+
+  document.getElementById('post_image').addEventListener('change', function (e) {
+    // 1枚だけ表示する
+    const file = e.target.files[0];
+    // ファイルのブラウザ上でのURLを取得する
+    const blobUrl = window.URL.createObjectURL(file);
+    // img要素に表示
+    const post_img = document.getElementById('user_image_prev');
+    post_img.src = blobUrl;
+    post_img.classList.toggle("hidden");
+    const before_img = document.getElementById('user_present_image');
+    before_img.classList.toggle("hidden");
+    // before_img.classList.remove("user_present_image");
+  });
+</script>
+
+<style lang="scss">
+  #user_edit_image_upload_btn:hover {
+    cursor: pointer;
+  }
+  .hidden {
+    display: none;
+  }
+</style>

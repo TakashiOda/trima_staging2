@@ -22,7 +22,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'fog-aws'
 gem 'kaminari'
-gem 'rails-i18n'
+# gem 'rails-i18n'
 
 group :development, :test do
   gem 'byebug',"11.1.3", platforms: [:mri, :mingw, :x64_mingw]
