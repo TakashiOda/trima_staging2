@@ -1,0 +1,44 @@
+<a id="menu_show_btn">
+  <i class="fas fa-bars"></i>
+</a>
+<div id="menu_container" class="hidden">
+  <div class="menu_inside">
+    <div class="menu_inside_up">
+      <span>Menu</span>
+      <div id="close_menu_btn"><i class="fas fa-times"></i></div>
+    </div>
+    <% if current_user %>
+    <ul class="sp_side_menu menu_for_user">
+      <li><i class="fas fa-user"></i><%= link_to "Profile", user_path(current_user)%></li>
+      <li><i class="fas fa-suitcase"></i><%= link_to "Projects", "#" %></li>
+      <li><i class="fas fa-heart"></i><%= link_to "Favorites", "#" %></li>
+      <li><i class="far fa-bookmark"></i><%= link_to "Booked Items", "#" %></li>
+      <li><i class="fas fa-cog"></i><%= link_to "Account", "#" %></li>
+      <li><i class="fas fa-cog"></i><%= link_to "Sign Out", destroy_user_session_path %></li>
+    </ul>
+    <% else %>
+      <ul class="sp_side_menu menu_for_supplier">
+        <li>あああ</li>
+        <li>あああ</li>
+        <li>あああ</li>
+        <li>あああ</li>
+        <li>あああ</li>
+      </ul>
+    <% end %>
+  </div>
+  <div id="menu_outside"></div>
+</div>
+
+<script>
+  document.getElementById("menu_show_btn").onclick = function() {
+    document.getElementById("menu_container").classList.remove("hidden");
+  };
+
+  document.getElementById("menu_outside").onclick = function() {
+    document.getElementById("menu_container").classList.add("hidden");
+  };
+
+  document.getElementById("close_menu_btn").onclick = function() {
+    document.getElementById("menu_container").classList.add("hidden");
+  };
+</script>

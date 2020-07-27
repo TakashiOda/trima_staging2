@@ -35,9 +35,10 @@ group :development do
   gem 'spring', "2.1.0"
   gem 'spring-watcher-listen', '2.0.1'
   gem "pry", "0.13.1"
-  gem 'pry-rails'
+  # gem 'pry-rails'
   gem 'foreman'
   gem 'pry-remote'
+  gem 'awesome_print'
 end
 
 group :production do

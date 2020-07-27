@@ -4,13 +4,25 @@
   </div>
   <div class="user_show_content">
     <div class="user_show_content_up">
-      <div class="user_show_avatar_box">
-        <div class="user_show_avatar_box_inside">
-          <% if @user.avatar.present? %>
-            <%= image_tag current_user.avatar.url, class: "user_avatar" %>
-          <% else %>
-            <%= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
-          <% end %>
+      <div class="user_show_content_up__up">
+        <div class="user_show_avatar_box">
+          <div class="user_show_avatar_box_inside">
+            <% if @user.avatar.present? %>
+              <%= image_tag current_user.avatar.url, class: "user_avatar" %>
+            <% else %>
+              <%= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="user_show_btn_box">
+          <div>
+            <% if @user == current_user %>
+              <%= link_to edit_user_path(current_user) do %>
+                <!-- <i class="far fa-edit"></i> -->
+                <span>Edit</span>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
       <div class="user_show_up_right_box">
@@ -19,39 +31,20 @@
             <div class="user_show_nickname">
               <span><%= @user.username ? @user.username : "No nickname" %></span>
             </div>
-            <div class="user_show_realnames">
-              <span><%= @user.first_name ? @user.first_name : "First_name" %></span>
-              <span><%= @user.last_name ? @user.last_name : "Last name" %></span>
-            </div>
+            <!-- <div class="user_show_realnames">
+              <span><%# @user.first_name ? @user.first_name : "First_name" %></span>
+              <span><%# @user.last_name ? @user.last_name : "Last name" %></span>
+            </div> -->
           </div>
-          <div class="user_show_country">
+          <% if @user.country_id %>
+            <div class="user_show_country">
               <div><i class="fas fa-map-marker-alt"></i><%= @user.country_id ? @user_country : "No Nationality" %></div>
-          </div>
-        </div>
-        <div class="user_show_btn_box">
-          <div>
-            <% if @user == current_user %>
-              <%= link_to edit_user_path(current_user) do %>
-                <i class="far fa-edit"></i>
-                <span>Edit Profile</span>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="user_show_content_down">
-      <div class="user_show_info_items_box">
-        <ul class="user_show_info_items">
-          <li>
-            <div class="user_info_item_title">Profile</div>
+            </div>
+          <% end %>
+          <div class="user_show_profile">
             <div><%= @user.profile_text ? @user.profile_text : "No Profile" %></div>
-          </li>
-          <li>
-            <div class="user_info_item_title">Language</div>
-            <div><%= @user.language_id ? @user_language : "No Language" %></div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

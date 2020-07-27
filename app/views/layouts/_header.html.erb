@@ -1,6 +1,9 @@
 <header class="erb_header">
   <div class="header_inner">
-    <%= link_to "Trima", root_path, id: "logo" %>
+    <div class="header_left">
+      <%= render 'layouts/sidemenu_for_users' %>
+      <%= link_to "Trima", root_path, id: "logo" %>
+    </div>
     <ul class="header__links">
       <% if user_signed_in? %>
         <%= link_to(user_path(current_user), class: 'header_mypage_link') do %>
