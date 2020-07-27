@@ -60,7 +60,7 @@ a:hover {opacity: 0.8;}
   text-align: center;
   margin: 0;
   position: fixed;
-  top: 50px;
+  top: 60px;
   width: 100%;
   font-size: 13px;
 }
@@ -70,7 +70,7 @@ a:hover {opacity: 0.8;}
   text-align: center;
   margin: 0;
   position: fixed;
-  top: 50px;
+  top: 60px;
   width: 100%;
   font-size: 13px;
 }
@@ -524,7 +524,7 @@ span#user_edit_image_upload_btn {
 	/* 781px以下に適用されるCSS（タブレット用） */
   header.erb_header a#logo {
     font-size: 22px;
-    margin-left: 4px;
+    margin-left: 15px;
     font-weight: bold;
   }
   .header_left svg {
@@ -539,6 +539,9 @@ span#user_edit_image_upload_btn {
   }
   a#menu_show_btn {
     margin-left: 14px;
+  }
+  a#menu_show_btn svg {
+    color: #fff;
   }
   div#menu_container {
     position: absolute;
@@ -565,13 +568,18 @@ span#user_edit_image_upload_btn {
   .menu_inside {
     width: 70%;
     background: #0f1d16f7;
-    padding: 30px 10px 30px 30px;
+    padding: 30px 20px 30px 30px;
   }
   ul.sp_side_menu li {
     margin-bottom: 12px;
     font-size: 20px;
     color: #b5b5b5;
     display: flex;
+    align-items: center;
+  }
+  ul.sp_side_menu li svg {
+    margin-right: 11px;
+    width: 30px !important;
   }
   ul.sp_side_menu.menu_for_user a {
     color: #b5b5b5 !important;
