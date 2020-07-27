@@ -82,9 +82,12 @@
               <div class="form-group birth_day_input_box">
                 <%= form.label "Date of Birth" %>
                 <div class="birth_day_input_items">
-                  <%= form.select :user_id, [['Jan', 1], ['Feb', 2], ['Mar', 3], ['Apr', 4], ['May', 5], ['Jun', 6], ['Jul', 7], ['Aug', 8], ['Sep', 9], ['Oct', 10], ['Nov', 11], ['Dec', 12]], { include_blank: "Month", selected: 0 }, { id: "user_id", class: "form-control" } %>
-                  <%= form.select :birth_day, options_for_select(1..31), { prompt: "Day"}, { class: "form-control" } %>
-                  <%= form.select :birth_year, options_for_select(1930..2020), { prompt: "Year"}, { class: "form-control" } %>
+                  <%= form.select :birth_month, [['Jan', 1], ['Feb', 2], ['Mar', 3], ['Apr', 4], ['May', 5], ['Jun', 6], ['Jul', 7], ['Aug', 8], ['Sep', 9], ['Oct', 10], ['Nov', 11], ['Dec', 12]], { include_blank: "Month" }, { id: "user_id", class: "form-control" } %>
+                  <%= form.select :birth_day, options_for_select((1..31), :selected => form.object.birth_day), { include_blank: "Day" } ,{ class: "form-control" }%>
+                  <%= form.select :birth_year, options_for_select((1940..2010), :selected => form.object.birth_year), { include_blank: "Year" } ,{ class: "form-control" }%>
+                  <%# form.select(:birth_year, options_for_select((1940..2020), :selected => form.object.birth_year), :include_blank => "Year",) %>
+                  <%# form.select :birth_day, options_for_select(1..31), { prompt: "Day" }, { class: "form-control", "data-live-search" => "true" } %>
+                  <%# form.select :birth_year, options_for_select(1930..2020), { prompt: "Year"}, { class: "form-control" } %>
                 </div>
               </div>
             </div>
