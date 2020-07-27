@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'areas/new'
+  get 'areas/show'
+  get 'areas/edit'
   # get 'users/index'
   # get 'users/show'
   # get 'users/edit'
@@ -20,5 +23,6 @@ Rails.application.routes.draw do
   }
 
   resources :users, only: [:index, :show, :edit, :update]
+  resources :areas
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

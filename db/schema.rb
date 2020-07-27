@@ -10,7 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_21_071135) do
+ActiveRecord::Schema.define(version: 2020_07_27_103959) do
+
+  create_table "areas", force: :cascade do |t|
+    t.integer "country_id", null: false
+    t.integer "state_id", null: false
+    t.integer "prefecture_id", null: false
+    t.string "en_name"
+    t.string "local_name"
+    t.string "cn_name"
+    t.string "tw_name"
+    t.string "image"
+    t.string "map"
+    t.text "en_introduction"
+    t.string "jp_introduction"
+    t.string "cn_introduction"
+    t.string "tw_introduction"
+    t.string "nearest_airport"
+    t.string "nearest_big_city"
+    t.boolean "season_jan"
+    t.boolean "season_feb"
+    t.boolean "season_mar"
+    t.boolean "season_apr"
+    t.boolean "season_may"
+    t.boolean "season_jun"
+    t.boolean "season_jul"
+    t.boolean "season_aug"
+    t.boolean "season_sep"
+    t.boolean "season_oct"
+    t.boolean "season_nov"
+    t.boolean "season_dec"
+    t.index ["country_id"], name: "index_areas_on_country_id"
+    t.index ["prefecture_id"], name: "index_areas_on_prefecture_id"
+    t.index ["state_id"], name: "index_areas_on_state_id"
+  end
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
@@ -20,6 +53,46 @@ ActiveRecord::Schema.define(version: 2020_07_21_071135) do
     t.string "code"
     t.string "name"
     t.string "apply_lang"
+  end
+
+  create_table "prefectures", force: :cascade do |t|
+    t.integer "country_id", null: false
+    t.integer "state_id", null: false
+    t.string "en_name"
+    t.string "local_name"
+    t.string "cn_name"
+    t.string "tw_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_prefectures_on_country_id"
+    t.index ["state_id"], name: "index_prefectures_on_state_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.integer "owner_user_id", null: false
+    t.integer "country_id_id", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.string "start_place"
+    t.string "end_place"
+    t.integer "destination_area_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id_id"], name: "index_projects_on_country_id_id"
+    t.index ["destination_area_id"], name: "index_projects_on_destination_area_id"
+    t.index ["owner_user_id"], name: "index_projects_on_owner_user_id"
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.integer "country_id", null: false
+    t.string "en_name"
+    t.string "local_name"
+    t.string "cn_name"
+    t.string "tw_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_states_on_country_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -62,4 +135,13 @@ ActiveRecord::Schema.define(version: 2020_07_21_071135) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "areas", "countries"
+  add_foreign_key "areas", "prefectures"
+  add_foreign_key "areas", "states"
+  add_foreign_key "prefectures", "countries"
+  add_foreign_key "prefectures", "states"
+  add_foreign_key "projects", "areas", column: "destination_area_id"
+  add_foreign_key "projects", "country_ids"
+  add_foreign_key "projects", "users", column: "owner_user_id"
+  add_foreign_key "states", "countries"
 end
