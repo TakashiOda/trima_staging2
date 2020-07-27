@@ -9,8 +9,8 @@ CarrierWave.configure do |config|
     config.storage = :fog
     config.fog_provider = 'fog/aws'
     config.fog_directory  = ENV['S3_BUCKET']
-    config.asset_host = 'https://s3.amazonaws.com/trima-images'
-    # config.asset_host = 'https://trima-images.s3.amazonaws.com' #このように修正
+    # config.asset_host = 'https://s3.amazonaws.com/trima-images'
+    config.asset_host = 'https://trima-images.s3.amazonaws.com' #このように修正
     config.fog_credentials = {
       provider: 'AWS',
       aws_access_key_id: ENV['S3_ACCESS_KEY'],
