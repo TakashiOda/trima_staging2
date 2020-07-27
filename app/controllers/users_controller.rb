@@ -15,7 +15,7 @@ class UsersController < ApplicationController
         @user_language = Language.find(@user.language_id).name
       end
     else
-      flash.now[:alert] = 'Plese Sign in'
+      flash.now[:alert] = 'Please Sign in'
     end
   end
 
@@ -24,7 +24,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    # binding.pry
     @user = User.find(params[:id])
     # @user.update(user_params)
     if @user.update(user_params)
@@ -40,8 +39,4 @@ class UsersController < ApplicationController
                                    :nickname, :country_id, :language_id, :profile_text)
     end
 
-    def update_params
-      params.require(:user).permit(:email, :first_name,:last_name, :nickname,
-                                  :profile_text, :avatar)
-    end
 end
