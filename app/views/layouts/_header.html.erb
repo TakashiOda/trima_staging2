@@ -5,7 +5,7 @@
       <% if user_signed_in? %>
         <%= link_to(user_path(current_user), class: 'header_mypage_link') do %>
           <li>
-            <% if current_user.avatar? %>
+            <% if current_user.avatar %>
               <%= image_tag current_user.avatar.url, class: 'header_avatar' %>
             <% else %>
               <%= image_tag 'default_images/no_avatar_image.png', class: 'header_avatar' %>
