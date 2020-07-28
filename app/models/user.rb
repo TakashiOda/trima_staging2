@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_many :user_projects
+  has_many :projects, through: :user_projects
+  accepts_nested_attributes_for :user_projects, allow_destroy: true
 
   mount_uploader :avatar, AvatarUploader
 

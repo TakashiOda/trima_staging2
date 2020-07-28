@@ -63,7 +63,6 @@ a:hover {opacity: 0.8;}
   top: 60px;
   width: 100%;
   font-size: 16px;
-  height: 25px;
 }
 .alert {
   background: #ff282870;
@@ -74,7 +73,6 @@ a:hover {opacity: 0.8;}
   top: 60px;
   width: 100%;
   font-size: 16px;
-  height: 25px;
 }
 .form-group {
     width: 100%;
@@ -423,7 +421,6 @@ img.user_avatar {
 }
 
 /*user edit************************************/
-
 .user_show_content_down {
     margin: 0;
     padding: 40px 20px;
@@ -511,9 +508,48 @@ span#user_edit_image_upload_btn {
     width: 30%;
     max-width: 100px;
 }
-
-
-
+/*project index************************************/
+.project_index_container {
+    width: 80%;
+}
+.project_index_container_innner {
+    padding: 20px 50px 50px 40px;
+}
+.page_title_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.btn_box a {
+    color: #fff;
+    background: #2bb561;
+    border-radius: 6px;
+    padding: 10px 20px;
+}
+.page_list_box {
+    margin: 20px 0 80px;
+}
+.page_list_item_box .title_box {
+    border-bottom: solid 3px #2bb56169;
+    padding: 4px 10px;
+    /* margin-top: 20px; */
+}
+.page_list_item_box {
+    margin: 10px 0 60px;
+}
+.item_box ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.item_box li {
+    width: 140px;
+    height: 140px;
+    border: solid 1px lightgray;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
 
 /************************************************************
 *************************************************************
@@ -680,6 +716,10 @@ span#user_edit_image_upload_btn {
 .for_admin_page_container {
     padding: 10px 15% 50px;
     max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .seasons_input_items {
     display: flex;
@@ -696,4 +736,18 @@ span#user_edit_image_upload_btn {
     input[type=checkbox] {
       margin: 1px 6px 0px !important;
     }
+}
+table   {
+    border-collapse:collapse
+}
+table tr{
+    border:1px solid #dedede;
+    padding: 5px;
+}
+table th {
+  padding: 5px;
+}
+
+table td {
+  padding: 5px;
 }

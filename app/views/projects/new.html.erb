@@ -1,0 +1,62 @@
+<div class="container user_show container-fluid row">
+  <div class="user_show_side col-2">
+    <%= render 'users/user_page_front_sidebar' %>
+  </div>
+  <div class="user_show_content col-8">
+    <div class="user_show_content_down">
+      <div class="user_show_info_items_box">
+        <!-- <form> -->
+          <%= form_for(@project) do |form| %>
+            <div class="form-group">
+              <%= form.label "Project Name" %>
+              <%= form.text_field :name, class: "form-control" %>
+            </div>
+            <%= form.hidden_field :owner_user_id, :value => current_user.id %>
+            <div class="form-group">
+              <%= form.label "Start Date" %>
+              <%= form.text_field :start_date, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "Start Date" %>
+              <%= form.text_field :start_date, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "Start Place" %>
+              <%= form.text_field :start_place, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "End Date" %>
+              <%= form.text_field :end_date, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "End Place" %>
+              <%= form.text_field :end_place, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "Destination" %>
+              <%= form.text_field :destination_area_id, class: "form-control" %>
+            </div>
+            <div class="form_btns">
+              <div class="row">
+                <div class="col-half">
+                  <%= link_to "cansel", projects_path, class: "button btn-cansel" %>
+                </div>
+                <div class="col-half">
+                  <%= form.submit('Create Projct',class: 'button btn-submit') %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <!-- </form> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div> -->
+
+
+<style lang="scss">
+  .user_show_content {
+    padding: 0px;
+  }
+</style>

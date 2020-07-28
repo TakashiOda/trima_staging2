@@ -1,19 +1,20 @@
 class AreasController < ApplicationController
+  before_action :authenticate_user!, only: [:edit, :update]
 
   def index
     @areas = Area.all
   end
 
-  def show
-    @area = Area.find(params[:id])
-  end
+  # def show
+  #   @area = Area.find(params[:id])
+  # end
 
-  def new
-    @area = Area.new
-  end
+  # def new
+  #   @area = Area.new
+  # end
 
   def create
-    @area = Area.new
+    @area = Area.new(area_params)
   end
 
   def edit
@@ -22,10 +23,12 @@ class AreasController < ApplicationController
 
   def update
     @area = Area.find(params[:id])
-  end
-
-  def destroy
-    @area = Area.find(params[:id])
+    # @user.update(user_params)
+    if @area.update(area_params)
+      redirect_to areas_path
+    else
+      render 'edit'
+    end
   end
 
   private

@@ -2,12 +2,24 @@
   <h1>エリア一覧</h1>
   <div class="admin_list_add_btn_box">
     <div>
-      <%=link_to "エリア新規作成", new_area_path %>
+      <%# link_to "エリア新規作成", new_area_path %>
     </div>
   </div>
   <div class="admin_info_list_box">
-    <ul>
-      <li>あああ</li>
-    </ul>
+    <table>
+      <tr>
+        <th class="th_01"><span>都道府県名</span></th>
+        <th class="th_02"><span>エリア名（英語）</span></th>
+        <th class="th_03"><span>エリア名（日本語）</span></th>
+      </tr>
+      <% @areas.each do |area| %>
+        <tr>
+          <td class="th_01"><span><%= Prefecture.find(area.prefecture_id).local_name %></span></td>
+          <td class="th_02"><span><%= area.en_name %></span></td>
+          <td class="th_03"><span><%= area.local_name %></span></td>
+          <td class="th_04"><span><%= link_to "編集", edit_area_path(area) %></span></td>
+        </tr>
+      <% end %>
+    </table>
   </div>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_27_103959) do
+ActiveRecord::Schema.define(version: 2020_07_28_060037) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "country_id", null: false
@@ -62,8 +62,6 @@ ActiveRecord::Schema.define(version: 2020_07_27_103959) do
     t.string "local_name"
     t.string "cn_name"
     t.string "tw_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["country_id"], name: "index_prefectures_on_country_id"
     t.index ["state_id"], name: "index_prefectures_on_state_id"
   end
@@ -71,7 +69,6 @@ ActiveRecord::Schema.define(version: 2020_07_27_103959) do
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.integer "owner_user_id", null: false
-    t.integer "country_id_id", null: false
     t.date "start_date"
     t.date "end_date"
     t.string "start_place"
@@ -79,7 +76,6 @@ ActiveRecord::Schema.define(version: 2020_07_27_103959) do
     t.integer "destination_area_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["country_id_id"], name: "index_projects_on_country_id_id"
     t.index ["destination_area_id"], name: "index_projects_on_destination_area_id"
     t.index ["owner_user_id"], name: "index_projects_on_owner_user_id"
   end
@@ -90,9 +86,17 @@ ActiveRecord::Schema.define(version: 2020_07_27_103959) do
     t.string "local_name"
     t.string "cn_name"
     t.string "tw_name"
+    t.index ["country_id"], name: "index_states_on_country_id"
+  end
+
+  create_table "user_projects", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "project_id", null: false
+    t.string "control_level", default: "owner"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["country_id"], name: "index_states_on_country_id"
+    t.index ["project_id"], name: "index_user_projects_on_project_id"
+    t.index ["user_id"], name: "index_user_projects_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -141,7 +145,8 @@ ActiveRecord::Schema.define(version: 2020_07_27_103959) do
   add_foreign_key "prefectures", "countries"
   add_foreign_key "prefectures", "states"
   add_foreign_key "projects", "areas", column: "destination_area_id"
-  add_foreign_key "projects", "country_ids"
   add_foreign_key "projects", "users", column: "owner_user_id"
   add_foreign_key "states", "countries"
+  add_foreign_key "user_projects", "projects"
+  add_foreign_key "user_projects", "users"
 end

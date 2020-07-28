@@ -1,2 +1,118 @@
-<h1>Areas#edit</h1>
-<p>Find me in app/views/areas/edit.html.erb</p>
+<h1 style="text-align:center;">エリア情報を作成</h1>
+<div class="container user_show container-fluid row">
+  <div class="user_show_content col-8">
+    <div class="user_show_content_down">
+      <div class="user_show_info_items_box">
+        <!-- <form> -->
+          <%= form_for(@area) do |form| %>
+            <div class="form-group select_id_items">
+                <div class="select_id_item">
+                  <%= form.label "国" %>
+                  <%= form.select :country_id, [['日本', 1]], { include_blank: "国を選ぶ", selected: 1 }, { class: "form-control" } %>
+                </div>
+                <div class="col-select_id_item">
+                  <%= form.label "地域名" %>
+                  <%= form.select :state_id, [['北海道', 1]], { include_blank: "地域を選ぶ", selected: 1 }, { class: "form-control" } %>
+                </div>
+                <div class="col-select_id_item">
+                  <%= form.label "都道府県" %>
+                  <%= form.select :prefecture_id, [['北海道', 1]], { include_blank: "都道府県を選ぶ", selected: 1 }, { class: "form-control" } %>
+                </div>
+            </div>
+            <div class="form-group">
+              <%= form.label "日本語エリア名" %>
+              <%= form.text_field :local_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "エリア説明<日本語>" %>
+              <%= form.text_area :jp_introduction, size: "22x5", class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "英語エリア名" %>
+              <%= form.text_field :en_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "エリア説明<英語>" %>
+              <%= form.text_area :jp_introduction, size: "22x5", class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "簡体エリア名" %>
+              <%= form.text_field :cn_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "エリア説明<簡体>" %>
+              <%= form.text_area :jp_introduction, size: "22x5", class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "繁体エリア名" %>
+              <%= form.text_field :tw_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "エリア説明<繁体>" %>
+              <%= form.text_area :jp_introduction, size: "22x5", class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label "最寄りの空港<英語>" %>
+              <%= form.text_field :nearest_airport, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label "最寄りの大都市<英語>" %>
+              <%= form.text_field :nearest_big_city, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label "エリアの写真" %>
+              <%= form.file_field :image, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= form.label "エリアのMAP写真" %>
+              <%= form.file_field :map, class: "form-control" %>
+            </div>
+
+            <div class="form-group seasons_input_box">
+              <div class="form-group"><%= form.label "1月" %><%= form.check_box :season_jan %></div>
+              <div class="form-group"><%= form.label "2月" %><%= form.check_box :season_feb %></div>
+              <div class="form-group"><%= form.label "3月" %><%= form.check_box :season_mar %></div>
+              <div class="form-group"><%= form.label "4月" %><%= form.check_box :season_apr %></div>
+              <div class="form-group"><%= form.label "5月" %><%= form.check_box :season_may %></div>
+              <div class="form-group"><%= form.label "6月" %><%= form.check_box :season_jun %></div>
+              <div class="form-group"><%= form.label "7月" %><%= form.check_box :season_jul %></div>
+              <div class="form-group"><%= form.label "8月" %><%= form.check_box :season_aug %></div>
+              <div class="form-group"><%= form.label "9月" %><%= form.check_box :season_sep %></div>
+              <div class="form-group"><%= form.label "10月" %><%= form.check_box :season_oct %></div>
+              <div class="form-group"><%= form.label "11月" %><%= form.check_box :season_nov %></div>
+              <div class="form-group"><%= form.label "12月" %><%= form.check_box :season_dec %></div>
+            </div>
+
+            <div class="form_btns">
+              <div class="row">
+                <div class="col-half">
+                  <%= link_to "cansel", areas_path, class: "button btn-cansel" %>
+                </div>
+                <div class="col-half">
+                  <%= form.submit('作成権限なし',class: 'button btn-submit',disabled: true) %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <!-- </form> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div> -->
+
+<style>
+  .user_show_content.col-8 {
+    padding: 0 180px;
+    width: 100%;
+  }
+  .user_show_content_down {
+    padding: 20px 0 80px;
+  }
+  .form-group.seasons_input_box {
+    margin-bottom: 50px;
+  }
+</style>
