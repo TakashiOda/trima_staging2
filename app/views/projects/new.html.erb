@@ -5,41 +5,48 @@
   <div class="user_show_content col-8">
     <div class="user_show_content_down">
       <div class="user_show_info_items_box">
+        <h2 class="page_title_padding">Create New Project</h2>
         <!-- <form> -->
-          <%= form_for(@project) do |form| %>
+          <%= form_for [@user, @project] do |form| %>
             <div class="form-group">
               <%= form.label "Project Name" %>
               <%= form.text_field :name, class: "form-control" %>
             </div>
             <%= form.hidden_field :owner_user_id, :value => current_user.id %>
             <div class="form-group">
-              <%= form.label "Start Date" %>
-              <%= form.text_field :start_date, class: "form-control" %>
-            </div>
-            <div class="form-group">
-              <%= form.label "Start Date" %>
-              <%= form.text_field :start_date, class: "form-control" %>
-            </div>
-            <div class="form-group">
-              <%= form.label "Start Place" %>
-              <%= form.text_field :start_place, class: "form-control" %>
-            </div>
-            <div class="form-group">
-              <%= form.label "End Date" %>
-              <%= form.text_field :end_date, class: "form-control" %>
-            </div>
-            <div class="form-group">
-              <%= form.label "End Place" %>
-              <%= form.text_field :end_place, class: "form-control" %>
-            </div>
-            <div class="form-group">
               <%= form.label "Destination" %>
               <%= form.text_field :destination_area_id, class: "form-control" %>
             </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="date_pick_box">
+                  <%= form.label "Start Date" %>
+                  <%= form.date_field :start_date, use_month_numbers: true, class: "form-control"  %>
+                </div>
+                <div class="date_pick_box">
+                  <%= form.label "End Date" %>
+                  <%= form.date_field :start_date, use_month_numbers: true, class: "form-control"  %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="date_pick_box">
+                  <%= form.label "Start Place" %>
+                  <%= form.text_field :start_place, class: "form-control" %>
+                </div>
+                <div class="date_pick_box">
+                  <%= form.label "End Place" %>
+                  <%= form.text_field :end_place, class: "form-control" %>
+                </div>
+              </div>
+            </div>
+
             <div class="form_btns">
               <div class="row">
                 <div class="col-half">
-                  <%= link_to "cansel", projects_path, class: "button btn-cansel" %>
+                  <%= link_to "cansel", user_projects_path(current_user), class: "button btn-cansel" %>
                 </div>
                 <div class="col-half">
                   <%= form.submit('Create Projct',class: 'button btn-submit') %>

@@ -117,6 +117,10 @@ form label {
 .hidden {
   display: none !important;
 }
+
+.form_btns {
+    margin: 50px 0;
+}
 /*header************************************/
 header.erb_header {
   background: #2bb562;
@@ -254,6 +258,17 @@ img.header_avatar {
       box-shadow: 2px 3px 3px #bfbfbf;
     }
     /* flex-wrap: wrap; */
+}
+
+.home_contents__top__down ul li {
+    margin: 15px 0;
+}
+.home_contents__top__down ul li a {
+    color: #fff;
+    background: #2bb561;
+    font-size: 24px;
+    padding: 8px 19px;
+    border-radius: 10px;
 }
 
 /*sign_up************************************/
@@ -543,13 +558,33 @@ span#user_edit_image_upload_btn {
     flex-wrap: wrap;
 }
 .item_box li {
-    width: 140px;
-    height: 140px;
+    width: 120px;
+    height: 120px;
     border: solid 1px lightgray;
     padding: 20px;
     display: flex;
     justify-content: center;
+    margin: 6px;
+    border-radius: 5px;
 }
+/*project new************************************/
+
+.user_show_info_items_box {
+    width: 100%;
+    max-width: 550px;
+    padding: 0px 30px;
+}
+
+.date_pick_box {
+    width: 48%;
+}
+.page_title_padding {
+  margin-bottom: 55px;
+  margin-top: 0;
+}
+
+
+
 
 /************************************************************
 *************************************************************

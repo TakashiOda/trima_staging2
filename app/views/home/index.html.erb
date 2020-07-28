@@ -6,8 +6,13 @@
     </div>
     <div class="home_contents__top__down">
       <ul>
-        <li><%= link_to "aaaa", "#" %></li>
-        <li><%= link_to "bbbb", "#" %></li>
+        <% if current_user %>
+          <li><%= link_to "Create Project", new_user_project_path(current_user) %></li>
+          <li><%= link_to "How to Use", "#" %></li>
+        <% else %>
+          <li><%= link_to "About Service", "#" %></li>
+          <li><%= link_to "Sign UP", new_user_registration_path %></li>
+        <% end %>
       </ul>
     </div>
   </div>

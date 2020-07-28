@@ -12,10 +12,10 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    @user = User.find(params[:user_id])
     # @project = Project.new
     # @project.users << current_user
-    @user = current_user
-    @project = current_user.projects.build
+    @project = @user.projects.build
   end
 
   def create
@@ -26,7 +26,7 @@ class ProjectsController < ApplicationController
     # end
     @project = current_user.projects.build(project_params)
     if @project.save
-      redirect_to projects_path
+      redirect_to user_projects_path(current_user)
     else
       render 'new'
     end

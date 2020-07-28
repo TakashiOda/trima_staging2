@@ -7,22 +7,22 @@
       <div class="page_title_box">
         <h3>Your Projects</h3>
         <div class="btn_box">
-          <%= link_to "Create Project", new_project_path %>
+          <%= link_to "Create Project", new_user_project_path(current_user) %>
         </div>
       </div>
       <div class="page_list_box">
         <div class="page_list_item_box">
           <div class="title_box"><span>Own Projects</span></div>
           <div class="item_box">
-            <% @own_projects.each do |own_project| %>
-              <ul>
+            <ul>
+              <% @own_projects.each do |own_project| %>
                 <li>
-                  <%= link_to projects_path(own_project) do %>
+                  <%= link_to user_project_path(current_user, own_project) do %>
                     <%= own_project.name %>
                   <% end %>
                 </li>
-              </ul>
-            <% end %>
+              <% end %>
+            </ul>
           </div>
         </div>
         <div class="page_list_item_box">
@@ -31,7 +31,7 @@
             <% @invited_projects.each do |invited_project| %>
               <ul>
                 <li>
-                  <%= link_to projects_path(invited_project) do %>
+                  <%= link_to user_project_path(current_user, invited_project) do %>
                     <%= invited_project.name %>
                   <% end %>
                 </li>
