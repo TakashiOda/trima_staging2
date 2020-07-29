@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_28_041936) do
+ActiveRecord::Schema.define(version: 2020_07_29_084915) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "country_id", null: false
@@ -87,11 +87,31 @@ ActiveRecord::Schema.define(version: 2020_07_28_041936) do
     t.index ["country_id"], name: "index_states_on_country_id"
   end
 
+  create_table "towns", force: :cascade do |t|
+    t.string "town_code"
+    t.integer "country_id", null: false
+    t.integer "state_id", null: false
+    t.integer "prefecture_id", null: false
+    t.integer "area_id", null: false
+    t.string "en_name"
+    t.string "jp_name"
+    t.string "cn_name"
+    t.string "tw_name"
+    t.boolean "is_big_city"
+    t.string "image"
+    t.index ["area_id"], name: "index_towns_on_area_id"
+    t.index ["country_id"], name: "index_towns_on_country_id"
+    t.index ["prefecture_id"], name: "index_towns_on_prefecture_id"
+    t.index ["state_id"], name: "index_towns_on_state_id"
+  end
+
   create_table "user_projects", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "project_id", null: false
-    t.string "control_level", default: "owner"
+    t.integer "control_level", default: 0
+    t.integer "accept_invite", default: 0
     t.index ["project_id"], name: "index_user_projects_on_project_id"
+    t.index ["user_id", "project_id"], name: "index_user_projects_on_user_id_and_project_id", unique: true
     t.index ["user_id"], name: "index_user_projects_on_user_id"
   end
 
@@ -142,6 +162,10 @@ ActiveRecord::Schema.define(version: 2020_07_28_041936) do
   add_foreign_key "prefectures", "states"
   add_foreign_key "projects", "users", column: "owner_user_id"
   add_foreign_key "states", "countries"
+  add_foreign_key "towns", "areas"
+  add_foreign_key "towns", "countries"
+  add_foreign_key "towns", "prefectures"
+  add_foreign_key "towns", "states"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"
 end

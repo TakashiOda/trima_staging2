@@ -10,15 +10,29 @@
           <%= link_to "Create Project", new_user_project_path(current_user) %>
         </div>
       </div>
+      <div class="page_list_item_box">
+        <div class="title_box"><span>Waiting Accept!!</span></div>
+        <div class="item_box">
+          <ul>
+            <% @waitings.each do |waiting| %>
+            <li>
+              <%= link_to user_project_path(current_user, waiting) do %>
+                <%= waiting.name %>
+              <% end %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
       <div class="page_list_box">
         <div class="page_list_item_box">
           <div class="title_box"><span>Own Projects</span></div>
           <div class="item_box">
             <ul>
-              <% @own_projects.each do |own_project| %>
+              <% @owns.each do |own| %>
                 <li>
-                  <%= link_to user_project_path(current_user, own_project) do %>
-                    <%= own_project.name %>
+                  <%= link_to user_project_path(current_user, own) do %>
+                    <%= own.name %>
                   <% end %>
                 </li>
               <% end %>
@@ -28,18 +42,60 @@
         <div class="page_list_item_box">
           <div class="title_box"><span>Invited Projects</span></div>
           <div class="item_box">
-            <% @invited_projects.each do |invited_project| %>
-              <ul>
-                <li>
-                  <%= link_to user_project_path(current_user, invited_project) do %>
-                    <%= invited_project.name %>
-                  <% end %>
-                </li>
-              </ul>
-            <% end %>
+            <ul>
+              <% @inviteds.each do |invited| %>
+              <li>
+                <%= link_to user_project_path(current_user, invited) do %>
+                  <%= invited.name %>
+                <% end %>
+              </li>
+              <% end %>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- <input type="button" id="btn" value='click me'> -->
+
+<!-- <div id="modal" class="hidden">
+  <div class="modal-content">
+    <div class="modal-body">
+      <h1>hello</h1>
+    </div>
+  </div>
+</div> -->
+
+<!-- <style>
+  div#modal {
+    position: absolute;
+    top: 50px;
+    left: 20%;
+    right: 20%;
+    margin: 0 auto;
+    width: 50%;
+    height: 300px;
+    z-index: 100;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+  }
+  .modal-content{
+    background-color: white;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('btn');
+  const modal = document.getElementById('modal');
+  const classList = modal.classList;
+  const has_hidden = modal.classList.contains('hidden');
+
+  document.getElementById('btn').onclick = function() {
+    const modal = document.getElementById('modal');
+    modal.classList.toggle('hidden');
+  };
+</script> -->

@@ -13,10 +13,10 @@
               <%= form.text_field :name, class: "form-control" %>
             </div>
               <%= form.hidden_field :owner_user_id, :value => current_user.id %>
-            <div class="form-group">
-              <%= form.label "Destination" %>
-              <%= form.number_field :destination_area_id, class: "form-control" %>
-            </div>
+            <!-- <div class="form-group">
+              <%# form.label "Destination" %>
+              <%# form.number_field :destination_area_id, class: "form-control" %>
+            </div> -->
             <div class="form-group">
               <div class="row">
                 <div class="date_pick_box">
@@ -40,6 +40,16 @@
                   <%= form.label "End Place" %>
                   <%= form.text_field :end_place, class: "form-control" %>
                 </div>
+              </div>
+            </div>
+
+            <div class="form-group invite_member_box">
+              <div class="form_inner_form_title">Share with trip member</div>
+              <div class="form_inner_form_box">
+                <span>Member 1</span>
+                <input type="textbox" name="invite_emails[member01][]" class="form-control">
+                <span>Member 2</span>
+                <input type="textbox" name="invite_emails[member02][]" class="form-control">
               </div>
             </div>
 

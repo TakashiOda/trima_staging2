@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'basic_datas/index', to: 'basic_datas#index', as: :basic_index
   root to: 'home#index'
   get "thank_you_for_registration", :to => 'home#after_registration_send_email'
   get "about", to: 'home#about_page_for_user', as: :about_user
@@ -20,8 +21,11 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :edit, :update]
   resources :users do
     resources :projects
+    get "project/:id", to: "projects#accept_project", as: :accept_project
+    delete "project/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
   end
   resources :areas, only: [:index, :show, :edit, :update]
+
   # resources :projects
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

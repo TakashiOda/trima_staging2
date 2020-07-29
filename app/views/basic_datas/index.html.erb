@@ -1,0 +1,51 @@
+<h1 style="text-align: center;">BasicDatas#index</h1>
+<div class="basic_datas_box">
+  <ul>
+    <li>
+      <div>市区町村コード</div>
+      <div>都道府県</div>
+      <div>エリア名</div>
+      <div>英語名</div>
+      <div>日本語名</div>
+    </li>
+    <% @towns.each do |town| %>
+    <li>
+      <div><%= town.town_code %></div>
+      <div><%= Prefecture.find(town.prefecture_id).local_name %></div>
+      <div><%= Area.find(town.area_id).local_name %></div>
+      <div><%= town.en_name %></div>
+      <div><%= town.jp_name %></div>
+    </li>
+    <% end %>
+  </ul>
+</div>
+
+<style>
+  .basic_datas_box ul {
+    width: 100%;
+    max-width: 600px;
+  }
+  .basic_datas_box ul li {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .basic_datas_box ul li div:nth-child(1) {
+    width: 17%;
+  }
+  .basic_datas_box ul li div:nth-child(2) {
+    width: 12%;
+  }
+  .basic_datas_box ul li div:nth-child(3) {
+    width: 20%;
+  }
+  .basic_datas_box ul li div:nth-child(4) {
+    width: 20%;
+  }
+  .basic_datas_box {
+    padding: 0 30px;
+    display: flex;
+    justify-content: center;
+    font-size: 13px;
+  }
+</style>
