@@ -5,18 +5,19 @@
       <%= link_to "Trima", root_path, id: "logo" %>
     </div>
     <ul class="header__links">
-      <% if user_signed_in? %>
+      <% if current_user %>
         <%= link_to(user_path(current_user), class: 'header_mypage_link') do %>
           <li>
-            <% if current_user.avatar %>
+            <% if !current_user.avatar.blank? %>
+              <%# image_tag 'default_images/no_avatar_image.png', class: 'header_avatar' %>
               <%= image_tag current_user.avatar.url, class: 'header_avatar' %>
             <% else %>
               <%= image_tag 'default_images/no_avatar_image.png', class: 'header_avatar' %>
             <% end %>
           </li>
           <li class="header_username">
-            <% if current_user.first_name && current_user.last_name %>
-              <%= current_user.first_name %><%= current_user.last_name %>
+            <% if current_user.username %>
+              <%= current_user.username %>
             <% else %>
               MyPage
             <% end %>

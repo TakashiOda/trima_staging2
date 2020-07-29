@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_28_060037) do
+ActiveRecord::Schema.define(version: 2020_07_28_041936) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "country_id", null: false
@@ -73,10 +73,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_060037) do
     t.date "end_date"
     t.string "start_place"
     t.string "end_place"
-    t.integer "destination_area_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["destination_area_id"], name: "index_projects_on_destination_area_id"
     t.index ["owner_user_id"], name: "index_projects_on_owner_user_id"
   end
 
@@ -93,8 +91,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_060037) do
     t.integer "user_id", null: false
     t.integer "project_id", null: false
     t.string "control_level", default: "owner"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_user_projects_on_project_id"
     t.index ["user_id"], name: "index_user_projects_on_user_id"
   end
@@ -144,7 +140,6 @@ ActiveRecord::Schema.define(version: 2020_07_28_060037) do
   add_foreign_key "areas", "states"
   add_foreign_key "prefectures", "countries"
   add_foreign_key "prefectures", "states"
-  add_foreign_key "projects", "areas", column: "destination_area_id"
   add_foreign_key "projects", "users", column: "owner_user_id"
   add_foreign_key "states", "countries"
   add_foreign_key "user_projects", "projects"

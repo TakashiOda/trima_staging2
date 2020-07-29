@@ -6,8 +6,6 @@ class CreateStates < ActiveRecord::Migration[6.0]
       t.string :local_name
       t.string :cn_name
       t.string :tw_name
-
-      t.timestamps
     end
   end
 end
