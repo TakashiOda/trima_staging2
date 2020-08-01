@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_084915) do
+ActiveRecord::Schema.define(version: 2020_08_01_043140) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "country_id", null: false
@@ -55,6 +55,30 @@ ActiveRecord::Schema.define(version: 2020_07_29_084915) do
     t.string "apply_lang"
   end
 
+  create_table "organizations", force: :cascade do |t|
+    t.string "org_type"
+    t.string "name", null: false
+    t.integer "state_id"
+    t.integer "prefecture_id"
+    t.integer "town_id"
+    t.string "detail_address"
+    t.string "building"
+    t.string "post_code"
+    t.string "phone"
+    t.boolean "has_event", default: false, null: false
+    t.boolean "has_spot", default: false, null: false
+    t.boolean "has_activity", default: false, null: false
+    t.boolean "has_restaurant", default: false, null: false
+    t.integer "contract_plan", default: 0, null: false
+    t.integer "contract_status", default: 0, null: false
+    t.index ["contract_plan"], name: "index_organizations_on_contract_plan"
+    t.index ["contract_status"], name: "index_organizations_on_contract_status"
+    t.index ["phone"], name: "index_organizations_on_phone", unique: true
+    t.index ["prefecture_id"], name: "index_organizations_on_prefecture_id"
+    t.index ["state_id"], name: "index_organizations_on_state_id"
+    t.index ["town_id"], name: "index_organizations_on_town_id"
+  end
+
   create_table "prefectures", force: :cascade do |t|
     t.integer "country_id", null: false
     t.integer "state_id", null: false
@@ -85,6 +109,38 @@ ActiveRecord::Schema.define(version: 2020_07_29_084915) do
     t.string "cn_name"
     t.string "tw_name"
     t.index ["country_id"], name: "index_states_on_country_id"
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.string "name"
+    t.string "avatar"
+    t.integer "organization_id"
+    t.integer "control_level", default: 0, null: false
+    t.integer "accept_invite", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["confirmation_token"], name: "index_suppliers_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_suppliers_on_email", unique: true
+    t.index ["organization_id"], name: "index_suppliers_on_organization_id"
+    t.index ["reset_password_token"], name: "index_suppliers_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_suppliers_on_unlock_token", unique: true
   end
 
   create_table "towns", force: :cascade do |t|
@@ -162,6 +218,7 @@ ActiveRecord::Schema.define(version: 2020_07_29_084915) do
   add_foreign_key "prefectures", "states"
   add_foreign_key "projects", "users", column: "owner_user_id"
   add_foreign_key "states", "countries"
+  add_foreign_key "suppliers", "organizations"
   add_foreign_key "towns", "areas"
   add_foreign_key "towns", "countries"
   add_foreign_key "towns", "prefectures"

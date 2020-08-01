@@ -5,11 +5,6 @@ Rails.application.routes.draw do
   get "thank_you_for_registration", :to => 'home#after_registration_send_email'
   get "about", to: 'home#about_page_for_user', as: :about_user
   # get "about", :to => "home#about"
-  devise_scope :user do
-    get "users/sign_in", :to => "users/sessions#new"
-    # post "users/sign_in", :to => "users/sessions#create"
-    get "users/sign_out", :to => "users/sessions#destroy"
-  end
 
   devise_for :users, controllers: {
     :registrations => 'users/registrations',
@@ -17,6 +12,27 @@ Rails.application.routes.draw do
     :confirmations     => "users/confirmations",
     :unlocks     => "users/unlocks"
   }
+
+  devise_scope :user do
+    get "users/sign_in", :to => "users/sessions#new"
+    post "users/sign_in", :to => "users/sessions#create"
+    get "users/sign_out", :to => "users/sessions#destroy"
+  end
+
+
+
+  # devise_scope :supplier do
+  #   get "suppliers/sign_in", :to => "suppliers/sessions#new"
+  #   # post "users/sign_in", :to => "users/sessions#create"
+  #   get "suppliers/sign_out", :to => "suppliers/sessions#destroy"
+  # end
+  #
+  # devise_for :suppliers, controllers: {
+  #   :registrations => 'suppliers/registrations',
+  #   :passwords     => "suppliers/passwords",
+  #   :confirmations     => "suppliers/confirmations",
+  #   :unlocks     => "suppliers/unlocks"
+  # }
 
   resources :users, only: [:index, :show, :edit, :update]
   resources :users do
