@@ -1,5 +1,21 @@
-<p>Welcome <%= @email %>!</p>
+<p>こんにちわ <%= @email %>様!</p>
 
-<p>You can confirm your account email through the link below:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p>trima運営事務局です！</p>
+<p>この度は trima にご登録いただき誠にありがとうございます。</p>
+<p>あなたのアカウントはまだ有効化されていません。</p>
+<p>大変お手数ですが、下記リンクをクリックしてアカウントを有効化し、ログインしていただくようお願い致します。</p>
+
+<p><%= link_to 'アカウントを有効化する', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+
+<p>※身に覚えがない場合はこのメールを破棄してください。</p>
+<p>※このメールアドレスは送信専用です。返信されてもお返事できませんのでご了承ください。</p>
+<p>※お問い合わせは<a href="https://ccc.ne.jp/contact_uu/">コチラ</a>よりお願い致します</p>
+
+
+****************************************
+旅行マルチプラットフォーム trima
+trima運営事務局
+URL: ****************.com
+****************************************

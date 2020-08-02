@@ -14,7 +14,7 @@ gem 'bootsnap', '1.4.6', require: false
 gem 'activeadmin','2.7.0'
 gem 'omniauth'
 gem 'devise','4.7.2'
-gem 'devise_token_auth'
+# gem 'devise_token_auth'
 gem 'rack-cors'
 gem 'dotenv-rails'
 gem 'seed-fu'

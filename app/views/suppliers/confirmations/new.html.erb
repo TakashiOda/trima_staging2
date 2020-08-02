@@ -1,16 +1,25 @@
-<h2>Resend confirmation instructions</h2>
+<div class="sign_up_in_page child_position_center">
+  <div class="sign_up_in_page_end">
+    <h3>認証メールを再送信する</h3>
+    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="form-group">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "メールアドレス", class: "form-control", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+      </div>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "suppliers/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+      <div class="form-group button">
+        <%= f.submit "送信する", class: "button btn-submit" %>
+      </div>
+    <% end %>
+    <div class="another_way_btn_box">
+        <%= link_to "ログイン", suppliers_sign_in_path %><br /><br />
+        <%= link_to "事業者アカウントを作成", new_supplier_registration_path %><br />
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
-  </div>
-<% end %>
-
-<%= render "suppliers/shared/links" %>
+</div>
+<style>
+  h3 {margin-bottom:40px;}
+  form#new_user {
+    width: 340px;
+  }
+</style>

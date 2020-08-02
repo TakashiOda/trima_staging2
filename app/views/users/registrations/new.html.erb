@@ -6,7 +6,8 @@
   </div>
   <div class="sign_up_in_page_end">
     <h3>Create a account</h3>
-    <!-- = form_for(resource, as: resource_name, url: user_registration_path(resource_name)) do |f|  -->
+    <%# form_for(resource, as: resource_name, url: user_registration_path do |f| %>
+    <%# <%= form_for(resource, as: resource_name, url: user_registration_path(resource_name)) do |f| %>
     <%= form_with model: @user, url: user_registration_path(@user), id: 'new_user', class: 'new_user', local: true do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div class="form-group">

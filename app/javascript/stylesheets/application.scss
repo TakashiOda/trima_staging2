@@ -23,7 +23,7 @@
 /*基本css************************************/
 body.erb_body {
   margin: 0 !important;
-  width: 100vw;
+  // width: 100vw;
   height: 100vh;
   // padding-bottom:100px;
   // position: relative;
@@ -56,14 +56,17 @@ a {text-decoration: none;}
 }
 a:hover {opacity: 0.8;}
 .notice {
-  background: #1da0326b;
-  color: white;
-  text-align: center;
-  margin: 0;
-  position: fixed;
-  top: 60px;
-  width: 100%;
-  font-size: 16px;
+    background: #19da85d1;
+    color: white;
+    text-align: center;
+    margin: 0;
+    position: fixed;
+    top: 60px;
+    width: 100%;
+    /* margin: 0 auto; */
+    font-size: 16px;
+    z-index: 100;
+    padding: 6px;
 }
 .alert {
   background: #ff282870;
@@ -74,6 +77,8 @@ a:hover {opacity: 0.8;}
   top: 60px;
   width: 100%;
   font-size: 16px;
+  z-index: 100;
+  padding: 6px;
 }
 .form-group {
     width: 100%;
@@ -303,7 +308,7 @@ img.header_avatar {
   flex-direction: column;
   align-items: center;
 }
-form#new_user {
+form#new_user, form#new_supplier {
   width: 80%;
   margin: auto;
 }
@@ -319,9 +324,36 @@ form#new_user {
 }
 .another_way_btn_box {
   margin: 20px auto;
+  text-align: center;
 }
 .didnt_recieve_btn_box {
   margin: 25px auto;
+}
+/*after_send_email***************************/
+.static_pages.short_messages_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto 100px;
+    padding: 50px 0;
+    width: 100vw;
+    max-width: 500px;
+}
+.short_messages_box_title {
+    margin-bottom: 30px;
+    font-size: 17px;
+    border-bottom: solid 1px lightgray;
+    padding-bottom: 7px;
+}
+.short_messages_box_contents {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.short_messages_box_contents span {
+    text-align: center;
 }
 
 /*user show************************************/

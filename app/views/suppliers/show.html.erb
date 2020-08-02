@@ -1,0 +1,38 @@
+<div class="container user_show container-fluid">
+  <div class="user_show_side">
+    <%= render 'suppliers/supplier_page_front_sidebar' %>
+  </div>
+  <div class="user_show_content">
+    <div class="user_show_content_up">
+      <div class="user_show_content_up__up">
+        <div class="user_show_avatar_box">
+          <div class="user_show_avatar_box_inside">
+            <% if @supplier.avatar.present? %>
+              <%= image_tag current_supplier.avatar.url, class: "user_avatar" %>
+            <% else %>
+              <%= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="user_show_btn_box">
+          <div>
+            <% if @supplier == current_supplier %>
+              <%= link_to edit_user_path(current_supplier) do %>
+                <!-- <i class="far fa-edit"></i> -->
+                <span>Edit</span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="user_show_up_right_box">
+        <div class="user_show_name_box">
+          <div class="user_names">
+            <div class="user_show_nickname">
+              <span><%= @supplier.name ? @supplier.name : "名前が登録されていません" %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
