@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
               <%= form.label "Username" %>
-              <%= form.text_field :username, class: "form-control" %>
+              <%= form.text_field :username, required: true, class: "form-control" %>
             </div>
             <div class="form-group">
               <%= form.label "Profile" %>
@@ -41,11 +41,11 @@
                 <div class="row">
                   <div class="col-half">
                     <%= form.label "First Name" %>
-                    <%= form.text_field :first_name, class: "form-control" %>
+                    <%= form.text_field :first_name, required: true, class: "form-control" %>
                   </div>
                   <div class="col-half">
                     <%= form.label "Last Name" %>
-                    <%= form.text_field :last_name, class: "form-control" %>
+                    <%= form.text_field :last_name, required: true, class: "form-control" %>
                   </div>
                 </div>
               </div>
@@ -54,11 +54,11 @@
                 <div class="row">
                   <div class="col-half">
                     <%= form.label "Nationality" %>
-                    <%= form.collection_select :country_id, Country.all, :id, :name,{prompt: "Select Nationality"}, class: "form-control" %>
+                    <%= form.collection_select :country_id, Country.all, :id, :name,{prompt: "Select Nationality"}, required: true, class: "form-control" %>
                   </div>
                   <div class="col-half">
                     <%= form.label "Language" %>
-                    <%= form.collection_select :language_id, Language.all, :id, :name,{prompt: "Select Nationality"}, class: "form-control" %>
+                    <%= form.collection_select :language_id, Language.all, :id, :name,{prompt: "Select Nationality"}, required: true, class: "form-control" %>
                   </div>
                 </div>
               </div>
@@ -82,12 +82,9 @@
               <div class="form-group birth_day_input_box">
                 <%= form.label "Date of Birth" %>
                 <div class="birth_day_input_items">
-                  <%= form.select :birth_month, [['Jan', 1], ['Feb', 2], ['Mar', 3], ['Apr', 4], ['May', 5], ['Jun', 6], ['Jul', 7], ['Aug', 8], ['Sep', 9], ['Oct', 10], ['Nov', 11], ['Dec', 12]], { include_blank: "Month" }, { id: "user_id", class: "form-control" } %>
-                  <%= form.select :birth_day, options_for_select((1..31), :selected => form.object.birth_day), { include_blank: "Day" } ,{ class: "form-control" }%>
-                  <%= form.select :birth_year, options_for_select((1940..2010), :selected => form.object.birth_year), { include_blank: "Year" } ,{ class: "form-control" }%>
-                  <%# form.select(:birth_year, options_for_select((1940..2020), :selected => form.object.birth_year), :include_blank => "Year",) %>
-                  <%# form.select :birth_day, options_for_select(1..31), { prompt: "Day" }, { class: "form-control", "data-live-search" => "true" } %>
-                  <%# form.select :birth_year, options_for_select(1930..2020), { prompt: "Year"}, { class: "form-control" } %>
+                  <%= form.select :birth_month, [['Jan', 1], ['Feb', 2], ['Mar', 3], ['Apr', 4], ['May', 5], ['Jun', 6], ['Jul', 7], ['Aug', 8], ['Sep', 9], ['Oct', 10], ['Nov', 11], ['Dec', 12]], { include_blank: "Month" }, { required: true, id: "user_id", class: "form-control" } %>
+                  <%= form.select :birth_day, options_for_select((1..31), :selected => form.object.birth_day), { include_blank: "Day" } ,{ required: true, class: "form-control" }%>
+                  <%= form.select :birth_year, options_for_select((1940..2010), :selected => form.object.birth_year), { include_blank: "Year" } ,{ required: true, class: "form-control" }%>
                 </div>
               </div>
             </div>

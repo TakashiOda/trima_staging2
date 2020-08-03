@@ -14,7 +14,7 @@ gem 'bootsnap', '1.4.6', require: false
 gem 'activeadmin','2.7.0'
 gem 'omniauth'
 gem 'devise','4.7.2'
-# gem 'devise_token_auth'
+gem 'i18n'
 gem 'rack-cors'
 gem 'dotenv-rails'
 gem 'seed-fu'
@@ -22,8 +22,8 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'fog-aws'
 gem 'kaminari'
-# gem 'rails-i18n'
-# gem 'rails-i18n'
+gem 'nokogiri'
+
 
 group :development, :test do
   gem 'byebug',"11.1.3", platforms: [:mri, :mingw, :x64_mingw]
@@ -33,13 +33,12 @@ end
 group :development do
   gem 'web-console', '4.0.4'
   gem 'listen', '3.2.1'
-  gem 'spring', "2.1.0"
-  gem 'spring-watcher-listen', '2.0.1'
+  gem 'spring'
+  gem 'spring-watcher-listen'
   gem "pry", "0.13.1"
   gem 'pry-rails'
   gem 'foreman'
   gem 'pry-remote'
-  # gem 'awesome_print'
 end
 
 group :production do

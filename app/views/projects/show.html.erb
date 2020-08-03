@@ -10,7 +10,7 @@
           <div class="btn_box">
             <%= link_to "Accept Project", user_accept_project_path(current_user, @project) %>
           </div>
-        <% elsif @project.owner_user_id == current_user.id %>
+        <% elsif @owner == current_user %>
         <div class="btn_box">
           <%= link_to "Edit Project", edit_user_project_path(current_user, @project) %>
         </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="project_show_item">
           <span>Project Owner</span><br/>
-          <span><%= User.find(@project.owner_user_id).username %></span>
+          <span><%= @owner.username %></span>
         </div>
         <div class="project_members_box">
           <table class="project_members_list">
@@ -61,7 +61,7 @@
                   <td><%= user.email%></td>
                   <td><%= user_project.control_level == 0 ? "Owner" : "Editor" %></td>
                   <td>
-                    <% if @project.owner_user_id == current_user.id && user != current_user %>
+                    <% if @owner == current_user && user != current_user %>
                       <%= link_to "Delete" ,
                       user_project_member_delete_path(current_user.id, @project.id, user.id),
                       class: "member_delete_btn",

@@ -5,7 +5,7 @@
     </div>
     <div class="short_messages_box_contents">
       <span>
-        メールアドレス宛に認証メールをお送りいたしました。<br />
+        メールアドレス宛に認証メールをお送りいたしました。
         メールボックスをご確認いただき、アカウントを認証してください
       </span>
       <p><%= link_to "認証メールが届かない方はこちら", new_supplier_confirmation_path %></p>
@@ -13,3 +13,30 @@
     </div>
   </div>
 </div>
+
+
+<style>
+  .body_content {
+    background: #eaeaea;
+    height: 100vh;
+  }
+  .static_pages.short_messages_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto 0px;
+    padding: 30px 0px;
+    width: 90vw;
+    min-width: 320px;
+    max-width: 490px;
+    background: #fff;
+    border-radius: 20px;
+  }
+  .short_messages_box_title {
+    margin-bottom: 20px;
+    font-size: 18px;
+    padding-bottom: 7px;
+    font-weight: bold;
+  }
+</style>

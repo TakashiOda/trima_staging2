@@ -92,14 +92,12 @@ ActiveRecord::Schema.define(version: 2020_08_01_043140) do
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
-    t.integer "owner_user_id", null: false
     t.date "start_date"
     t.date "end_date"
     t.string "start_place"
     t.string "end_place"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["owner_user_id"], name: "index_projects_on_owner_user_id"
   end
 
   create_table "states", force: :cascade do |t|
@@ -216,7 +214,6 @@ ActiveRecord::Schema.define(version: 2020_08_01_043140) do
   add_foreign_key "areas", "states"
   add_foreign_key "prefectures", "countries"
   add_foreign_key "prefectures", "states"
-  add_foreign_key "projects", "users", column: "owner_user_id"
   add_foreign_key "states", "countries"
   add_foreign_key "suppliers", "organizations"
   add_foreign_key "towns", "areas"

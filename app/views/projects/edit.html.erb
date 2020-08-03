@@ -10,7 +10,7 @@
           <%= form_for [@user, @project] do |form| %>
             <div class="form-group">
               <%= form.label "Project Name" %>
-              <%= form.text_field :name, class: "form-control" %>
+              <%= form.text_field :name, required: true, class: "form-control" %>
             </div>
               <%= form.hidden_field :owner_user_id, :value => current_user.id %>
             <!-- <div class="form-group">
@@ -65,6 +65,9 @@
             </div>
           <% end %>
         <!-- </form> -->
+        <div class="delete_btn">
+          <%= link_to "Delete Project", user_project_path(@user, @project), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
       </div>
     </div>
   </div>

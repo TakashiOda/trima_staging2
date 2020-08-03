@@ -4,32 +4,33 @@ class ProjectsController < ApplicationController
 
   def index
     # @user = User.find(current_user.id)
-    @owns = Project.where(owner_user_id: current_user.id)
+    # @owns = Project.where(owner_user_id: current_user.id)
 
-    invited_pro_ids = UserProject.where(user_id: current_user.id, accept_invite: 0).pluck(:project_id)
+    own_pro_ids = UserProject.where(user_id: current_user.id, control_level: 0).pluck(:project_id)
+    @owns = []
+    own_pro_ids.each do |own_pro_id|
+      own_project = Project.find(own_pro_id)
+      @owns.push(own_project)
+    end
+
+    invited_pro_ids = UserProject.where(user_id: current_user.id, control_level: 1 ,accept_invite: 0).pluck(:project_id)
     @inviteds = []
     invited_pro_ids.each do |invited_pro_id|
       accept_project = Project.find(invited_pro_id)
-      unless accept_project.owner_user_id == current_user.id
-        @inviteds.push(accept_project)
-      end
+      @inviteds.push(accept_project)
     end
 
-    waiting_pro_ids = UserProject.where(user_id: current_user.id, accept_invite: 1).pluck(:project_id)
+    waiting_pro_ids = UserProject.where(user_id: current_user.id, control_level: 1, accept_invite: 1).pluck(:project_id)
     @waitings = []
     waiting_pro_ids.each do |waiting_pro_id|
       wait_project = Project.find(waiting_pro_id)
-      unless wait_project.owner_user_id == current_user.id
-        @waitings.push(wait_project)
-      end
+      @waitings.push(wait_project)
     end
-    # binding.pry
-    # @waiting_projects.is_a?(Array)
-    # @invited_projects = current_user.projects.where.not(owner_user_id: current_user.id)
   end
 
   def show
     @project = Project.find(params[:id])
+    @owner = User.find(UserProject.find_by(project_id: params[:id], control_level: 0).user_id)
     @accept_invite = UserProject.find_by(user_id: current_user.id, project_id: @project.id).accept_invite
     # @user_projects = UserProject.where(project_id: @project.id).where.not(user_id: current_user.id)
     @user_projects = UserProject.where(project_id: @project.id)
@@ -135,12 +136,31 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    @user = User.find(params[:user_id])
+    @project = Project.find(params[:id])
+    unless UserProject.where(project_id: @project.id).where.not(user_id: current_user)
+      if @project.destroy
+        flash[:notice] = "Project has been Deleted!"
+        redirect_to user_projects_path(@user)
+      end
+    else
+      flash[:alert] = "At first, please delete members"
+      render 'edit'
+    end
+    # # UserProject.where(project_id: @project.id).destroy_all
+    # if @project.destroy
+    #   flash[:notice] = "Project has been Deleted!"
+    #   redirect_to user_projects_path(@user)
+    # else
+    #   render 'edit'
+    #   flash[:alert] = "You cannot delete with members"
+    # end
   end
 
   private
     def project_params
       params.require(:project).permit(:name, :start_date, :end_date,
-                                      :start_place, :end_place, :owner_user_id,
+                                      :start_place, :end_place,
                                       :destination_area_id, { invite_emails: [] })
     end
 

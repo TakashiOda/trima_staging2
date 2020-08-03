@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  has_many :user_projects
-  has_many :projects, through: :user_projects
-  accepts_nested_attributes_for :user_projects, allow_destroy: true
+  has_many :user_projects, dependent: :destroy
+  has_many :projects, through: :user_projects, dependent: :destroy
+  # accepts_nested_attributes_for :user_projects, allow_destroy: true
 
   mount_uploader :avatar, AvatarUploader
 
@@ -16,4 +16,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
+
+  # def devise_mailer
+  #   UserMailer
+  # end
 end

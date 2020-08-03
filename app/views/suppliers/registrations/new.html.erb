@@ -8,7 +8,7 @@
   <div class="sign_up_in_page_end">
     <h3>事業者アカウントを作成する</h3>
     <%= form_with model: @supplier, url: supplier_registration_path(@supplier), id: 'new_user', class: 'new_user', local: true do |f| %>
-    <%# <%= form_for(resource, as: resource_name, url: supplier_registration_path(resource_name)) do |f| %> %>
+    <%# <%= form_for(resource, as: resource_name, url: supplier_registration_path(resource_name)) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div class="form-group">
         <%= f.label :メールアドレス %><br />

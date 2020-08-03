@@ -1,0 +1,53 @@
+<div class="email_container">
+  <span>Hello <%= @email %>!</span><br /><br /><br />
+  <span>We are trima team!</span><br />
+  <span>Thank you for registration.</span><br />
+  <span>To create account is almost there!please click bellow link and Sign in to activate your account.</span><br /><br />
+  <%= link_to 'Activate Account', confirmation_url(@resource, confirmation_token: @token), class: "email_activate_btn" %>
+  <div class="email_supplement_box">
+    <span>※if you don't remember this, please delete this Email.</span><br />
+    <span>※This is ONLY-SENDING-ACCOUNT, so we cannot response in this email.</span><br />
+    <span>※If you have a question? Ask us <a href="https://ccc.ne.jp/contact_uu/">here</a>!</span>
+  </div>
+  <div class="email_signature_box">
+    <p>trima</p>
+    <span>is a travel platform</span><br />
+    <span>Website:<a href="https://trima-staging2.herokuapp.com/">trima.com</a></span>
+  </div>
+</div>
+
+
+<style>
+  .email_container {
+    padding: 20px 30px 15px;
+    margin: 5px;
+    border: solid 1px lightgray;
+    border-radius: 10px;
+  }
+  .email_supplement_box {
+    padding: 10px 0px;
+    border-radius: 12px;
+    font-size: 11px;
+  }
+  .email_signature_box {
+    padding: 10px 0px;
+    border-top: solid 1px lightgray;
+    font-size: 10px;
+  }
+  .email_signature_box p {
+    font-size: 22px;
+    margin: 0 0 5px;
+    color: #0aa70a;
+  }
+  a.email_activate_btn {
+    display: block;
+    background: #56bb56;
+    text-decoration: none;
+    padding: 7px 9px;
+    margin: 16px 0;
+    width: 160px;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+  }
+</style>

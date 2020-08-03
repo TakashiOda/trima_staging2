@@ -26,7 +26,16 @@ class Devise::RegistrationsController < DeviseController
       else
         set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
         expire_data_after_sign_in!
-        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        # 以下編集
+        #元はrespond_with resource, location: after_sign_up_path_for(resource)
+        if resource.class.name == "User"
+          redirect_to thank_you_for_registration_user_path
+        elsif resource.class.name == "Supplier"
+          redirect_to thank_you_for_registration_supplier_path
+        else
+          respond_with resource, location: after_inactive_sign_up_path_for(resource)
+        end
+        # ここまで編集
       end
     else
       clean_up_passwords resource

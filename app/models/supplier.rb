@@ -5,4 +5,8 @@ class Supplier < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
+
+  # def devise_mailer
+  #   SupplierMailer
+  # end
 end

@@ -1,21 +1,53 @@
-<p>こんにちわ <%= @email %>様!</p>
+<div class="email_container">
+  <span>こんにちは <%= @email %>様</span><br /><br /><br />
+  <span>trima運営事務局です！</span><br />
+  <span>この度は trima にご登録いただき誠にありがとうございます。</span><br /><br />
+  <span>あなたのアカウントはまだ有効化されていません。大変お手数ですが、下記リンクをクリックしてアカウントを有効化し、ログインしていただくようお願い致します。</span><br /><br />
+  <%= link_to 'アカウントを有効化する', confirmation_url(@resource, confirmation_token: @token), class: "email_activate_btn" %>
+  <div class="email_supplement_box">
+    <span>※身に覚えがない場合はこのメールを破棄してください。</span><br />
+    <span>※このメールアドレスは送信専用です。返信されてもお返事できませんのでご了承ください。</span><br />
+    <span>※お問い合わせは<a href="https://ccc.ne.jp/contact_uu/">コチラ</a>よりお願い致します</span>
+  </div>
+  <div class="email_signature_box">
+    <span style="font-size:10px;">トラベルプラットフォーム</span><br />
+    <p>trima<span style="font-size:12px;">運営事務局</span></p>
+    <span>Websサイト:<a href="https://trima-staging2.herokuapp.com/">trima.com</a></span>
+  </div>
+</div>
 
 
-<p>trima運営事務局です！</p>
-<p>この度は trima にご登録いただき誠にありがとうございます。</p>
-<p>あなたのアカウントはまだ有効化されていません。</p>
-<p>大変お手数ですが、下記リンクをクリックしてアカウントを有効化し、ログインしていただくようお願い致します。</p>
-
-<p><%= link_to 'アカウントを有効化する', confirmation_url(@resource, confirmation_token: @token) %></p>
-
-
-<p>※身に覚えがない場合はこのメールを破棄してください。</p>
-<p>※このメールアドレスは送信専用です。返信されてもお返事できませんのでご了承ください。</p>
-<p>※お問い合わせは<a href="https://ccc.ne.jp/contact_uu/">コチラ</a>よりお願い致します</p>
-
-
-****************************************
-旅行マルチプラットフォーム trima
-trima運営事務局
-URL: ****************.com
-****************************************
+<style>
+  .email_container {
+    padding: 20px 30px 15px;
+    margin: 5px;
+    border: solid 1px lightgray;
+    border-radius: 10px;
+  }
+  .email_supplement_box {
+    padding: 10px 0px;
+    border-radius: 12px;
+    font-size: 11px;
+  }
+  .email_signature_box {
+    padding: 10px 0px;
+    border-top: solid 1px lightgray;
+    font-size: 10px;
+  }
+  .email_signature_box p {
+    font-size: 22px;
+    margin: 0 0 5px;
+    color: #0aa70a;
+  }
+  a.email_activate_btn {
+    display: block;
+    background: #56bb56;
+    text-decoration: none;
+    padding: 7px 9px;
+    margin: 16px 0;
+    width: 160px;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+  }
+</style>
