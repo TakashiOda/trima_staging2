@@ -126,11 +126,12 @@ class ProjectsController < ApplicationController
 
   def member_delete
     # @project = Project.find(params[:id])
-    @user_pro = UserProject.find_by(user_id: params[:member_id], project_id: params[:id])
-    if @user_pro.destroy
-      flash[:notice] = 'Member Deleted!!'
+    @member = UserProject.find_by(user_id: params[:member_id], project_id: params[:id])
+    if @member.destroy
+      flash[:notice] = 'Member Deleted!'
       redirect_to user_project_path(current_user, params[:id])
     else
+      flash[:alert] = 'Permission denied!'
       render 'show'
     end
   end
@@ -138,23 +139,22 @@ class ProjectsController < ApplicationController
   def destroy
     @user = User.find(params[:user_id])
     @project = Project.find(params[:id])
-    unless UserProject.where(project_id: @project.id).where.not(user_id: current_user)
-      if @project.destroy
+    if @project.is_owner?(current_user) # current_userは管理者かどうか is_owner?はモデルメソッド
+      unless @project.has_other_members?(current_user) # 他のメンバーが存在しないかどうか　has_other_members?はモデルメソッド
+        @project.destroy_last_owner(current_user) #
+        @project.destroy
         flash[:notice] = "Project has been Deleted!"
         redirect_to user_projects_path(@user)
+      else
+        #メンバーがいるので削除できない、まずはメンバー消してね！
+        flash[:alert] = "At first, please delete members"
+        render 'edit'
       end
     else
-      flash[:alert] = "At first, please delete members"
+      # 管理者でないので削除できない
+      flash[:alert] = "Permission denied! You are not owner!"
       render 'edit'
     end
-    # # UserProject.where(project_id: @project.id).destroy_all
-    # if @project.destroy
-    #   flash[:notice] = "Project has been Deleted!"
-    #   redirect_to user_projects_path(@user)
-    # else
-    #   render 'edit'
-    #   flash[:alert] = "You cannot delete with members"
-    # end
   end
 
   private

@@ -2,9 +2,9 @@
   <div class="user_show_side">
     <%= render 'suppliers/supplier_page_front_sidebar' %>
   </div>
-  <div class="user_show_content">
-    <div class="user_show_content_up">
-      <div class="user_show_content_up__up">
+  <div class="supplier_show_main_content"><!--メインコンテンツ-->
+    <div class="supplier_show_content_inside"><!--メインコンテンツ内部-->
+      <div class="supplier_profile_box"><!--メインコンテンツprofile-->
         <div class="user_show_avatar_box">
           <div class="user_show_avatar_box_inside">
             <% if @supplier.avatar.present? %>
@@ -14,25 +14,107 @@
             <% end %>
           </div>
         </div>
-        <div class="user_show_btn_box">
-          <div>
+        <div class="supplier_name">
+          <div class="supplier_profile_edit_btn">
             <% if @supplier == current_supplier %>
-              <%= link_to edit_supplier_path(current_supplier) do %>
-                <!-- <i class="far fa-edit"></i> -->
-                <span>Edit</span>
-              <% end %>
+              <%= link_to "編集",edit_supplier_path(current_supplier), class: "org_edit_btn" %>
+            <% end %>
+          </div>
+          <div><%= !@supplier.name.nil? ? @supplier.name : "名前が登録されていません" %></div>
+          <div>所属：<%= Organization.find(@supplier.organization_id).name if @supplier.organization_id %></div>
+        </div>
+      </div><!--メインコンテンツprofile end-->
+      <div class="info_box"><!--メインコンテンツorg-->
+        <div class="info_list_box_title">
+          <div>組織情報</div>
+          <div>
+            <% unless @supplier.organization_id.nil? %>
+              <%= link_to "編集", edit_supplier_organization_path(@supplier, @supplier.organization_id), class: "org_edit_btn" %>
             <% end %>
           </div>
         </div>
+          <% if @supplier.organization_id.nil? %>
+            まだ組織情報がありません
+            <%= link_to "組織情報を作成", new_supplier_organization_path(@supplier), class: "org_edit_btn" %>
+          <% else %>
+            <div class="info_list_box_contents">
+              <table class="info_list_table">
+                <tr>
+                  <td class="td_front">組織名</td>
+                  <td class="td_end">ああああああ株式会社</td>
+                </tr>
+                <tr>
+                  <td class="td_front">組織分類</td>
+                  <td>ああああああ系</td>
+                </tr>
+                <tr>
+                  <td class="td_front">組織分類</td>
+                  <td>ああああああ系</td>
+                </tr>
+                <tr>
+                  <td class="td_front">組織分類</td>
+                  <td>ああああああ系</td>
+                </tr>
+                <tr>
+                  <td class="td_front">組織分類</td>
+                  <td>ああああああ系</td>
+                </tr>
+                <tr>
+                  <td class="td_front">組織分類</td>
+                  <td>ああああああ系</td>
+                </tr>
+                <tr>
+                  <td class="td_front">組織分類</td>
+                  <td>ああああああ系</td>
+                </tr>
+              </table>
+            </div>
+          <% end %>
       </div>
-      <div class="user_show_up_right_box">
-        <div class="user_show_name_box">
-          <div class="user_names">
-            <div class="user_show_nickname">
-              <span><%= @supplier.name ? @supplier.name : "名前が登録されていません" %></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </div><!--メインコンテンツ内部-->
+  </div><!--メインコンテンツ-->
 </div>
+
+<style>
+  .supplier_show_content_inside {
+    padding: 20px 20px;
+  }
+  .supplier_profile_box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  .user_show_avatar_box {
+    width: 80px;
+    height: 80px;
+  }
+  img.user_avatar {
+    width: 80px;
+    height: 80px;
+  }
+  .supplier_name {
+    margin-left: 15px;
+    width: 100%;
+  }
+  .supplier_profile_edit_btn {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .info_list_box_title {
+    border-bottom: solid 1px lightgray;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 3px 5px;
+  }
+  a.org_edit_btn {
+    background: #2bb561;
+    padding: 5px 9px;
+    font-size: 15px;
+    color: #fff;
+    border-radius: 5px;
+  }
+  .info_list_box_contents {
+    padding: 0 3px;
+  }
+
+</style>

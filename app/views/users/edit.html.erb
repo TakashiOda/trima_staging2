@@ -3,10 +3,11 @@
     <%= render 'users/user_page_front_sidebar' %>
   </div>
   <div class="user_show_content col-8">
+    <!-- <form> -->
+    <%= form_for(@user) do |form| %>
     <div class="user_show_content_down">
+      <%= render 'layouts/error_messages', model: form.object %>
       <div class="user_show_info_items_box">
-        <!-- <form> -->
-          <%= form_for(@user) do |form| %>
             <div class="user_edit_image_container">
               <div class="form-group user_edit_image_box">
                 <div class="user_edit_image_box_inside">
@@ -99,10 +100,10 @@
                 </div>
               </div>
             </div>
-          <% end %>
-        <!-- </form> -->
       </div>
     </div>
+    <% end %>
+    <!-- </form> -->
   </div>
 </div>
 <!-- </div> -->

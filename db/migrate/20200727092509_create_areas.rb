@@ -11,23 +11,23 @@ class CreateAreas < ActiveRecord::Migration[6.0]
       t.string :image
       t.string :map
       t.text :en_introduction
-      t.string :jp_introduction
-      t.string :cn_introduction
-      t.string :tw_introduction
+      t.text :jp_introduction
+      t.text :cn_introduction
+      t.text :tw_introduction
       t.string :nearest_airport
       t.string :nearest_big_city
-      t.boolean :season_jan
-      t.boolean :season_feb
-      t.boolean :season_mar
-      t.boolean :season_apr
-      t.boolean :season_may
-      t.boolean :season_jun
-      t.boolean :season_jul
-      t.boolean :season_aug
-      t.boolean :season_sep
-      t.boolean :season_oct
-      t.boolean :season_nov
-      t.boolean :season_dec
+      t.boolean :season_jan, null: false, default: false
+      t.boolean :season_feb, null: false, default: false
+      t.boolean :season_mar, null: false, default: false
+      t.boolean :season_apr, null: false, default: false
+      t.boolean :season_may, null: false, default: false
+      t.boolean :season_jun, null: false, default: false
+      t.boolean :season_jul, null: false, default: false
+      t.boolean :season_aug, null: false, default: false
+      t.boolean :season_sep, null: false, default: false
+      t.boolean :season_oct, null: false, default: false
+      t.boolean :season_nov, null: false, default: false
+      t.boolean :season_dec, null: false, default: false
     end
   end
 end

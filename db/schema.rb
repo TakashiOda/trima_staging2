@@ -23,23 +23,23 @@ ActiveRecord::Schema.define(version: 2020_08_01_043140) do
     t.string "image"
     t.string "map"
     t.text "en_introduction"
-    t.string "jp_introduction"
-    t.string "cn_introduction"
-    t.string "tw_introduction"
+    t.text "jp_introduction"
+    t.text "cn_introduction"
+    t.text "tw_introduction"
     t.string "nearest_airport"
     t.string "nearest_big_city"
-    t.boolean "season_jan"
-    t.boolean "season_feb"
-    t.boolean "season_mar"
-    t.boolean "season_apr"
-    t.boolean "season_may"
-    t.boolean "season_jun"
-    t.boolean "season_jul"
-    t.boolean "season_aug"
-    t.boolean "season_sep"
-    t.boolean "season_oct"
-    t.boolean "season_nov"
-    t.boolean "season_dec"
+    t.boolean "season_jan", default: false, null: false
+    t.boolean "season_feb", default: false, null: false
+    t.boolean "season_mar", default: false, null: false
+    t.boolean "season_apr", default: false, null: false
+    t.boolean "season_may", default: false, null: false
+    t.boolean "season_jun", default: false, null: false
+    t.boolean "season_jul", default: false, null: false
+    t.boolean "season_aug", default: false, null: false
+    t.boolean "season_sep", default: false, null: false
+    t.boolean "season_oct", default: false, null: false
+    t.boolean "season_nov", default: false, null: false
+    t.boolean "season_dec", default: false, null: false
     t.index ["country_id"], name: "index_areas_on_country_id"
     t.index ["prefecture_id"], name: "index_areas_on_prefecture_id"
     t.index ["state_id"], name: "index_areas_on_state_id"
@@ -86,6 +86,11 @@ ActiveRecord::Schema.define(version: 2020_08_01_043140) do
     t.string "local_name"
     t.string "cn_name"
     t.string "tw_name"
+    t.text "en_introduction"
+    t.text "jp_introduction"
+    t.text "cn_introduction"
+    t.text "tw_introduction"
+    t.string "image"
     t.index ["country_id"], name: "index_prefectures_on_country_id"
     t.index ["state_id"], name: "index_prefectures_on_state_id"
   end
@@ -106,6 +111,11 @@ ActiveRecord::Schema.define(version: 2020_08_01_043140) do
     t.string "local_name"
     t.string "cn_name"
     t.string "tw_name"
+    t.text "en_introduction"
+    t.text "jp_introduction"
+    t.text "cn_introduction"
+    t.text "tw_introduction"
+    t.string "image"
     t.index ["country_id"], name: "index_states_on_country_id"
   end
 
@@ -151,12 +161,21 @@ ActiveRecord::Schema.define(version: 2020_08_01_043140) do
     t.string "jp_name"
     t.string "cn_name"
     t.string "tw_name"
+    t.text "en_introduction"
+    t.text "jp_introduction"
+    t.text "cn_introduction"
+    t.text "tw_introduction"
     t.boolean "is_big_city"
     t.string "image"
     t.index ["area_id"], name: "index_towns_on_area_id"
+    t.index ["cn_name"], name: "index_towns_on_cn_name"
     t.index ["country_id"], name: "index_towns_on_country_id"
+    t.index ["en_name"], name: "index_towns_on_en_name"
+    t.index ["jp_name"], name: "index_towns_on_jp_name"
     t.index ["prefecture_id"], name: "index_towns_on_prefecture_id"
     t.index ["state_id"], name: "index_towns_on_state_id"
+    t.index ["town_code"], name: "index_towns_on_town_code"
+    t.index ["tw_name"], name: "index_towns_on_tw_name"
   end
 
   create_table "user_projects", force: :cascade do |t|

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'organizations/index'
+  get 'organizations/show'
+  get 'organizations/new'
+  get 'organizations/edit'
   get 'suppliers/edit'
   get 'suppliers/show'
   get 'suppliers/index'
@@ -44,7 +48,12 @@ Rails.application.routes.draw do
     delete "project/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
   end
   resources :users, only: [:index, :show, :edit, :update]
-  resources :suppliers, only: [:index, :show, :edit, :update]
+
+  resources :suppliers do
+    resources :organizations
+  end
+  # resources :suppliers, only: [:index, :show, :edit, :update, :destroy]
+  # resources :organizations, only: [:index, :show, :new, :edit, :update, :destroy]
   resources :areas, only: [:index, :show, :edit, :update]
 
   # resources :projects

@@ -15,7 +15,7 @@ class CreateOrganizations < ActiveRecord::Migration[6.0]
       t.boolean :has_activity, null: false, default: false
       t.boolean :has_restaurant, null: false, default: false
       t.integer :contract_plan, null: false, default: 0
-      t.integer :contract_status, null: false, default: 0 #0:契約済, 1:未契約
+      t.integer :contract_status, null: false, default: 1 #0:契約済, 1:未契約
     end
     add_index :organizations, :state_id
     add_index :organizations, :prefecture_id

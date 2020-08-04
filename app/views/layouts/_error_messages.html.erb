@@ -1,0 +1,28 @@
+<% if model.errors.any? %>
+  <div class="alert form_alert">
+    <ul>
+      <% model.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<style>
+  .form_alert {
+    margin: 0;
+    position: relative;
+    top:0;
+    right: 0;
+    width: 100%;
+    text-align: initial;
+    font-size: 13px;
+    padding: 2px;
+    z-index: 90;
+  }
+  .alert.form_alert ul {
+    margin: 0;
+    padding-left: 15px;
+  }
+</style>

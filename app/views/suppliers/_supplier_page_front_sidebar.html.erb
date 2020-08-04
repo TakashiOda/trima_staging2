@@ -1,9 +1,12 @@
 <ul>
-  <li><i class="fas fa-user"></i><%= link_to "プロフィール", supplier_path(current_supplier)%></li>
-  <li><i class="fas fa-suitcase"></i><%= link_to "事業リスト", "#{}" %></li>
+  <li><i class="fas fa-suitcase"></i><%= link_to "事業リスト", "#" %></li>
   <li><i class="far fa-bookmark"></i><%= link_to "予約一覧", "#" %></li>
+  <li>
+    <i class="fas fa-user"></i>
+    <%= link_to "事業者情報",supplier_path(current_supplier)%>
+  </li>
   <li><i class="fas fa-cog"></i><%= link_to "アカウント設定", "#" %></li>
-  <li><i class="fas fa-cog"></i><%= link_to "Sign Out", destroy_supplier_session_path %></li>
+  <li><i class="fas fa-cog"></i><%= link_to "ログアウト", destroy_supplier_session_path %></li>
 </ul>
 <style>
   svg {

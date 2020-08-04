@@ -8,7 +8,7 @@ class CreateProjects < ActiveRecord::Migration[6.0]
       t.date :end_date
       t.string :start_place
       t.string :end_place
-      # t.integer :destination_area, foreign_key: { to_table: :areas }
+      # t.references :destination_area_id
 
       t.timestamps
     end

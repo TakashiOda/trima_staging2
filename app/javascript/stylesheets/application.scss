@@ -366,9 +366,11 @@ form#new_user, form#new_supplier {
     background: #0f3a36;
     padding: 20px 0 30px 30px;
 }
-.user_show_content {
+.user_show_main_content,
+.supplier_show_main_content {
     width: 80%;
 }
+
 
 .user_show_side ul li {
     margin-bottom: 6px;
@@ -376,7 +378,7 @@ form#new_user, form#new_supplier {
     a {color: #fff;}
     /* color: #fff; */
 }
-.user_show_content {padding: 40px 30px 50px 50px;}
+.user_show_main_content {padding: 40px 30px 50px 50px;}
 .user_show_content_up {
   display: flex;
   flex-direction: column;
@@ -451,8 +453,8 @@ img.user_avatar {
   // svg {margin-right: 5px;}
 }
 .user_show_content_down {
-  margin: 20px 0;
-  padding: 20px 0;
+  margin: 0px 0;
+  padding: 0px 0;
   ul.user_show_info_items {
     width: 100%;
     li {
@@ -469,10 +471,7 @@ img.user_avatar {
 }
 
 /*user edit************************************/
-.user_show_content_down {
-    margin: 0;
-    padding: 40px 20px;
-}
+
 .user_edit_image_container {
     display: flex;
     justify-content: center;
@@ -603,9 +602,9 @@ span#user_edit_image_upload_btn {
 /*project new************************************/
 
 .user_show_info_items_box {
-    width: 100%;
+    // width: 100%;
     max-width: 550px;
-    padding: 0px 30px;
+    padding: 30px 15px;
 }
 
 .date_pick_box {
@@ -827,9 +826,10 @@ a.member_delete_btn {
 
   .header_username {display: none;}
   .user_show_side {display: none;}
-  .user_show_content {
+  .user_show_content,
+  .supplier_show_main_content {
     width: 100%;
-    padding: 40px 0px 50px;
+    padding: 30px 0px 50px;
   }
 }
 
