@@ -20,7 +20,7 @@ class CreateOrganizations < ActiveRecord::Migration[6.0]
     add_index :organizations, :state_id
     add_index :organizations, :prefecture_id
     add_index :organizations, :town_id
-    add_index :organizations, :phone,            unique: true
+    add_index :organizations, :phone
     add_index :organizations, :contract_plan
     add_index :organizations, :contract_status
   end

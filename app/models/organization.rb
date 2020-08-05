@@ -14,4 +14,33 @@ class Organization < ApplicationRecord
   validates :contract_plan, inclusion: {in: [0, 1]}, allow_nil: true
   validates :contract_status, inclusion: {in: [0, 1]}, allow_nil: true
   # validates :post_code, format: { with: /\A\d{3}\-?d{4}\z/ }, allow_nil: true
+
+  def send_invite_email(email_params, inviter)
+   SupplierInvitationMailer.supplier_invitation(email_params, inviter).deliver_now
+  end
+
+  def add_member(email_params, inviter)
+    unless email_params.blank?
+      @supplier = Supplier.find_by(email: email_params)
+      unless @supplier.nil?
+        @supplier.update(organization_id: self.id, control_level: 1, accept_invite: 1)
+      else
+        OrgInvite.create(organization_id: self.id, inviter_id: inviter.id, invited_email: email_params)
+        self.send_invite_email(email_params, inviter)
+      end
+    end
+  end
+
+  def replace_member(email_params, inviter)
+    unless email_params.blank?
+      @supplier = Supplier.find_by(email: email_params)
+      unless @supplier.nil?
+        @supplier.update(organization_id: self.id, control_level: 1, accept_invite: 1)
+      else
+        OrgInvite.create(organization_id: self.id, inviter_id: inviter.id, invited_email: email_params)
+        self.send_invite_email(email_params, inviter)
+      end
+    end
+  end
+
 end

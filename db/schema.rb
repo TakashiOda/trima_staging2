@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_05_070916) do
+ActiveRecord::Schema.define(version: 2020_08_05_100710) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "country_id", null: false
@@ -55,6 +55,18 @@ ActiveRecord::Schema.define(version: 2020_08_05_070916) do
     t.string "apply_lang"
   end
 
+  create_table "org_invites", force: :cascade do |t|
+    t.integer "organization_id", null: false
+    t.integer "inviter_id"
+    t.string "invited_email"
+    t.integer "accept_invite", default: 1
+    t.integer "has_account", default: 1
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["inviter_id"], name: "index_org_invites_on_inviter_id"
+    t.index ["organization_id"], name: "index_org_invites_on_organization_id"
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string "org_type"
     t.string "name", null: false
@@ -73,7 +85,7 @@ ActiveRecord::Schema.define(version: 2020_08_05_070916) do
     t.integer "contract_status", default: 1, null: false
     t.index ["contract_plan"], name: "index_organizations_on_contract_plan"
     t.index ["contract_status"], name: "index_organizations_on_contract_status"
-    t.index ["phone"], name: "index_organizations_on_phone", unique: true
+    t.index ["phone"], name: "index_organizations_on_phone"
     t.index ["prefecture_id"], name: "index_organizations_on_prefecture_id"
     t.index ["state_id"], name: "index_organizations_on_state_id"
     t.index ["town_id"], name: "index_organizations_on_town_id"
@@ -244,6 +256,8 @@ ActiveRecord::Schema.define(version: 2020_08_05_070916) do
   add_foreign_key "areas", "countries"
   add_foreign_key "areas", "prefectures"
   add_foreign_key "areas", "states"
+  add_foreign_key "org_invites", "organizations"
+  add_foreign_key "org_invites", "users", column: "inviter_id"
   add_foreign_key "prefectures", "countries"
   add_foreign_key "prefectures", "states"
   add_foreign_key "project_invites", "projects"

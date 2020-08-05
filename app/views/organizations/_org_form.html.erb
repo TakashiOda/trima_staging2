@@ -69,6 +69,33 @@
     <div class="form-group"><%= form.check_box :has_spot %><%= form.label "観光地・観光施設を運営" %></div>
     <div class="form-group"><%= form.check_box :has_restaurant %><%= form.label "飲食事業を運営" %></div>
   </div>
+  <div class="form-group invite_member_box">
+    <div class="form_inner_form_title">従業員を招待する</div>
+    <div class="form_inner_form_box">
+      <% if !@suppliers.nil? %>
+        <% @suppliers.each do |supplier| %>
+        <span>Member</span>
+        <input type="textbox" value="<%= Supplier.find(supplier.id).email %>" name="invite_emails[member]" class="form-control">
+        <% end %>
+      <% end %>
+      <% if !@inviting_suppliers.nil? %>
+        <% @inviting_suppliers.each do |inviting_supplier| %>
+        <span>Member</span>
+        <input type="textbox" value="<%= inviting_supplier.invited_email %>" name="invite_emails[member]" class="form-control">
+        <% end %>
+      <% end %>
+      <% if @left_invite_num > 0 %>
+        <% @left_invite_num.times do %>
+          <span>Member</span>
+          <input type="textbox" name="invite_emails[member]" class="form-control">
+        <% end %>
+      <% end %>
+      <span>Member</span>
+      <input type="textbox" name="invite_emails[member]" class="form-control">
+      <span>Member</span>
+      <input type="textbox" name="invite_emails[member]" class="form-control">
+    </div>
+  </div>
   <div class="form_btns">
     <div class="row">
       <div class="col-half">
