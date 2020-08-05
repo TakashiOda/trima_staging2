@@ -48,6 +48,7 @@
         <div class="project_members_box">
           <table class="project_members_list">
             <tr>
+              <th>status</th>
               <th>UserName</th>
               <th>Member</th>
               <th>Role</th>
@@ -57,6 +58,7 @@
               <% @user_projects.each do |user_project| %>
                 <% user = User.find(user_project.user_id) %>
                 <tr>
+                  <td><%= user_project.accept_invite = 0 ? "Joined" : "Waiting Accept" %></td>
                   <td><%= user.username %></td>
                   <td><%= user.email%></td>
                   <td><%= user_project.control_level == 0 ? "Owner" : "Editor" %></td>
@@ -72,6 +74,26 @@
                 </tr>
               <% end %>
             <% end %>
+
+            <% if !@inviting_users.nil? %>
+              <% @inviting_users.each do |inviting_user| %>
+                <tr>
+                  <td>Waiting SignUp</td>
+                  <td><%= inviting_user.invited_email %></td>
+                  <td>Editor</td>
+                  <td>
+                    <% if @owner == current_user %>
+                      <%= link_to "Delete" ,
+                      project_invitation_delete_path(@project.id, inviting_user.id ),
+                      class: "member_delete_btn",
+                      method: :delete, data: { confirm: "Are you sure to delete invitation?" }
+                      %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+
           </table>
         </div>
       </div>

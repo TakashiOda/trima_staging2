@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_01_043140) do
+ActiveRecord::Schema.define(version: 2020_08_05_070916) do
 
   create_table "areas", force: :cascade do |t|
     t.integer "country_id", null: false
@@ -93,6 +93,19 @@ ActiveRecord::Schema.define(version: 2020_08_01_043140) do
     t.string "image"
     t.index ["country_id"], name: "index_prefectures_on_country_id"
     t.index ["state_id"], name: "index_prefectures_on_state_id"
+  end
+
+  create_table "project_invites", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "inviter_id"
+    t.string "invited_email"
+    t.integer "accept_invite", default: 1
+    t.integer "has_account", default: 1
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["invited_email"], name: "index_project_invites_on_invited_email"
+    t.index ["inviter_id"], name: "index_project_invites_on_inviter_id"
+    t.index ["project_id"], name: "index_project_invites_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -233,6 +246,8 @@ ActiveRecord::Schema.define(version: 2020_08_01_043140) do
   add_foreign_key "areas", "states"
   add_foreign_key "prefectures", "countries"
   add_foreign_key "prefectures", "states"
+  add_foreign_key "project_invites", "projects"
+  add_foreign_key "project_invites", "users", column: "inviter_id"
   add_foreign_key "states", "countries"
   add_foreign_key "suppliers", "organizations"
   add_foreign_key "towns", "areas"

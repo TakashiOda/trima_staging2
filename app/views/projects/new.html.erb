@@ -8,7 +8,8 @@
         <h2 class="page_title_padding">Create New Project</h2>
         <!-- <form> -->
           <%= form_for [@user, @project] do |form| %>
-            <%= render :partial => 'projects/project_form', :locals => {:form => form} %>
+            <%= render :partial => 'projects/project_form', :locals => {form: form, project: @project} %>
+            <%# render :partial => 'projects/project_form', :locals => {:form => form} %>
           <% end %>
         <!-- </form> -->
       </div>

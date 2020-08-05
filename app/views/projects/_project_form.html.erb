@@ -2,10 +2,6 @@
   <%= form.label "Project Name" %>
   <%= form.text_field :name, required: true, class: "form-control" %>
 </div>
-<!-- <div class="form-group">
-  <%# form.label "Destination" %>
-  <%# form.number_field :destination_area_id, class: "form-control" %>
-</div> -->
 <div class="form-group">
   <div class="row">
     <div class="date_pick_box">
@@ -31,17 +27,31 @@
     </div>
   </div>
 </div>
-
 <div class="form-group invite_member_box">
   <div class="form_inner_form_title">Share with trip member</div>
   <div class="form_inner_form_box">
-    <span>Member 1</span>
-    <input type="textbox" name="invite_emails[member01][]" class="form-control">
-    <span>Member 2</span>
-    <input type="textbox" name="invite_emails[member02][]" class="form-control">
+    <% if @members.any? %>
+      <% @members.each do |member| %>
+      <span>Member</span>
+      <input type="textbox" value="<%= User.find(member.user_id).email %>" name="invite_emails[member]" class="form-control">
+      <% end %>
+    <% end %>
+    <% if @inviting_members.any? %>
+      <% @inviting_members.each do |inviting_member| %>
+      <span>Member</span>
+      <input type="textbox" value="<%= inviting_member.invited_email %>" name="invite_emails[member]" class="form-control">
+      <% end %>
+    <% end %>
+    <% if @left_invite_num > 0 %>
+      <% @left_invite_num.times do %>
+        <span>Member</span>
+        <input type="textbox" name="invite_emails[member]" class="form-control">
+      <% end %>
+    <% end %>
   </div>
 </div>
-
+@members.count
+@inviting_members.count
 <div class="form_btns">
   <div class="row">
     <div class="col-half">

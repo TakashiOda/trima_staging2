@@ -20,7 +20,11 @@
           <%= f.password_field :password, autocomplete: "new-password", class: "form-control" ,id: "password-input", :data => {:toggle=>"password"} %>
         </div>
       </div>
-
+      <div class="form-group agree_check">
+        <input type="checkbox" id="agree_checkbox" value="" required>
+        <%# check_box_tag :agree_policy, { required: true, class: "form-control" ,id: "agree_checkbox" } %>
+        <label for="agree_checkbox">I agree <%= link_to "term of servise", "#", class: "agree_link" %>&nbsp;&&nbsp;<%= link_to "privacy policy", "#", class: "agree_link" %></label>
+      </div>
       <div class="form-group">
         <%= f.submit "Sign up", class: "button btn-submit" %>
       </div>

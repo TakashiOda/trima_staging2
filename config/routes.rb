@@ -42,10 +42,13 @@ Rails.application.routes.draw do
     :unlocks     => "suppliers/unlocks"
   }
 
+  delete "projects/:id/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
+
   resources :users do
     resources :projects
-    get "project/:id", to: "projects#accept_project", as: :accept_project
-    delete "project/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
+    get "projects/:id", to: "projects#accept_project", as: :accept_project
+    delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
+    # delete "projects/:id/invitation_delete/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
   end
   resources :users, only: [:index, :show, :edit, :update]
 

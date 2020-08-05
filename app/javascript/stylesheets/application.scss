@@ -329,6 +329,20 @@ form#new_user, form#new_supplier {
 .didnt_recieve_btn_box {
   margin: 25px auto;
 }
+.form-group.agree_check {
+    display: flex;
+    align-items: center;
+}
+input#agree_checkbox {
+    margin-bottom: 0;
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+}
+a.agree_link {
+    color: #108fff;
+    text-decoration: underline;
+}
 /*after_send_email***************************/
 .static_pages.short_messages_box {
     display: flex;

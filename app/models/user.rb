@@ -25,5 +25,44 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable # ,:omniauthable
 
+  def own_projects
+    own_pro_ids = UserProject.where(user_id: self.id, control_level: 0).pluck(:project_id)
+    @owns = []
+    own_pro_ids.each do |own_pro_id|
+      own_project = Project.find(own_pro_id)
+      @owns.push(own_project)
+    end
+    return @owns
+  end
 
+  def invited_projects
+    invited_pro_ids = UserProject.where(user_id: self.id, control_level: 1 ,accept_invite: 0).pluck(:project_id)
+    @inviteds = []
+    invited_pro_ids.each do |invited_pro_id|
+      accept_project = Project.find(invited_pro_id)
+      # 管理者のいない幽霊Projectは入れない
+      project_owners = UserProject.where(project_id: invited_pro_id, control_level: 0)
+      if project_owners.any?
+        @inviteds.push(accept_project)
+      else
+        accept_project.destroy!
+      end
+    end
+    return @inviteds
+  end
+
+  def waiting_projects
+    waiting_pro_ids = UserProject.where(user_id: self.id, control_level: 1, accept_invite: 1).pluck(:project_id)
+    @waitings = []
+    waiting_pro_ids.each do |waiting_pro_id|
+      wait_project = Project.find(waiting_pro_id)
+      project_owners = UserProject.where(project_id: waiting_pro_id, control_level: 0)
+      if project_owners.any?
+        @waitings.push(wait_project)
+      else
+        wait_project.destroy!
+      end
+    end
+    return @waitings
+  end
 end

@@ -10,30 +10,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   # super
-  #   build_resource(sign_up_params)
-  #   resource.save
-  #   yield resource if block_given?
-  #   if resource.persisted?
-  #     if resource.active_for_authentication?
-  #       set_flash_message! :notice, :signed_up
-  #       sign_up(resource_name, resource)
-  #       respond_with resource, location: after_sign_up_path_for(resource)
-  #       # redirect_to thank_you_for_registration_path
-  #     else
-  #       set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
-  #       expire_data_after_sign_in!
-  #       # redirect_to root_path
-  #       redirect_to thank_you_for_registration_user_path
-  #       # respond_with resource, location: after_inactive_sign_up_path_for(resource)
-  #     end
-  #   else
-  #     clean_up_passwords resource
-  #     set_minimum_password_length
-  #     respond_with resource
-  #   end
-  # end
+  def create
+    super
+    @user = User.find_by(email: params[:user][:email])
+    params[:user][:email]
+    invitations = ProjectInvite.where(invited_email: params[:user][:email])
+    invitations.each do |invitation|
+      UserProject.create(user_id: @user.id, project_id: invitation.project_id,
+                         control_level: 1, accept_invite: 1)
+      invitation.has_account =  0
+      invitation.save!
+    end
+  end
 
   # GET /resource/edit
   # def edit

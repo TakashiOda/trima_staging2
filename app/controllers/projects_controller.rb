@@ -3,37 +3,17 @@ class ProjectsController < ApplicationController
   attr_reader :invite_emails
 
   def index
-    # @user = User.find(current_user.id)
-    # @owns = Project.where(owner_user_id: current_user.id)
-
-    own_pro_ids = UserProject.where(user_id: current_user.id, control_level: 0).pluck(:project_id)
-    @owns = []
-    own_pro_ids.each do |own_pro_id|
-      own_project = Project.find(own_pro_id)
-      @owns.push(own_project)
-    end
-
-    invited_pro_ids = UserProject.where(user_id: current_user.id, control_level: 1 ,accept_invite: 0).pluck(:project_id)
-    @inviteds = []
-    invited_pro_ids.each do |invited_pro_id|
-      accept_project = Project.find(invited_pro_id)
-      @inviteds.push(accept_project)
-    end
-
-    waiting_pro_ids = UserProject.where(user_id: current_user.id, control_level: 1, accept_invite: 1).pluck(:project_id)
-    @waitings = []
-    waiting_pro_ids.each do |waiting_pro_id|
-      wait_project = Project.find(waiting_pro_id)
-      @waitings.push(wait_project)
-    end
+    @owns = current_user.own_projects #Userのモデルメソッド
+    @inviteds = current_user.invited_projects #Userのモデルメソッド
+    @waitings = current_user.waiting_projects #Userのモデルメソッド
   end
 
   def show
     @project = Project.find(params[:id])
     @owner = User.find(UserProject.find_by(project_id: params[:id], control_level: 0).user_id)
     @accept_invite = UserProject.find_by(user_id: current_user.id, project_id: @project.id).accept_invite
-    # @user_projects = UserProject.where(project_id: @project.id).where.not(user_id: current_user.id)
     @user_projects = UserProject.where(project_id: @project.id)
+    @inviting_users = ProjectInvite.where(project_id: @project.id, has_account: 1)
   end
 
   def accept_project
@@ -53,29 +33,13 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    # binding.pry
     @project = Project.new(project_params)
-
     if @project.save
-      unless params[:invite_emails][:member01].blank?
-        @member1 = User.find_by(email: params[:invite_emails][:member01])
-        unless @member1.nil?
-          @member1_join = UserProject.new(project_id: @project.id, user_id: @member1.id,
-                                             control_level: 1, accept_invite: 1)
-          @member1_join.save!
-        end
-      end
-      unless params[:invite_emails][:member02].blank?
-        @member2 = User.find_by(email: params[:invite_emails][:member02])
-        unless @member2.nil?
-          @member2_join = UserProject.new(project_id: @project.id, user_id: @member2.id,
-                                             control_level: 1, accept_invite: 1)
-          @member2_join.save!
-        end
-      end
-      @userProject = UserProject.new(project_id: @project.id, user_id: current_user.id,
-                                         control_level: 0, accept_invite: 0)
-      @userProject.save!
+      @project.add_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
+      @project.add_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
+      @project.add_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
+      @project.add_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
+      @project.add_me_as_admin(current_user)
       redirect_to user_projects_path(current_user)
     else
       render 'new'
@@ -85,39 +49,20 @@ class ProjectsController < ApplicationController
   def edit
     @user = User.find(params[:user_id])
     @project = Project.find(params[:id])
+    @members = UserProject.where(project_id: @project.id).where.not(user_id: current_user.id )
+    @inviting_members = ProjectInvite.where(project_id: @project.id, has_account: 1)
+    @left_invite_num = 4 - @members.count - @inviting_members.count
   end
 
   def update
+    # binding.pry
     @user = User.find(params[:user_id])
     @project = Project.find(params[:id])
     if @project.update(project_params)
-      # メールフォームが空ではないか
-      unless params[:invite_emails][:member01].blank?
-        @member1 = User.find_by(email: params[:invite_emails][:member01])
-        # メールアドレスに該当するユーザーが存在するか
-        unless @member1.nil?
-          @member1_join = UserProject.find_by(project_id: @project.id, user_id: @member1.id)
-          # ユーザーがまだプロジェクトに加入していない
-          unless @member1_join
-            @member1_join = UserProject.new(project_id: @project.id, user_id: @member1.id,
-                                               control_level: 1, accept_invite: 1)
-            @member1_join.save!
-          end
-        end
-      end
-      unless params[:invite_emails][:member02].blank?
-        @member2 = User.find_by(email: params[:invite_emails][:member02])
-        # メールアドレスに該当するユーザーが存在するか
-        unless @member2.nil?
-          @member2_join = UserProject.find_by(project_id: @project.id, user_id: @member2.id)
-          # ユーザーがまだプロジェクトに加入していない
-          unless @member2_join
-            @member2_join = UserProject.new(project_id: @project.id, user_id: @member2.id,
-                                               control_level: 1, accept_invite: 1)
-            @member2_join.save!
-          end
-        end
-      end
+      @project.replace_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
+      @project.replace_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
+      @project.replace_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
+      @project.replace_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
       redirect_to user_project_path(@user, @project)
     else
       render 'edit'
@@ -125,13 +70,21 @@ class ProjectsController < ApplicationController
   end
 
   def member_delete
-    # @project = Project.find(params[:id])
     @member = UserProject.find_by(user_id: params[:member_id], project_id: params[:id])
     if @member.destroy
       flash[:notice] = 'Member Deleted!'
       redirect_to user_project_path(current_user, params[:id])
     else
       flash[:alert] = 'Permission denied!'
+      render 'show'
+    end
+  end
+
+  def invitation_delete
+    @invitation = ProjectInvite.find(params[:invite_id])
+    if @invitation.destroy!
+      redirect_to user_project_path(current_user, params[:id])
+    else
       render 'show'
     end
   end
@@ -146,12 +99,10 @@ class ProjectsController < ApplicationController
         flash[:notice] = "Project has been Deleted!"
         redirect_to user_projects_path(@user)
       else
-        #メンバーがいるので削除できない、まずはメンバー消してね！
         flash[:alert] = "At first, please delete members"
         render 'edit'
       end
     else
-      # 管理者でないので削除できない
       flash[:alert] = "Permission denied! You are not owner!"
       render 'edit'
     end
