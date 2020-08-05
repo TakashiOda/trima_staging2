@@ -9,6 +9,9 @@ class SuppliersController < ApplicationController
 
   def show
     @supplier = Supplier.find(params[:id])
+    unless @supplier.organization_id.nil?
+      @organization = Organization.find(@supplier.organization_id)
+    end
   end
 
   def edit
@@ -28,6 +31,13 @@ class SuppliersController < ApplicationController
 
   def destroy
     @supplier = Supplier.find(params[:id])
+    if @supplier.destroy
+      flash[:notice] = '社員情報を更新しました'
+      redirect_to root_path
+    else
+      flash[:alert] = '削除に失敗しました'
+      render 'edit'
+    end
   end
 
   private

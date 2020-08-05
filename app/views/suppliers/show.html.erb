@@ -41,19 +41,19 @@
               <table class="info_list_table">
                 <tr>
                   <td class="td_front">組織名</td>
-                  <td class="td_end">ああああああ株式会社</td>
+                  <td class="td_end"><%= @organization.name if @organization.name %></td>
                 </tr>
                 <tr>
                   <td class="td_front">組織分類</td>
-                  <td>ああああああ系</td>
+                  <td class="td_end"><%= @organization.org_type if @organization.org_type %></td>
                 </tr>
                 <tr>
-                  <td class="td_front">組織分類</td>
-                  <td>ああああああ系</td>
+                  <td class="td_front">都道府県・市町村</td>
+                  <td class="td_end"><%= Prefecture.find(@organization.prefecture_id).local_name %>・<%= Town.find(@organization.town_id).jp_name %></td>
                 </tr>
                 <tr>
-                  <td class="td_front">組織分類</td>
-                  <td>ああああああ系</td>
+                  <td class="td_front">住所</td>
+                  <td class="td_end"><%= @organization.detail_address if @organization.detail_address%><%= @organization.building if @organization.building %></td>
                 </tr>
                 <tr>
                   <td class="td_front">組織分類</td>

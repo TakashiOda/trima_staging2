@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2020_08_01_043140) do
     t.boolean "has_activity", default: false, null: false
     t.boolean "has_restaurant", default: false, null: false
     t.integer "contract_plan", default: 0, null: false
-    t.integer "contract_status", default: 0, null: false
+    t.integer "contract_status", default: 1, null: false
     t.index ["contract_plan"], name: "index_organizations_on_contract_plan"
     t.index ["contract_status"], name: "index_organizations_on_contract_status"
     t.index ["phone"], name: "index_organizations_on_phone", unique: true
