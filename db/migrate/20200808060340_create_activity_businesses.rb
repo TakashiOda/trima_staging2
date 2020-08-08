@@ -5,7 +5,6 @@ class CreateActivityBusinesses < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :profile_image
       t.text :profile_text
-      t.integer :country_id
       t.integer :state_id
       t.integer :prefecture_id
       t.integer :area_id
@@ -16,7 +15,7 @@ class CreateActivityBusinesses < ActiveRecord::Migration[6.0]
       t.boolean :apply_org_bank, default: true
       t.boolean :has_insurance, default: false
       t.string :guide_certification
-      t.boolean :is_approved, default: 1 #0 => approved, 1 =>not yet
+      t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
     end
     add_index :activity_businesses, :state_id
     add_index :activity_businesses, :prefecture_id

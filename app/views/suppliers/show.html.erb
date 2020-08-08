@@ -26,37 +26,27 @@
       <!--事業リスト---------------------------------------------------------------->
       <div class="project_members_box">
         <div class="info_list_box_title">
-          <div>事業リスト</div>
+          <div>事業リスト（現在体験事業のみ）</div>
         </div>
         <table class="project_members_list">
-          <tr>
-            <th></th>
-            <!-- <th>Name</th> -->
+          <!-- <tr>
+            <th>事業タイプ</th>
             <th>事業名</th>
             <th></th>
-          </tr>
-            <% if !@activity_business.nil? %>
+          </tr> -->
+            <% if @activity_business %>
             <tr>
-              <td><%= @activity_business.profile_image if @activity_business.profile_image %></td>
-              <td><%= @activity_business.name if @activity_business.name %></td>
+              <td>体験事業</td>
+              <td><%= @activity_business.name %></td>
               <td>
                 <% if current_supplier.control_level == 0 %>
-                  <%= link_to "編集", "#", class: "member_delete_btn" %>
-                <% end %>
-              </td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>他の事業を追加しよう</td>
-              <td>
-                <% if current_supplier.control_level == 0 %>
-                  <%= link_to "追加", new_supplier_activity_business_path(current_supplier), class: "member_delete_btn" %>
+                  <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business ), class: "member_delete_btn edit" %>
                 <% end %>
               </td>
             </tr>
             <% else %>
             <tr>
-              <td></td>
+              <td>体験事業</td>
               <td>まだ事業が登録されていません</td>
               <td>
                 <% if current_supplier.control_level == 0 %>
@@ -74,12 +64,11 @@
           <div>メンバー情報</div>
         </div>
         <table class="project_members_list">
-          <tr>
+          <!-- <tr>
             <th>ステータス</th>
-            <!-- <th>Name</th> -->
             <th>メールアドレス</th>
             <th></th>
-          </tr>
+          </tr> -->
           <% @joined_members.each do |joined_member| %>
             <tr>
               <td>参加済</td>
@@ -197,6 +186,9 @@
     font-size: 15px;
     color: #fff;
     border-radius: 5px;
+  }
+  a.member_delete_btn.edit {
+    background: #2bb560;
   }
   .info_list_box_contents {
     padding: 0 3px;

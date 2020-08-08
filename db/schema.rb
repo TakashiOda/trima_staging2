@@ -10,7 +10,62 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_08_060340) do
+ActiveRecord::Schema.define(version: 2020_08_08_085301) do
+
+  create_table "activities", force: :cascade do |t|
+    t.string "name"
+    t.integer "activity_business_id", null: false
+    t.integer "activity_categories_id", null: false
+    t.text "description"
+    t.integer "activity_category_id"
+    t.string "main_image"
+    t.integer "state_id"
+    t.integer "prefecture_id"
+    t.integer "area_id"
+    t.integer "town_id"
+    t.string "detail_address"
+    t.string "building"
+    t.float "longitude"
+    t.float "latitude"
+    t.integer "maximum_num", default: 1
+    t.integer "minimum_num", default: 5
+    t.integer "available_age", default: 6
+    t.boolean "january", default: true
+    t.boolean "febrary", default: true
+    t.boolean "march", default: true
+    t.boolean "april", default: true
+    t.boolean "may", default: true
+    t.boolean "june", default: true
+    t.boolean "july", default: true
+    t.boolean "august", default: true
+    t.boolean "september", default: true
+    t.boolean "october", default: true
+    t.boolean "november", default: true
+    t.boolean "december", default: true
+    t.boolean "advertise_activate", default: false
+    t.boolean "is_approved", default: false
+    t.index ["activity_business_id"], name: "index_activities_on_activity_business_id"
+    t.index ["activity_categories_id"], name: "index_activities_on_activity_categories_id"
+    t.index ["advertise_activate"], name: "index_activities_on_advertise_activate"
+    t.index ["april"], name: "index_activities_on_april"
+    t.index ["area_id"], name: "index_activities_on_area_id"
+    t.index ["august"], name: "index_activities_on_august"
+    t.index ["available_age"], name: "index_activities_on_available_age"
+    t.index ["december"], name: "index_activities_on_december"
+    t.index ["febrary"], name: "index_activities_on_febrary"
+    t.index ["is_approved"], name: "index_activities_on_is_approved"
+    t.index ["january"], name: "index_activities_on_january"
+    t.index ["july"], name: "index_activities_on_july"
+    t.index ["june"], name: "index_activities_on_june"
+    t.index ["march"], name: "index_activities_on_march"
+    t.index ["may"], name: "index_activities_on_may"
+    t.index ["november"], name: "index_activities_on_november"
+    t.index ["october"], name: "index_activities_on_october"
+    t.index ["prefecture_id"], name: "index_activities_on_prefecture_id"
+    t.index ["september"], name: "index_activities_on_september"
+    t.index ["state_id"], name: "index_activities_on_state_id"
+    t.index ["town_id"], name: "index_activities_on_town_id"
+  end
 
   create_table "activity_businesses", force: :cascade do |t|
     t.integer "organization_id", null: false
@@ -37,6 +92,12 @@ ActiveRecord::Schema.define(version: 2020_08_08_060340) do
     t.index ["prefecture_id"], name: "index_activity_businesses_on_prefecture_id"
     t.index ["state_id"], name: "index_activity_businesses_on_state_id"
     t.index ["town_id"], name: "index_activity_businesses_on_town_id"
+  end
+
+  create_table "activity_categories", force: :cascade do |t|
+    t.string "en_name"
+    t.string "jp_name"
+    t.string "cn_name"
   end
 
   create_table "areas", force: :cascade do |t|
@@ -280,6 +341,8 @@ ActiveRecord::Schema.define(version: 2020_08_08_060340) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "activities", "activity_businesses"
+  add_foreign_key "activities", "activity_categories", column: "activity_categories_id"
   add_foreign_key "activity_businesses", "organizations"
   add_foreign_key "areas", "countries"
   add_foreign_key "areas", "prefectures"
