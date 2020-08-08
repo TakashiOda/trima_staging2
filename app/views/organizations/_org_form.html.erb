@@ -29,12 +29,13 @@
     <div class="row">
       <div class="col-half">
         <%= form.label "郵便番号（半角・ハイフンあり）" %>
-        <%= form.text_field :post_code, required: true, class: "form-control" %>
+        <%= form.text_field :post_code, class: "form-control" %>
       </div>
       <div class="col-half">
         <%= form.label "地域" %>
         <%# form.collection_select :state_id, State.all, :id, :local_name,{prompt: "地域を選択"}, required: true, class: "form-control" %>
-        <%= form.select :state_id, {'北海道': 1}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
+        <%# form.select :state_id, {'北海道': 1}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
+        <%= form.select :state_id, {'北海道': 1}, { class: 'form-control' , required: true } %>
       </div>
     </div>
   </div>
@@ -43,25 +44,27 @@
       <div class="col-half">
         <%= form.label "都道府県" %>
         <%# form.collection_select :prefecture_id, Prefecture.all, :id, :local_name,{prompt: "都道府県を選択"}, required: true, class: "form-control" %>
-        <%= form.select :prefecture_id, {'北海道': 2}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
+        <%# form.select :prefecture_id, {'北海道': 2}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
+        <%= form.select :prefecture_id, {'北海道': 2}, { class: 'form-control' , required: true } %>
       </div>
       <div class="col-half">
         <%= form.label "市町村" %>
-        <%= form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市町村を選択"}, required: true, class: "form-control" %>
+        <%##form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市町村を選択"}, required: true, class: "form-control" %>
+        <%= form.select :town_id, {'札幌市': 2}, { class: 'form-control' , required: true } %>
       </div>
     </div>
   </div>
   <div class="form-group">
     <%= form.label "以降の住所" %>
-    <%= form.text_field :detail_address, required: true, class: "form-control" %>
+    <%= form.text_field :detail_address, class: "form-control" %>
   </div>
   <div class="form-group">
     <%= form.label "建物名・部屋番号" %>
-    <%= form.text_field :building, required: true, class: "form-control" %>
+    <%= form.text_field :building, class: "form-control" %>
   </div>
   <div class="form-group">
     <%= form.label "電話番号" %>
-    <%= form.telephone_field :phone, required: true, class: "form-control" %>
+    <%= form.telephone_field :phone, class: "form-control" %>
   </div>
   <div class="form-group manage_agent_input_box">
     <div class="form-group"><%= form.check_box :has_activity %><%= form.label "体験事業を所有" %></div>
@@ -72,28 +75,21 @@
   <div class="form-group invite_member_box">
     <div class="form_inner_form_title">従業員を招待する</div>
     <div class="form_inner_form_box">
-      <% if !@suppliers.nil? %>
-        <% @suppliers.each do |supplier| %>
-        <span>Member</span>
-        <input type="textbox" value="<%= Supplier.find(supplier.id).email %>" name="invite_emails[member]" class="form-control">
-        <% end %>
-      <% end %>
-      <% if !@inviting_suppliers.nil? %>
-        <% @inviting_suppliers.each do |inviting_supplier| %>
-        <span>Member</span>
-        <input type="textbox" value="<%= inviting_supplier.invited_email %>" name="invite_emails[member]" class="form-control">
+      <% num = 0 %>
+      <% if !@member_emails.nil? %>
+        <% @member_emails.each do |member_email| %>
+        <% num += 1 %>
+        <span>Member<%= num %></span>
+        <input type="textbox" value="<%= member_email %>" name="invite_emails[member<%= num %>]" class="form-control">
         <% end %>
       <% end %>
       <% if @left_invite_num > 0 %>
         <% @left_invite_num.times do %>
-          <span>Member</span>
-          <input type="textbox" name="invite_emails[member]" class="form-control">
+          <% num += 1 %>
+          <span>Member<%= num %></span>
+          <input type="textbox" name="invite_emails[member<%= num %>]" class="form-control">
         <% end %>
       <% end %>
-      <span>Member</span>
-      <input type="textbox" name="invite_emails[member]" class="form-control">
-      <span>Member</span>
-      <input type="textbox" name="invite_emails[member]" class="form-control">
     </div>
   </div>
   <div class="form_btns">

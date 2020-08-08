@@ -15,15 +15,103 @@
           </div>
         </div>
         <div class="supplier_name">
+          <div><%= !@supplier.name.nil? ? @supplier.name : "お名前未登録" %></div>
           <div class="supplier_profile_edit_btn">
             <% if @supplier == current_supplier %>
               <%= link_to "編集",edit_supplier_path(current_supplier), class: "org_edit_btn" %>
             <% end %>
           </div>
-          <div><%= !@supplier.name.nil? ? @supplier.name : "名前が登録されていません" %></div>
-          <div>所属：<%= Organization.find(@supplier.organization_id).name if @supplier.organization_id %></div>
         </div>
       </div><!--メインコンテンツprofile end-->
+      <!--事業リスト---------------------------------------------------------------->
+      <div class="project_members_box">
+        <div class="info_list_box_title">
+          <div>事業リスト</div>
+        </div>
+        <table class="project_members_list">
+          <tr>
+            <th></th>
+            <!-- <th>Name</th> -->
+            <th>事業名</th>
+            <th></th>
+          </tr>
+            <% if !@activity_business.nil? %>
+            <tr>
+              <td><%= @activity_business.profile_image if @activity_business.profile_image %></td>
+              <td><%= @activity_business.name if @activity_business.name %></td>
+              <td>
+                <% if current_supplier.control_level == 0 %>
+                  <%= link_to "編集", "#", class: "member_delete_btn" %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>他の事業を追加しよう</td>
+              <td>
+                <% if current_supplier.control_level == 0 %>
+                  <%= link_to "追加", new_supplier_activity_business_path(current_supplier), class: "member_delete_btn" %>
+                <% end %>
+              </td>
+            </tr>
+            <% else %>
+            <tr>
+              <td></td>
+              <td>まだ事業が登録されていません</td>
+              <td>
+                <% if current_supplier.control_level == 0 %>
+                  <%= link_to "追加", new_supplier_activity_business_path(current_supplier), class: "member_delete_btn" %>
+                <% end %>
+              </td>
+            </tr>
+            <% end %>
+        </table>
+      </div>
+      <!--事業リスト---------------------------------------------------------------->
+      <!--メンバーリスト---------------------------------------------------------------->
+      <div class="project_members_box">
+        <div class="info_list_box_title">
+          <div>メンバー情報</div>
+        </div>
+        <table class="project_members_list">
+          <tr>
+            <th>ステータス</th>
+            <!-- <th>Name</th> -->
+            <th>メールアドレス</th>
+            <th></th>
+          </tr>
+          <% @joined_members.each do |joined_member| %>
+            <tr>
+              <td>参加済</td>
+              <td><%= joined_member.name if joined_member.name %></td>
+              <td>
+                <% if current_supplier.control_level == 0 %>
+                  <%= link_to "削除", supplier_org_member_delete_path(current_supplier.id, joined_member.organization_id, joined_member.id),
+                  class: "member_delete_btn",
+                  method: :delete, data: { confirm: "本当に削除しますか？" }
+                  %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          <% @inviting_members.each do |inviting_member| %>
+            <tr>
+              <td><%= inviting_member.has_account == 0 ? "未承認" : "未登録" %></td>
+              <td><%= inviting_member.invited_email %></td>
+              <td>
+                <% if current_supplier.control_level == 0 %>
+                  <%= link_to "削除", supplier_org_invite_delete_path(current_supplier.id, inviting_member.organization_id, inviting_member.id),
+                  class: "member_delete_btn",
+                  method: :delete, data: { confirm: "本当に削除しますか？" }
+                  %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+      <!--メンバーリスト---------------------------------------------------------------->
+      <!--組織情報---------------------------------------------------------------->
       <div class="info_box"><!--メインコンテンツorg-->
         <div class="info_list_box_title">
           <div>組織情報</div>
@@ -55,22 +143,11 @@
                   <td class="td_front">住所</td>
                   <td class="td_end"><%= @organization.detail_address if @organization.detail_address%><%= @organization.building if @organization.building %></td>
                 </tr>
-                <tr>
-                  <td class="td_front">組織分類</td>
-                  <td>ああああああ系</td>
-                </tr>
-                <tr>
-                  <td class="td_front">組織分類</td>
-                  <td>ああああああ系</td>
-                </tr>
-                <tr>
-                  <td class="td_front">組織分類</td>
-                  <td>ああああああ系</td>
-                </tr>
               </table>
             </div>
           <% end %>
       </div>
+      <!--組織情報---------------------------------------------------------------->
     </div><!--メインコンテンツ内部-->
   </div><!--メインコンテンツ-->
 </div>
@@ -95,16 +172,24 @@
   .supplier_name {
     margin-left: 15px;
     width: 100%;
-  }
-  .supplier_profile_edit_btn {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+  }
+  table.info_list_table {
+    width: 100%;
+    font-size: 11px;
+  }
+  table.info_list_table tr .td_front {
+    width: 20%;
   }
   .info_list_box_title {
     border-bottom: solid 1px lightgray;
     display: flex;
     justify-content: space-between;
     padding: 0 3px 5px;
+  }
+  table.project_members_list td:nth-child(3) {
+    text-align: end;
   }
   a.org_edit_btn {
     background: #2bb561;

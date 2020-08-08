@@ -22,9 +22,10 @@ class Organization < ApplicationRecord
   def add_member(email_params, inviter)
     unless email_params.blank?
       @supplier = Supplier.find_by(email: email_params)
-      unless @supplier.nil?
+      @invited = OrgInvite.find_by(organization_id: self.id, invited_email: email_params)
+      if !@supplier.nil?
         @supplier.update(organization_id: self.id, control_level: 1, accept_invite: 1)
-      else
+      elsif @invited.nil?
         OrgInvite.create(organization_id: self.id, inviter_id: inviter.id, invited_email: email_params)
         self.send_invite_email(email_params, inviter)
       end
@@ -34,13 +35,25 @@ class Organization < ApplicationRecord
   def replace_member(email_params, inviter)
     unless email_params.blank?
       @supplier = Supplier.find_by(email: email_params)
-      unless @supplier.nil?
+      @invited = OrgInvite.find_by(organization_id: self.id, invited_email: email_params)
+      if !@supplier.nil?
         @supplier.update(organization_id: self.id, control_level: 1, accept_invite: 1)
-      else
+      elsif @invited.nil?
         OrgInvite.create(organization_id: self.id, inviter_id: inviter.id, invited_email: email_params)
         self.send_invite_email(email_params, inviter)
       end
     end
+  end
+
+  def destroy_unlist_member(params, current_supplier)
+    member_emails = []
+    member_emails.push(current_supplier.email)
+    member_emails.push(params[:member1]) if !params[:member1].blank?
+    member_emails.push(params[:member2]) if !params[:member2].blank?
+    member_emails.push(params[:member3]) if !params[:member3].blank?
+    member_emails.push(params[:member4]) if !params[:member4].blank?
+    Supplier.where.not(email: member_emails).update_all(organization_id: nil)
+    OrgInvite.where.not(invited_email: member_emails).delete_all
   end
 
 end

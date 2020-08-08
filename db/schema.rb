@@ -10,7 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_05_100710) do
+ActiveRecord::Schema.define(version: 2020_08_08_060340) do
+
+  create_table "activity_businesses", force: :cascade do |t|
+    t.integer "organization_id", null: false
+    t.string "name"
+    t.string "profile_image"
+    t.text "profile_text"
+    t.integer "country_id"
+    t.integer "state_id"
+    t.integer "prefecture_id"
+    t.integer "area_id"
+    t.integer "town_id"
+    t.string "detail_address"
+    t.string "building"
+    t.boolean "apply_org_info", default: true
+    t.boolean "apply_org_bank", default: true
+    t.boolean "has_insurance", default: false
+    t.string "guide_certification"
+    t.boolean "is_approved", default: true
+    t.index ["area_id"], name: "index_activity_businesses_on_area_id"
+    t.index ["guide_certification"], name: "index_activity_businesses_on_guide_certification"
+    t.index ["has_insurance"], name: "index_activity_businesses_on_has_insurance"
+    t.index ["is_approved"], name: "index_activity_businesses_on_is_approved"
+    t.index ["organization_id"], name: "index_activity_businesses_on_organization_id"
+    t.index ["prefecture_id"], name: "index_activity_businesses_on_prefecture_id"
+    t.index ["state_id"], name: "index_activity_businesses_on_state_id"
+    t.index ["town_id"], name: "index_activity_businesses_on_town_id"
+  end
 
   create_table "areas", force: :cascade do |t|
     t.integer "country_id", null: false
@@ -253,11 +280,12 @@ ActiveRecord::Schema.define(version: 2020_08_05_100710) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "activity_businesses", "organizations"
   add_foreign_key "areas", "countries"
   add_foreign_key "areas", "prefectures"
   add_foreign_key "areas", "states"
   add_foreign_key "org_invites", "organizations"
-  add_foreign_key "org_invites", "users", column: "inviter_id"
+  add_foreign_key "org_invites", "suppliers", column: "inviter_id"
   add_foreign_key "prefectures", "countries"
   add_foreign_key "prefectures", "states"
   add_foreign_key "project_invites", "projects"

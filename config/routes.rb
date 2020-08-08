@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'activity_businesses/index'
+  get 'activity_businesses/show'
+  get 'activity_businesses/new'
+  get 'activity_businesses/edit'
+  get 'businesses/index'
+  get 'businesses/show'
+  get 'businesses/new'
+  get 'businesses/edit'
   get 'organizations/index'
   get 'organizations/show'
   get 'organizations/new'
@@ -27,8 +35,6 @@ Rails.application.routes.draw do
     :unlocks => "users/unlocks"
   }
 
-
-
   devise_scope :supplier do
     get "suppliers/sign_in", :to => "suppliers/sessions#new"
     # post "users/sign_in", :to => "users/sessions#create"
@@ -54,6 +60,10 @@ Rails.application.routes.draw do
 
   resources :suppliers do
     resources :organizations
+    resources :activity_businesses
+    # get "business_list", to: "suppliers#business_list", as: :business_list
+    delete "suppliers/:supplier_id/organizations/:org_id/:member_id", to: "organizations#member_delete", as: :org_member_delete
+    delete "suppliers/:supplier_id/organizations/:org_id/:invite_id", to: "organizations#invite_delete", as: :org_invite_delete
   end
   # resources :suppliers, only: [:index, :show, :edit, :update, :destroy]
   # resources :organizations, only: [:index, :show, :new, :edit, :update, :destroy]

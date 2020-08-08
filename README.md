@@ -6,7 +6,7 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version v2.7.1
-* Node version ccc/  , home/v12.18.3
+* Node version ccc/v12.18.3  , home/v12.18.3
 * ndenv v0.4.0
 
 
