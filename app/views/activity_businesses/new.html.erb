@@ -6,6 +6,9 @@
     <!-- <form> -->
     <%= form_for [@supplier, @activity_business] do |form| %>
     <div class="user_show_content_down">
+      <div class="form_title">
+        <h3>体験事業の情報を作成</h3>
+      </div>
       <%= render 'layouts/error_messages', model: form.object %>
       <%= render :partial => 'activity_businesses/biz_form', :locals => {:form => form} %>
     </div>

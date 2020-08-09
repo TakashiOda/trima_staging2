@@ -28,14 +28,14 @@
   <div class="form-group">
     <div class="row">
       <div class="col-half">
-        <%= form.label "郵便番号（半角・ハイフンあり）" %>
+        <%= form.label "郵便番号" %><span class="form_supplement">※半角・ハイフンあり</span>
         <%= form.text_field :post_code, class: "form-control" %>
       </div>
       <div class="col-half">
         <%= form.label "地域" %>
         <%# form.collection_select :state_id, State.all, :id, :local_name,{prompt: "地域を選択"}, required: true, class: "form-control" %>
         <%# form.select :state_id, {'北海道': 1}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
-        <%= form.select :state_id, {'北海道': 1}, { class: 'form-control' , required: true } %>
+        <%= form.select :state_id, {'北海道': 1}, { include_blank: false}, { class: 'form-control' } %>
       </div>
     </div>
   </div>
@@ -45,12 +45,11 @@
         <%= form.label "都道府県" %>
         <%# form.collection_select :prefecture_id, Prefecture.all, :id, :local_name,{prompt: "都道府県を選択"}, required: true, class: "form-control" %>
         <%# form.select :prefecture_id, {'北海道': 2}, { include_blank: '選択してください'}, { class: 'form-control' , required: true } %>
-        <%= form.select :prefecture_id, {'北海道': 2}, { class: 'form-control' , required: true } %>
+        <%= form.select :prefecture_id, {'北海道': 2}, { include_blank: false }, { class: 'form-control' } %>
       </div>
       <div class="col-half">
         <%= form.label "市町村" %>
-        <%##form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市町村を選択"}, required: true, class: "form-control" %>
-        <%= form.select :town_id, {'札幌市': 2}, { class: 'form-control' , required: true } %>
+        <%=form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市町村を選択"}, required: true, class: "form-control" %>
       </div>
     </div>
   </div>
@@ -120,7 +119,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 5px;
-    width: 46%;
+    width: 50%;
   }
   .form-group.manage_agent_input_box input[type=checkbox] {
     width: 25px;

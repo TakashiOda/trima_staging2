@@ -6,6 +6,9 @@
     <!-- <form> -->
     <%= form_for [current_supplier, @organization] do |form| %>
     <div class="user_show_content_down">
+      <div class="form_title">
+        <h3>組織情報を作成</h3>
+      </div>
       <%= render 'layouts/error_messages', model: form.object %>
       <%= render :partial => 'organizations/org_form', :locals => {:form => form} %>
     </div>

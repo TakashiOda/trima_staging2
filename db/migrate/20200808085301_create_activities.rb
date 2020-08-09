@@ -3,9 +3,8 @@ class CreateActivities < ActiveRecord::Migration[6.0]
     create_table :activities do |t|
       t.string :name
       t.references :activity_business, null: false, foreign_key: true
-      t.references :activity_categories, null: false, foreign_key: true
+      t.references :activity_category, null: false, foreign_key: true
       t.text :description
-      t.integer :activity_category_id
       t.string :main_image
 
       # 住所情報

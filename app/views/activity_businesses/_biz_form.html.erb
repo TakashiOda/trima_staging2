@@ -10,23 +10,20 @@
   </div>
   <div class="form-group">
     <%= form.label "事業紹介" %>
-    <%= form.text_field :profile_text, class: "form-control" %>
+    <%= form.text_area :profile_text, size: "22x5", class: "form-control" %>
   </div>
   <div class="form-group">
     <div class="row">
       <%= form.hidden_field :organization_id, value: current_supplier.organization_id %>
-      <%= form.hidden_field :country_id, value: 105 %>
       <div class="col-half">
         <%= form.label "地域" %>
         <%# form.collection_select :state_id, State.all, :id, :local_name,{prompt: "地域を選択"}, required: true, class: "form-control" %>
-        <%= form.select :state_id, {'北海道': 1}, { include_blank: '選択してください'}, { class: 'form-control' } %>
-        <%# form.select :state_id, {'北海道': 1}, { class: 'form-control' , required: true } %>
+        <%= form.select :state_id, {'北海道': 1}, { include_blank: false}, { class: 'form-control' } %>
       </div>
       <div class="col-half">
         <%= form.label "都道府県" %>
         <%# form.collection_select :prefecture_id, Prefecture.all, :id, :local_name,{prompt: "都道府県を選択"}, required: true, class: "form-control" %>
-        <%= form.select :prefecture_id, {'北海道': 2}, { include_blank: '選択してください'}, { class: 'form-control' } %>
-        <%# form.select :prefecture_id, {'北海道': 2}, { class: 'form-control' , required: true } %>
+        <%= form.select :prefecture_id, {'北海道': 2}, { include_blank: false}, { class: 'form-control' } %>
       </div>
     </div>
   </div>

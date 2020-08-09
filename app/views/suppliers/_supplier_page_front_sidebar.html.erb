@@ -1,5 +1,12 @@
 <ul>
-  <li><i class="fas fa-suitcase"></i><%= link_to "体験事業", "#" %></li>
+  <li>
+    <i class="fas fa-suitcase"></i>
+    <% if !ActivityBusiness.find_by(organization_id:current_supplier.organization_id).nil? %>
+      <%= link_to "体験事業", activities_path(ActivityBusiness.find_by(organization_id:current_supplier.organization_id)) %>
+    <% else %>
+      <%= link_to "体験事業", supplier_path(current_supplier) %>
+    <% end %>
+  </li>
   <li><i class="far fa-bookmark"></i><%= link_to "予約一覧", "#" %></li>
   <li>
     <i class="fas fa-user"></i>

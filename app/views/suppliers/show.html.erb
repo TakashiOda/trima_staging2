@@ -24,6 +24,7 @@
         </div>
       </div><!--メインコンテンツprofile end-->
       <!--事業リスト---------------------------------------------------------------->
+      <% if !@organization.nil? %>
       <div class="project_members_box">
         <div class="info_list_box_title">
           <div>事業リスト（現在体験事業のみ）</div>
@@ -57,6 +58,7 @@
             <% end %>
         </table>
       </div>
+      <% end %>
       <!--事業リスト---------------------------------------------------------------->
       <!--メンバーリスト---------------------------------------------------------------->
       <div class="project_members_box">
@@ -69,33 +71,37 @@
             <th>メールアドレス</th>
             <th></th>
           </tr> -->
-          <% @joined_members.each do |joined_member| %>
-            <tr>
-              <td>参加済</td>
-              <td><%= joined_member.name if joined_member.name %></td>
-              <td>
-                <% if current_supplier.control_level == 0 %>
-                  <%= link_to "削除", supplier_org_member_delete_path(current_supplier.id, joined_member.organization_id, joined_member.id),
-                  class: "member_delete_btn",
-                  method: :delete, data: { confirm: "本当に削除しますか？" }
-                  %>
-                <% end %>
-              </td>
-            </tr>
+          <% if !@joined_members.nil? %>
+            <% @joined_members.each do |joined_member| %>
+              <tr>
+                <td>参加済</td>
+                <td><%= joined_member.name if joined_member.name %></td>
+                <td>
+                  <% if current_supplier.control_level == 0 %>
+                    <%= link_to "削除", supplier_org_member_delete_path(current_supplier.id, joined_member.organization_id, joined_member.id),
+                    class: "member_delete_btn",
+                    method: :delete, data: { confirm: "本当に削除しますか？" }
+                    %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
-          <% @inviting_members.each do |inviting_member| %>
-            <tr>
-              <td><%= inviting_member.has_account == 0 ? "未承認" : "未登録" %></td>
-              <td><%= inviting_member.invited_email %></td>
-              <td>
-                <% if current_supplier.control_level == 0 %>
-                  <%= link_to "削除", supplier_org_invite_delete_path(current_supplier.id, inviting_member.organization_id, inviting_member.id),
-                  class: "member_delete_btn",
-                  method: :delete, data: { confirm: "本当に削除しますか？" }
-                  %>
-                <% end %>
-              </td>
-            </tr>
+          <% if !@inviting_members.nil? %>
+            <% @inviting_members.each do |inviting_member| %>
+              <tr>
+                <td><%= inviting_member.has_account == 0 ? "未承認" : "未登録" %></td>
+                <td><%= inviting_member.invited_email %></td>
+                <td>
+                  <% if current_supplier.control_level == 0 %>
+                    <%= link_to "削除", supplier_org_invite_delete_path(current_supplier.id, inviting_member.organization_id, inviting_member.id),
+                    class: "member_delete_btn",
+                    method: :delete, data: { confirm: "本当に削除しますか？" }
+                    %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
         </table>
       </div>
@@ -111,8 +117,10 @@
           </div>
         </div>
           <% if @supplier.organization_id.nil? %>
-            まだ組織情報がありません
-            <%= link_to "組織情報を作成", new_supplier_organization_path(@supplier), class: "org_edit_btn" %>
+            <div class="add_new_org_box">
+              <div>まだ組織情報がありません</div>
+              <%= link_to "組織情報を作成", new_supplier_organization_path(@supplier), class: "org_edit_btn" %>
+            </div>
           <% else %>
             <div class="info_list_box_contents">
               <table class="info_list_table">
@@ -192,6 +200,10 @@
   }
   .info_list_box_contents {
     padding: 0 3px;
+  }
+  .add_new_org_box {
+    display: flex;
+    justify-content: space-between;
   }
 
 </style>

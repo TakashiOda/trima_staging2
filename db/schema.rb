@@ -15,9 +15,8 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
   create_table "activities", force: :cascade do |t|
     t.string "name"
     t.integer "activity_business_id", null: false
-    t.integer "activity_categories_id", null: false
+    t.integer "activity_category_id", null: false
     t.text "description"
-    t.integer "activity_category_id"
     t.string "main_image"
     t.integer "state_id"
     t.integer "prefecture_id"
@@ -45,7 +44,7 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
     t.boolean "advertise_activate", default: false
     t.boolean "is_approved", default: false
     t.index ["activity_business_id"], name: "index_activities_on_activity_business_id"
-    t.index ["activity_categories_id"], name: "index_activities_on_activity_categories_id"
+    t.index ["activity_category_id"], name: "index_activities_on_activity_category_id"
     t.index ["advertise_activate"], name: "index_activities_on_advertise_activate"
     t.index ["april"], name: "index_activities_on_april"
     t.index ["area_id"], name: "index_activities_on_area_id"
@@ -72,7 +71,6 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
     t.string "name"
     t.string "profile_image"
     t.text "profile_text"
-    t.integer "country_id"
     t.integer "state_id"
     t.integer "prefecture_id"
     t.integer "area_id"
@@ -83,7 +81,7 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
     t.boolean "apply_org_bank", default: true
     t.boolean "has_insurance", default: false
     t.string "guide_certification"
-    t.boolean "is_approved", default: true
+    t.boolean "is_approved", default: false
     t.index ["area_id"], name: "index_activity_businesses_on_area_id"
     t.index ["guide_certification"], name: "index_activity_businesses_on_guide_certification"
     t.index ["has_insurance"], name: "index_activity_businesses_on_has_insurance"
@@ -342,7 +340,7 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
   end
 
   add_foreign_key "activities", "activity_businesses"
-  add_foreign_key "activities", "activity_categories", column: "activity_categories_id"
+  add_foreign_key "activities", "activity_categories"
   add_foreign_key "activity_businesses", "organizations"
   add_foreign_key "areas", "countries"
   add_foreign_key "areas", "prefectures"

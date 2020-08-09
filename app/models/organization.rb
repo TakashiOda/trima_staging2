@@ -1,5 +1,7 @@
 class Organization < ApplicationRecord
   has_many :suppliers, dependent: :destroy
+  has_many :org_invites, dependent: :destroy
+  has_one :activity_business, dependent: :destroy
 
   validates  :name,   length: { maximum: 30, too_long: "Maximum %{count} characters" }, allow_nil: true
   validates  :state_id, numericality: { only_integer: true }, allow_nil: true
