@@ -39,7 +39,6 @@ class DeviseCreateSuppliers < ActiveRecord::Migration[6.0]
       t.integer  :control_level, default: 0, null: false
       t.integer :accept_invite, default: 0, null: false
 
-
       t.timestamps null: false
     end
 

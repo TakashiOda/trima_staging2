@@ -14,7 +14,6 @@ class OrganizationsController < ApplicationController
     if @supplier.organization_id.nil?
       @organization = Organization.new
       @left_invite_num = 4
-      # @members = Supplier.where(organization_id: @organization.id)
     else
       flash[:alert] = 'すでに組織情報が存在します'
       redirect_to supplier_path(@supplier)
@@ -30,7 +29,7 @@ class OrganizationsController < ApplicationController
       unless town.town_code ==  "nil" || prefecture.local_name.include?("---")
         if @organization.save
           @supplier.update(organization_id: @organization.id)
-          @organization.add_member(params[:invite_emails][:member], current_supplier) #Organizationのモデルメソッド
+          @organization.add_member(params[:invite_emails][:member1], current_supplier) #Organizationのモデルメソッド
           @organization.add_member(params[:invite_emails][:member2], current_supplier) #Organizationのモデルメソッド
           @organization.add_member(params[:invite_emails][:member3], current_supplier) #Organizationのモデルメソッド
           @organization.add_member(params[:invite_emails][:member4], current_supplier) #Organizationのモデルメソッド
@@ -53,42 +52,34 @@ class OrganizationsController < ApplicationController
   def edit
     @supplier = Supplier.find(params[:supplier_id])
     @organization = Organization.find(@supplier.organization_id)
-    @suppliers = Supplier.where(organization_id: @organization.id).where.not(id: current_supplier.id )
-    @inviting_suppliers = OrgInvite.where(organization_id: @organization.id, has_account: 1)
-    # binding.pry
-    if !@suppliers.nil?
-      @left_invite_num = 4 - @suppliers.count
-      if !@inviting_suppliers.nil?
-        @left_invite_num -= @inviting_suppliers.count
+    @member_emails = []
+    @joined_emails = Supplier.where(organization_id: @organization.id).where.not(id: current_supplier.id ).pluck(:email)
+    if !@suppliers_emails.nil?
+      @joined_emails.each do |joined_email|
+        @member_emails.push(joined_email)
       end
     end
+    @inviting_emails = OrgInvite.where(organization_id: @organization.id, has_account: 1).pluck(:invited_email)
+    if !@inviting_emails.nil?
+      @inviting_emails.each do |inviting_email|
+        @member_emails.push(inviting_email)
+      end
+    end
+    @left_invite_num = 4 - @member_emails.count
   end
 
   def update
-    binding.pry
     @supplier = Supplier.find(params[:supplier_id])
     @organization = Organization.find(@supplier.organization_id)
     prefecture = Prefecture.find(params[:organization][:prefecture_id])
     town = Town.find(params[:organization][:town_id])
     unless town.town_code ==  "nil" || prefecture.local_name.include?("---")
       if @organization.update(org_params)
-         @organization.replace_member(params[:invite_emails][:member], current_supplier) #Organizationのモデルメソッド
+         @organization.replace_member(params[:invite_emails][:member1], current_supplier) #Organizationのモデルメソッド
          @organization.replace_member(params[:invite_emails][:member2], current_supplier) #Organizationのモデルメソッド
          @organization.replace_member(params[:invite_emails][:member3], current_supplier) #Organizationのモデルメソッド
          @organization.replace_member(params[:invite_emails][:member4], current_supplier) #Organizationのモデルメソッド
-         #member 0~4と管理者以外のsupplierのidはnilにする
-        new_member_ids = []
-        new_member_ids.push(@supplier.id)
-        new_member = Supplier.find_by(email: params[:invite_emails][:member]) if !params[:invite_emails][:member].blank?
-        new_member_ids.push(new_member.id) if !new_member.nil?
-        new_member2 = Supplier.find_by(email: params[:invite_emails][:member2]) if !params[:invite_emails][:member2].blank?
-        new_member_ids.push(new_member2.id) if !new_member2.nil?
-        new_member3 = Supplier.find_by(email: params[:invite_emails][:member3]) if !params[:invite_emails][:member3].blank?
-        new_member_ids.push(new_member3.id) if !new_member3.nil?
-        new_member4 = Supplier.find_by(email: params[:invite_emails][:member4]) if !params[:invite_emails][:member4].blank?
-        new_member_ids.push(new_member4.id) if !new_member4.nil?
-        Supplier.where.not(id: new_member_ids).update_all(organization_id: nil)
-
+         @organization.destroy_unlist_member(params[:invite_emails], current_supplier) #Organizationのモデルメソッド
          flash[:notice] = '組織情報を更新しました'
          redirect_to supplier_path(@supplier)
       else
@@ -119,6 +110,27 @@ class OrganizationsController < ApplicationController
       flash[:alert] = '削除権限がありません。管理者ユーザーのみ削除可能です'
     end
     render 'edit'
+  end
+
+  def member_delete
+    @supplier = Supplier.find(params[:supplier_id])
+    @member = Supplier.find(params[:member_id])
+    if @supplier.control_level == 0
+      # @organization = Organization.find(params[:org_id])
+      @member.organization_id = nil
+      @member.save!
+    end
+    redirect_to supplier_path(@supplier)
+  end
+
+  def invite_delete
+    @supplier = Supplier.find(params[:supplier_id])
+    # @organization = Organization.find(params[:org_id])
+    if @supplier.control_level == 0
+      @invite = OrgInvite.find(params[:invite_id])
+      @invite.destroy!
+    end
+    redirect_to supplier_path(@supplier)
   end
 
   private

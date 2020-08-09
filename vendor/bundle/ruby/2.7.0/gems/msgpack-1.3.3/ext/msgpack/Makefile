@@ -12,12 +12,12 @@ NULLCMD = :
 #### Start of system configuration section. ####
 
 srcdir = .
-topdir = /Users/takashioda/.rbenv/versions/2.7.1/include/ruby-2.7.0
+topdir = /Users/odatakashi/.rbenv/versions/2.7.1/include/ruby-2.7.0
 hdrdir = $(topdir)
-arch_hdrdir = /Users/takashioda/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18
+arch_hdrdir = /Users/odatakashi/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin19
 PATH_SEPARATOR = :
 VPATH = $(srcdir):$(arch_hdrdir)/ruby:$(hdrdir)/ruby
-prefix = $(DESTDIR)/Users/takashioda/.rbenv/versions/2.7.1
+prefix = $(DESTDIR)/Users/odatakashi/.rbenv/versions/2.7.1
 rubysitearchprefix = $(rubylibprefix)/$(sitearch)
 rubyarchprefix = $(rubylibprefix)/$(arch)
 rubylibprefix = $(libdir)/$(RUBY_BASE_NAME)
@@ -31,8 +31,8 @@ rubyhdrdir = $(includedir)/$(RUBY_VERSION_NAME)
 vendorarchdir = $(vendorlibdir)/$(sitearch)
 vendorlibdir = $(vendordir)/$(ruby_version)
 vendordir = $(rubylibprefix)/vendor_ruby
-sitearchdir = $(DESTDIR)./.gem.20200803-21979-4rhwv0
-sitelibdir = $(DESTDIR)./.gem.20200803-21979-4rhwv0
+sitearchdir = $(DESTDIR)./.gem.20200808-1449-1tcy7ou
+sitelibdir = $(DESTDIR)./.gem.20200808-1449-1tcy7ou
 sitedir = $(rubylibprefix)/site_ruby
 rubyarchdir = $(rubylibdir)/$(arch)
 rubylibdir = $(rubylibprefix)/$(ruby_version)
@@ -84,13 +84,13 @@ debugflags = -ggdb3
 warnflags = -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens
 cppflags = 
 CCDLFLAGS = -fno-common
-CFLAGS   = $(CCDLFLAGS)  -O3 -Wno-error=shorten-64-to-32  -fno-common -pipe -I.. -Wall -O3 -g -std=gnu99 $(ARCH_FLAG)
+CFLAGS   = $(CCDLFLAGS) $(cflags)  -fno-common -pipe -I.. -Wall -O3 -g -std=gnu99 $(ARCH_FLAG)
 INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir)
 DEFS     = 
-CPPFLAGS = -DHAVE_RUBY_ST_H -DHAVE_ST_H -DHAVE_RB_STR_REPLACE -DHAVE_RB_INTERN_STR -DHAVE_RB_SYM2STR -DHAVE_RB_STR_INTERN -DHAVE_RB_BLOCK_LAMBDA -DHAVE_RB_HASH_DUP -DHAVE_RB_HASH_CLEAR -I/Users/takashioda/.rbenv/versions/2.7.1/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT $(DEFS) $(cppflags)
+CPPFLAGS = -DHAVE_RUBY_ST_H -DHAVE_ST_H -DHAVE_RB_STR_REPLACE -DHAVE_RB_INTERN_STR -DHAVE_RB_SYM2STR -DHAVE_RB_STR_INTERN -DHAVE_RB_BLOCK_LAMBDA -DHAVE_RB_HASH_DUP -DHAVE_RB_HASH_CLEAR -I/Users/odatakashi/.rbenv/versions/2.7.1/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT $(DEFS) $(cppflags)
 CXXFLAGS = $(CCDLFLAGS) -g -O2 $(ARCH_FLAG)
-ldflags  = -L. -L/Users/takashioda/.rbenv/versions/2.7.1/lib  -fstack-protector-strong -L/usr/local/lib
-dldflags = -L/Users/takashioda/.rbenv/versions/2.7.1/lib  -Wl,-undefined,dynamic_lookup -Wl,-multiply_defined,suppress 
+ldflags  = -L. -L/Users/odatakashi/.rbenv/versions/2.7.1/lib  -fstack-protector-strong -L/usr/local/lib
+dldflags = -L/Users/odatakashi/.rbenv/versions/2.7.1/lib  -Wl,-undefined,dynamic_lookup -Wl,-multiply_defined,suppress 
 ARCH_FLAG = 
 DLDFLAGS = $(ldflags) $(dldflags) $(ARCH_FLAG)
 LDSHARED = $(CC) -dynamic -bundle
@@ -105,7 +105,7 @@ RUBY_VERSION_NAME = $(RUBY_BASE_NAME)-$(ruby_version)
 RUBYW_BASE_NAME = rubyw
 RUBY_BASE_NAME = ruby
 
-arch = x86_64-darwin18
+arch = x86_64-darwin19
 sitearch = $(arch)
 ruby_version = 2.7.0
 ruby = $(bindir)/$(RUBY_BASE_NAME)
