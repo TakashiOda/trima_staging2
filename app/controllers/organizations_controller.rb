@@ -55,7 +55,6 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(@supplier.organization_id)
     @suppliers = Supplier.where(organization_id: @organization.id).where.not(id: current_supplier.id )
     @inviting_suppliers = OrgInvite.where(organization_id: @organization.id, has_account: 1)
-    # binding.pry
     if !@suppliers.nil?
       @left_invite_num = 4 - @suppliers.count
       if !@inviting_suppliers.nil?
@@ -65,7 +64,6 @@ class OrganizationsController < ApplicationController
   end
 
   def update
-    binding.pry
     @supplier = Supplier.find(params[:supplier_id])
     @organization = Organization.find(@supplier.organization_id)
     prefecture = Prefecture.find(params[:organization][:prefecture_id])
