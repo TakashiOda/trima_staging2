@@ -1,5 +1,5 @@
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/pg-1.2.3/ext
-/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200803-21979-16htm6z.rb extconf.rb
+/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200817-64118-dla5dx.rb extconf.rb
 checking for pg_config... yes
 Using config values from /usr/local/bin/pg_config
 checking for libpq-fe.h... yes
@@ -50,4 +50,4 @@ linking shared-object pg_ext.bundle
 
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/pg-1.2.3/ext
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 pg_ext.bundle ./.gem.20200803-21979-19lgusy
+/usr/bin/install -c -m 0755 pg_ext.bundle ./.gem.20200817-64118-1hqonw0

@@ -1,0 +1,18 @@
+<div class="container user_show container-fluid row">
+  <div class="user_show_side col-2">
+    <%= render 'suppliers/supplier_page_front_sidebar' %>
+  </div>
+  <div class="user_show_content col-8">
+    <!-- <form> -->
+    <%= form_for [@supplier, @activity_business] do |form| %>
+    <div class="user_show_content_down">
+      <div class="form_title">
+        <h3>体験事業の情報を作成</h3>
+      </div>
+      <%= render 'layouts/error_messages', model: form.object %>
+      <%= render :partial => 'activity_businesses/biz_form', :locals => {:form => form} %>
+    </div>
+    <% end %>
+    <!-- </form> -->
+  </div>
+</div>

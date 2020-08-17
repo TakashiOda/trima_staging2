@@ -1,5 +1,5 @@
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/rmagick-4.1.2/ext/RMagick
-/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200803-21979-1kwfxrz.rb extconf.rb
+/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200817-64118-1kwcuzp.rb extconf.rb
 checking for brew... yes
 checking for Ruby version >= 2.3.0... yes
 checking for pkg-config... yes
@@ -21,7 +21,7 @@ checking for malloc/malloc.h... yes
 creating extconf.h
 creating Makefile
 ======================================================================
-Mon 03 Aug 20 14:31:32
+Mon 17 Aug 20 15:25:10
 This installation of RMagick 4.1.2 is configured for
 Ruby 2.7.1 (x86_64-darwin18) and ImageMagick 6.9.11
 ======================================================================
@@ -51,4 +51,4 @@ linking shared-object RMagick2.bundle
 
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/rmagick-4.1.2/ext/RMagick
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 RMagick2.bundle ./.gem.20200803-21979-12h5vax
+/usr/bin/install -c -m 0755 RMagick2.bundle ./.gem.20200817-64118-14hs5e8

@@ -9,8 +9,11 @@ class SuppliersController < ApplicationController
 
   def show
     @supplier = Supplier.find(params[:id])
-    unless @supplier.organization_id.nil?
+    @activity_business = ActivityBusiness.find_by(organization_id: @supplier.organization_id)
+    if !@supplier.organization_id.nil?
       @organization = Organization.find(@supplier.organization_id)
+      @joined_members = Supplier.where(organization_id: @organization.id).where.not(id: current_supplier.id)
+      @inviting_members = OrgInvite.where(organization_id: @organization.id, accept_invite: 1)
     end
   end
 
@@ -39,6 +42,10 @@ class SuppliersController < ApplicationController
       render 'edit'
     end
   end
+
+  def business_list
+  end
+
 
   private
     def supplier_params

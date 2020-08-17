@@ -1,5 +1,5 @@
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.4.2/ext/sqlite3
-/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200803-21979-3h4es.rb extconf.rb
+/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200817-64118-1ykp074.rb extconf.rb
 checking for sqlite3.h... yes
 checking for pthread_create() in -lpthread... yes
 checking for -ldl... yes
@@ -65,4 +65,4 @@ ld: warning: directory not found for option '-L/usr/local/Cellar/sqlite/3.32.3/l
 
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/sqlite3-1.4.2/ext/sqlite3
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 sqlite3_native.bundle ./.gem.20200803-21979-1r60cwq/sqlite3
+/usr/bin/install -c -m 0755 sqlite3_native.bundle ./.gem.20200817-64118-bvtkbs/sqlite3

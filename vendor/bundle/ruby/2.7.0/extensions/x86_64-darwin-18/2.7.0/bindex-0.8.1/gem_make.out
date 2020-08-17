@@ -1,5 +1,5 @@
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
-/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200803-21979-1rwg308.rb extconf.rb
+/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200817-64118-1da84r6.rb extconf.rb
 creating Makefile
 
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
@@ -12,4 +12,4 @@ linking shared-object skiptrace/internal/cruby.bundle
 
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/bindex-0.8.1/ext/skiptrace
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 cruby.bundle ./.gem.20200803-21979-11afg2i/skiptrace/internal
+/usr/bin/install -c -m 0755 cruby.bundle ./.gem.20200817-64118-do9l2u/skiptrace/internal

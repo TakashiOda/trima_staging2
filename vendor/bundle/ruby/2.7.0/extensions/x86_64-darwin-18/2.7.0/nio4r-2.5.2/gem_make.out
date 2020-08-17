@@ -1,5 +1,5 @@
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/nio4r-2.5.2/ext/nio4r
-/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200803-21979-1abkuq6.rb extconf.rb
+/Users/takashioda/.rbenv/versions/2.7.1/bin/ruby -I /Users/takashioda/.rbenv/versions/2.7.1/lib/ruby/2.7.0 -r ./siteconf20200817-64118-3cft2d.rb extconf.rb
 checking for unistd.h... yes
 checking for linux/aio_abi.h... no
 checking for sys/select.h... yes
@@ -260,4 +260,4 @@ linking shared-object nio4r_ext.bundle
 
 current directory: /Users/takashioda/dev/trip_app_project/trima_v0.0/vendor/bundle/ruby/2.7.0/gems/nio4r-2.5.2/ext/nio4r
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 nio4r_ext.bundle ./.gem.20200803-21979-aapb8p
+/usr/bin/install -c -m 0755 nio4r_ext.bundle ./.gem.20200817-64118-1barewq

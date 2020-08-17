@@ -175,7 +175,7 @@ checked program was:
 "clang -o conftest -I/Users/takashioda/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18 -I/Users/takashioda/.rbenv/versions/2.7.1/include/ruby-2.7.0/ruby/backward -I/Users/takashioda/.rbenv/versions/2.7.1/include/ruby-2.7.0 -I.  -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/local/Cellar/imagemagick@6/6.9.11-24/include/ImageMagick-6  -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/local/Cellar/imagemagick@6/6.9.11-24/include/ImageMagick-6 -std=gnu99 conftest.c  -L. -L/Users/takashioda/.rbenv/versions/2.7.1/lib  -L/usr/local/Cellar/imagemagick@6/6.9.11-24/lib -lMagickCore-6.Q16    -L/usr/local/Cellar/imagemagick@6/6.9.11-24/lib -lMagickCore-6.Q16  -lruby.2.7   "
 Undefined symbols for architecture x86_64:
   "_malloc_usable_size", referenced from:
-      _t in conftest-5ec298.o
+      _t in conftest-09366b.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 checked program was:
@@ -310,7 +310,7 @@ checked program was:
 "clang -o conftest -I/Users/takashioda/.rbenv/versions/2.7.1/include/ruby-2.7.0/x86_64-darwin18 -I/Users/takashioda/.rbenv/versions/2.7.1/include/ruby-2.7.0/ruby/backward -I/Users/takashioda/.rbenv/versions/2.7.1/include/ruby-2.7.0 -I.  -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/local/Cellar/imagemagick@6/6.9.11-24/include/ImageMagick-6  -DMAGICKCORE_HDRI_ENABLE=0 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/local/Cellar/imagemagick@6/6.9.11-24/include/ImageMagick-6 -std=gnu99 conftest.c  -L. -L/Users/takashioda/.rbenv/versions/2.7.1/lib  -L/usr/local/Cellar/imagemagick@6/6.9.11-24/lib -lMagickCore-6.Q16    -L/usr/local/Cellar/imagemagick@6/6.9.11-24/lib -lMagickCore-6.Q16  -lruby.2.7   "
 Undefined symbols for architecture x86_64:
   "__aligned_msize", referenced from:
-      _t in conftest-a57427.o
+      _t in conftest-352812.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 checked program was:
@@ -487,7 +487,7 @@ extconf.h is:
 /* end */
 
 ======================================================================
-Mon 03 Aug 20 14:31:32
+Mon 17 Aug 20 15:25:10
 This installation of RMagick 4.1.2 is configured for
 Ruby 2.7.1 (x86_64-darwin18) and ImageMagick 6.9.11
 ======================================================================

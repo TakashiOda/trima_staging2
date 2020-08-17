@@ -1,16 +1,7 @@
 Rails.application.routes.draw do
-
-  get 'organizations/index'
-  get 'organizations/show'
-  get 'organizations/new'
-  get 'organizations/edit'
-  get 'suppliers/edit'
-  get 'suppliers/show'
-  get 'suppliers/index'
   get 'basic_datas/index', to: 'basic_datas#index', as: :basic_index
   root to: 'home#index'
   get "about", to: 'home#about_page_for_user', as: :about_user
-  # get "about", :to => "home#about"
   get "thank_you_for_registration_user", :to => 'users#thank_you_for_registration_user'
   get "thank_you_for_registration_supplier", :to => 'suppliers#thank_you_for_registration_supplier'
 
@@ -27,11 +18,8 @@ Rails.application.routes.draw do
     :unlocks => "users/unlocks"
   }
 
-
-
   devise_scope :supplier do
     get "suppliers/sign_in", :to => "suppliers/sessions#new"
-    # post "users/sign_in", :to => "users/sessions#create"
     get "suppliers/sign_out", :to => "suppliers/sessions#destroy"
   end
 
@@ -54,11 +42,18 @@ Rails.application.routes.draw do
 
   resources :suppliers do
     resources :organizations
+    resources :activity_businesses
+    #   resources :activities
+    # end
+    delete "suppliers/:supplier_id/organizations/:org_id/:member_id", to: "organizations#member_delete", as: :org_member_delete
+    delete "suppliers/:supplier_id/organizations/:org_id/:invite_id", to: "organizations#invite_delete", as: :org_invite_delete
   end
-  # resources :suppliers, only: [:index, :show, :edit, :update, :destroy]
-  # resources :organizations, only: [:index, :show, :new, :edit, :update, :destroy]
+  get "activity_agency/:activity_business_id/activities/new", to: "activities#new", as: :new_activities
+  get "activity_agency/:activity_business_id/activities/:id", to: "activities#show", as: :activity
+  patch "activity_agency/:activity_business_id/activities/:id", to: "activities#update"
+  get "activity_agency/:activity_business_id/activities", to: "activities#index", as: :activities
+  post "activity_agency/:activity_business_id/activities", to: "activities#create"
+  get "activity_agency/:activity_business_id/activities/:id/edit", to: "activities#edit", as: :edit_activities
   resources :areas, only: [:index, :show, :edit, :update]
 
-  # resources :projects
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
