@@ -30,9 +30,10 @@ body.erb_body {
 }
 body.erb_body.add_padding_top {
   padding-top: 0px;
+  position: relative;
 }
 .body_content {
-  padding-top: 60px;
+  // padding-top: 60px;
   position: relative;
 }
 ul {
@@ -64,29 +65,28 @@ a:hover {
   opacity: 0.8;
 }
 .notice {
-  background: #19da85d1;
+  background: #069456a6;
   color: white;
   text-align: center;
   margin: 0;
-  position: fixed;
-  top: 60px;
   width: 100%;
-  /* margin: 0 auto; */
-  font-size: 16px;
+  font-size: 14px;
   z-index: 100;
-  padding: 6px;
+  padding: 5px;
+  position: absolute;
+  top: 60px;
 }
 .alert {
   background: #ff282870;
   color: white;
   text-align: center;
   margin: 0;
-  position: fixed;
-  top: 60px;
   width: 100%;
-  font-size: 16px;
+  font-size: 14px;
   z-index: 100;
-  padding: 6px;
+  padding: 5px;
+  position: absolute;
+  top: 60px;
 }
 .form-group {
   width: 100%;
@@ -136,11 +136,12 @@ form label {
 }
 /*header************************************/
 header.erb_header {
-  background: #2bb562;
+  background: linear-gradient(to right, #25d4c4, #0f9287);
+  // background: #205f39;
   padding: 0px;
   height: 60px;
-  position: fixed;
-  top: 0;
+  // position: fixed;
+  // top: 0;
   width: 100%;
   z-index: 100;
   .header_inner {
@@ -352,6 +353,23 @@ input#agree_checkbox {
 a.agree_link {
   color: #108fff;
   text-decoration: underline;
+}
+
+/* パスワード表示・非表示 */
+div#password_input_box {
+    position: relative;
+}
+#password_visible_btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25px;
+    height: 19px;
+    padding: 10px;
+    color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 /*after_send_email***************************/
 .static_pages.short_messages_box {
