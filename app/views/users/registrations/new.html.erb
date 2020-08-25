@@ -37,18 +37,16 @@
 </div>
 
 <script type="text/javascript">
-  window.onload = function () {
-    document.getElementById("password_visible_btn").onclick = function() {
-      const pwd = document.getElementById('password-input');
-      const pwdClass = pwd.classList.toggle("invisible");
-      const pwdIcon = document.getElementById('password_visible_btn');
-      if(pwdClass == false){
-        pwd.setAttribute('type', 'text');
-        pwdIcon.innerHTML = '<i class="fas fa-eye-slash"></i>';
-      } else {
-        pwd.setAttribute('type', 'password');
-        pwdIcon.innerHTML = '<i class="fas fa-eye"></i>';
-      }
-    };
+  document.getElementById("password_visible_btn").onclick = function() {
+    const pwd = document.getElementById('password-input');
+    const pwdClass = pwd.classList.toggle("invisible");
+    const pwdIcon = document.getElementById('password_visible_btn');
+    if(pwdClass == false){
+      pwd.setAttribute('type', 'text');
+      pwdIcon.innerHTML = '<i class="fas fa-eye-slash"></i>';
+    } else {
+      pwd.setAttribute('type', 'password');
+      pwdIcon.innerHTML = '<i class="fas fa-eye"></i>';
+    }
   };
 </script>
