@@ -9,12 +9,11 @@
           <h3>体験を新規作成</h3>
         </div>
         <div class="activity_index_activity_list_box">
-          <%= form_for @activity do |form| %>
-            <%= render 'layouts/error_messages', model: form.object %>
-            <%= render :partial => 'activities/activity_form', :locals => {:form => form} %>
+          <%= form_for @activity do |f| %>
+            <%= render 'layouts/error_messages', model: f.object %>
+            <%= render :partial => 'activities/activity_form', :locals => {:f => f} %>
           <% end %>
         </div>
-
       </div>
     </div><!--メインコンテンツ内部-->
   </div><!--メインコンテンツ-->

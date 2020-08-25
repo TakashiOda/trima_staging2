@@ -1,56 +1,99 @@
 <!-- <form> -->
 <div class="user_show_info_items_box">
   <div class="form-group">
-    <%= form.label "体験名" %>
-    <%= form.text_field :name, required: true, class: "form-control" %>
+    <%= f.label "体験名" %>
+    <%= f.text_field :name, required: true, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= form.label "体験の紹介文" %>
-    <%= form.text_area :description, required: true, class: "form-control" %>
+    <%= f.label "体験の紹介文" %>
+    <%= f.text_area :description, required: true, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= form.label "体験のメイン写真" %>
-    <%= form.file_field :main_image, class: "form-control" %>
+    <%= f.label "体験のメイン写真" %>
+    <%= f.file_field :main_image, class: "form-control" %>
   </div>
   <div class="form-group">
     <div class="row">
       <div class="col-half">
-        <%= form.label "体験カテゴリー" %>
-        <%= form.collection_select :activity_category_id, ActivityCategory.all, :id, :jp_name,{prompt: "カテゴリーを選択"}, required: true, class: "form-control" %>
+        <%= f.label "体験所用時間（分）" %>
+        <%= f.number_field :activity_minutes, min: 20 ,step: 5, required: true, class: "form-control" %>
       </div>
       <div class="col-half">
-        <%= form.label "参加できる最低年齢" %>
-        <%= form.text_field :available_age, required: true, class: "form-control" %>
+        <%= f.label "参加できる最低年齢" %>
+        <%# f.text_field :available_age, required: true, class: "form-control" %>
       </div>
     </div>
   </div>
   <div class="form-group">
     <div class="row">
       <div class="col-half">
-        <%= form.label "最大人数" %>
-        <%= form.text_field :maximum_num, required: true, class: "form-control" %>
+        <%= f.label "体験カテゴリー" %>
+        <%= f.collection_select :activity_category_id, ActivityCategory.all, :id, :jp_name,{prompt: "選択してください"}, required: true, class: "form-control" %>
       </div>
       <div class="col-half">
-        <%= form.label "最小人数" %>
-        <%= form.text_field :minimum_num, required: true, class: "form-control" %>
+        <%= f.label "参加できる最低年齢" %>
+        <%= f.number_field :available_age, min: 0, max: 110, required: true, class: "form-control" %>
       </div>
     </div>
   </div>
   <div class="form-group">
-    <%= form.label "実施シーズン" %>
-    <div class="manage_agent_input_box">
-        <div class="form-group"><%= form.check_box :january %><%= form.label "1月" %></div>
-        <div class="form-group"><%= form.check_box :febrary %><%= form.label "2月" %></div>
-        <div class="form-group"><%= form.check_box :march %><%= form.label "3月" %></div>
-        <div class="form-group"><%= form.check_box :april %><%= form.label "4月" %></div>
-        <div class="form-group"><%= form.check_box :may %><%= form.label "5月" %></div>
-        <div class="form-group"><%= form.check_box :june %><%= form.label "6月" %></div>
-        <div class="form-group"><%= form.check_box :july %><%= form.label "7月" %></div>
-        <div class="form-group"><%= form.check_box :august %><%= form.label "8月" %></div>
-        <div class="form-group"><%= form.check_box :september %><%= form.label "9月" %></div>
-        <div class="form-group"><%= form.check_box :october %><%= form.label "10月" %></div>
-        <div class="form-group"><%= form.check_box :november %><%= form.label "11月" %></div>
-        <div class="form-group"><%= form.check_box :december %><%= form.label "12月" %></div>
+    <div class="row">
+      <div class="col-half">
+        <%= f.label "最少催行人数" %>
+        <%= f.number_field :minimum_num, min: 1, max: 49, required: true, class: "form-control" %>
+      </div>
+      <div class="col-half">
+        <%= f.label "最大人数" %>
+        <%= f.number_field :maximum_num, min: 1, max: 50, required: true, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :activity_courses, "アクティビティのコース" %><br />
+    <div class="course_table_head">
+      <div class="course_row1"><span>No.</span></div>
+      <div class="course_row2"><span>開始時間</span></div>
+      <div class="course_row3"><span>終了時間</span></div>
+      <div class="course_row4"><span>削除</span></div>
+    </div>
+    <div id="courses">
+      <%= f.fields_for :activity_courses do |t| %>
+        <%= render "activity_course_fields", f: t %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association "コースを追加", f, :activity_courses, form_name: 'f', id:"course_add_btn" %>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label "実施シーズン" %>
+    <div class="activity_season_input_box">
+        <div class="form-group"><%= f.check_box :january %><%= f.label "january", "１月", class: "top_left_check_label" %></div>
+        <div class="form-group"><%= f.check_box :febrary %><%= f.label "febrary","2月" %></div>
+        <div class="form-group"><%= f.check_box :march %><%= f.label "march","3月" %></div>
+        <div class="form-group"><%= f.check_box :april %><%= f.label "april","4月" %></div>
+        <div class="form-group"><%= f.check_box :may %><%= f.label "may","5月" %></div>
+        <div class="form-group"><%= f.check_box :june %><%= f.label "june","6月", class: "top_right_check_label" %></div>
+    </div>
+    <div class="activity_season_input_box">
+        <div class="form-group"><%= f.check_box :july %><%= f.label "july","7月", class: "bottom_left_check_label" %></div>
+        <div class="form-group"><%= f.check_box :august %><%= f.label "august","8月" %></div>
+        <div class="form-group"><%= f.check_box :september %><%= f.label "september","9月" %></div>
+        <div class="form-group"><%= f.check_box :october %><%= f.label "october","10月" %></div>
+        <div class="form-group"><%= f.check_box :november %><%= f.label "november","11月" %></div>
+        <div class="form-group"><%= f.check_box :december %><%= f.label "december","12月", class: "bottom_right_check_label" %></div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label "営業する曜日" %>
+    <div class="activity_openday_input_box">
+        <div class="form-group"><%= f.check_box :monday_open %><%= f.label "monday_open","月曜", class: "first_check_label" %></div>
+        <div class="form-group"><%= f.check_box :tuesday_open %><%= f.label "tuesday_open","火曜" %></div>
+        <div class="form-group"><%= f.check_box :wednesday_open %><%= f.label "wednesday_open","水曜" %></div>
+        <div class="form-group"><%= f.check_box :thursday_open %><%= f.label "thursday_open","木曜" %></div>
+        <div class="form-group"><%= f.check_box :friday_open %><%= f.label "friday_open","金曜" %></div>
+        <div class="form-group"><%= f.check_box :saturday_open %><%= f.label "saturday_open","土曜" %></div>
+        <div class="form-group"><%= f.check_box :sunday_open %><%= f.label "sunday_open","日曜", class: "last_check_label" %></div>
     </div>
   </div>
   <div class="form_btns">
@@ -59,7 +102,7 @@
         <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
       </div>
       <div class="col-half">
-        <%= form.submit('更新する',class: 'button btn-submit') %>
+        <%= f.submit('更新する',class: 'button btn-submit') %>
       </div>
     </div>
   </div>
@@ -73,19 +116,159 @@
   .hidden {
     display: none;
   }
-  .manage_agent_input_box {
+  .activity_season_input_box,
+  .activity_openday_input_box {
     display: flex;
     flex-wrap: wrap;
   }
-  .manage_agent_input_box .form-group {
+  .activity_season_input_box .form-group {
+    display: flex;
+    margin-bottom: 0px;
+    width: 16.6%;
+  }
+  .activity_openday_input_box .form-group {
+    display: flex;
+    margin-bottom: 0px;
+    width: 14.28%;
+  }
+  input[type=checkbox] {
+    display: none;
+  }
+  input[type="checkbox"]:checked + label {
+    background: #18ab9e;/* マウス選択時の背景色を指定する */
+    color: #ffffff; /* マウス選択時のフォント色を指定する */
+  }
+  .activity_season_input_box label,
+  .activity_openday_input_box label {
+    padding: 5px 10px;
+    text-align: center;
+    background: #e8e8e8;
+    user-select: none;
+    width: 100%;
+  }
+  .activity_season_input_box label:hover,
+  .activity_openday_input_box label:hover {
+    background: #18ab9e85;
+    color: #fff;
+  }
+  label.first_check_label {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+  label.last_check_label {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+  .top_left_check_label {border-top-left-radius: 6px;}
+  .top_right_check_label {border-top-right-radius: 6px;}
+  .bottom_left_check_label {border-bottom-left-radius: 6px;}
+  .bottom_right_check_label {border-bottom-right-radius: 6px;}
+  .form-group.time_input input {
+    width: 60px;
+    border-radius: 6px;
+  }
+  #add_course_btn {
+    border: solid 1px #fff;
+    background: #ececec;
+    color: #656565;
+    padding: 3px 20px;
+    border-radius: 50px;
+    width: 160px;
+    text-align: center;
+    user-select:none;
+  }
+  #add_course_btn:hover {
+    cursor: pointer;
+    background: #d8d8d8;
+  }
+  #add_course_btn svg {
+    color: #7b7b7b;
+  }
+  div#courses .nested-fields .form-group {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
-    width: 25%;
+    margin-bottom: 6px;
   }
-  .manage_agent_input_box input[type=checkbox] {
-    width: 25px;
-    height: 30px;
-    /* vertical-align: middle; */
+  a.remove_course_btn {
+    /* margin-left: 15px; */
+    background: #ef6c6c;
+    color: #fff;
+    border-radius: 93px;
+    padding: 3px 0;
+    font-size: 12px;
+  }
+  a.remove_course_btn span {
+    padding: 0px 9px 0px 10px;
+  }
+  .course_table_head {
+    display: flex;
+    background: gainsboro;
+    color: #fff;
+    font-size: 14px;
+  }
+  .course_row1 {
+    width: 10%;
+    text-align: center;
+  }
+  .course_row2 {
+    width: 40%;
+  }
+  .course_row3 {
+    width: 15%;
+  }
+  .course_row4 {
+    width: 35%;
+    text-align: right;
+    padding-right: 10px;
+  }
+  select.time_input {
+    width: 30%;
+    margin: 0 5px;
+  }
+  .course_row2.time_select {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+  }
+  .links {
+    text-align: center;
+    background: gainsboro;
+    margin: 10px 30%;
+    padding: 2px;
+    border-radius: 40px;
+    font-size: 14px;
+    /* color: #fff; */
+  }
+  .links a {
+    color: #777777;
+    display: block;
+    user-select: none;
+  }
+  .links:hover {
+    background: #b7b7b7;
+  }
+  a.disable {
+    pointer-events: none;
   }
 </style>
+
+<!-- <script type="text/javascript">
+  document.getElementById("course_add_btn").onclick = function() {
+    const courseCount = document.querySelectorAll('.nested-fields').length;
+    if (courseCount >= 9) {
+      const btn = document.getElementById("course_add_btn");
+      btn.classList.add("disable");
+      alert("コースは体験一つにつき10までです");
+    }
+  };
+  const remove_btns = document.getElementsByClassName("remove_course_btn")
+  for( var $i = 0; $i < remove_btns.length; $i++ ) {
+    remove_btns[$i].onclick = function () {
+      const courseCount = document.querySelectorAll('.nested-fields').length;
+      const btn = document.getElementById("course_add_btn");
+      if (courseCount <= 10) {
+        btn.classList.remove("disable");
+      }
+    }
+  }
+</script> -->

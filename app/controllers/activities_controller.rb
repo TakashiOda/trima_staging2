@@ -12,6 +12,7 @@ class ActivitiesController < ApplicationController
   def new
     @activity_business = ActivityBusiness.find_by(organization_id: current_supplier.organization_id)
     @activity = @activity_business.activities.build
+    @activity.activity_courses.build
   end
 
   def create
@@ -51,7 +52,8 @@ class ActivitiesController < ApplicationController
                                       :maximum_num, :minimum_num, :available_age,
                                       :january, :febrary, :march, :april,
                                       :may, :june, :july, :august, :september, :october,
-                                      :november, :december, :advertise_activate, :is_approved)
+                                      :november, :december, :advertise_activate, :is_approved,
+                                      activity_courses_attributes: [:id, :activity_id, :start_hour, :start_minutes, :_destroy])
     end
 
 

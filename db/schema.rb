@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_08_085301) do
+ActiveRecord::Schema.define(version: 2020_08_25_040614) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
     t.integer "activity_category_id", null: false
     t.text "description"
     t.string "main_image"
+    t.integer "activity_minutes"
     t.integer "state_id"
     t.integer "prefecture_id"
     t.integer "area_id"
@@ -41,8 +42,20 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
     t.boolean "october", default: true
     t.boolean "november", default: true
     t.boolean "december", default: true
+    t.boolean "has_season_price", default: false
+    t.float "low_price_ratio", default: 0.8
+    t.float "high_price_ratio", default: 1.2
+    t.boolean "monday_open", default: true
+    t.boolean "tuesday_open", default: true
+    t.boolean "wednesday_open", default: true
+    t.boolean "thursday_open", default: true
+    t.boolean "friday_open", default: true
+    t.boolean "saturday_open", default: true
+    t.boolean "sunday_open", default: true
     t.boolean "advertise_activate", default: false
     t.boolean "is_approved", default: false
+    t.boolean "activate", default: true
+    t.index ["activate"], name: "index_activities_on_activate"
     t.index ["activity_business_id"], name: "index_activities_on_activity_business_id"
     t.index ["activity_category_id"], name: "index_activities_on_activity_category_id"
     t.index ["advertise_activate"], name: "index_activities_on_advertise_activate"
@@ -57,6 +70,7 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
     t.index ["july"], name: "index_activities_on_july"
     t.index ["june"], name: "index_activities_on_june"
     t.index ["march"], name: "index_activities_on_march"
+    t.index ["maximum_num"], name: "index_activities_on_maximum_num"
     t.index ["may"], name: "index_activities_on_may"
     t.index ["november"], name: "index_activities_on_november"
     t.index ["october"], name: "index_activities_on_october"
@@ -64,6 +78,14 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
     t.index ["september"], name: "index_activities_on_september"
     t.index ["state_id"], name: "index_activities_on_state_id"
     t.index ["town_id"], name: "index_activities_on_town_id"
+  end
+
+  create_table "activity_ageprices", force: :cascade do |t|
+    t.integer "activity_id", null: false
+    t.integer "age_from"
+    t.integer "age_to"
+    t.integer "price"
+    t.index ["activity_id"], name: "index_activity_ageprices_on_activity_id"
   end
 
   create_table "activity_businesses", force: :cascade do |t|
@@ -96,6 +118,25 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
     t.string "en_name"
     t.string "jp_name"
     t.string "cn_name"
+  end
+
+  create_table "activity_courses", force: :cascade do |t|
+    t.integer "activity_id", null: false
+    t.integer "start_hour"
+    t.integer "start_minutes"
+    t.index ["activity_id"], name: "index_activity_courses_on_activity_id"
+  end
+
+  create_table "activity_stocks", force: :cascade do |t|
+    t.integer "activity_course_id", null: false
+    t.date "date"
+    t.integer "stock"
+    t.integer "book_amount"
+    t.integer "left_amount"
+    t.string "season_price", default: "normal"
+    t.index ["activity_course_id"], name: "index_activity_stocks_on_activity_course_id"
+    t.index ["date"], name: "index_activity_stocks_on_date"
+    t.index ["left_amount"], name: "index_activity_stocks_on_left_amount"
   end
 
   create_table "areas", force: :cascade do |t|
@@ -341,7 +382,10 @@ ActiveRecord::Schema.define(version: 2020_08_08_085301) do
 
   add_foreign_key "activities", "activity_businesses"
   add_foreign_key "activities", "activity_categories"
+  add_foreign_key "activity_ageprices", "activities"
   add_foreign_key "activity_businesses", "organizations"
+  add_foreign_key "activity_courses", "activities"
+  add_foreign_key "activity_stocks", "activity_courses"
   add_foreign_key "areas", "countries"
   add_foreign_key "areas", "prefectures"
   add_foreign_key "areas", "states"

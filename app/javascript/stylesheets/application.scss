@@ -137,11 +137,8 @@ form label {
 /*header************************************/
 header.erb_header {
   background: linear-gradient(to right, #25d4c4, #0f9287);
-  // background: #205f39;
   padding: 0px;
   height: 60px;
-  // position: fixed;
-  // top: 0;
   width: 100%;
   z-index: 100;
   .header_inner {
@@ -196,20 +193,13 @@ img.header_avatar {
   background: #3e3e3e;
   padding: 20px 0px 15px;
   color: #fff;
-  // position: fixed;
-  // bottom: 0;
   width: 100%;
-  // position: absolute;
-  // bottom: 0;
-  // position: fixed;
-  // bottom: 0;
 }
 .footer_contents {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0 25px;
-  // align-items: center;
   .footer_content_title h4 {
     margin: 10px 0 0 0;
     font-size: 40px;
@@ -218,7 +208,6 @@ img.header_avatar {
 .footer_content_links {
   display: flex;
   margin-top: 20px;
-  // width: 100%;
   ul {
     display: flex;
     flex-direction: column;
@@ -257,7 +246,6 @@ img.header_avatar {
 .itembox__inner {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
 }
 .itembox__inner__items ul {
@@ -273,7 +261,6 @@ img.header_avatar {
     border-radius: 6px;
     box-shadow: 2px 3px 3px #bfbfbf;
   }
-  /* flex-wrap: wrap; */
 }
 
 .home_contents__top__down ul li {
@@ -295,9 +282,6 @@ img.header_avatar {
 }
 .sign_up_in_page_front {
   background-image: url("../images/biei_dark.jpg");
-  // background-image: url("biei_dark.jpg");
-  // background-image: url(<%= asset_path "biei_dark.jpg" %>);
-  // background-image: url("../images/biei.jpg");
   background-size: cover;
   padding: 60px;
   width: 50%;
@@ -401,7 +385,6 @@ div#password_input_box {
 /*user show************************************/
 .container.user_show.container-fluid {
   display: flex;
-  // width: 100vw;
 }
 .user_show_side {
   width: 20%;
@@ -423,7 +406,6 @@ div#password_input_box {
   a {
     color: #fff;
   }
-  /* color: #fff; */
 }
 .user_show_main_content {
   padding: 40px 30px 50px 50px;
@@ -456,7 +438,6 @@ img.user_avatar {
 .user_show_up_right_box {
   display: flex;
   flex-direction: row;
-  // align-items: center;
   justify-content: space-between;
   width: 100%;
   padding-top: 15px;

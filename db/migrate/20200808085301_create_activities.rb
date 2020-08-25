@@ -6,6 +6,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.references :activity_category, null: false, foreign_key: true
       t.text :description
       t.string :main_image
+      t.integer :activity_minutes
 
       # 住所情報
       t.integer :state_id
@@ -36,14 +37,31 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.boolean :november, default: true
       t.boolean :december, default: true
 
+      #　シーズン料金設定
+      t.boolean :has_season_price, default: false
+      t.float   :low_price_ratio, default: 0.8
+      t.float   :high_price_ratio, default: 1.2
+
+      # 定休日情報
+      t.boolean :monday_open, default: true
+      t.boolean :tuesday_open, default: true
+      t.boolean :wednesday_open, default: true
+      t.boolean :thursday_open, default: true
+      t.boolean :friday_open, default: true
+      t.boolean :saturday_open, default: true
+      t.boolean :sunday_open, default: true
+
       #その他設定
       t.boolean :advertise_activate, default: false #0 => approved, 1 =>not yet
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
+      t.boolean :activate, default: true
+
     end
     add_index :activities, :state_id
     add_index :activities, :prefecture_id
     add_index :activities, :area_id
     add_index :activities, :town_id
+    add_index :activities, :maximum_num
     add_index :activities, :available_age
     add_index :activities, :january
     add_index :activities, :febrary
@@ -59,5 +77,6 @@ class CreateActivities < ActiveRecord::Migration[6.0]
     add_index :activities, :december
     add_index :activities, :advertise_activate
     add_index :activities, :is_approved
+    add_index :activities, :activate
   end
 end

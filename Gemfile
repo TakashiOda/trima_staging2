@@ -23,6 +23,8 @@ gem 'rmagick'
 gem 'fog-aws'
 gem 'kaminari'
 gem 'nokogiri'
+gem 'cocoon'
+gem "jquery-rails"
 
 
 group :development, :test do
