@@ -16,7 +16,6 @@ class SuppliersController < ApplicationController
       @inviting_members = OrgInvite.where(organization_id: @organization.id, accept_invite: 1)
     end
   end
-
   def edit
     @supplier = Supplier.find(params[:id])
   end

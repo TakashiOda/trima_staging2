@@ -122,8 +122,8 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
 
   create_table "activity_courses", force: :cascade do |t|
     t.integer "activity_id", null: false
-    t.integer "start_hour"
-    t.integer "start_minutes"
+    t.time "start_time"
+    t.index ["activity_id", "start_time"], name: "index_activity_courses_on_activity_id_and_start_time", unique: true
     t.index ["activity_id"], name: "index_activity_courses_on_activity_id"
   end
 

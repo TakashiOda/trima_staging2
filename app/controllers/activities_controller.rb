@@ -46,14 +46,13 @@ class ActivitiesController < ApplicationController
   private
     def activity_params
       params.require(:activity).permit(:name, :description, :activity_business_id,
-                                      :activity_category_id, :main_image, :state_id,
-                                      :prefecture_id, :area_id, :town_id, :detail_address,
-                                      :building, :longitude, :latitude,
+                                      :activity_category_id, :main_image, :activity_minutes,
+                                      :detail_address, :longitude, :latitude,
                                       :maximum_num, :minimum_num, :available_age,
                                       :january, :febrary, :march, :april,
                                       :may, :june, :july, :august, :september, :october,
                                       :november, :december, :advertise_activate, :is_approved,
-                                      activity_courses_attributes: [:id, :activity_id, :start_hour, :start_minutes, :_destroy])
+                                      activity_courses_attributes: [:id, :activity_id, :start_time, :_destroy])
     end
 
 

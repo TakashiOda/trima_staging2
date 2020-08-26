@@ -16,11 +16,7 @@
     <div class="row">
       <div class="col-half">
         <%= f.label "体験所用時間（分）" %>
-        <%= f.number_field :activity_minutes, min: 20 ,step: 5, required: true, class: "form-control" %>
-      </div>
-      <div class="col-half">
-        <%= f.label "参加できる最低年齢" %>
-        <%# f.text_field :available_age, required: true, class: "form-control" %>
+        <%= f.number_field :activity_minutes, min: 20 ,step: 5, required: true, class: "form-control", id: "activity_minutes" %>
       </div>
     </div>
   </div>
@@ -51,10 +47,8 @@
   <div class="form-group">
     <%= f.label :activity_courses, "アクティビティのコース" %><br />
     <div class="course_table_head">
-      <div class="course_row1"><span>No.</span></div>
-      <div class="course_row2"><span>開始時間</span></div>
-      <div class="course_row3"><span>終了時間</span></div>
-      <div class="course_row4"><span>削除</span></div>
+      <div class="course_row1"><span>開始時間</span></div>
+      <div class="course_row2"><span>削除</span></div>
     </div>
     <div id="courses">
       <%= f.fields_for :activity_courses do |t| %>
@@ -102,7 +96,11 @@
         <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
       </div>
       <div class="col-half">
-        <%= f.submit('更新する',class: 'button btn-submit') %>
+        <% if action_name == "new" %>
+          <%= f.submit('登録する',class: 'button btn-submit') %>
+        <% else %>
+          <%= f.submit('更新する',class: 'button btn-submit') %>
+        <% end %>
       </div>
     </div>
   </div>
@@ -207,23 +205,19 @@
     font-size: 14px;
   }
   .course_row1 {
-    width: 10%;
-    text-align: center;
+    width: 60%;
+    /* text-align: center; */
   }
   .course_row2 {
     width: 40%;
-  }
-  .course_row3 {
-    width: 15%;
-  }
-  .course_row4 {
-    width: 35%;
     text-align: right;
     padding-right: 10px;
   }
   select.time_input {
-    width: 30%;
-    margin: 0 5px;
+    width: 70px;
+    margin: 4px 5px 0px;
+    height: 40px;
+    padding: 5px 10px;
   }
   .course_row2.time_select {
     padding: 5px;
@@ -252,23 +246,11 @@
   }
 </style>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
   document.getElementById("course_add_btn").onclick = function() {
-    const courseCount = document.querySelectorAll('.nested-fields').length;
-    if (courseCount >= 9) {
-      const btn = document.getElementById("course_add_btn");
-      btn.classList.add("disable");
-      alert("コースは体験一つにつき10までです");
+    var minutes = document.getElementById("activity_minutes").value;
+    if (minutes == "") {
+      console.log("からです");
     }
   };
-  const remove_btns = document.getElementsByClassName("remove_course_btn")
-  for( var $i = 0; $i < remove_btns.length; $i++ ) {
-    remove_btns[$i].onclick = function () {
-      const courseCount = document.querySelectorAll('.nested-fields').length;
-      const btn = document.getElementById("course_add_btn");
-      if (courseCount <= 10) {
-        btn.classList.remove("disable");
-      }
-    }
-  }
-</script> -->
+</script>

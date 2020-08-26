@@ -1,57 +1,54 @@
 <!-- <form> -->
 <div class="user_show_info_items_box">
+  <div class="user_edit_image_container">
+    <div class="form-group user_edit_image_box">
+      <div class="user_edit_image_box_inside">
+        <img id="user_image_prev" src="#" class="hidden" />
+        <% if current_supplier && @activity_business.profile_image? %>
+          <%= image_tag @activity_business.profile_image.to_s, class: 'user_present_image', id: 'user_present_image' %>
+        <% else %>
+          <%= image_tag 'default_images/no_avatar_image.png', class: 'user_present_image', id: 'user_present_image' %>
+          <%= form.hidden_field :profile_image_cache %>
+        <% end %>
+      </div>
+      <div id="user_edit_image_upload_btn_box">
+        <%= form.file_field :profile_image, id: 'post_image' %>
+        <span id="user_edit_image_upload_btn" onclick="image_input_btn()"><i class="fas fa-camera"></i></span>
+      </div>
+    </div>
+  </div>
   <div class="form-group">
     <%= form.label "事業名" %>
     <%= form.text_field :name, required: true, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= form.label "事業画像" %>
-    <%= form.file_field :profile_image, class: "form-control" %>
-  </div>
-  <div class="form-group">
     <%= form.label "事業紹介" %>
     <%= form.text_area :profile_text, size: "22x5", class: "form-control" %>
   </div>
-  <div class="form-group">
-    <div class="row">
-      <%= form.hidden_field :organization_id, value: current_supplier.organization_id %>
-      <div class="col-half">
-        <%= form.label "地域" %>
-        <%# form.collection_select :state_id, State.all, :id, :local_name,{prompt: "地域を選択"}, required: true, class: "form-control" %>
-        <%= form.select :state_id, {'北海道': 1}, { include_blank: false}, { class: 'form-control' } %>
-      </div>
-      <div class="col-half">
-        <%= form.label "都道府県" %>
-        <%# form.collection_select :prefecture_id, Prefecture.all, :id, :local_name,{prompt: "都道府県を選択"}, required: true, class: "form-control" %>
-        <%= form.select :prefecture_id, {'北海道': 2}, { include_blank: false}, { class: 'form-control' } %>
-      </div>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="row">
-      <div class="col-half">
-        <%= form.label "エリア" %>
-        <%= form.collection_select :area_id, Area.all, :id, :local_name,{prompt: "エリアを選択"}, class: "form-control" %>
-        <%# form.select :area_id, {'どここかのエリア': 2}, { class: 'form-control' , required: true } %>
-      </div>
-      <div class="col-half">
-        <%= form.label "市町村" %>
-        <%= form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市町村を選択"}, class: "form-control" %>
-        <%# form.select :town_id, {'札幌市': 2}, { class: 'form-control' , required: true } %>
+  <div id="address_box">
+    <div class="form-group">
+      <div class="row">
+        <%= form.hidden_field :organization_id, value: current_supplier.organization_id %>
+        <!-- <div class="col-half"> -->
+          <%# form.label "地域" %>
+          <%# form.collection_select :state_id, State.all, :id, :local_name,{prompt: "地域を選択"}, required: true, class: "form-control" %>
+          <%# form.select :state_id, {'北海道': 1}, { include_blank: false}, { class: 'form-control' } %>
+        <!-- </div> -->
+        <div class="col-half">
+          <%= form.label "都道府県" %>
+          <%# form.collection_select :prefecture_id, Prefecture.all, :id, :local_name,{prompt: "都道府県を選択"}, required: true, class: "form-control" %>
+          <%= form.select :prefecture_id, {'北海道': 2}, { include_blank: false}, { class: 'form-control' } %>
+        </div>
+        <div class="col-half">
+          <%= form.label "エリア" %>
+          <%= form.collection_select :area_id, Area.all, :id, :local_name,{prompt: "エリアを選択"}, class: "form-control" %>
+          <%# form.select :area_id, {'どここかのエリア': 2}, { class: 'form-control' , required: true } %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <%= form.label "以降の住所" %>
-    <%= form.text_field :detail_address, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= form.label "建物名・部屋番号" %>
-    <%= form.text_field :building, class: "form-control" %>
   </div>
   <div class="form-group manage_agent_input_box">
-    <div class="form-group"><%= form.check_box :apply_org_info %><%= form.label "組織の情報を適用" %></div>
-    <div class="form-group"><%= form.check_box :apply_org_bank %><%= form.label "組織の口座を適用" %></div>
+    <!-- <div class="form-group"><%# form.check_box :apply_org_bank %><%# form.label "組織の口座を適用" %></div> -->
     <div class="form-group"><%= form.check_box :has_insurance %><%= form.label "保険に加入している" %></div>
     <div class="form-group"><%= form.check_box :guide_certification %><%= form.label "ガイド認可を保有" %></div>
   </div>
@@ -67,6 +64,27 @@
   </div>
 </div>
 <!-- </form> -->
+
+<script>
+  const selectElement = document.querySelector('#post_image');
+  function image_input_btn() {
+    selectElement.click();
+  }
+
+  document.getElementById('post_image').addEventListener('change', function (e) {
+    // 1枚だけ表示する
+    const file = e.target.files[0];
+    // ファイルのブラウザ上でのURLを取得する
+    const blobUrl = window.URL.createObjectURL(file);
+    // img要素に表示
+    const post_img = document.getElementById('user_image_prev');
+    post_img.src = blobUrl;
+    post_img.classList.toggle("hidden");
+    const before_img = document.getElementById('user_present_image');
+    before_img.classList.toggle("hidden");
+    // before_img.classList.remove("user_present_image");
+  });
+</script>
 
 <style lang="scss">
   #user_edit_image_upload_btn:hover {

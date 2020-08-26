@@ -11,7 +11,7 @@
         <div class="activity_index_activity_list_box">
           <%= form_for @activity do |form| %>
             <%= render 'layouts/error_messages', model: form.object %>
-            <%= render :partial => 'activities/activity_form', :locals => {:form => form} %>
+            <%= render :partial => 'activities/activity_form', :locals => {:f => form} %>
           <% end %>
         </div>
 
