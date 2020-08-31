@@ -16,6 +16,7 @@
               <% @activities.each do |activity|%>
                 <%= link_to edit_activities_path(@activity_business, activity), class: "link" do %>
                   <li class="activity_list_item">
+                    <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
                     <%= activity.name %>
                   </li>
                 <% end %>
@@ -26,7 +27,7 @@
               </li>
             <% end %>
           </ul>
-          
+
         </div>
 
       </div>
@@ -59,6 +60,12 @@
     padding: 10px 0;
     border-bottom: solid 1px #dfdfdf;
     border-top: solid 1px #dfdfdf;
+    display: flex;
+    align-items: center;
+  }
+  img.activity_icon_image {
+    width: 70px;
+    margin-right: 20px;
   }
 
 </style>

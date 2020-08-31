@@ -1,22 +1,23 @@
 class ActivitiesController < ApplicationController
   def index
-    @activity_business = ActivityBusiness.find_by(organization_id: current_supplier.organization_id)
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activities = Activity.where(activity_business_id: @activity_business.id)
   end
 
   def show
-    @activity_business = ActivityBusiness.find_by(organization_id: current_supplier.organization_id)
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = Activity.find(params[:id])
   end
 
   def new
-    @activity_business = ActivityBusiness.find_by(organization_id: current_supplier.organization_id)
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build
     @activity.activity_courses.build
   end
 
   def create
-    @activity_business = ActivityBusiness.find_by(organization_id: current_supplier.organization_id)
+    # binding.pry
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build(activity_params)
     if @activity.save
       redirect_to activities_path(@activity_business)
@@ -26,12 +27,12 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
-    @activity_business = ActivityBusiness.find_by(organization_id: current_supplier.organization_id)
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = Activity.find(params[:id])
   end
 
   def update
-    @activity_business = ActivityBusiness.find_by(organization_id: current_supplier.organization_id)
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
       redirect_to activities_path(@activity_business)

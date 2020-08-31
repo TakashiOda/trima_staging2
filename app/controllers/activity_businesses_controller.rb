@@ -7,14 +7,14 @@ class ActivityBusinessesController < ApplicationController
 
   def new
     @supplier = current_supplier
-    @organization = Organization.find(current_supplier.organization_id)
+    # @organization = Organization.find(current_supplier.organization_id)
     # @business = @organization.activity_businesses.build
     @activity_business = ActivityBusiness.new(organization_id: @organization.id)
   end
 
   def create
     @supplier = current_supplier
-    @organization = Organization.find(current_supplier.organization_id)
+    # @organization = Organization.find(current_supplier.organization_id)
     @activity_business = ActivityBusiness.new(activity_biz_params)
     if @activity_business.save
       redirect_to supplier_path(current_supplier)
@@ -25,7 +25,7 @@ class ActivityBusinessesController < ApplicationController
 
   def edit
     @supplier = current_supplier
-    @organization = Organization.find(current_supplier.organization_id)
+    # @organization = Organization.find(current_supplier.organization_id)
     @activity_business = ActivityBusiness.find_by(organization_id: @organization.id)
     @owners = Supplier.where(organization_id: @organization.id, control_level: 0)
   end
@@ -57,7 +57,6 @@ class ActivityBusinessesController < ApplicationController
   private
     def activity_biz_params
         params.require(:activity_business).permit(:name, :profile_image, :profile_text,
-                                                  :organization_id, :country_id, :state_id,
                                                   :prefecture_id, :area_id, :town_id,
                                                   :detail_address, :building, :apply_org_info,
                                                   :apply_org_bank, :has_insurance, :guide_certification)

@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.text "description"
     t.string "main_image"
     t.integer "activity_minutes"
-    t.integer "state_id"
     t.integer "prefecture_id"
     t.integer "area_id"
     t.integer "town_id"
@@ -55,6 +54,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.boolean "advertise_activate", default: false
     t.boolean "is_approved", default: false
     t.boolean "activate", default: true
+    t.index "\"state_id\"", name: "index_activities_on_state_id"
     t.index ["activate"], name: "index_activities_on_activate"
     t.index ["activity_business_id"], name: "index_activities_on_activity_business_id"
     t.index ["activity_category_id"], name: "index_activities_on_activity_category_id"
@@ -76,7 +76,6 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.index ["october"], name: "index_activities_on_october"
     t.index ["prefecture_id"], name: "index_activities_on_prefecture_id"
     t.index ["september"], name: "index_activities_on_september"
-    t.index ["state_id"], name: "index_activities_on_state_id"
     t.index ["town_id"], name: "index_activities_on_town_id"
   end
 
@@ -89,18 +88,16 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
   end
 
   create_table "activity_businesses", force: :cascade do |t|
-    t.integer "organization_id", null: false
+    t.integer "supplier_id", null: false
     t.string "name"
     t.string "profile_image"
     t.text "profile_text"
-    t.integer "state_id"
+    t.boolean "apply_basic_info", default: true
     t.integer "prefecture_id"
     t.integer "area_id"
     t.integer "town_id"
     t.string "detail_address"
     t.string "building"
-    t.boolean "apply_org_info", default: true
-    t.boolean "apply_org_bank", default: true
     t.boolean "has_insurance", default: false
     t.string "guide_certification"
     t.boolean "is_approved", default: false
@@ -108,9 +105,8 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.index ["guide_certification"], name: "index_activity_businesses_on_guide_certification"
     t.index ["has_insurance"], name: "index_activity_businesses_on_has_insurance"
     t.index ["is_approved"], name: "index_activity_businesses_on_is_approved"
-    t.index ["organization_id"], name: "index_activity_businesses_on_organization_id"
     t.index ["prefecture_id"], name: "index_activity_businesses_on_prefecture_id"
-    t.index ["state_id"], name: "index_activity_businesses_on_state_id"
+    t.index ["supplier_id"], name: "index_activity_businesses_on_supplier_id"
     t.index ["town_id"], name: "index_activity_businesses_on_town_id"
   end
 
@@ -140,8 +136,6 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
   end
 
   create_table "areas", force: :cascade do |t|
-    t.integer "country_id", null: false
-    t.integer "state_id", null: false
     t.integer "prefecture_id", null: false
     t.string "en_name"
     t.string "local_name"
@@ -167,9 +161,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.boolean "season_oct", default: false, null: false
     t.boolean "season_nov", default: false, null: false
     t.boolean "season_dec", default: false, null: false
-    t.index ["country_id"], name: "index_areas_on_country_id"
     t.index ["prefecture_id"], name: "index_areas_on_prefecture_id"
-    t.index ["state_id"], name: "index_areas_on_state_id"
   end
 
   create_table "countries", force: :cascade do |t|
@@ -182,45 +174,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.string "apply_lang"
   end
 
-  create_table "org_invites", force: :cascade do |t|
-    t.integer "organization_id", null: false
-    t.integer "inviter_id"
-    t.string "invited_email"
-    t.integer "accept_invite", default: 1
-    t.integer "has_account", default: 1
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["inviter_id"], name: "index_org_invites_on_inviter_id"
-    t.index ["organization_id"], name: "index_org_invites_on_organization_id"
-  end
-
-  create_table "organizations", force: :cascade do |t|
-    t.string "org_type"
-    t.string "name", null: false
-    t.integer "state_id"
-    t.integer "prefecture_id"
-    t.integer "town_id"
-    t.string "detail_address"
-    t.string "building"
-    t.string "post_code"
-    t.string "phone"
-    t.boolean "has_event", default: false, null: false
-    t.boolean "has_spot", default: false, null: false
-    t.boolean "has_activity", default: false, null: false
-    t.boolean "has_restaurant", default: false, null: false
-    t.integer "contract_plan", default: 0, null: false
-    t.integer "contract_status", default: 1, null: false
-    t.index ["contract_plan"], name: "index_organizations_on_contract_plan"
-    t.index ["contract_status"], name: "index_organizations_on_contract_status"
-    t.index ["phone"], name: "index_organizations_on_phone"
-    t.index ["prefecture_id"], name: "index_organizations_on_prefecture_id"
-    t.index ["state_id"], name: "index_organizations_on_state_id"
-    t.index ["town_id"], name: "index_organizations_on_town_id"
-  end
-
   create_table "prefectures", force: :cascade do |t|
-    t.integer "country_id", null: false
-    t.integer "state_id", null: false
     t.string "en_name"
     t.string "local_name"
     t.string "cn_name"
@@ -230,8 +184,6 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.text "cn_introduction"
     t.text "tw_introduction"
     t.string "image"
-    t.index ["country_id"], name: "index_prefectures_on_country_id"
-    t.index ["state_id"], name: "index_prefectures_on_state_id"
   end
 
   create_table "project_invites", force: :cascade do |t|
@@ -253,22 +205,24 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.date "end_date"
     t.string "start_place"
     t.string "end_place"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "states", force: :cascade do |t|
-    t.integer "country_id", null: false
-    t.string "en_name"
-    t.string "local_name"
-    t.string "cn_name"
-    t.string "tw_name"
-    t.text "en_introduction"
-    t.text "jp_introduction"
-    t.text "cn_introduction"
-    t.text "tw_introduction"
-    t.string "image"
-    t.index ["country_id"], name: "index_states_on_country_id"
+  create_table "supplier_profiles", force: :cascade do |t|
+    t.integer "supplier_id", null: false
+    t.string "manager_name"
+    t.string "post_code"
+    t.integer "prefecture_id"
+    t.integer "town_id"
+    t.string "detail_address"
+    t.string "building"
+    t.string "phone"
+    t.boolean "has_event", default: false, null: false
+    t.boolean "has_spot", default: false, null: false
+    t.boolean "has_activity", default: false, null: false
+    t.boolean "has_restaurant", default: false, null: false
+    t.integer "contract_plan", default: 0, null: false
+    t.boolean "is_suspended", default: false, null: false
+    t.index ["supplier_id"], name: "index_supplier_profiles_on_supplier_id"
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -291,22 +245,13 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.datetime "locked_at"
     t.string "name"
     t.string "avatar"
-    t.integer "organization_id"
-    t.integer "control_level", default: 0, null: false
-    t.integer "accept_invite", default: 0, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_suppliers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_suppliers_on_email", unique: true
-    t.index ["organization_id"], name: "index_suppliers_on_organization_id"
     t.index ["reset_password_token"], name: "index_suppliers_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_suppliers_on_unlock_token", unique: true
   end
 
   create_table "towns", force: :cascade do |t|
-    t.string "town_code"
-    t.integer "country_id", null: false
-    t.integer "state_id", null: false
     t.integer "prefecture_id", null: false
     t.integer "area_id", null: false
     t.string "en_name"
@@ -319,14 +264,12 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.text "tw_introduction"
     t.boolean "is_big_city"
     t.string "image"
+    t.index "\"town_code\"", name: "index_towns_on_town_code"
     t.index ["area_id"], name: "index_towns_on_area_id"
     t.index ["cn_name"], name: "index_towns_on_cn_name"
-    t.index ["country_id"], name: "index_towns_on_country_id"
     t.index ["en_name"], name: "index_towns_on_en_name"
     t.index ["jp_name"], name: "index_towns_on_jp_name"
     t.index ["prefecture_id"], name: "index_towns_on_prefecture_id"
-    t.index ["state_id"], name: "index_towns_on_state_id"
-    t.index ["town_code"], name: "index_towns_on_town_code"
     t.index ["tw_name"], name: "index_towns_on_tw_name"
   end
 
@@ -383,24 +326,15 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
   add_foreign_key "activities", "activity_businesses"
   add_foreign_key "activities", "activity_categories"
   add_foreign_key "activity_ageprices", "activities"
-  add_foreign_key "activity_businesses", "organizations"
+  add_foreign_key "activity_businesses", "suppliers"
   add_foreign_key "activity_courses", "activities"
   add_foreign_key "activity_stocks", "activity_courses"
-  add_foreign_key "areas", "countries"
   add_foreign_key "areas", "prefectures"
-  add_foreign_key "areas", "states"
-  add_foreign_key "org_invites", "organizations"
-  add_foreign_key "org_invites", "suppliers", column: "inviter_id"
-  add_foreign_key "prefectures", "countries"
-  add_foreign_key "prefectures", "states"
   add_foreign_key "project_invites", "projects"
   add_foreign_key "project_invites", "users", column: "inviter_id"
-  add_foreign_key "states", "countries"
-  add_foreign_key "suppliers", "organizations"
+  add_foreign_key "supplier_profiles", "suppliers"
   add_foreign_key "towns", "areas"
-  add_foreign_key "towns", "countries"
   add_foreign_key "towns", "prefectures"
-  add_foreign_key "towns", "states"
   add_foreign_key "user_projects", "projects"
   add_foreign_key "user_projects", "users"
 end

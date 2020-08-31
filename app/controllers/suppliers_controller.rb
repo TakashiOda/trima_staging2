@@ -9,13 +9,15 @@ class SuppliersController < ApplicationController
 
   def show
     @supplier = Supplier.find(params[:id])
-    @activity_business = ActivityBusiness.find_by(organization_id: @supplier.organization_id)
-    if !@supplier.organization_id.nil?
-      @organization = Organization.find(@supplier.organization_id)
-      @joined_members = Supplier.where(organization_id: @organization.id).where.not(id: current_supplier.id)
-      @inviting_members = OrgInvite.where(organization_id: @organization.id, accept_invite: 1)
-    end
+    @supplier_profile = @supplier.supplier_profile
+    @activity_business = ActivityBusiness.find_by(supplier_id: @supplier.id)
+    # if !@supplier.organization_id.nil?
+      # @organization = Organization.find(@supplier.organization_id)
+      # @joined_members = Supplier.where(organization_id: @organization.id).where.not(id: current_supplier.id)
+      # @inviting_members = OrgInvite.where(organization_id: @organization.id, accept_invite: 1)
+    # end
   end
+
   def edit
     @supplier = Supplier.find(params[:id])
   end
@@ -48,7 +50,7 @@ class SuppliersController < ApplicationController
 
   private
     def supplier_params
-        params.require(:supplier).permit(:avatar, :avatar_cache, :name, :organization_id,
+        params.require(:supplier).permit(:avatar, :avatar_cache, :name,
                                          :control_level, :accept_invite)
     end
 end

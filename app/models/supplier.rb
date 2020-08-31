@@ -1,5 +1,5 @@
 class Supplier < ApplicationRecord
-  belongs_to :organization, optional: true
+  has_one :supplier_profile
 
   mount_uploader :avatar, AvatarUploader
 

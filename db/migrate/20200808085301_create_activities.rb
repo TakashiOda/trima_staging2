@@ -9,7 +9,6 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.integer :activity_minutes
 
       # 住所情報
-      t.integer :state_id
       t.integer :prefecture_id
       t.integer :area_id
       t.integer :town_id

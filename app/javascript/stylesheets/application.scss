@@ -253,11 +253,14 @@ img.header_avatar {
   flex-direction: row;
   width: 100%;
   li {
-    width: 25%;
-    margin: 7px;
+    // width: 25%;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 180px;
   }
   img {
-    width: 150px;
+    width: 180px;
     border-radius: 6px;
     box-shadow: 2px 3px 3px #bfbfbf;
   }

@@ -1,6 +1,4 @@
 class Prefecture < ApplicationRecord
-  belongs_to :country
-  belongs_to :state
 
   validates :en_name,  length: { maximum: 40, too_long: "Maximum %{count} characters" }, allow_nil: true
   validates :local_name,  length: { maximum: 40, too_long: "Maximum %{count} characters" }, allow_nil: true

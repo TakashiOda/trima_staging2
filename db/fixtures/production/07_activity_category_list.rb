@@ -1,5 +1,5 @@
 require 'csv'
-csv = CSV.read('db/fixtures/production/activity_categories.csv')
+csv = CSV.read('db/fixtures/development/activity_categories.csv')
 csv.each do |data|
   ActivityCategory.seed(:en_name) do |model|
     model.en_name = data[0]

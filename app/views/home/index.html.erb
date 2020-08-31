@@ -19,22 +19,27 @@
   <div class="home_contents__itembox">
     <div class="itembox__inner">
       <div class="itembox__inner__title">
-        <h4>Pick Up!</h4>
+        <h4>Recommended!</h4>
       </div>
       <div class="itembox__inner__items">
         <ul>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
+          <% if !@activities.nil? %>
+            <% @activities.each do |activity|%>
+              <%= link_to activity_path(activity.activity_business, activity), class: "link" do %>
+                <li class="activity_list_item">
+                  <%= image_tag activity.main_image.to_s, class: 'home_item_image' %>
+                  <div>
+                    <%= activity.name %>
+                    time:<%= activity.activity_minutes %>mins
+                  </div>
+                </li>
+              <% end %>
+            <% end %>
+          <% else %>
+            <li class="activity_list_item">
+              <span>体験が登録されていません</span>
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>

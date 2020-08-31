@@ -33,7 +33,7 @@ class AreasController < ApplicationController
 
   private
     def area_params
-      params.require(:area).permit(:country_id, :state_id, :prefecture_id, :en_name,
+      params.require(:area).permit(:prefecture_id, :en_name,
                                    :local_name, :cn_name, :tw_name, :image, :map,
                                    :en_introduction, :jp_introduction, :cn_introduction,
                                    :tw_introduction, :nearest_airport, :nearest_big_city,

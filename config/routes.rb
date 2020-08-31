@@ -41,12 +41,13 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :edit, :update]
 
   resources :suppliers do
-    resources :organizations
+    # resources :organizations
+    resources :supplier_profiles
     resources :activity_businesses
     #   resources :activities
     # end
-    delete "suppliers/:supplier_id/organizations/:org_id/:member_id", to: "organizations#member_delete", as: :org_member_delete
-    delete "suppliers/:supplier_id/organizations/:org_id/:invite_id", to: "organizations#invite_delete", as: :org_invite_delete
+    # delete "suppliers/:supplier_id/organizations/:org_id/:member_id", to: "organizations#member_delete", as: :org_member_delete
+    # delete "suppliers/:supplier_id/organizations/:org_id/:invite_id", to: "organizations#invite_delete", as: :org_invite_delete
   end
   get "activity_agency/:activity_business_id/activities/new", to: "activities#new", as: :new_activities
   get "activity_agency/:activity_business_id/activities/:id", to: "activities#show", as: :activity
