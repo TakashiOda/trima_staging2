@@ -35,11 +35,22 @@ class DeviseCreateSuppliers < ActiveRecord::Migration[6.0]
       #supplier_info
       t.string   :name
       t.string   :avatar
-      t.references :organization, foreign_key: true
-      t.integer  :control_level, default: 0, null: false
-      t.integer :accept_invite, default: 0, null: false
 
-      t.timestamps null: false
+      # organizationから移行
+      t.string  :manager_name
+      t.integer :state_id
+      t.integer :prefecture_id
+      t.integer :town_id
+      t.string :detail_address
+      t.string :building
+      t.string :post_code
+      t.string :phone
+      t.boolean :has_event, null: false, default: false
+      t.boolean :has_spot, null: false, default: false
+      t.boolean :has_activity, null: false, default: false
+      t.boolean :has_restaurant, null: false, default: false
+      t.integer :contract_plan, null: false, default: 0
+      t.boolean :is_suspended, null: false, default: false #false:稼働, true:凍結
     end
 
     add_index :suppliers, :email,                unique: true
