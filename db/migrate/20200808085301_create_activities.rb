@@ -37,6 +37,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.boolean :december, default: true
 
       #　シーズン料金設定
+      t.integer :price
       t.boolean :has_season_price, default: false
       t.float   :low_price_ratio, default: 0.8
       t.float   :high_price_ratio, default: 1.2

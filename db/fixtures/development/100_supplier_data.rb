@@ -1,3 +1,4 @@
+
 Supplier.seed(:email) do |sup|
   sup.id = 1
   sup.email = "takashi.oda@ccc.ne.jp"

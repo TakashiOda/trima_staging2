@@ -30,19 +30,19 @@
 <div class="form-group invite_member_box">
   <div class="form_inner_form_title">Share with trip member</div>
   <div class="form_inner_form_box">
-    <% if @members.any? %>
+    <% if @members %>
       <% @members.each do |member| %>
       <span>Member</span>
       <input type="textbox" value="<%= User.find(member.user_id).email %>" name="invite_emails[member]" class="form-control">
       <% end %>
     <% end %>
-    <% if @inviting_members.any? %>
+    <% if @inviting_members %>
       <% @inviting_members.each do |inviting_member| %>
       <span>Member</span>
       <input type="textbox" value="<%= inviting_member.invited_email %>" name="invite_emails[member]" class="form-control">
       <% end %>
     <% end %>
-    <% if @left_invite_num > 0 %>
+    <% if @left_invite_num %>
       <% @left_invite_num.times do %>
         <span>Member</span>
         <input type="textbox" name="invite_emails[member]" class="form-control">

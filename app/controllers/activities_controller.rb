@@ -12,7 +12,11 @@ class ActivitiesController < ApplicationController
   def new
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build
+    @activity.activity_ageprices.build
     @activity.activity_courses.build
+    # ActivityAgeprice.all.each do |aa|
+    #   @activity.activity_ageprices.build :id=>aa.id
+    # end
   end
 
   def create
@@ -49,11 +53,13 @@ class ActivitiesController < ApplicationController
       params.require(:activity).permit(:name, :description, :activity_business_id,
                                       :activity_category_id, :main_image, :activity_minutes,
                                       :detail_address, :longitude, :latitude,
+                                      :price, :has_season_price, :low_price_ratio, :high_price_ratio,
                                       :maximum_num, :minimum_num, :available_age,
                                       :january, :febrary, :march, :april,
                                       :may, :june, :july, :august, :september, :october,
                                       :november, :december, :advertise_activate, :is_approved,
-                                      activity_courses_attributes: [:id, :activity_id, :start_time, :_destroy])
+                                      activity_courses_attributes: [:id, :activity_id, :start_time, :_destroy],
+                                      activity_ageprices_attributes: [:id, :activity_id, :age_from, :age_to, :price, :_destroy])
     end
 
 

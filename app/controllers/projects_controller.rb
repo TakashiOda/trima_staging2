@@ -30,6 +30,7 @@ class ProjectsController < ApplicationController
   def new
     @user = User.find(params[:user_id])
     @project = @user.projects.build
+    @left_invite_num = 5
   end
 
   def create

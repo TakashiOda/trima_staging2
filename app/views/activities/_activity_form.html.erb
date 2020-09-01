@@ -20,6 +20,57 @@
       </div>
     </div>
   </div>
+  <!-- <div class="form-group">
+    <div class="row">
+      <div class="col-half">
+        <%# f.label "料金" %>
+        <%# f.number_field :price, min: 1000 ,step: 10, required: true, class: "form-control", id: "activity_minutes" %>
+      </div>
+    </div>
+  </div> -->
+  <div class="form-group">
+    <div class="row">
+      <div class="col-half">
+        <%= f.label "シーズン料金の有無" %>
+        <%= f.check_box :has_season_price, id: "season_price_checkbox" %><%= f.label "has_season_price", "true", class: "season_price_check_label" %>
+      </div>
+    </div>
+  </div>
+  <%# if @activity.has_season_price %>
+    <div class="form-group <%= "hidden" if !@activity.has_season_price %>" id="season_price_ratio_box">
+      <div class="row">
+        <div class="col-half">
+          <%= f.label "ローシーズン倍率" %>
+          <%= f.number_field :low_price_ratio, min: 0.05, max: 1.00, step: "0.05", class: "form-control" %>
+          <input name="low_season_ratio" type="hidden" value=<%= @activity.low_price_ratio %> />
+        </div>
+        <div class="col-half">
+          <%= f.label "ハイシーズン倍率" %>
+          <%= f.number_field :high_price_ratio, min: 1.00, max: 5.00, step: "0.05", class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  <%# end %>
+  <div class="form-group ageprice_table">
+    <%= f.label :activity_ageprices, "料金＆年齢設定" %><br />
+    <div class="course_table_head">
+      <div class="ageprice_row_age"><span>下限年齢</span></div>
+      <div class="ageprice_row_2"></div>
+      <div class="ageprice_row_age"><span>上限年齢</span></div>
+      <div class="ageprice_row_price"><span>通常料金</span></div>
+      <div class="ageprice_row_price"><span>ローシーズン料金</span></div>
+      <div class="ageprice_row_price"><span>ハイシーズン料金</span></div>
+      <div class="ageprice_row_5"><span>削除</span></div>
+    </div>
+    <div id="ageprice">
+      <%= f.fields_for :activity_ageprices do |t| %>
+        <%= render "activity_ageprice_fields", f: t %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association "料金設定を追加", f, :activity_ageprices, form_name: 'f', id:"course_add_btn" %>
+      </div>
+    </div>
+  </div>
   <div class="form-group">
     <div class="row">
       <div class="col-half">
@@ -129,7 +180,8 @@
     margin-bottom: 0px;
     width: 14.28%;
   }
-  input[type=checkbox] {
+  .activity_season_input_box input[type=checkbox],
+  .activity_openday_input_box input[type=checkbox] {
     display: none;
   }
   input[type="checkbox"]:checked + label {
@@ -244,13 +296,74 @@
   a.disable {
     pointer-events: none;
   }
+  .form-group.ageprice_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  /* .ageprice_row_age {
+    width: 15%;
+    padding: 3px;
+  }
+  .ageprice_row_2 {
+    width: 5%;
+    text-align: center;
+    padding: 0 10px;
+  } */
+  .ageprice_input {
+    display: flex;
+    align-items: flex-end;
+  }
+  span.ageprice_unit {
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+    padding: 0 0 3px 5px;
+  }
+  /* .ageprice_row_price {
+    width: 22%;
+    padding: 0 15px 0 15%;
+  } */
 </style>
 
 <script type="text/javascript">
-  document.getElementById("course_add_btn").onclick = function() {
-    var minutes = document.getElementById("activity_minutes").value;
-    if (minutes == "") {
-      console.log("からです");
+  document.getElementById("season_price_checkbox").onclick = function() {
+    var isChecked = document.getElementById("season_price_checkbox").checked;
+    var ratioBox = document.getElementById("season_price_ratio_box");
+    var ratioBoxClass = ratioBox.classList;
+    if (isChecked) {
+      ratioBoxClass.remove("hidden");
+    } else {
+      ratioBoxClass.add("hidden");
     }
   };
+
+  // var box = document.getElementById("ageprice");
+  function changeMax(obj) {
+    if (obj.value >= 1) {
+      var objMinusOne = obj.value - 1;
+    } else {
+      var objMinusOne = 0;
+    }
+
+    var selfElement = document.getElementById(obj.id);
+    var threeUpParent = selfElement.parentNode.parentNode.parentNode;
+    var downParent = threeUpParent.nextElementSibling;
+    var downAgeFrom = downParent.children[0].children[0].children[0];
+    downAgeFrom.setAttribute('max', objMinusOne);
+    var downAgeTo = downParent.children[0].children[2].children[0];
+    downAgeTo.setAttribute('max', objMinusOne);
+    downAgeTo.value = objMinusOne;
+    console.log(objMinusOne);
+    // console.log(obj.value);
+
+  }
+    // var isChecked = document.getElementById("season_price_checkbox").checked;
+    // var ratioBox = document.getElementById("season_price_ratio_box");
+    // var ratioBoxClass = ratioBox.classList;
+    // if (isChecked) {
+    //   ratioBoxClass.remove("hidden");
+    // } else {
+    //   ratioBoxClass.add("hidden");
+    // }
 </script>

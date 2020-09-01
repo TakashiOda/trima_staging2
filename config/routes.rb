@@ -41,7 +41,6 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :edit, :update]
 
   resources :suppliers do
-    # resources :organizations
     resources :supplier_profiles
     resources :activity_businesses
     #   resources :activities

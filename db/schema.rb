@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.boolean "october", default: true
     t.boolean "november", default: true
     t.boolean "december", default: true
+    t.integer "price"
     t.boolean "has_season_price", default: false
     t.float "low_price_ratio", default: 0.8
     t.float "high_price_ratio", default: 1.2

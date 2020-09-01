@@ -24,11 +24,12 @@ class SuppliersController < ApplicationController
 
   def update
     @supplier = Supplier.find(params[:id])
+    # binding.pry
     if @supplier.update(supplier_params)
-      flash[:notice] = '社員情報を更新しました'
+      flash[:notice] = '事業者情報を更新しました'
       redirect_to supplier_path(@supplier)
     else
-      flash[:alert] = '社員情報がおかしいです'
+      flash[:alert] = '事業者情報がおかしいです'
       render 'edit'
     end
   end
@@ -36,7 +37,7 @@ class SuppliersController < ApplicationController
   def destroy
     @supplier = Supplier.find(params[:id])
     if @supplier.destroy
-      flash[:notice] = '社員情報を更新しました'
+      flash[:notice] = '事業者情報を更新しました'
       redirect_to root_path
     else
       flash[:alert] = '削除に失敗しました'
@@ -50,7 +51,6 @@ class SuppliersController < ApplicationController
 
   private
     def supplier_params
-        params.require(:supplier).permit(:avatar, :avatar_cache, :name,
-                                         :control_level, :accept_invite)
+        params.require(:supplier).permit(:avatar, :avatar_cache, :name)
     end
 end
