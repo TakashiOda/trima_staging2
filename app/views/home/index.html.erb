@@ -25,7 +25,8 @@
         <ul>
           <% if !@activities.nil? %>
             <% @activities.each do |activity|%>
-              <%= link_to activity_path(activity.activity_business, activity), class: "link" do %>
+              <% sup = Supplier.find(ActivityBusiness.find(activity.activity_business_id).supplier_id) %>
+              <%= link_to supplier_activity_path(sup, activity), class: "link" do %>
                 <li class="activity_list_item">
                   <%= image_tag activity.main_image.to_s, class: 'home_item_image' %>
                   <div>

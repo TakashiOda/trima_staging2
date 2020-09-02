@@ -1,0 +1,14 @@
+<div class="nested-fields">
+  <div class="stock_items">
+    <%= f %>
+    <%# @activity.activity_stocks[f.index].date %>
+    <%= f.number_field :stock, min: 0, max: 50, step: 1,class: "form-control" %>
+    <%= f.select :season_price, {'通常料金': "normal", 'ハイシーズン料金': 'ハイシーズン料金', 'ローシーズン料金': 'ローシーズン料金'}, class: 'form-control' %>
+  </div>
+</div>
+
+<style lang="scss">
+  .stock_items {
+    display: flex;
+  }
+</style>

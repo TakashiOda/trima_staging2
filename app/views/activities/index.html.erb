@@ -7,17 +7,22 @@
       <div class="supplier_activity_page_top">
         <div class="activity_index_top_box">
           <h3>十勝ラフティングアドベンチャー</h3>
-          <%= link_to "体験を追加", new_activities_path(@activity_business), class: "add_btn" %>
+          <%= link_to "体験を追加", new_supplier_activity_path(current_supplier), class: "add_btn" %>
         </div>
         <div class="activity_index_activity_list_box">
           <h3>体験一覧</h3>
           <ul class="activity_list_items">
             <% if !@activities.nil? %>
               <% @activities.each do |activity|%>
-                <%= link_to edit_activities_path(@activity_business, activity), class: "link" do %>
+                <%= link_to edit_supplier_activity_path(current_supplier, activity), class: "link" do %>
                   <li class="activity_list_item">
-                    <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
-                    <%= activity.name %>
+                    <div class="activity_list_item_front">
+                      <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
+                      <%= activity.name %>
+                    </div>
+                    <div class="activity_list_item_back">
+                      <%= link_to "在庫を編集", new_supplier_activity_activity_stock_path(current_supplier, activity)%>
+                    </div>
                   </li>
                 <% end %>
               <% end %>
@@ -60,6 +65,11 @@
     padding: 10px 0;
     border-bottom: solid 1px #dfdfdf;
     border-top: solid 1px #dfdfdf;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .activity_list_item_front {
     display: flex;
     align-items: center;
   }

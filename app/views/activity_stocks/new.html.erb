@@ -6,15 +6,14 @@
     <div class="supplier_show_content_inside_form"><!--メインコンテンツ内部-->
       <div class="supplier_activity_page_top">
         <div class="activity_index_top_box">
-          <h3>体験を編集</h3>
+          <h3>アクティビティの在庫管理</h3>
         </div>
         <div class="activity_index_activity_list_box">
-          <%= form_for [current_supplier, @activity] do |form| %>
-            <%= render 'layouts/error_messages', model: form.object %>
-            <%= render :partial => 'activities/activity_form', :locals => {:f => form} %>
+          <%= form_for [current_supplier, @activity, @activity_stock] do |f| %>
+            <%= render 'layouts/error_messages', model: f.object %>
+            <%= render :partial => 'activity_stocks/activity_stocks_form', :locals => {:f => f} %>
           <% end %>
         </div>
-
       </div>
     </div><!--メインコンテンツ内部-->
   </div><!--メインコンテンツ-->

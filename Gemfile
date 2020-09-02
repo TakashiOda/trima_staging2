@@ -25,6 +25,7 @@ gem 'kaminari'
 gem 'nokogiri'
 gem 'cocoon'
 gem "jquery-rails"
+gem 'simple_calendar'
 
 
 group :development, :test do

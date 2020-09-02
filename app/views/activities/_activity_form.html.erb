@@ -151,9 +151,6 @@
         <div class="form-group"><%= f.check_box :december %><%= f.label "december","12月", class: "bottom_right_check_label" %></div>
     </div>
   </div>
-  <div class="form_big_title after_second_title">
-    <h3>アクティビティの在庫設定</h3>
-  </div>
   <div class="form_btns">
     <div class="row">
       <div class="col-half">
@@ -482,7 +479,7 @@
 
   function ageFromFocus(obj) {
     // 下の要素のtagNameを取得
-    var selfParent = obj.parentNode.parentNode.parentNode;
+    var selfParent = obj.parentNode.parentNode.parentNode.parentNode;
     var nextParent = selfParent.nextElementSibling;
     var nextElementTag = nextParent.tagName;
     var nextElementClass = nextParent.className;
@@ -499,7 +496,7 @@
 
     var prevParent = selfParent.previousElementSibling;
     if (prevParent !== null && prevParent.tagName == 'INPUT') {
-      var prevAgeFrom = prevParent.previousElementSibling.children[0].children[0].children[0];
+      var prevAgeFrom = prevParent.previousElementSibling.children[0].children[0].children[0].children[0];
       // console.log(prevAgeFrom.value);
       var prevAgeFromValue = prevAgeFrom.value;
       if (prevAgeFromValue > 0) {
@@ -520,9 +517,8 @@
       var objMinusOne = 0;
     }
     var selfElement = document.getElementById(obj.id);
-    var parentNestedField = selfElement.parentNode.parentNode.parentNode; //nested-fieldsクラスを持つdiv
+    var parentNestedField = selfElement.parentNode.parentNode.parentNode.parentNode; //nested-fieldsクラスを持つdiv
     var downParent = parentNestedField.nextElementSibling;
-
     if (downParent.tagName == "INPUT") {
       // すでにagepriceが存在 && 入力下段がinput hiddenの場合
       var towDownParent = parentNestedField.nextElementSibling.nextElementSibling;
@@ -531,18 +527,19 @@
         var downParent = parentNestedField.nextElementSibling.nextElementSibling;
         // var downAgeToText = downParent.children[0].children[2].children[1];
         // downAgeToText.innerText = objMinusOne;
-        var downAgeFrom = downParent.children[0].children[0].children[0];
+        var downAgeFrom = downParent.children[0].children[0].children[0].children[0];
         downAgeFrom.setAttribute('max', objMinusOne);
-        var downAgeTo = downParent.children[0].children[2].children[0];
+        var downAgeTo = downParent.children[0].children[0].children[2].children[0];
         // downAgeTo.setAttribute('max', objMinusOne);
         downAgeTo.value = objMinusOne;
       }
     } else if (downParent.tagName == "DIV" && downParent.className == "nested-fields") {
       // var downAgeToText = downParent.children[0].children[2].children[1];
       // downAgeToText.innerText = objMinusOne;
-      var downAgeFrom = downParent.children[0].children[0].children[0];
+
+      var downAgeFrom = downParent.children[0].children[0].children[0].children[0];
       downAgeFrom.setAttribute('max', objMinusOne);
-      var downAgeTo = downParent.children[0].children[2].children[0];
+      var downAgeTo = downParent.children[0].children[0].children[2].children[0];
       downAgeTo.setAttribute('max', objMinusOne);
       downAgeTo.value = objMinusOne;
     }
@@ -562,7 +559,22 @@
     var highPrice = twoNextParent.children[0];
     floorLow = Math.floor(obj.value * highRatio);
     highPrice.innerText = floorLow;
+  }
 
+  document.getElementById("ageprice_add_btn").onclick = function(){
+    setTimeout(function(){
+      var isChecked = document.getElementById("activity_has_season_price_true").checked;
+      var seasonPriceBoxes = document.querySelectorAll("div.ageprice_row_high");
+      if (isChecked){
+        for (var i = 0; i < seasonPriceBoxes.length; i++) {
+          var hasHidden = seasonPriceBoxes[i].classList.contains('hidden');
+          if (hasHidden) {
+            seasonPriceBoxes[i].classList.remove("hidden");
+          }
+        }
+        // console.log("シーズン金額なし");
+      }
+    }, 100);
   }
 
 </script>

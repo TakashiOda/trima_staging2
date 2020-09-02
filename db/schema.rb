@@ -125,15 +125,14 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
   end
 
   create_table "activity_stocks", force: :cascade do |t|
-    t.integer "activity_course_id", null: false
+    t.integer "activity_id", null: false
     t.date "date"
     t.integer "stock"
-    t.integer "book_amount"
-    t.integer "left_amount"
+    t.integer "book_amount", default: 0, null: false
     t.string "season_price", default: "normal"
-    t.index ["activity_course_id"], name: "index_activity_stocks_on_activity_course_id"
+    t.index ["activity_id"], name: "index_activity_stocks_on_activity_id"
     t.index ["date"], name: "index_activity_stocks_on_date"
-    t.index ["left_amount"], name: "index_activity_stocks_on_left_amount"
+    t.index ["stock"], name: "index_activity_stocks_on_stock"
   end
 
   create_table "areas", force: :cascade do |t|
@@ -329,7 +328,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
   add_foreign_key "activity_ageprices", "activities"
   add_foreign_key "activity_businesses", "suppliers"
   add_foreign_key "activity_courses", "activities"
-  add_foreign_key "activity_stocks", "activity_courses"
+  add_foreign_key "activity_stocks", "activities"
   add_foreign_key "areas", "prefectures"
   add_foreign_key "project_invites", "projects"
   add_foreign_key "project_invites", "users", column: "inviter_id"

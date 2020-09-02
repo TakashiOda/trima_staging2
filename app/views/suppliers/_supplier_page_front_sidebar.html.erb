@@ -2,7 +2,7 @@
   <li>
     <i class="fas fa-suitcase"></i>
     <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>
-      <%= link_to "体験事業", activities_path(ActivityBusiness.find_by(supplier_id:current_supplier.id)) %>
+      <%= link_to "体験事業", supplier_activities_path(current_supplier.id) %>
     <% else %>
       <%= link_to "体験事業", supplier_path(current_supplier) %>
     <% end %>

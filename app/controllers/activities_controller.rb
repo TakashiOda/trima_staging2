@@ -11,12 +11,9 @@ class ActivitiesController < ApplicationController
 
   def new
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
+    # @activity = current_supplier.activities.build
     @activity = @activity_business.activities.build
     @activity.activity_ageprices.build
-    @activity.activity_courses.build
-    # ActivityAgeprice.all.each do |aa|
-    #   @activity.activity_ageprices.build :id=>aa.id
-    # end
   end
 
   def create
