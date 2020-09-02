@@ -1,34 +1,57 @@
 <div class="nested-fields">
   <div class="form-group ageprice_item">
-    <div class="ageprice_row_age ageprice_input">
-      <%= f.number_field :age_from, min: 0, max: 100, onchange: 'changeMax(this)',class: "form-control age_from" %><span class="ageprice_unit">歳</span>
-    </div>
-    <div class="ageprice_row_2">
-      〜
-    </div>
-    <div class="ageprice_row_age ageprice_input">
-      <%= f.number_field :age_to, min: 0, max: 100,class: "form-control age_to" %><span class="ageprice_unit">歳</span>
-    </div>
-    <div class="ageprice_row_price ageprice_input">
-      <%= f.number_field :price, min: 0, max: 100000, step: 10,class: "form-control time_input" %><span class="ageprice_unit">円</span>
-    </div>
-    <div class="ageprice_row_price ageprice_input">
-      <span class="seasonal_price">
-        <%# binding.pry %>
-        <% if !@activity.activity_ageprices.blank? && f.index.is_a?(Integer) && !@activity.activity_ageprices[f.index].price.nil? %>
-          <%= @activity.activity_ageprices[f.index].price * @activity.low_price_ratio %>
+    <div class="ageprice_table_head_front">
+      <div class="ageprice_row_agefrom ageprice_input">
+        <!-- データのage_toが存在し、かつnilでなかったらmax属性をそのデータのagetoまでにする-->
+        <% if !@activity.activity_ageprices.blank? && f.index.is_a?(Integer) && !@activity.activity_ageprices[f.index].age_to.nil? %>
+          <% age_to = @activity.activity_ageprices[f.index].age_to %>
+          <%= f.number_field :age_from, min: 0, max: age_to, onchange: 'changeAgeFrom(this)', onfocus: 'ageFromFocus(this)',class: "form-control age_from" %><span class="ageprice_unit">歳</span>
+        <% else %>
+          <%= f.number_field :age_from, min: 0, max: 100, onchange: 'changeAgeFrom(this)', onfocus: 'ageFromFocus(this)',class: "form-control age_from" %><span class="ageprice_unit">歳</span>
         <% end %>
-      </span>
-      <span class="ageprice_unit">円</span>
+      </div>
+      <div class="ageprice_fromsign">〜</div>
+      <div class="ageprice_row_ageto ageprice_input age_to_input_box">
+        <%= f.number_field :age_to, min: 0, max: 100,class: "form-control age_to" %>
+        <!-- <span class="ageto_text">
+          <%# if !@activity.activity_ageprices.blank? && f.index.is_a?(Integer) && !@activity.activity_ageprices[f.index].age_to.nil? %>
+            <%# @activity.activity_ageprices[f.index].age_to %>
+          <%# end %>
+        </span> -->
+        <span class="ageprice_unit">歳</span>
+      </div>
+      <div class="ageprice_price_input_box ageprice_input">
+        <%= f.number_field :price, min: 0, max: 100000, step: 10,class: "form-control time_input", onchange: 'changePrice(this)', required: true %><span class="ageprice_unit">円</span>
+      </div>
+      <div class="ageprice_row_high ageprice_input <%= "hidden" if !@activity.has_season_price %>">
+        <span class="seasonal_price">
+          <% if !@activity.activity_ageprices.blank? && f.index.is_a?(Integer) && !@activity.activity_ageprices[f.index].price.nil? %>
+            <% low_price = @activity.activity_ageprices[f.index].price * @activity.low_price_ratio %>
+            <%= low_price.round %>
+          <% else %>
+            <%= (1000*@activity.low_price_ratio).round%>
+          <% end %>
+        </span>
+        <span class="ageprice_unit">円</span>
+      </div>
+      <div class="ageprice_row_high ageprice_input <%= "hidden" if !@activity.has_season_price %>">
+        <span class="seasonal_price">
+          <% if !@activity.activity_ageprices.blank? && f.index.is_a?(Integer) && !@activity.activity_ageprices[f.index].price.nil? %>
+            <% high_price = @activity.activity_ageprices[f.index].price * @activity.high_price_ratio %>
+            <%= high_price.round %>
+          <% else %>
+            <%= (1000*@activity.high_price_ratio).round%>
+          <% end %>
+        </span>
+        <span class="ageprice_unit">円</span>
+      </div>
     </div>
-    <div class="ageprice_row_price ageprice_input">
-      <span class="seasonal_price"><%= 1000*2.65 %></span>
-      <span class="ageprice_unit">円</span>
-    </div>
-    <div class="ageprice_row_5">
-      <%= link_to_remove_association f, class: "remove_course_btn" do %>
-        <span><i class="fas fa-times"></i></span>
-      <% end %>
+    <div class="ageprice_table_head_back">
+      <div class="ageprice_row_5">
+        <%= link_to_remove_association f, class: "remove_ageprice_btn" do %>
+          <span><i class="far fa-trash-alt"></i></span>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

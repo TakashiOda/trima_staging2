@@ -82,9 +82,9 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
 
   create_table "activity_ageprices", force: :cascade do |t|
     t.integer "activity_id", null: false
-    t.integer "age_from"
-    t.integer "age_to"
-    t.integer "price"
+    t.integer "age_from", default: 0, null: false
+    t.integer "age_to", default: 100, null: false
+    t.integer "price", default: 1000, null: false
     t.index ["activity_id"], name: "index_activity_ageprices_on_activity_id"
   end
 
