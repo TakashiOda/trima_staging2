@@ -3,21 +3,21 @@ class CreateActivities < ActiveRecord::Migration[6.0]
     create_table :activities do |t|
       t.string :name
       t.references :activity_business, null: false, foreign_key: true
-      t.references :activity_category, null: false, foreign_key: true
-      t.text :description
-      t.string :main_image
+      t.integer :activity_category_id, null: false, foreign_key: true
+      t.text    :description
+      t.string  :main_image
       t.integer :activity_minutes
 
       # 住所情報
       t.integer :prefecture_id
       t.integer :area_id
       t.integer :town_id
-      t.string :detail_address
-      t.string :building
-      t.float  :longitude
-      t.float  :latitude
+      t.string  :detail_address
+      t.string  :building
+      t.float   :longitude
+      t.float   :latitude
 
-      #　参加情報
+      #　参加条件
       t.integer :maximum_num, default: 1
       t.integer :minimum_num, default: 5
       t.integer :available_age, default: 6
@@ -36,8 +36,13 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.boolean :november, default: true
       t.boolean :december, default: true
 
+      #期間設定
+      t.boolean :is_all_year_open, default: false
+      t.date    :start_date
+      t.date    :end_date
+
       #　シーズン料金設定
-      t.integer :price
+      t.integer :normal_adult_price
       t.boolean :has_season_price, default: false
       t.float   :low_price_ratio, default: 0.8
       t.float   :high_price_ratio, default: 1.2
@@ -57,7 +62,6 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.boolean :activate, default: true
 
     end
-    add_index :activities, :state_id
     add_index :activities, :prefecture_id
     add_index :activities, :area_id
     add_index :activities, :town_id
@@ -78,5 +82,8 @@ class CreateActivities < ActiveRecord::Migration[6.0]
     add_index :activities, :advertise_activate
     add_index :activities, :is_approved
     add_index :activities, :activate
+    add_index :activities, :is_all_year_open
+    add_index :activities, :start_date
+    add_index :activities, :end_date
   end
 end

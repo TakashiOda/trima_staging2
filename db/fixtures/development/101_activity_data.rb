@@ -13,7 +13,7 @@ csv.each do |data|
     act.maximum_num = data[7]
     act.minimum_num = data[8]
     act.available_age = data[9]
-    act.price = data[10]
+    act.normal_adult_price = data[10]
     act.has_season_price = data[11]
   end
 end

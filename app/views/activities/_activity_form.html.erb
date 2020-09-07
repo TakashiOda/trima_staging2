@@ -105,6 +105,31 @@
   <div class="form_big_title after_second_title">
     <h3>アクティビティのスケジュール設定</h3>
   </div>
+  <%= f.label "実施期間の有無" %>
+  <div class="season_price_radio_box_inner">
+    <div class="season_price_radio_items">
+      <div class="season_price_radio_item on">
+        <%= f.radio_button :is_all_year_open, :true, onClick: "isAllYearOpen(this)" %>
+        <%= f.label :is_all_year_open, "あり", {value: :true, style: "display: inline-block;"} %>
+      </div>
+      <div class="season_price_radio_item off">
+        <%= f.radio_button :is_all_year_open, :false, onClick: "isLimitedOpen(this)" %>
+        <%= f.label :is_all_year_open, "なし", {value: :false, style: "display: inline-block;"} %>
+      </div>
+    </div>
+    <div class="form-group <%= "hidden" if !@activity.is_all_year_open %>" id="activity_date_input_box">
+      <div class="row">
+        <div class="col-half">
+          <%= f.label "期間の開始日" %>
+          <%= f.date_field :start_date, min: Date.today ,class: "form-control date_select", id: "activity_start_select", onChange: "changeStartDate(this)" %>
+        </div>
+        <div class="col-half">
+          <%= f.label "期間の終了日" %>
+          <%= f.date_field :end_date, min: Date.today ,class: "form-control date_select", id: "activity_end_select", onChange: "changeEndDate(this)" %>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="form-group">
     <%= f.label "営業する曜日" %>
     <div class="activity_openday_input_box">
@@ -412,7 +437,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 90px;
     padding: 0 10px;
   }
   div#season_price_ratio_box {
@@ -423,7 +448,7 @@
   }
   .season_price_radio_items {
     display: flex;
-    width: 40%;
+    width: 30%;
   }
   .season_price_radio_items input[type=radio],
   .season_price_radio_items input[type=radio] {
@@ -446,6 +471,15 @@
     background: #18ab9e;/* マウス選択時の背景色を指定する */
     color: #ffffff; /* マウス選択時のフォント色を指定する */
   }
+  input.date_select {
+    font-size: 13px;
+  }
+  @media screen and (max-width: 787px) {
+    .season_price_radio_box_inner {
+      flex-direction: column;
+      align-items: baseline;
+    }
+}
 </style>
 
 <script type="text/javascript">
@@ -575,6 +609,72 @@
         // console.log("シーズン金額なし");
       }
     }, 100);
+  }
+  function isAllYearOpen(obj) {
+    var isChecked = obj.checked;
+    var dateBox = document.getElementById("activity_date_input_box");
+    var dateBoxClass = dateBox.classList;
+    if (isChecked) {
+      dateBoxClass.remove("hidden");
+    } else {
+      dateBoxClass.add("hidden");
+    }
+  }
+  function isLimitedOpen(obj) {
+    var isChecked = obj.checked;
+    var dateBox = document.getElementById("activity_date_input_box");
+    var dateBoxClass = dateBox.classList;
+    if (isChecked) {
+      dateBoxClass.add("hidden");
+    } else {
+      dateBoxClass.remove("hidden");
+    }
+  }
+
+  function changeStartDate(obj) {
+    let inputStartDate = new Date(obj.value); //入力された開始日
+    let systemEndDate = new Date(obj.value) //
+    let systemEndMin = new Date(systemEndDate.setDate(systemEndDate.getDate() + 1));
+    let eYear = systemEndDate.getFullYear();
+    let eMonth = ('0' + (systemEndDate.getMonth()+1)).slice(-2);
+    let eDate = ('0' + systemEndDate.getDate()).slice(-2);
+    let systemEndMinToString = eYear + "-" + eMonth + "-" + eDate;
+    let inputEndFrom = document.getElementById("activity_end_select");
+    inputEndFrom.setAttribute('min', systemEndMinToString);
+
+    let inputEndFromValue = inputEndFrom.value;
+    if (inputEndFromValue != "") {
+      inputEndFromValue = new Date(inputEndFrom.value);
+    }
+
+    if (inputEndFromValue == "" || inputEndFromValue == null ) {
+      inputEndFrom.setAttribute('value', systemEndMinToString);
+    } else if (inputEndFromValue != "" && inputStartDate >= inputEndFromValue ){
+      inputEndFrom.setAttribute('value', systemEndMinToString);
+    }
+  }
+
+  function changeEndDate(obj) {
+    let inputEndDate = new Date(obj.value); //入力された終了日
+    let systemStartDate = new Date(obj.value) //
+    let systemStartMax = new Date(systemStartDate.setDate(systemStartDate.getDate() - 1));
+    let eYear = systemStartDate.getFullYear();
+    let eMonth = ('0' + (systemStartDate.getMonth()+1)).slice(-2);
+    let eDate = ('0' + systemStartDate.getDate()).slice(-2);
+    let systemStartMaxToString = eYear + "-" + eMonth + "-" + eDate;
+    let inputStartFrom = document.getElementById("activity_start_select");
+    inputStartFrom.setAttribute('max', systemStartMaxToString);
+
+    let inputStartFromValue = inputStartFrom.value;
+    if (inputStartFromValue != "") {
+      inputStartFromValue = new Date(inputStartFrom.value);
+    }
+
+    if (inputStartFromValue == "" || inputStartFromValue == null ) {
+      inputStartFrom.setAttribute('value', systemStartMaxToString);
+    } else if (inputStartFromValue != "" && inputStartFromValue >= inputEndDate ){
+      inputStartFrom.setAttribute('value', systemStartMaxToString);
+    }
   }
 
 </script>

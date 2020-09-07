@@ -41,7 +41,10 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.boolean "october", default: true
     t.boolean "november", default: true
     t.boolean "december", default: true
-    t.integer "price"
+    t.boolean "is_all_year_open", default: false
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "normal_adult_price"
     t.boolean "has_season_price", default: false
     t.float "low_price_ratio", default: 0.8
     t.float "high_price_ratio", default: 1.2
@@ -55,17 +58,17 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.boolean "advertise_activate", default: false
     t.boolean "is_approved", default: false
     t.boolean "activate", default: true
-    t.index "\"state_id\"", name: "index_activities_on_state_id"
     t.index ["activate"], name: "index_activities_on_activate"
     t.index ["activity_business_id"], name: "index_activities_on_activity_business_id"
-    t.index ["activity_category_id"], name: "index_activities_on_activity_category_id"
     t.index ["advertise_activate"], name: "index_activities_on_advertise_activate"
     t.index ["april"], name: "index_activities_on_april"
     t.index ["area_id"], name: "index_activities_on_area_id"
     t.index ["august"], name: "index_activities_on_august"
     t.index ["available_age"], name: "index_activities_on_available_age"
     t.index ["december"], name: "index_activities_on_december"
+    t.index ["end_date"], name: "index_activities_on_end_date"
     t.index ["febrary"], name: "index_activities_on_febrary"
+    t.index ["is_all_year_open"], name: "index_activities_on_is_all_year_open"
     t.index ["is_approved"], name: "index_activities_on_is_approved"
     t.index ["january"], name: "index_activities_on_january"
     t.index ["july"], name: "index_activities_on_july"
@@ -77,6 +80,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.index ["october"], name: "index_activities_on_october"
     t.index ["prefecture_id"], name: "index_activities_on_prefecture_id"
     t.index ["september"], name: "index_activities_on_september"
+    t.index ["start_date"], name: "index_activities_on_start_date"
     t.index ["town_id"], name: "index_activities_on_town_id"
   end
 
@@ -125,12 +129,12 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
   end
 
   create_table "activity_stocks", force: :cascade do |t|
-    t.integer "activity_id", null: false
+    t.integer "activity_course_id", null: false
     t.date "date"
     t.integer "stock"
     t.integer "book_amount", default: 0, null: false
     t.string "season_price", default: "normal"
-    t.index ["activity_id"], name: "index_activity_stocks_on_activity_id"
+    t.index ["activity_course_id"], name: "index_activity_stocks_on_activity_course_id"
     t.index ["date"], name: "index_activity_stocks_on_date"
     t.index ["stock"], name: "index_activity_stocks_on_stock"
   end
@@ -324,11 +328,10 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
   end
 
   add_foreign_key "activities", "activity_businesses"
-  add_foreign_key "activities", "activity_categories"
   add_foreign_key "activity_ageprices", "activities"
   add_foreign_key "activity_businesses", "suppliers"
   add_foreign_key "activity_courses", "activities"
-  add_foreign_key "activity_stocks", "activities"
+  add_foreign_key "activity_stocks", "activity_courses"
   add_foreign_key "areas", "prefectures"
   add_foreign_key "project_invites", "projects"
   add_foreign_key "project_invites", "users", column: "inviter_id"

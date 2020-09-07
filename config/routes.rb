@@ -45,8 +45,11 @@ Rails.application.routes.draw do
   resources :suppliers do
     resources :supplier_profiles
     resources :activity_businesses
+    # resources :activities
+    # get "suppliers/:supplier_id/activities/stocknew", to: "activities#new", as: :new_activities
+
     resources :activities do
-      resources :activity_stocks
+      get "suppliers/:supplier_id/activities/:activity_id/stocknew", to: "activities#stock_new", as: :new_stocks
     end
   end
   # get "activity_agency/:activity_business_id/activities/new", to: "activities#new", as: :new_activities

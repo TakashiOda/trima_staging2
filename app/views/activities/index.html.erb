@@ -21,7 +21,7 @@
                       <%= activity.name %>
                     </div>
                     <div class="activity_list_item_back">
-                      <%= link_to "在庫を編集", new_supplier_activity_activity_stock_path(current_supplier, activity)%>
+                      <%= link_to "在庫を編集", supplier_activity_new_stocks_path(current_supplier, activity)%>
                     </div>
                   </li>
                 <% end %>
