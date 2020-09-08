@@ -65,14 +65,15 @@ class ActivitiesController < ApplicationController
       params.require(:activity).permit(:name, :description, :activity_business_id,
                                       :activity_category_id, :main_image, :activity_minutes,
                                       :detail_address, :longitude, :latitude,
-                                      :normal_adult_price, :has_season_price, :low_price_ratio, :high_price_ratio,
+                                      :normal_adult_price, :has_season_price,
                                       :maximum_num, :minimum_num, :available_age,  :is_all_year_open,
                                       :start_date, :end_date,
                                       :january, :febrary, :march, :april,
                                       :may, :june, :july, :august, :september, :october,
                                       :november, :december, :advertise_activate, :is_approved,
                                       activity_courses_attributes: [:id, :activity_id, :start_time, :_destroy],
-                                      activity_ageprices_attributes: [:id, :activity_id, :age_from, :age_to, :price, :_destroy])
+                                      activity_ageprices_attributes: [:id, :activity_id, :age_from,
+                                      :age_to, :normal_price, :high_price, :low_price, :_destroy])
     end
 
     def activity_stock_params

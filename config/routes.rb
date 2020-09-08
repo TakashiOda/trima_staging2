@@ -49,7 +49,11 @@ Rails.application.routes.draw do
     # get "suppliers/:supplier_id/activities/stocknew", to: "activities#new", as: :new_activities
 
     resources :activities do
-      get "suppliers/:supplier_id/activities/:activity_id/stocknew", to: "activities#stock_new", as: :new_stocks
+      get "stocknew", to: "activities#stock_new", as: :new_stocks
+      # get "suppliers/:supplier_id/activities/:activity_id/stocknew", to: "activities#stock_new", as: :new_stocks
+      post "stocks", to: "activities#stock_create"
+      get "stockedit", to: "activities#stock_edit"
+      patch "stocks", to: "activities#stock_update"
     end
   end
   # get "activity_agency/:activity_business_id/activities/new", to: "activities#new", as: :new_activities

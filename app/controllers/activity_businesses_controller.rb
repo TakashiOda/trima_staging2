@@ -9,7 +9,7 @@ class ActivityBusinessesController < ApplicationController
     @supplier = current_supplier
     # @organization = Organization.find(current_supplier.organization_id)
     # @business = @organization.activity_businesses.build
-    @activity_business = ActivityBusiness.new(organization_id: @organization.id)
+    @activity_business = ActivityBusiness.new(supplier_id: current_supplier.id)
   end
 
   def create
@@ -26,13 +26,12 @@ class ActivityBusinessesController < ApplicationController
   def edit
     @supplier = current_supplier
     # @organization = Organization.find(current_supplier.organization_id)
-    @activity_business = ActivityBusiness.find_by(organization_id: @organization.id)
-    @owners = Supplier.where(organization_id: @organization.id, control_level: 0)
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
   end
 
   def update
     @supplier = current_supplier
-    @activity_business = ActivityBusiness.find_by(organization_id: @supplier.organization.id)
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     if @activity_business.update(activity_biz_params)
       flash[:notice] = '体験事業の情報を更新しました'
       redirect_to supplier_path(@supplier)

@@ -63,43 +63,39 @@
           <%= f.label :has_season_price, "なし", {value: :false, style: "display: inline-block;"} %>
         </div>
       </div>
-      <div class="form-group <%= "hidden" if !@activity.has_season_price %>" id="season_price_ratio_box">
+      <!-- <div class="form-group" id="season_price_ratio_box">
         <div class="row">
-          <div class="col-half">
-            <%= f.label "ローシーズン倍率" %>
-            <%= f.number_field :low_price_ratio, min: 0.05, max: 1.00, step: "0.05", class: "form-control", id: "low_season_ratio_input" %>
-            <input name="low_season_ratio_hidden" type="hidden" value=<%= @activity.low_price_ratio %> />
-          </div>
-          <div class="col-half">
-            <%= f.label "ハイシーズン倍率" %>
-            <%= f.number_field :high_price_ratio, min: 1.00, max: 5.00, step: "0.05", class: "form-control", id: "high_season_ratio_input" %>
-          </div>
-        </div>
-      </div>
+          <div class="col-half"> -->
+            <%# f.label "ローシーズン倍率" %>
+            <%# f.number_field :low_price_ratio, min: 0.05, max: 1.00, step: "0.05", class: "form-control", id: "low_season_ratio_input" %>
+            <!-- <input name="low_season_ratio_hidden" type="hidden" /> -->
+          <!-- </div>
+          <div class="col-half"> -->
+            <%# f.label "ハイシーズン倍率" %>
+            <%# f.number_field :high_price_ratio, min: 1.00, max: 5.00, step: "0.05", class: "form-control", id: "high_season_ratio_input" %>
+          <!-- </div> -->
+        <!-- </div> -->
+      <!-- </div> -->
     </div>
   </div>
   <div class="form-group ageprice_table">
     <%= f.label :activity_ageprices, "料金＆年齢設定" %><br />
     <div class="ageprice_table_head">
-      <div class="ageprice_table_head_front">
-        <div class="ageprice_row_agefrom"><span>下限</span></div>
-        <div class="ageprice_fromsign">〜</div>
-        <div class="ageprice_row_ageto"><span>上限</span></div>
-        <div class="ageprice_price_input_box"><span>通常料金</span></div>
-        <div class="ageprice_row_high <%= "hidden" if !@activity.has_season_price %>"><span>ロー料金</span></div>
-        <div class="ageprice_row_high <%= "hidden" if !@activity.has_season_price %>"><span>ハイ料金</span></div>
-      </div>
-      <div class="ageprice_table_head_back">
-        <div class="ageprice_row_5"></div>
-      </div>
+      <div class="ageprice_row agefrom">下限</div>
+      <div class="ageprice_row fromsign">〜</div>
+      <div class="ageprice_row ageto">上限</div>
+      <div class="ageprice_row normal_price">通常料金</div>
+      <div class="ageprice_row season_price">ロー料金</div>
+      <div class="ageprice_row season_price">ハイ料金</div>
+      <div class="ageprice_row row_delete">削除</div>
     </div>
     <div id="ageprice">
       <%= f.fields_for :activity_ageprices do |t| %>
         <%= render "activity_ageprice_fields", f: t %>
       <% end %>
-      <div class="links">
-        <%= link_to_add_association "料金設定を追加", f, :activity_ageprices, form_name: 'f', id:"ageprice_add_btn" %>
-      </div>
+    </div>
+    <div class="links">
+      <%= link_to_add_association "料金設定を追加", f, :activity_ageprices, form_name: 'f', id:"ageprice_add_btn" %>
     </div>
   </div>
   <div class="form_big_title after_second_title">
@@ -344,50 +340,42 @@
   /* 年齢と料金 */
   .ageprice_table_head {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     background: gainsboro;
     color: #fff;
     font-size: 10px;
+    width: 100%;
   }
-  .ageprice_table_head_front {
-    width: 95%;
+  /* .ageprice_table_head div {
     display: flex;
     align-items: center;
-  }
-  .ageprice_table_head_back {width: 5%;}
-  .ageprice_table_head div {
+  } */
+  .ageprice_row {
     display: flex;
-    align-items: center;
-  }
-  .form-group.ageprice_item {
-    display: flex;
-    /* align-items: center; */
-    margin-bottom: 5px;
-  }
-  .ageprice_input {
-    display: flex;
+    flex-direction: row;
     align-items: flex-end;
   }
-  .ageprice_row_agefrom {
-    width: 14%;
-    padding: 0.5%;
+  .ageprice_row input {
+    padding: 8px 8px;
+    text-align: right;
   }
-  .ageprice_fromsign {
+  .nested-fields {
+    display: flex;
+    align-items: center;
+  }
+  .agefrom, .ageto {
+    width: 14%;
+    padding: 0 0.5%;
+  }
+  .fromsign {
     display: flex;
     align-items: flex-end;
     width: 3%;
     padding: 1%;
   }
-  .ageprice_row_ageto {
-    width: 14%;
-    padding: 0.5%;
-  }
-  .ageprice_price_input_box {
-    width: 25%;
-    padding: 0 0.5%;
-  }
-  .ageprice_row_high {
-    width: 11%;
+  .normal_price,
+  .season_price {
+    width: 18%;
     padding: 0 1%;
   }
 
@@ -401,11 +389,10 @@
     font-size: 12px;
     color: #a2a2a2;
   }
-  .ageprice_row_5 {
-    width: 20%;
+  .row_delete {
+    width: 5%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
   }
   a.remove_ageprice_btn {
       padding: 5px;
@@ -420,10 +407,6 @@
     width:100%;
     margin: 0;
     color: #ef6c6c;
-  }
-  .ageprice_row_high.ageprice_input {
-    display: flex;
-    justify-content: flex-end;
   }
   div#ageprice div.nested-fields:first-child div.age_to_input_box input,
   div#ageprice div.nested-fields:first-child div.age_to_input_box span {
@@ -485,11 +468,11 @@
 <script type="text/javascript">
   function hasSeasonPrice(obj) {
     var isChecked = obj.checked;
-    var ratioBox = document.getElementById("season_price_ratio_box");
-    var ratioBoxClass = ratioBox.classList;
+    // var ratioBox = document.getElementById("season_price_ratio_box");
+    // var ratioBoxClass = ratioBox.classList;
     var seasonPriceBoxes = document.querySelectorAll("div.ageprice_row_high");
     if (isChecked) {
-      ratioBoxClass.remove("hidden");
+      // ratioBoxClass.remove("hidden");
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
         seasonPriceBoxes[i].classList.remove("hidden");
         // console.log(seasonPriceBoxes[i]);

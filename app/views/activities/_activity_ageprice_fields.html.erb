@@ -1,7 +1,5 @@
 <div class="nested-fields">
-  <div class="form-group ageprice_item">
-    <div class="ageprice_table_head_front">
-      <div class="ageprice_row_agefrom ageprice_input">
+      <div class="ageprice_row agefrom">
         <!-- データのage_toが存在し、かつnilでなかったらmax属性をそのデータのagetoまでにする-->
         <% if !@activity.activity_ageprices.blank? && f.index.is_a?(Integer) && !@activity.activity_ageprices[f.index].age_to.nil? %>
           <% age_to = @activity.activity_ageprices[f.index].age_to %>
@@ -10,43 +8,23 @@
           <%= f.number_field :age_from, min: 0, max: 100, onchange: 'changeAgeFrom(this)', onfocus: 'ageFromFocus(this)',class: "form-control age_from" %><span class="ageprice_unit">歳</span>
         <% end %>
       </div>
-      <div class="ageprice_fromsign">〜</div>
-      <div class="ageprice_row_ageto ageprice_input age_to_input_box">
+      <div class="ageprice_row fromsign">〜</div>
+      <div class="ageprice_row ageto">
         <%= f.number_field :age_to, min: 0, max: 100,class: "form-control age_to" %>
         <span class="ageprice_unit">歳</span>
       </div>
-      <div class="ageprice_price_input_box ageprice_input">
-        <%= f.number_field :price, min: 0, max: 100000, step: 10,class: "form-control time_input", onchange: 'changePrice(this)', required: true %><span class="ageprice_unit">円</span>
+      <div class="ageprice_row normal_price">
+        <%= f.number_field :normal_price, min: 0, max: 100000, step: 10,class: "form-control time_input", onchange: 'changePrice(this)', required: true %><span class="ageprice_unit">円</span>
       </div>
-      <div class="ageprice_row_high ageprice_input hidden">
-        <span class="seasonal_price">
-          <% if !@activity.activity_ageprices.blank? && f.index.is_a?(Integer) && !@activity.activity_ageprices[f.index].price.nil? %>
-            <% low_price = @activity.activity_ageprices[f.index].price * @activity.low_price_ratio %>
-            <%= low_price.round %>
-          <% else %>
-            <%= (1000*@activity.low_price_ratio).round%>
-          <% end %>
-        </span>
-        <span class="ageprice_unit">円</span>
+      <div class="ageprice_row season_price">
+        <%= f.number_field :high_price, min: 0, max: 100000, step: 10,class: "form-control time_input", onchange: 'changePrice(this)', required: true %><span class="ageprice_unit">円</span>
       </div>
-      <div class="ageprice_row_high ageprice_input hidden">
-        <span class="seasonal_price">
-          <% if !@activity.activity_ageprices.blank? && f.index.is_a?(Integer) && !@activity.activity_ageprices[f.index].price.nil? %>
-            <% high_price = @activity.activity_ageprices[f.index].price * @activity.high_price_ratio %>
-            <%= high_price.round %>
-          <% else %>
-            <%= (1000*@activity.high_price_ratio).round%>
-          <% end %>
-        </span>
-        <span class="ageprice_unit">円</span>
+      <div class="ageprice_row season_price">
+        <%= f.number_field :low_price, min: 0, max: 100000, step: 10,class: "form-control time_input", onchange: 'changePrice(this)', required: true %><span class="ageprice_unit">円</span>
       </div>
-    </div>
-    <div class="ageprice_table_head_back">
-      <div class="ageprice_row_5">
+      <div class="ageprice_row row_delete">
         <%= link_to_remove_association f, class: "remove_ageprice_btn" do %>
           <span><i class="far fa-trash-alt"></i></span>
         <% end %>
       </div>
-    </div>
-  </div>
 </div>

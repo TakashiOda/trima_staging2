@@ -24,59 +24,59 @@
         </div>
       </div><!--メインコンテンツprofile end-->
       <!--事業リスト---------------------------------------------------------------->
-      <% if !@organization.nil? %>
-      <div class="supplier_business_box">
+      <%# if !@organization.nil? %>
+      <!-- <div class="supplier_business_box">
         <div class="info_list_box_title">
           <div>事業リスト（現在体験事業のみ）</div>
         </div>
-        <table class="supplier_business_items">
-            <% if @activity_business %>
-            <tr>
+        <table class="supplier_business_items"> -->
+            <%# if @activity_business %>
+            <!-- <tr>
               <td class="supplier_business_items_td1">体験</td>
-              <td class="supplier_business_items_td2">
-                <% if !@activity_business.profile_image.blank? %>
-                  <%= image_tag @activity_business.profile_image.to_s, class: 'business_icon_image' %>
-                <% else %>
-                  <div><%= @activity_business.name[0] %></div>
+              <td class="supplier_business_items_td2"> -->
+                <%# if !@activity_business.profile_image.blank? %>
+                  <%# image_tag @activity_business.profile_image.to_s, class: 'business_icon_image' %>
+                <%# else %>
+                  <!-- <div><%# @activity_business.name[0] %></div> -->
                   <%# image_tag 'default_images/no_avatar_image.png', class: 'business_icon_image' %>
-                <% end %>
-              </td>
-              <td class="supplier_business_items_td3"><%= @activity_business.name %></td>
-              <td class="supplier_business_items_td4">
-                <% if current_supplier.control_level == 0 %>
-                  <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business ), class: "member_delete_btn edit" %>
-                <% end %>
-              </td>
-            </tr>
-            <% else %>
-            <tr>
+                <%# end %>
+              <!-- </td>
+              <td class="supplier_business_items_td3"><%# @activity_business.name %></td>
+              <td class="supplier_business_items_td4"> -->
+                <%# if current_supplier.control_level == 0 %>
+                  <%# link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business ), class: "member_delete_btn edit" %>
+                <%# end %>
+              <!-- </td>
+            </tr> -->
+            <%# else %>
+            <!-- <tr>
               <td class="supplier_business_items_td1">体験</td>
               <td class="supplier_business_items_blank_td2">まだ事業が登録されていません</td>
-              <td class="supplier_business_items_blank_td3">
-                <% if current_supplier.control_level == 0 %>
-                  <%= link_to "追加", new_supplier_activity_business_path(current_supplier), class: "member_delete_btn" %>
-                <% end %>
-              </td>
-            </tr>
-            <% end %>
-        </table>
-      </div>
-      <% end %>
+              <td class="supplier_business_items_blank_td3"> -->
+                <%# if current_supplier.control_level == 0 %>
+                  <%# link_to "追加", new_supplier_activity_business_path(current_supplier), class: "member_delete_btn" %>
+                <%# end %>
+              <!-- </td>
+            </tr> -->
+            <%# end %>
+        <!-- </table>
+      </div> -->
+      <%# end %>
       <!--事業リスト---------------------------------------------------------------->
       <!--組織情報---------------------------------------------------------------->
       <div class="info_box"><!--メインコンテンツorg-->
         <div class="info_list_box_title">
-          <div>組織情報</div>
+          <div>事業情報</div>
           <div>
             <% unless @supplier.supplier_profile.nil? %>
-              <%= link_to "編集", "#", class: "org_edit_btn" %>
+              <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business ), class: "org_edit_btn" %>
             <% end %>
           </div>
         </div>
           <% if @supplier_profile .nil? %>
             <div class="add_new_org_box">
-              <div>まだ組織情報がありません</div>
-              <%= link_to "組織情報を作成", "#", class: "org_edit_btn" %>
+              <div>まだ事業情報がありません</div>
+              <%= link_to "事業を登録", "#", class: "org_edit_btn" %>
             </div>
           <% else %>
             <div class="info_list_box_contents">
@@ -107,14 +107,10 @@
     align-items: center;
     margin-bottom: 30px;
   }
-  .user_show_avatar_box {
+  /* .user_show_avatar_box {
     width: 80px;
     height: 80px;
-  }
-  img.user_avatar {
-    width: 80px;
-    height: 80px;
-  }
+  } */
   .supplier_name {
     margin-left: 15px;
     width: 100%;
