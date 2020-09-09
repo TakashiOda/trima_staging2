@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag 'suppliers' %>
 <div class="container user_show container-fluid">
   <div class="user_show_side">
     <%= render 'suppliers/supplier_page_front_sidebar' %>
@@ -25,9 +26,6 @@
                 <%= @activity.activity_courses[3].start_time.strftime("%H:%M") + "〜" if @activity.activity_courses[3] %>
               </div>
             </div>
-            <div>
-
-            </div>
             <div class="field">
               <div class="date_list date_column">
                 <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
@@ -35,18 +33,30 @@
                   <div class="date_item <%= wd[date.wday] == "土" ? "saturday" : wd[date.wday] == "日" ? "sunday" : ""%>"><%= date.strftime("%Y年%m月%d日(#{wd[date.wday]})")%></div>
                 <% end %>
               </div>
+              <div class="stock_items">
               <%= f.fields_for :activity_courses do |course| %>
                 <div class="course_stock_column course_column">
-                  <div>
-                    <%# @activity.activity_courses[course.index].start_time.strftime("%H:%M") %>
-                  </div>
                   <%= course.fields_for :activity_stocks do |stock| %>
-                    <div class="stock_input_box">
-                      <%= stock.number_field :stock %>
+                    <div class="form-group activity_stock_input_box" style="margin-bottom: 0;">
+                      <div class="stock_input_box">
+                        <%= stock.number_field :stock, class: 'form-control' %>
+                      </div>
+                      <%# if @activity.activity_courses.size == (course.index.to_i + 1) %>
+                        <div class="season_input_box <%= stock.index%>">
+                          <%= stock.select :season_price,
+                            {'通常料金': '通常料金', 'ハイシーズン料金': 'ハイシーズン料金', 'ローシーズン料金': 'ローシーズン料金'},
+                            {}, {onChange: 'changeSeasonPrice(this)', class: 'form-control'} %>
+                        </div>
+                      <%# else %>
+                        <!-- <div class="season_input_box"> -->
+                          <%# stock.hidden_field :season_price , value: '通常料金', class: 'hidden_season_price' %>
+                        <!-- </div> -->
+                      <%# end %>
                     </div>
                   <% end %>
                 </div>
               <% end %>
+              </div>
             </div>
             <div class="actions">
               <%= f.submit %>
@@ -83,24 +93,35 @@
     text-align: center;
   }
   .course_column {
-    width: 100px;
+    /* width: 100px; */
+  }
+  .activity_stock_input_box {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+  }
+  .is_high_season {
+    background: #ff8a8a;
+  }
+  .is_low_season {
+    background: #4e9bc7;
   }
   .stock_table_th.course_column {
     text-align: center;
   }
   .date_item {
-    font-size: 15px;
+    font-size: 12px;
     height: 37px;
     margin-bottom: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .stock_input_box {
+  .stock_items {
     display: flex;
     flex-direction: row;
-    height: 37px;
-    margin-bottom: 7px;
+    /* height: 37px; */
+    /* margin-bottom: 7px; */
   }
   .stock_input_box input {
     font-size: 19px;
@@ -119,3 +140,25 @@
     color: red;
   }
 </style>
+
+<script type="text/javascript">
+
+  function changeSeasonPrice(obj) {
+    const parent = obj.parentNode;
+    const inputSelectedIndex = obj.selectedIndex;
+    const classNum = parseInt(parent.classList[1]);
+    const stockColumns = document.querySelectorAll("div.course_stock_column");
+    for (var i = 0; i < stockColumns.length; i++) {
+      const targetBox = stockColumns[i].children[classNum];
+
+      const targetSelector = targetBox.children[1].children[0];
+      targetSelector.selectedIndex = inputSelectedIndex;
+
+      if (inputSelectedIndex == 1){
+        targetBox.classList.add("is_high_season");
+      } else if (inputSelectedIndex == 2) {
+        targetBox.classList.add("is_low_season");
+      }
+    }
+  }
+</script>

@@ -1,3 +1,35 @@
 // Place all the styles related to the suppliers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+$user-main-color: #0068b7; //ヘッダーに適用・コバルトブルー
+$user-main-light-color: #23a0ff;; //ラジオやチェックボックスに適用
+$user-main-dark-color: #192f60; //サイドバーに適用・プルシャンブルー
+
+
+header.erb_header {
+  background: $user-main-color !important;
+  padding: 0px;
+  height: 60px;
+  width: 100%;
+  z-index: 100;
+}
+
+.btn-submit {
+  color: #fff;
+  background: $user-main-color !important;
+}
+
+.user_show_side {
+  width: 20%;
+  background: $user-main-dark-color !important;
+  padding: 20px 0 30px 30px;
+}
+
+.activity_index_top_box a.add_btn {
+  background: $user-main-color !important;
+}
+
+a.org_edit_btn {
+  background: $user-main-color !important;
+}

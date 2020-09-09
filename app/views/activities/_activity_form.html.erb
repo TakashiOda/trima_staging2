@@ -1,177 +1,176 @@
 <!-- <form> -->
 <div class="user_show_info_items_box">
-  <div class="form_big_title">
-    <h3>アクティビティの基本情報</h3>
-  </div>
-  <div class="form-group">
-    <%= f.label "体験名" %>
-    <%= f.text_field :name, required: true, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label "体験の紹介文" %>
-    <%= f.text_area :description, required: true, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label "体験のメイン写真" %>
-    <%= f.file_field :main_image, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <div class="row">
-      <div class="col-half">
-        <%= f.label "体験所用時間（分）" %>
-        <%= f.number_field :activity_minutes, min: 20 ,step: 5, required: true, class: "form-control", id: "activity_minutes" %>
+  <section class="form_section">
+    <div class="form_big_title">
+      <h3>アクティビティの基本情報</h3>
+    </div>
+    <div class="form-group">
+      <%= f.label "体験名" %>
+      <%= f.text_field :name, required: true, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label "体験の紹介文" %>
+      <%= f.text_area :description, required: true, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label "体験のメイン写真" %>
+      <%= f.file_field :main_image, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-half">
+          <%= f.label "体験所用時間（分）" %>
+          <%= f.number_field :activity_minutes, min: 20 ,step: 5, required: true, class: "form-control", id: "activity_minutes" %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <div class="row">
-      <div class="col-half">
-        <%= f.label "体験カテゴリー" %>
-        <%= f.collection_select :activity_category_id, ActivityCategory.all, :id, :jp_name,{prompt: "選択してください"}, required: true, class: "form-control" %>
-      </div>
-      <div class="col-half">
-        <%= f.label "参加できる最低年齢" %>
-        <%= f.number_field :available_age, min: 0, max: 110, required: true, class: "form-control" %>
-      </div>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="row">
-      <div class="col-half">
-        <%= f.label "最少催行人数" %>
-        <%= f.number_field :minimum_num, min: 1, max: 49, required: true, class: "form-control" %>
-      </div>
-      <div class="col-half">
-        <%= f.label "最大人数" %>
-        <%= f.number_field :maximum_num, min: 1, max: 50, required: true, class: "form-control" %>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-half">
+          <%= f.label "体験カテゴリー" %>
+          <%= f.collection_select :activity_category_id, ActivityCategory.all, :id, :jp_name,{prompt: "選択してください"}, required: true, class: "form-control" %>
+        </div>
+        <div class="col-half">
+          <%= f.label "参加できる最低年齢" %>
+          <%= f.number_field :available_age, min: 0, max: 110, required: true, class: "form-control" %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form_big_title after_second_title">
-    <h3>料金に関する設定</h3>
-  </div>
-  <div class="form-group season_price_radio_box">
-    <%= f.label "シーズン料金の有無" %>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-half">
+          <%= f.label "最少催行人数" %>
+          <%= f.number_field :minimum_num, min: 1, max: 49, required: true, class: "form-control" %>
+        </div>
+        <div class="col-half">
+          <%= f.label "最大人数" %>
+          <%= f.number_field :maximum_num, min: 1, max: 50, required: true, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="form_section">
+    <div class="form_big_title after_second_title">
+      <h3>料金に関する設定</h3>
+    </div>
+    <div class="form-group season_price_radio_box">
+      <%= f.label "シーズン料金の有無" %>
+      <div class="season_price_radio_box_inner">
+        <div class="season_price_radio_items">
+          <div class="season_price_radio_item on">
+            <%= f.radio_button :has_season_price, :true, onClick: "hasSeasonPrice(this)" %>
+            <%= f.label :has_season_price, "あり", {value: :true, style: "display: inline-block;"} %>
+          </div>
+          <div class="season_price_radio_item off">
+            <%= f.radio_button :has_season_price, :false, onClick: "noSeasonPrice(this)" %>
+            <%= f.label :has_season_price, "なし", {value: :false, style: "display: inline-block;"} %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group ageprice_table">
+      <%= f.label :activity_ageprices, "料金＆年齢設定" %><br />
+      <div class="ageprice_table_head">
+        <div class="ageprice_row agefrom">下限</div>
+        <div class="ageprice_row fromsign">〜</div>
+        <div class="ageprice_row ageto">上限</div>
+        <div class="ageprice_row normal_price">通常料金</div>
+        <div class="ageprice_row season_price"><span>ロー料金</span></div>
+        <div class="ageprice_row season_price"><span>ハイ料金</span></div>
+        <div class="ageprice_row row_delete">削除</div>
+      </div>
+      <div id="ageprice">
+        <%= f.fields_for :activity_ageprices do |t| %>
+          <%= render "activity_ageprice_fields", f: t %>
+        <% end %>
+        <div class="links">
+          <%= link_to_add_association "年齢別料金を追加", f, :activity_ageprices, form_name: 'f', id:"ageprice_add_btn" %>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <section class="form_section">
+    <div class="form_big_title after_second_title">
+      <h3>アクティビティのスケジュール設定</h3>
+    </div>
+    <%= f.label "実施期間は通年ですか？" %>
     <div class="season_price_radio_box_inner">
       <div class="season_price_radio_items">
         <div class="season_price_radio_item on">
-          <%= f.radio_button :has_season_price, :true, onClick: "hasSeasonPrice(this)" %>
-          <%= f.label :has_season_price, "あり", {value: :true, style: "display: inline-block;"} %>
+          <%= f.radio_button :is_all_year_open, :true, onClick: "isAllYearOpen(this)" %>
+          <%= f.label :is_all_year_open, "通年", {value: :true, style: "display: inline-block;"} %>
         </div>
         <div class="season_price_radio_item off">
-          <%= f.radio_button :has_season_price, :false, onClick: "noSeasonPrice(this)" %>
-          <%= f.label :has_season_price, "なし", {value: :false, style: "display: inline-block;"} %>
+          <%= f.radio_button :is_all_year_open, :false, onClick: "isLimitedOpen(this)" %>
+          <%= f.label :is_all_year_open, "期間限定", {value: :false, style: "display: inline-block;"} %>
         </div>
       </div>
-      <!-- <div class="form-group" id="season_price_ratio_box">
+      <div class="form-group <%= "hidden" if @activity.is_all_year_open %>" id="activity_date_input_box">
         <div class="row">
-          <div class="col-half"> -->
-            <%# f.label "ローシーズン倍率" %>
-            <%# f.number_field :low_price_ratio, min: 0.05, max: 1.00, step: "0.05", class: "form-control", id: "low_season_ratio_input" %>
-            <!-- <input name="low_season_ratio_hidden" type="hidden" /> -->
-          <!-- </div>
-          <div class="col-half"> -->
-            <%# f.label "ハイシーズン倍率" %>
-            <%# f.number_field :high_price_ratio, min: 1.00, max: 5.00, step: "0.05", class: "form-control", id: "high_season_ratio_input" %>
-          <!-- </div> -->
-        <!-- </div> -->
-      <!-- </div> -->
-    </div>
-  </div>
-  <div class="form-group ageprice_table">
-    <%= f.label :activity_ageprices, "料金＆年齢設定" %><br />
-    <div class="ageprice_table_head">
-      <div class="ageprice_row agefrom">下限</div>
-      <div class="ageprice_row fromsign">〜</div>
-      <div class="ageprice_row ageto">上限</div>
-      <div class="ageprice_row normal_price">通常料金</div>
-      <div class="ageprice_row season_price">ロー料金</div>
-      <div class="ageprice_row season_price">ハイ料金</div>
-      <div class="ageprice_row row_delete">削除</div>
-    </div>
-    <div id="ageprice">
-      <%= f.fields_for :activity_ageprices do |t| %>
-        <%= render "activity_ageprice_fields", f: t %>
-      <% end %>
-    </div>
-    <div class="links">
-      <%= link_to_add_association "料金設定を追加", f, :activity_ageprices, form_name: 'f', id:"ageprice_add_btn" %>
-    </div>
-  </div>
-  <div class="form_big_title after_second_title">
-    <h3>アクティビティのスケジュール設定</h3>
-  </div>
-  <%= f.label "実施期間の有無" %>
-  <div class="season_price_radio_box_inner">
-    <div class="season_price_radio_items">
-      <div class="season_price_radio_item on">
-        <%= f.radio_button :is_all_year_open, :true, onClick: "isAllYearOpen(this)" %>
-        <%= f.label :is_all_year_open, "あり", {value: :true, style: "display: inline-block;"} %>
-      </div>
-      <div class="season_price_radio_item off">
-        <%= f.radio_button :is_all_year_open, :false, onClick: "isLimitedOpen(this)" %>
-        <%= f.label :is_all_year_open, "なし", {value: :false, style: "display: inline-block;"} %>
-      </div>
-    </div>
-    <div class="form-group <%= "hidden" if !@activity.is_all_year_open %>" id="activity_date_input_box">
-      <div class="row">
-        <div class="col-half">
-          <%= f.label "期間の開始日" %>
-          <%= f.date_field :start_date, min: Date.today ,class: "form-control date_select", id: "activity_start_select", onChange: "changeStartDate(this)" %>
-        </div>
-        <div class="col-half">
-          <%= f.label "期間の終了日" %>
-          <%= f.date_field :end_date, min: Date.today ,class: "form-control date_select", id: "activity_end_select", onChange: "changeEndDate(this)" %>
+          <div class="col-half">
+            <%= f.label "期間の開始日" %>
+            <%= f.date_field :start_date, min: Date.today ,class: "form-control date_select", id: "activity_start_select", onChange: "changeStartDate(this)" %>
+          </div>
+          <div class="col-half">
+            <%= f.label "期間の終了日" %>
+            <%= f.date_field :end_date, min: Date.today ,class: "form-control date_select", id: "activity_end_select", onChange: "changeEndDate(this)" %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <%= f.label "営業する曜日" %>
-    <div class="activity_openday_input_box">
-        <div class="form-group"><%= f.check_box :monday_open %><%= f.label "monday_open","月曜", class: "first_check_label" %></div>
-        <div class="form-group"><%= f.check_box :tuesday_open %><%= f.label "tuesday_open","火曜" %></div>
-        <div class="form-group"><%= f.check_box :wednesday_open %><%= f.label "wednesday_open","水曜" %></div>
-        <div class="form-group"><%= f.check_box :thursday_open %><%= f.label "thursday_open","木曜" %></div>
-        <div class="form-group"><%= f.check_box :friday_open %><%= f.label "friday_open","金曜" %></div>
-        <div class="form-group"><%= f.check_box :saturday_open %><%= f.label "saturday_open","土曜" %></div>
-        <div class="form-group"><%= f.check_box :sunday_open %><%= f.label "sunday_open","日曜", class: "last_check_label" %></div>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :activity_courses, "アクティビティの実施時間" %><br />
-    <div class="course_table_head">
-      <div class="course_row1"><span>開始時間</span></div>
-      <div class="course_row2"><span>削除</span></div>
-    </div>
-    <div id="courses">
-      <%= f.fields_for :activity_courses do |t| %>
-        <%= render "activity_course_fields", f: t %>
-      <% end %>
-      <div class="links">
-        <%= link_to_add_association "コースを追加", f, :activity_courses, form_name: 'f', id:"course_add_btn" %>
+    <div class="form-group">
+      <%= f.label "営業する曜日" %>
+      <div class="activity_openday_input_box">
+          <div class="form-group"><%= f.check_box :monday_open %><%= f.label "monday_open","月曜", class: "first_check_label" %></div>
+          <div class="form-group"><%= f.check_box :tuesday_open %><%= f.label "tuesday_open","火曜" %></div>
+          <div class="form-group"><%= f.check_box :wednesday_open %><%= f.label "wednesday_open","水曜" %></div>
+          <div class="form-group"><%= f.check_box :thursday_open %><%= f.label "thursday_open","木曜" %></div>
+          <div class="form-group"><%= f.check_box :friday_open %><%= f.label "friday_open","金曜" %></div>
+          <div class="form-group"><%= f.check_box :saturday_open %><%= f.label "saturday_open","土曜" %></div>
+          <div class="form-group"><%= f.check_box :sunday_open %><%= f.label "sunday_open","日曜", class: "last_check_label" %></div>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <%= f.label "実施シーズン" %>
-    <div class="activity_season_input_box">
-        <div class="form-group"><%= f.check_box :january %><%= f.label "january", "１月", class: "top_left_check_label" %></div>
-        <div class="form-group"><%= f.check_box :febrary %><%= f.label "febrary","2月" %></div>
-        <div class="form-group"><%= f.check_box :march %><%= f.label "march","3月" %></div>
-        <div class="form-group"><%= f.check_box :april %><%= f.label "april","4月" %></div>
-        <div class="form-group"><%= f.check_box :may %><%= f.label "may","5月" %></div>
-        <div class="form-group"><%= f.check_box :june %><%= f.label "june","6月", class: "top_right_check_label" %></div>
+    <div class="form-group">
+      <%= f.label :activity_courses, "アクティビティの実施時間" %><br />
+      <div class="course_table_head">
+        <div class="course_row1"><span>開始時間</span></div>
+        <div class="course_row2"><span>削除</span></div>
+      </div>
+      <div id="courses">
+        <%= f.fields_for :activity_courses do |t| %>
+          <%= render "activity_course_fields", f: t %>
+        <% end %>
+        <div class="links">
+          <%= link_to_add_association "コース時間を追加", f, :activity_courses, form_name: 'f', id:"course_add_btn" %>
+        </div>
+      </div>
     </div>
-    <div class="activity_season_input_box">
-        <div class="form-group"><%= f.check_box :july %><%= f.label "july","7月", class: "bottom_left_check_label" %></div>
-        <div class="form-group"><%= f.check_box :august %><%= f.label "august","8月" %></div>
-        <div class="form-group"><%= f.check_box :september %><%= f.label "september","9月" %></div>
-        <div class="form-group"><%= f.check_box :october %><%= f.label "october","10月" %></div>
-        <div class="form-group"><%= f.check_box :november %><%= f.label "november","11月" %></div>
-        <div class="form-group"><%= f.check_box :december %><%= f.label "december","12月", class: "bottom_right_check_label" %></div>
+  </section>
+  <section class="form_section">
+    <div class="form-group">
+      <div class="form_big_title after_second_title">
+        <h3>検索に反映させる要素の設定</h3>
+      </div>
+      <%= f.label "おすすめのシーズン" %>
+      <div class="activity_season_input_box">
+          <div class="form-group"><%= f.check_box :january %><%= f.label "january", "１月", class: "top_left_check_label" %></div>
+          <div class="form-group"><%= f.check_box :febrary %><%= f.label "febrary","2月" %></div>
+          <div class="form-group"><%= f.check_box :march %><%= f.label "march","3月" %></div>
+          <div class="form-group"><%= f.check_box :april %><%= f.label "april","4月" %></div>
+          <div class="form-group"><%= f.check_box :may %><%= f.label "may","5月" %></div>
+          <div class="form-group"><%= f.check_box :june %><%= f.label "june","6月", class: "top_right_check_label" %></div>
+      </div>
+      <div class="activity_season_input_box">
+          <div class="form-group"><%= f.check_box :july %><%= f.label "july","7月", class: "bottom_left_check_label" %></div>
+          <div class="form-group"><%= f.check_box :august %><%= f.label "august","8月" %></div>
+          <div class="form-group"><%= f.check_box :september %><%= f.label "september","9月" %></div>
+          <div class="form-group"><%= f.check_box :october %><%= f.label "october","10月" %></div>
+          <div class="form-group"><%= f.check_box :november %><%= f.label "november","11月" %></div>
+          <div class="form-group"><%= f.check_box :december %><%= f.label "december","12月", class: "bottom_right_check_label" %></div>
+      </div>
     </div>
-  </div>
+  </section>
   <div class="form_btns">
     <div class="row">
       <div class="col-half">
@@ -190,12 +189,18 @@
 <!-- </form> -->
 
 <style lang="scss">
+  section.form_section {
+    margin-bottom: 130px;
+  }
   .form_big_title {
-    border-left: solid 8px #15a397;
+    border-left: solid 11px #0068b7;
     padding-left: 11px;
+    border-bottom: solid 2px #0068b7;
+    margin-bottom: 25px;
   }
   .form_big_title h3 {
-    margin: 0 0 20px;
+    margin: 0px 0 0px;
+    padding: 5px 0;
   }
   .form_big_title.after_second_title {
     margin-top: 60px;
@@ -226,7 +231,7 @@
     display: none;
   }
   input[type="checkbox"]:checked + label {
-    background: #18ab9e;/* マウス選択時の背景色を指定する */
+    background: #22a0ff;/* マウス選択時の背景色を指定する */
     color: #ffffff; /* マウス選択時のフォント色を指定する */
   }
   .activity_season_input_box label,
@@ -239,7 +244,7 @@
   }
   .activity_season_input_box label:hover,
   .activity_openday_input_box label:hover {
-    background: #18ab9e85;
+    background: #22a0ff52;
     color: #fff;
   }
   label.first_check_label {
@@ -364,19 +369,20 @@
     align-items: center;
   }
   .agefrom, .ageto {
-    width: 14%;
+    width: 13%;
     padding: 0 0.5%;
   }
   .fromsign {
     display: flex;
     align-items: flex-end;
     width: 3%;
-    padding: 1%;
+    padding: 0.5%;
+    font-size: 11px;
   }
   .normal_price,
   .season_price {
     width: 18%;
-    padding: 0 1%;
+    padding-left: 2%;
   }
 
   span.ageprice_unit {
@@ -390,9 +396,10 @@
     color: #a2a2a2;
   }
   .row_delete {
-    width: 5%;
+    width: 8%;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
   a.remove_ageprice_btn {
       padding: 5px;
@@ -408,8 +415,8 @@
     margin: 0;
     color: #ef6c6c;
   }
-  div#ageprice div.nested-fields:first-child div.age_to_input_box input,
-  div#ageprice div.nested-fields:first-child div.age_to_input_box span {
+  div#ageprice div.nested-fields:first-child div.ageto input,
+  div#ageprice div.nested-fields:first-child div.ageto span {
     display: none;
   }
   .form-group.season_price_radio_box {
@@ -451,7 +458,7 @@
     border-bottom-right-radius: 7px;
   }
   .season_price_radio_items input[type="radio"]:checked + label {
-    background: #18ab9e;/* マウス選択時の背景色を指定する */
+    background: #23a0ff;/* マウス選択時の背景色を指定する */
     color: #ffffff; /* マウス選択時のフォント色を指定する */
   }
   input.date_select {
@@ -468,35 +475,33 @@
 <script type="text/javascript">
   function hasSeasonPrice(obj) {
     var isChecked = obj.checked;
-    // var ratioBox = document.getElementById("season_price_ratio_box");
-    // var ratioBoxClass = ratioBox.classList;
-    var seasonPriceBoxes = document.querySelectorAll("div.ageprice_row_high");
+    var seasonPriceBoxes = document.querySelectorAll("div.season_price");
     if (isChecked) {
-      // ratioBoxClass.remove("hidden");
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
-        seasonPriceBoxes[i].classList.remove("hidden");
-        // console.log(seasonPriceBoxes[i]);
+        seasonPriceBoxes[i].children[0].classList.remove("hidden");
+        if (seasonPriceBoxes[i].children[1]) {
+          seasonPriceBoxes[i].children[1].classList.remove("hidden");
+        }
       }
     }
   }
   function noSeasonPrice(obj) {
     var isChecked = obj.checked;
-    var ratioBox = document.getElementById("season_price_ratio_box");
-    var ratioBoxClass = ratioBox.classList;
-    var seasonPriceBoxes = document.querySelectorAll("div.ageprice_row_high");
-    // console.log(seasonPriceBoxes);
+    var seasonPriceBoxes = document.querySelectorAll("div.season_price");
     if (isChecked) {
-      ratioBoxClass.add("hidden");
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
-        seasonPriceBoxes[i].classList.add("hidden");
-        // console.log(seasonPriceBoxes[i]);
+        seasonPriceBoxes[i].children[0].classList.add("hidden");
+        if (seasonPriceBoxes[i].children[1]) {
+          seasonPriceBoxes[i].children[1].classList.add("hidden");
+        }
       }
     }
   }
 
+
   function ageFromFocus(obj) {
     // 下の要素のtagNameを取得
-    var selfParent = obj.parentNode.parentNode.parentNode.parentNode;
+    var selfParent = obj.parentNode.parentNode;
     var nextParent = selfParent.nextElementSibling;
     var nextElementTag = nextParent.tagName;
     var nextElementClass = nextParent.className;
@@ -513,8 +518,7 @@
 
     var prevParent = selfParent.previousElementSibling;
     if (prevParent !== null && prevParent.tagName == 'INPUT') {
-      var prevAgeFrom = prevParent.previousElementSibling.children[0].children[0].children[0].children[0];
-      // console.log(prevAgeFrom.value);
+      var prevAgeFrom = prevParent.previousElementSibling.children[0].children[0];
       var prevAgeFromValue = prevAgeFrom.value;
       if (prevAgeFromValue > 0) {
         newMax = prevAgeFromValue - 1;
@@ -522,8 +526,6 @@
         newMax = 0;
       }
       obj.setAttribute('max', newMax);
-    } else {
-      console.log("no item above");
     }
   }
 
@@ -534,82 +536,72 @@
       var objMinusOne = 0;
     }
     var selfElement = document.getElementById(obj.id);
-    var parentNestedField = selfElement.parentNode.parentNode.parentNode.parentNode; //nested-fieldsクラスを持つdiv
+    var parentNestedField = selfElement.parentNode.parentNode; //nested-fieldsクラスを持つdiv
     var downParent = parentNestedField.nextElementSibling;
-    if (downParent.tagName == "INPUT") {
-      // すでにagepriceが存在 && 入力下段がinput hiddenの場合
+    if (downParent.tagName == "INPUT") { // すでにagepriceが存在 && 入力下段がinput hiddenの場合
       var towDownParent = parentNestedField.nextElementSibling.nextElementSibling;
-      if (towDownParent.className !== "links") {
-        // 下段にさらにフィードがある場合
+      if (towDownParent.className !== "links") {  // 下段にさらにフィードがある場合
         var downParent = parentNestedField.nextElementSibling.nextElementSibling;
-        // var downAgeToText = downParent.children[0].children[2].children[1];
-        // downAgeToText.innerText = objMinusOne;
-        var downAgeFrom = downParent.children[0].children[0].children[0].children[0];
+        var downAgeFrom = downParent.children[0].children[0];
         downAgeFrom.setAttribute('max', objMinusOne);
-        var downAgeTo = downParent.children[0].children[0].children[2].children[0];
-        // downAgeTo.setAttribute('max', objMinusOne);
+        var downAgeTo = downParent.children[2].children[0];
         downAgeTo.value = objMinusOne;
       }
     } else if (downParent.tagName == "DIV" && downParent.className == "nested-fields") {
-      // var downAgeToText = downParent.children[0].children[2].children[1];
-      // downAgeToText.innerText = objMinusOne;
-
-      var downAgeFrom = downParent.children[0].children[0].children[0].children[0];
+      var downAgeFrom = downParent.children[0].children[0];
       downAgeFrom.setAttribute('max', objMinusOne);
-      var downAgeTo = downParent.children[0].children[0].children[2].children[0];
+      var downAgeTo = downParent.children[2].children[0];
       downAgeTo.setAttribute('max', objMinusOne);
       downAgeTo.value = objMinusOne;
     }
   }
 
-  function changePrice(obj) {
-    // ローシーズンを変更
-    var lowRatio = document.getElementById("low_season_ratio_input").value;
-    var parent = obj.parentNode;
-    var nextParent = parent.nextElementSibling;
-    var lowPrice = nextParent.children[0];
-    lowPrice.innerText = obj.value * lowRatio;
+  // function changePrice(obj) {
+  //   // ローシーズンを変更
+  //   var lowRatio = document.getElementById("low_season_ratio_input").value;
+  //   var parent = obj.parentNode;
+  //   var nextParent = parent.nextElementSibling;
+  //   var lowPrice = nextParent.children[0];
+  //   lowPrice.innerText = obj.value * lowRatio;
+  //
+  //   // ハイシーズンを変更
+  //   var highRatio = document.getElementById("high_season_ratio_input").value;
+  //   var twoNextParent = nextParent.nextElementSibling;
+  //   var highPrice = twoNextParent.children[0];
+  //   floorLow = Math.floor(obj.value * highRatio);
+  //   highPrice.innerText = floorLow;
+  // }
 
-    // ハイシーズンを変更
-    var highRatio = document.getElementById("high_season_ratio_input").value;
-    var twoNextParent = nextParent.nextElementSibling;
-    var highPrice = twoNextParent.children[0];
-    floorLow = Math.floor(obj.value * highRatio);
-    highPrice.innerText = floorLow;
-  }
-
+  // 年齢＆料金を追加する際にシーズン料金がONなら一定時間後にシーズン料金欄を表示
   document.getElementById("ageprice_add_btn").onclick = function(){
     setTimeout(function(){
       var isChecked = document.getElementById("activity_has_season_price_true").checked;
-      var seasonPriceBoxes = document.querySelectorAll("div.ageprice_row_high");
-      if (isChecked){
+      var seasonPriceBoxes = document.querySelectorAll("div.season_price");
+      if (isChecked){ //シーズン料金有りの場合
         for (var i = 0; i < seasonPriceBoxes.length; i++) {
-          var hasHidden = seasonPriceBoxes[i].classList.contains('hidden');
+          var hasHidden = seasonPriceBoxes[i].children[0].classList.contains('hidden');
           if (hasHidden) {
-            seasonPriceBoxes[i].classList.remove("hidden");
+            seasonPriceBoxes[i].children[0].classList.remove("hidden");
+          }
+          if (seasonPriceBoxes[i].children[1] && seasonPriceBoxes[i].children[1].classList.contains('hidden')) {
+            seasonPriceBoxes[i].children[1].classList.remove("hidden");
           }
         }
-        // console.log("シーズン金額なし");
       }
     }, 100);
   }
+
   function isAllYearOpen(obj) {
-    var isChecked = obj.checked;
     var dateBox = document.getElementById("activity_date_input_box");
     var dateBoxClass = dateBox.classList;
-    if (isChecked) {
-      dateBoxClass.remove("hidden");
-    } else {
+    if (obj.checked) {
       dateBoxClass.add("hidden");
     }
   }
   function isLimitedOpen(obj) {
-    var isChecked = obj.checked;
     var dateBox = document.getElementById("activity_date_input_box");
     var dateBoxClass = dateBox.classList;
-    if (isChecked) {
-      dateBoxClass.add("hidden");
-    } else {
+    if (obj.checked) {
       dateBoxClass.remove("hidden");
     }
   }

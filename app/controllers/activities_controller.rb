@@ -11,7 +11,6 @@ class ActivitiesController < ApplicationController
 
   def new
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
-    # @activity = current_supplier.activities.build
     @activity = @activity_business.activities.build
     @activity.activity_ageprices.build
   end
@@ -48,16 +47,35 @@ class ActivitiesController < ApplicationController
   def stock_new
     # binding.pry
     @activity = Activity.find(params[:activity_id])
-    # @activity.activity_courses
     @courses = @activity.activity_courses
-    @s_Date = @activity.start_date
-    @e_Date = @activity.end_date
-    @courses.each do |course|
-      (@s_Date..@e_Date).each do |date|
-        @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+    if !@courses.blank?
+      if @activity.is_all_year_open
+        #通年の体験
+        @s_Date = Date.tomorrow
+        @e_Date = Date.tomorrow.since(3.month).end_of_month
+        @courses.each do |course|
+          (@s_Date..@e_Date).each do |date|
+            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+          end
+        end
+        
+      elsif !@activity.is_all_year_open && @activity.start_date && @activity.start_date
+        #期間限定の体験
+        @s_Date = @activity.start_date
+        @e_Date = @activity.end_date
+        @courses.each do |course|
+          (@s_Date..@e_Date).each do |date|
+            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+          end
+        end
+      else
+        flash[:alert] = '在庫を設定するには体験情報にて期間設定をしてください'
+        redirect_to supplier_activities_path(current_supplier)
       end
+    else
+      flash[:alert] = '在庫を設定するには体験情報のコース時間または期間設定をしてください'
+      redirect_to supplier_activities_path(current_supplier)
     end
-    # @stock = @course.activity_stocks.build
   end
 
   private

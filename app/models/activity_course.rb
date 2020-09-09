@@ -6,4 +6,5 @@ class ActivityCourse < ApplicationRecord
   accepts_nested_attributes_for :activity_stocks, allow_destroy: true
 
   validates :activity_id, uniqueness: { scope: :start_time }
+  
 end

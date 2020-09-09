@@ -14,13 +14,21 @@
         <span class="ageprice_unit">歳</span>
       </div>
       <div class="ageprice_row normal_price">
-        <%= f.number_field :normal_price, min: 0, max: 100000, step: 10,class: "form-control time_input", onchange: 'changePrice(this)', required: true %><span class="ageprice_unit">円</span>
+        <%= f.number_field :normal_price, min: 0, max: 100000, step: 10,class: "form-control time_input", required: true %><span class="ageprice_unit">円</span>
       </div>
       <div class="ageprice_row season_price">
-        <%= f.number_field :high_price, min: 0, max: 100000, step: 10,class: "form-control time_input", onchange: 'changePrice(this)', required: true %><span class="ageprice_unit">円</span>
+        <% if @activity.has_season_price %>
+          <%= f.number_field :high_price, min: 0, max: 100000, step: 10, class: "form-control time_input", required: true %><span class="ageprice_unit">円</span>
+        <% else %>
+          <%= f.number_field :high_price, min: 0, max: 100000, step: 10, class: "form-control time_input hidden", required: true %><span class="ageprice_unit hidden">円</span>
+        <% end %>
       </div>
       <div class="ageprice_row season_price">
-        <%= f.number_field :low_price, min: 0, max: 100000, step: 10,class: "form-control time_input", onchange: 'changePrice(this)', required: true %><span class="ageprice_unit">円</span>
+        <% if @activity.has_season_price %>
+          <%= f.number_field :low_price, min: 0, max: 100000, step: 10, class: "form-control time_input", required: true %><span class="ageprice_unit">円</span>
+        <% else %>
+          <%= f.number_field :low_price, min: 0, max: 100000, step: 10, class: "form-control time_input hidden", required: true %><span class="ageprice_unit hidden">円</span>
+        <% end %>
       </div>
       <div class="ageprice_row row_delete">
         <%= link_to_remove_association f, class: "remove_ageprice_btn" do %>

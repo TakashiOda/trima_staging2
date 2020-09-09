@@ -10,15 +10,14 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- // *= require_self
+ *= require_self
  */
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
-$colors: (
-  ButtonColor: #258e4f,
-  MainKeyColor: #258e4f,
-  SubKeyColor: #36d475,
-);
+
+$user-main-color: #2bb560;
+$user-main-dark-color: #536A97;
+
+
 
 /*基本css************************************/
 body.erb_body {
@@ -55,7 +54,7 @@ a {
 }
 .btn-submit {
   color: #fff;
-  background: #146e24;
+  background: $user-main-color;
 }
 .btn-cansel {
   color: #fff;
@@ -136,7 +135,9 @@ form label {
 }
 /*header************************************/
 header.erb_header {
-  background: linear-gradient(to right, #25d4c4, #0f9287);
+  // background: linear-gradient(to right, #25d4c4, #0f9287);
+  // background: linear-gradient(to right, #25d4c4, #2bb560);
+  background: $user-main-color;
   padding: 0px;
   height: 60px;
   width: 100%;
@@ -391,7 +392,8 @@ div#password_input_box {
 }
 .user_show_side {
   width: 20%;
-  background: #0f3a36;
+  // background: #0f3a36;
+  background: #215234;
   padding: 20px 0 30px 30px;
 }
 .user_show_content {
@@ -477,7 +479,7 @@ img.user_avatar {
 .user_show_btn_box {
   padding-top: 10px;
   div a {
-    background: #4fb15f;
+    background: $user-main-color;
     padding: 8px 23px;
     color: #fff;
     font-weight: bold;
@@ -612,7 +614,7 @@ span.form_supplement {
 }
 .btn_box a {
   color: #fff;
-  background: #2bb561;
+  background: $user-main-color;
   border-radius: 6px;
   padding: 10px 20px;
 }
