@@ -50,6 +50,10 @@ Rails.application.routes.draw do
 
     resources :activities do
       get "stocknew", to: "activities#stock_new", as: :new_stocks
+      get "stock_new_first_month", to: "activities#stock_new_first_month", as: :new_stocks_first_month
+      get "stock_new_next_month", to: "activities#stock_new_next_month", as: :new_stocks_next_month
+      get "stock_new_next2_month", to: "activities#stock_new_next2_month", as: :new_stocks_next2_month
+      get "stock_new_next3_month", to: "activities#stock_new_next3_month", as: :new_stocks_next3_month
       # get "suppliers/:supplier_id/activities/:activity_id/stocknew", to: "activities#stock_new", as: :new_stocks
       post "stocks", to: "activities#stock_create"
       get "stockedit", to: "activities#stock_edit"
