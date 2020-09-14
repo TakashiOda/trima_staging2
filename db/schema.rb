@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
 
   create_table "activity_stocks", force: :cascade do |t|
     t.integer "activity_course_id", null: false
+    t.integer "activity_id", null: false
     t.date "date"
     t.integer "stock"
     t.integer "book_amount", default: 0, null: false
