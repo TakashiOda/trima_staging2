@@ -13,8 +13,12 @@
           <%=link_to "#{(@s_Date << 2).month}月", supplier_activity_new_stocks_first_month_path(current_supplier, @activity), class: "month_tab" %>
           <%=link_to "#{(@s_Date << 1).month}月", supplier_activity_new_stocks_next_month_path(current_supplier, @activity), class: "month_tab" %>
           <%=link_to "#{@s_Date.month}月", supplier_activity_new_stocks_next2_month_path(current_supplier, @activity), class: "month_tab selected" %>
-          <% if !@activity.is_all_year_open && @activity.end_date > @s_Date.end_of_month %>
+          <% if @activity.is_all_year_open %>
             <%=link_to "#{(@s_Date >> 1).month}月", supplier_activity_new_stocks_next3_month_path(current_supplier, @activity), class: "month_tab" %>
+          <% else %>
+            <% if @activity.end_date > @s_Date.end_of_month %>
+              <%=link_to "#{(@s_Date >> 1).month}月", supplier_activity_new_stocks_next3_month_path(current_supplier, @activity), class: "month_tab" %>
+            <% end %>
           <% end %>
         </div>
         <%= render 'stock_new_form' %>
