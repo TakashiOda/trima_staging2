@@ -22,7 +22,7 @@
                       <%= activity.name %>
                     </div>
                     <div class="activity_list_item_back">
-                      <% if ActivityStock.where(activity_id: activity.id).any? %>
+                      <% if activity.activity_courses.any? && activity.activity_courses.first.activity_stocks.any? %>
                         <%= link_to "在庫を編集", supplier_activity_edit_stocks_first_month_path(current_supplier, activity)%>
                       <% else %>
                         <%= link_to "在庫を作成", supplier_activity_new_stocks_first_month_path(current_supplier, activity)%>

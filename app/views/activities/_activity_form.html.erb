@@ -384,6 +384,10 @@
     width: 18%;
     padding-left: 2%;
   }
+  .season_price_inner {
+    display: flex;
+    align-items: flex-end;
+  }
 
   span.ageprice_unit {
     font-size: 10px;
@@ -430,9 +434,9 @@
     height: 90px;
     padding: 0 10px;
   }
-  div#season_price_ratio_box {
+  /* <!-- div#season_price_ratio_box {
     width: 50%;
-  }
+  } --> */
   .form-group.season_price_radio_box label:first-child {
     margin-right: 20px;
   }
@@ -479,9 +483,9 @@
     if (isChecked) {
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
         seasonPriceBoxes[i].children[0].classList.remove("hidden");
-        if (seasonPriceBoxes[i].children[1]) {
-          seasonPriceBoxes[i].children[1].classList.remove("hidden");
-        }
+        // if (seasonPriceBoxes[i].children[1]) {
+        //   seasonPriceBoxes[i].children[1].classList.remove("hidden");
+        // }
       }
     }
   }
@@ -491,9 +495,9 @@
     if (isChecked) {
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
         seasonPriceBoxes[i].children[0].classList.add("hidden");
-        if (seasonPriceBoxes[i].children[1]) {
-          seasonPriceBoxes[i].children[1].classList.add("hidden");
-        }
+        // if (seasonPriceBoxes[i].children[1]) {
+        //   seasonPriceBoxes[i].children[1].classList.add("hidden");
+        // }
       }
     }
   }
@@ -580,12 +584,19 @@
       if (isChecked){ //シーズン料金有りの場合
         for (var i = 0; i < seasonPriceBoxes.length; i++) {
           var hasHidden = seasonPriceBoxes[i].children[0].classList.contains('hidden');
-          if (hasHidden) {
+          // if (hasHidden) {
             seasonPriceBoxes[i].children[0].classList.remove("hidden");
-          }
-          if (seasonPriceBoxes[i].children[1] && seasonPriceBoxes[i].children[1].classList.contains('hidden')) {
-            seasonPriceBoxes[i].children[1].classList.remove("hidden");
-          }
+          // }
+          // if (seasonPriceBoxes[i].children[1] && seasonPriceBoxes[i].children[1].classList.contains('hidden')) {
+          //   seasonPriceBoxes[i].children[1].classList.remove("hidden");
+          // }
+        }
+      } else {
+        for (var i = 0; i < seasonPriceBoxes.length; i++) {
+          // var hasHidden = seasonPriceBoxes[i].children[0].classList.contains('hidden');
+          seasonPriceBoxes[i].children[0].classList.add("hidden");
+          // seasonPriceBoxes[i].children[0].classList.add("hidden");
+          // console.log(seasonPriceBoxes[i].children[1].classList);
         }
       }
     }, 100);
@@ -651,5 +662,4 @@
       inputStartFrom.setAttribute('value', systemStartMaxToString);
     }
   }
-
 </script>

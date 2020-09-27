@@ -1,4 +1,6 @@
 <div class="stock_form">
+  <%# @exist_stock_s_Date %>
+  <%# @exist_stock_e_Date %>
   <%= form_for [current_supplier, @activity] do |f| %>
     <div class="stock_table_header">
       <div class="stock_table_th date_column">日付</div>
@@ -24,7 +26,7 @@
             <%= course.fields_for :activity_stocks, course.object.activity_stocks.where('date >= ?', @exist_stock_s_Date).where('date <= ?', @exist_stock_e_Date) do |stock| %>
               <div class="form-group activity_stock_input_box" style="margin-bottom: 0;">
                 <%= stock.hidden_field :activity_id, value: @activity.id %>
-                <%= stock.hidden_field :date, class: 'form-control' %>
+                <%= stock.hidden_field :date, :value => @exist_stock_dates[stock.index] %>
                 <div class="stock_input_box">
                   <%= stock.number_field :stock, class: 'form-control' %>
                 </div>
@@ -55,10 +57,11 @@
         <div class="stock_items">
         <%= f.fields_for :activity_courses do |course| %>
           <div class="course_stock_column course_column">
-            <%= course.fields_for :activity_stocks, course.object.activity_stocks.where('date >= ?', @s_Date).where('date <= ?', @e_Date) do |stock| %>
+            <%= course.fields_for :activity_stocks, course.object.activity_stocks.where('date >= ?', @s_Date).where('date <= ?', @s_Date) do |stock| %>
+            <%# course.fields_for :activity_stocks do |stock| %>
               <div class="form-group activity_stock_input_box" style="margin-bottom: 0;">
                 <%= stock.hidden_field :activity_id, value: @activity.id %>
-                <%= stock.hidden_field :date, class: 'form-control' %>
+                <%= stock.hidden_field :date, :value => @dates[stock.index] %>
                 <div class="stock_input_box">
                   <%= stock.number_field :stock, class: 'form-control' %>
                 </div>
@@ -79,7 +82,6 @@
         <% end %>
         </div>
       <% end %>
-      <%# binding.pry %>
     </div>
     <div class="actions">
       <%= f.submit %>

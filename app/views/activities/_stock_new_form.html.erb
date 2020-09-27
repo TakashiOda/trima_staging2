@@ -22,7 +22,8 @@
           <%# course.fields_for :activity_stocks, course.object.activity_stocks.where('date >= ?', @s_Date).where('date <= ?', @e_Date) do |stock| %>
             <div class="form-group activity_stock_input_box" style="margin-bottom: 0;">
               <%= stock.hidden_field :activity_id, value: @activity.id %>
-              <%= stock.hidden_field :date, class: 'form-control' %>
+              <%# stock.hidden_field :date, class: 'form-control' %>
+              <%= stock.hidden_field :date, :value => @dates[stock.index] %>
               <div class="stock_input_box">
                 <%= stock.number_field :stock, class: 'form-control' %>
               </div>

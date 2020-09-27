@@ -10,5 +10,6 @@ class CreateActivityStocks < ActiveRecord::Migration[6.0]
     end
     add_index :activity_stocks, :date
     add_index :activity_stocks, :stock
+    add_index :activity_stocks, [:activity_course_id, :date], unique: true
   end
 end

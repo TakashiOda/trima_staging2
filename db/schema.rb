@@ -41,13 +41,11 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.boolean "october", default: true
     t.boolean "november", default: true
     t.boolean "december", default: true
-    t.boolean "is_all_year_open", default: false
+    t.boolean "is_all_year_open", default: true
     t.date "start_date"
     t.date "end_date"
     t.integer "normal_adult_price"
     t.boolean "has_season_price", default: false
-    t.float "low_price_ratio", default: 0.8
-    t.float "high_price_ratio", default: 1.2
     t.boolean "monday_open", default: true
     t.boolean "tuesday_open", default: true
     t.boolean "wednesday_open", default: true
@@ -137,6 +135,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.integer "stock"
     t.integer "book_amount", default: 0, null: false
     t.string "season_price", default: "normal"
+    t.index ["activity_course_id", "date"], name: "index_activity_stocks_on_activity_course_id_and_date", unique: true
     t.index ["activity_course_id"], name: "index_activity_stocks_on_activity_course_id"
     t.index ["date"], name: "index_activity_stocks_on_date"
     t.index ["stock"], name: "index_activity_stocks_on_stock"

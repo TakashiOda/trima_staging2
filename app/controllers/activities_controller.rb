@@ -45,7 +45,6 @@ class ActivitiesController < ApplicationController
 
 
   def stock_new_first_month
-    # binding.pry
     @activity = Activity.find(params[:activity_id])
     @courses = @activity.activity_courses
     if !@courses.blank?
@@ -59,14 +58,27 @@ class ActivitiesController < ApplicationController
             @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
           end
         end
+        @dates = []
+        (@s_Date..@e_Date).each do |date|
+          @dates.push(date)
+        end
+
 
       elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date
         #期間限定の体験
-        @s_Date = @activity.start_date # start_dateが来月の場合もある
+        if @activity.start_date > Date.today
+          @s_Date = @activity.start_date # start_dateが来月の場合もある
+        else
+          @s_Date = Date.today # start_dateが来月の場合もある
+        end
         if @activity.end_date < @activity.start_date.end_of_month
           @e_Date = @activity.end_date
         else
           @e_Date = @activity.start_date.end_of_month #end_dateが月末より前の可能性がある
+        end
+        @dates = []
+        (@s_Date..@e_Date).each do |date|
+          @dates.push(date)
         end
 
         @courses.each do |course|
@@ -97,6 +109,10 @@ class ActivitiesController < ApplicationController
             @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
           end
         end
+        @dates = []
+        (@s_Date..@e_Date).each do |date|
+          @dates.push(date)
+        end
 
       elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date
         #期間限定の体験
@@ -112,6 +128,11 @@ class ActivitiesController < ApplicationController
             @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
           end
         end
+        @dates = []
+        (@s_Date..@e_Date).each do |date|
+          @dates.push(date)
+        end
+
       else
         flash[:alert] = '在庫を設定するには体験情報にて期間設定をしてください'
         redirect_to supplier_activities_path(current_supplier)
@@ -136,6 +157,10 @@ class ActivitiesController < ApplicationController
             @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
           end
         end
+        @dates = []
+        (@s_Date..@e_Date).each do |date|
+          @dates.push(date)
+        end
 
       elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date
         #期間限定の体験
@@ -150,6 +175,10 @@ class ActivitiesController < ApplicationController
           (@s_Date..@e_Date).each do |date|
             @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
           end
+        end
+        @dates = []
+        (@s_Date..@e_Date).each do |date|
+          @dates.push(date)
         end
       else
         flash[:alert] = '在庫を設定するには体験情報にて期間設定をしてください'
@@ -175,6 +204,10 @@ class ActivitiesController < ApplicationController
             @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
           end
         end
+        @dates = []
+        (@s_Date..@e_Date).each do |date|
+          @dates.push(date)
+        end
 
       elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date
         #期間限定の体験
@@ -188,6 +221,10 @@ class ActivitiesController < ApplicationController
           (@s_Date..@e_Date).each do |date|
             @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
           end
+        end
+        @dates = []
+        (@s_Date..@e_Date).each do |date|
+          @dates.push(date)
         end
       else
         flash[:alert] = '在庫を設定するには体験情報にて期間設定をしてください'
@@ -204,12 +241,12 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:activity_id])
     @courses = @activity.activity_courses
     if !@courses.blank?
-      @latest_stock_date = ActivityStock.where(activity_id: @activity.id).order(:date).last.date
+      @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
       if @activity.is_all_year_open #　通年の体験
         if @latest_stock_date < Date.today # 今日以降の在庫がない
           render 'stock_new_first_month'
         elsif @latest_stock_date >= Date.today && @latest_stock_date < Date.today.end_of_month
-          # 今日以降の在庫がない
+          # 今日以降の在庫がある
           @exist_stock_s_Date = Date.today
           @exist_stock_e_Date = @latest_stock_date
           @s_Date = @latest_stock_date + 1
@@ -219,82 +256,267 @@ class ActivitiesController < ApplicationController
               @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
             end
           end
+          @exist_stock_dates = []
+          (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+            @exist_stock_dates.push(exist_date)
+          end
+          @dates = []
+          (@s_Date..@e_Date).each do |date|
+            @dates.push(date)
+          end
         else # 月末まで在庫ある
           @exist_stock_s_Date = Date.today
           @exist_stock_e_Date = Date.today.end_of_month
+          @exist_stock_dates = []
+          (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+            @exist_stock_dates.push(exist_date)
+          end
         end
 
       elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
         if @activity.start_date <= Date.today # (1)開始日が今日以前
           if @latest_stock_date < Date.today # (1)-1 在庫が今日以降ない
             if @activity.end_date < Date.today
-
+              flash[:alert] = '体験期間が終了しています。期間を再設定してください'
+              redirect_to supplier_activities_path(current_supplier)
             elsif @activity.end_date >= Date.today && @activity.end_date >= Date.today.end_of_month
-
+              @s_Date = Date.today
+              @e_Date = @activity.end_date
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
             else
-
+              @s_Date = Date.today
+              @e_Date = Date.today.end_of_month
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
             end
+
           elsif @latest_stock_date >= Date.today && @latest_stock_date < Date.today.end_of_month # (1)-2 在庫が今日以降〜月末までの間
             if @activity.end_date < Date.today
-
+              flash[:alert] = '体験期間が終了しています。期間を再設定してください'
+              redirect_to supplier_activities_path(current_supplier)
             elsif @activity.end_date >= Date.today && @activity.end_date <= @latest_stock_date
-
+              @exist_stock_s_Date = Date.today
+              @exist_stock_e_Date = @activity.end_date
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
             elsif @activity.end_date > @latest_stock_date
-
-            else
-
+              @exist_stock_s_Date = Date.today
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = @activity.end_date
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+            elsif @activity.end_date > Date.today.end_of_month
+              @exist_stock_s_Date = Date.today
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = Date.today.end_of_month
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
             end
+
           else # (1)-3 在庫が月末以降も存在
             if @activity.end_date < Date.today
-
+              flash[:alert] = '体験期間が終了しています。期間を再設定してください'
+              redirect_to supplier_activities_path(current_supplier)
             elsif @activity.end_date >= Date.today && @activity.end_date < Date.today.end_of_month
-
+              @exist_stock_s_Date = Date.today
+              @exist_stock_e_Date = @activity.end_date
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
             else
-
+              @exist_stock_s_Date = Date.today
+              @exist_stock_e_Date = Date.today.end_of_month
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
             end
           end
         elsif @activity.start_date > Date.today && @activity.start_date <= Date.today.end_of_month #(2)開始日が今日以降 && 今月末より前
           if @latest_stock_date < @activity.start_date #在庫がstart日以降ない
             if @activity.end_date > Date.today.end_of_month
-
+              @s_Date = @activity.start_date
+              @e_Date = @activity.start_date
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
             else
-
+              @s_Date = @activity.start_date
+              @e_Date = Date.today.end_of_month
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
             end
           elsif @latest_stock_date >= @activity.start_date && @latest_stock_date < Date.today.end_of_month # 在庫がstart以降あるが月末まではない
             if @activity.end_date <= @latest_stock_date
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = @activity.end_date
             elsif @activity.end_date > @latest_stock_date && @activity.end_date < Date.today.end_of_month
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = @activity.end_date
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
             else # 月末 <= end
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = Date.today.end_of_month
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+            end
+            @exist_stock_dates = []
+            (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+              @exist_stock_dates.push(exist_date)
             end
           else # 在庫がstartの翌月もある
             if @activity.end_date < Date.today.end_of_month
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = @activity.end_date
             else
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = Date.today.end_of_month
+            end
+            @exist_stock_dates = []
+            (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+              @exist_stock_dates.push(exist_date)
             end
           end
         else @activity.start_date >= Date.today.end_of_month + 1 # 開始日が来月以降
           if @activity.start_date > @latest_stock_date
-            if @activity.end_date < Date.today.end_of_month
-
+            if @activity.end_date < @activity.start_date.end_of_month
+              @s_Date = @activity.start_date
+              @e_Date = @activity.end_date
             else
-
+              @s_Date = @activity.start_date
+              @e_Date = @activity.start_date.end_of_month
+            end
+            @dates = []
+            (@s_Date..@e_Date).each do |date|
+              @dates.push(date)
+            end
+            @courses.each do |course|
+              (@s_Date..@e_Date).each do |date|
+                @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+              end
             end
           elsif @activity.start_date <= @latest_stock_date && @latest_stock_date < @activity.start_date.end_of_month
             if @activity.end_date <= @latest_stock_date
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = @activity.end_date
             elsif @activity.end_date > @latest_stock_date && @activity.end_date < @activity.start_date.end_of_month
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = @activity.end_date
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
             else
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = @activity.start_date.end_of_month
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+            end
+            @exist_stock_dates = []
+            (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+              @exist_stock_dates.push(exist_date)
             end
           else # 在庫がstart月の翌月もある
             if @activity.end_date < Date.today.end_of_month
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = @activity.end_date
             else
-
+              @exist_stock_s_Date = @activity.start_date
+              @exist_stock_e_Date = @activity.start_date.end_of_month
+            end
+            @exist_stock_dates = []
+            (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+              @exist_stock_dates.push(exist_date)
             end
           end
         end
@@ -314,78 +536,240 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:activity_id])
     @courses = @activity.activity_courses
     if !@courses.blank?
-      @latest_stock_date = ActivityStock.where(activity_id: @activity.id).order(:date).last.date
+      @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
       if @activity.is_all_year_open #　通年の体験
-      #   if @latest_stock_date <= Date.today.end_of_month # 来月分の在庫がない
-      #     @s_Date = Date.today.end_of_month + 1
-      #     @e_Date = (Date.today >> 1).end_of_month
-      #   elsif @latest_stock_date > Date.today.end_of_month + 1 && @latest_stock_date < (Date.today >> 1).end_of_month # 在庫が来月の途中まで
-      #     @exist_stock_s_Date = Date.today.end_of_month + 1
-      #     @exist_stock_e_Date = @latest_stock_date
-      #     @s_Date = @latest_stock_date + 1
-      #     @e_Date = (Date.today >> 1).end_of_month
-      #     @courses.each do |course|
-      #       (@s_Date..@e_Date).each do |date|
-      #         @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
-      #       end
-      #     end
-      #   else # 来月末まで在庫ある
-      #     @exist_stock_s_Date = Date.today.end_of_month + 1
-      #     @exist_stock_e_Date = (Date.today >> 1).end_of_month
-      #   end
-      # elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
-      #   if @latest_stock_date <= Date.today.end_of_month # 在庫が今月末以前
-      #     if @activity.end_date <= #終了日が今月末以前
-      #
-      #     elsif @activity.end_date >= Date.today.end_of_month + 1 #終了日が来月頭より後ろ & 在庫より前
-      #
-      #     elsif #終了日が来月在庫より後ろ & 月末より前
-      #
-      #     else # 終了日が来月末以降
-      #     end
-      #   elsif @latest_stock_date > Date.today.end_of_month && @latest_stock_date < (Date.today >> 1).end_of_month　#在庫が来月頭より後ろ & 来月末より前
-      #   else #在庫が来月末以降
-      #   end
+        if @latest_stock_date <= Date.today.end_of_month
+          @s_Date = Date.today.end_of_month + 1
+          @e_Date = (Date.today >> 1).end_of_month
+          @courses.each do |course|
+            (@s_Date..@e_Date).each do |date|
+              @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+            end
+          end
+          @dates = []
+          (@s_Date..@e_Date).each do |date|
+            @dates.push(date)
+          end
+        elsif @latest_stock_date > Date.today.end_of_month && @latest_stock_date < (Date.today >> 1).end_of_month # 在庫は翌月頭〜翌月末までの間
+          @exist_stock_s_Date = Date.today.end_of_month + 1
+          @exist_stock_e_Date = @latest_stock_date
+          @s_Date = @latest_stock_date + 1
+          @e_Date = (Date.today >> 1).end_of_month
+          @exist_stock_dates = []
+          (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+            @exist_stock_dates.push(exist_date)
+          end
+          @courses.each do |course|
+            (@s_Date..@e_Date).each do |date|
+              @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+            end
+          end
+          @dates = []
+          (@s_Date..@e_Date).each do |date|
+            @dates.push(date)
+          end
+        end
 
+      elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
+        if @activity.start_date < Date.today.end_of_month #翌月 = 今日の翌月
+          if @latest_stock_date <= Date.today.end_of_month # 在庫が翌月分ない
+            if @activity.end_date <= Date.today.end_of_month
+              flash[:alert] = '体験期間が終了しています。期間を再設定してください'
+              redirect_to supplier_activities_path(current_supplier)
+            elsif @activity.end_date > Date.today.end_of_month && @activity.end_date < (Date.today >> 1).end_of_month
+              @s_Date = Date.today.end_of_month + 1
+              @e_Date = @activity.end_date
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
 
-        # if @latest_stock_date >= (Date.today >> 1).end_of_month #来月分の在庫は作成済
-        #   @s_Date = Date.today.end_of_month + 1
-        #
-        #   if @activity.end_date < (Date.today >> 1).end_of_month
-        #     @e_Date = @activity.end_date
-        #   else
-        #     @e_Date = (Date.today >> 1).end_of_month
-        #   end
-        # elsif @latest_stock_date >= Date.today && @latest_stock_date < Date.today.end_of_month
-        #   #在庫は来月のとある時点まで作成済み
-        #
-        #   if @activity.start_date > Date.today
-        #     @exist_stock_s_Date = @activity.start_date
-        #   else
-        #     @exist_stock_s_Date = Date.today
-        #   end
-        #   @exist_stock_e_Date = @latest_stock_date
-        #   @s_Date = @latest_stock_date + 1
-        #   if @activity.end_date > (Date.today >> 1).end_of_month
-        #     @e_Date = (Date.today >> 1).end_of_month
-        #   else
-        #     @e_Date = @activity.end_date
-        #   end
-        #   @courses.each do |course|
-        #     (@s_Date..@e_Date).each do |date|
-        #       @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
-        #     end
-        #   end
+            else
+              @s_Date = Date.today.end_of_month + 1
+              @e_Date = (Date.today >> 1).end_of_month
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+            end
 
-        # else #最新在庫は今日より過去
-        #   @s_Date = Date.today.end_of_month + 1
-        #   @e_Date = (Date.today >> 1).end_of_month
-        #   @courses.each do |course|
-        #     (@s_Date..@e_Date).each do |date|
-        #       @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
-        #     end
-        #   end
-        # end
+          elsif @latest_stock_date > Date.today.end_of_month && @latest_stock_date < (Date.today >> 1).end_of_month　# 在庫が途中まである
+            if @activity.end_date <= Date.today.end_of_month
+              flash[:alert] = '体験期間が終了しています。期間を再設定してください'
+              redirect_to supplier_activities_path(current_supplier)
+            elsif @activity.end_date > Date.today.end_of_month && @activity.end_date <= @latest_stock_date
+              @exist_stock_s_Date = Date.today.end_of_month + 1
+              @exist_stock_e_Date = @activity.end_date
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+            elsif @activity.end_date > @latest_stock_date && @activity.end_date < (Date.today >> 1).end_of_month
+              @exist_stock_s_Date = Date.today.end_of_month + 1
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = @activity.end_date
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+            else
+              @exist_stock_s_Date = Date.today.end_of_month + 1
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = (Date.today >> 1).end_of_month
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+            end
+          else
+            if @activity.end_date <= Date.today.end_of_month
+              flash[:alert] = '体験期間が終了しています。期間を再設定してください'
+              redirect_to supplier_activities_path(current_supplier)
+            elsif @activity.end_date > Date.today.end_of_month && @activity.end_date < (Date.today >> 1).end_of_month
+              @exist_stock_s_Date = Date.today.end_of_month + 1
+              @exist_stock_e_Date = @activity.end_date
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+            else
+              @exist_stock_s_Date = Date.today.end_of_month + 1
+              @exist_stock_e_Date = (Date.today >> 1).end_of_month
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+            end
+          end
+        else # 翌月 = start日の翌月
+          if @latest_stock_date <= @activity.start_date.end_of_month
+            if @activity.end_date <= @activity.start_date.end_of_month
+              flash[:alert] = '体験期間が終了しています。期間を再設定してください'
+              redirect_to supplier_activities_path(current_supplier)
+            elsif @activity.end_date > @activity.start_date.end_of_month && @activity.end_date < (@activity.start_date >> 1).end_of_month
+              @s_Date = @activity.start_date.end_of_month + 1
+              @e_Date = @activity.end_date
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+            else
+              @s_Date = @activity.start_date.end_of_month + 1
+              @e_Date = (@activity.start_date >> 1).end_of_month
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+            end
+          elsif @latest_stock_date > @activity.start_date.end_of_month && @latest_stock_date < (@activity.start_date >> 1).end_of_month
+            if @activity.end_date <= @activity.start_date.end_of_month
+              flash[:alert] = '体験期間が終了しています。期間を再設定してください'
+              redirect_to supplier_activities_path(current_supplier)
+            elsif @activity.end_date > @activity.start_date.end_of_month && @activity.end_date <= @latest_stock_date
+              @exist_stock_s_Date = @activity.start_date.end_of_month + 1
+              @exist_stock_e_Date = @activity.end_date
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+            elsif @activity.end_date > @latest_stock_date && @activity.end_date < (@activity.start_date >> 1).end_of_month
+              @exist_stock_s_Date = @activity.start_date.end_of_month + 1
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = @activity.end_date
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+            else
+              @exist_stock_s_Date = @activity.start_date.end_of_month + 1
+              @exist_stock_e_Date = @latest_stock_date
+              @s_Date = @latest_stock_date + 1
+              @e_Date = (@activity.start_date >> 1).end_of_month
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+              @courses.each do |course|
+                (@s_Date..@e_Date).each do |date|
+                  @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+                end
+              end
+              @dates = []
+              (@s_Date..@e_Date).each do |date|
+                @dates.push(date)
+              end
+            end
+          else
+            if @activity.end_date <= @activity.start_date.end_of_month
+              flash[:alert] = '体験期間が終了しています。期間を再設定してください'
+              redirect_to supplier_activities_path(current_supplier)
+            elsif @activity.end_date > @activity.start_date.end_of_month && @activity.end_date < (@activity.start_date >> 1).end_of_month
+              @exist_stock_s_Date = @activity.start_date.end_of_month + 1
+              @exist_stock_e_Date = @activity.end_date
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+            else
+              @exist_stock_s_Date = @activity.start_date.end_of_month + 1
+              @exist_stock_e_Date = (@activity.start_date >> 1).end_of_month
+              @exist_stock_dates = []
+              (@exist_stock_s_Date..@exist_stock_e_Date).each do |exist_date|
+                @exist_stock_dates.push(exist_date)
+              end
+            end
+          end
+        end
       else
         flash[:alert] = '在庫を設定するには体験情報にて期間設定をしてください'
         redirect_to supplier_activities_path(current_supplier)

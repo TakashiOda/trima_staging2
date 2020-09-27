@@ -37,15 +37,15 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.boolean :december, default: true
 
       #期間設定
-      t.boolean :is_all_year_open, default: false
+      t.boolean :is_all_year_open, default: true
       t.date    :start_date
       t.date    :end_date
 
       #　シーズン料金設定
       t.integer :normal_adult_price
       t.boolean :has_season_price, default: false
-      t.float   :low_price_ratio, default: 0.8
-      t.float   :high_price_ratio, default: 1.2
+      # t.float   :low_price_ratio, default: 0.8
+      # t.float   :high_price_ratio, default: 1.2
 
       # 定休日情報
       t.boolean :monday_open, default: true
