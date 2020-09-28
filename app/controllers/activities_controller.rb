@@ -335,24 +335,6 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:activity_id])
     @courses = @activity.activity_courses
     set_dates_all_year_and_limit_term_activity(@activity, @courses)
-    # if !@courses.blank?
-    #   @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
-    #   if @activity.is_all_year_open #　通年の体験
-    #     set_all_year_activity_dates(action_name, @latest_stock_date)
-    #   elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
-    #     set_limit_term_activity_dates(action_name, @activity, @latest_stock_date)
-    #   else
-    #     redirect_to_index_because_of_no_term
-    #   end
-    #   if !@s_Date.nil? && !@e_Date.nil?
-    #     @dates = setDates(@s_Date, @e_Date)
-    #   end
-    #   if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
-    #     @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
-    #   end
-    # else
-    #   redirect_to_index_because_of_no_term_or_no_courses
-    # end
   end
 
 
@@ -360,24 +342,6 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:activity_id])
     @courses = @activity.activity_courses
     set_dates_all_year_and_limit_term_activity(@activity, @courses)
-    # if !@courses.blank?
-    #   @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
-    #   if @activity.is_all_year_open #　通年の体験
-    #     set_all_year_activity_dates(action_name, @latest_stock_date)
-    #   elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
-    #     set_limit_term_activity_dates(action_name, @activity, @latest_stock_date)
-    #   else
-    #     redirect_to_index_because_of_no_term
-    #   end
-    #   if !@s_Date.nil? && !@e_Date.nil?
-    #     @dates = setDates(@s_Date, @e_Date)
-    #   end
-    #   if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
-    #     @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
-    #   end
-    # else
-    #   redirect_to_index_because_of_no_term_or_no_courses
-    # end
   end
 
 
@@ -385,24 +349,6 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:activity_id])
     @courses = @activity.activity_courses
     set_dates_all_year_and_limit_term_activity(@activity, @courses)
-    # if !@courses.blank?
-    #   @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
-    #   if @activity.is_all_year_open #　通年の体験
-    #     set_all_year_activity_dates(action_name, @latest_stock_date)
-    #   elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
-    #     set_limit_term_activity_dates(action_name, @activity, @latest_stock_date)
-    #   else
-    #     redirect_to_index_because_of_no_term
-    #   end
-    #   if !@s_Date.nil? && !@e_Date.nil?
-    #     @dates = setDates(@s_Date, @e_Date)
-    #   end
-    #   if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
-    #     @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
-    #   end
-    # else
-    #   redirect_to_index_because_of_no_term_or_no_courses
-    # end
   end
 
   private
@@ -607,5 +553,4 @@ class ActivitiesController < ApplicationController
         redirect_to_index_because_of_no_term_or_no_courses
       end
     end
-
 end
