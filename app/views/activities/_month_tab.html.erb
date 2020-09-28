@@ -12,7 +12,7 @@
         <%=link_to "#{first_month + 2}月", supplier_activity_edit_stocks_next2_month_path(current_supplier, @activity),
           class: "month_tab #{'selected' if action_name == 'stock_edit_next2_month' || action_name == 'stock_new_next2_month'}" %>
       <% end %>
-      <% if @activity.end_date >= (Date.today >> 2).beginning_of_month %>
+      <% if @activity.end_date >= (Date.today >> 3).beginning_of_month %>
         <%=link_to "#{first_month + 3}月", supplier_activity_edit_stocks_next3_month_path(current_supplier, @activity),
           class: "month_tab #{'selected' if action_name == 'stock_edit_next3_month' || action_name == 'stock_new_next3_month'}" %>
       <% end %>
@@ -28,7 +28,7 @@
         <%=link_to "#{first_month + 2}月", supplier_activity_edit_stocks_next2_month_path(current_supplier, @activity),
           class: "month_tab #{'selected' if action_name == 'stock_edit_next2_month' || action_name == 'stock_new_next2_month'}" %>
       <% end %>
-      <% if @activity.end_date >= (Date.today >> 2).beginning_of_month %>
+      <% if @activity.end_date >= (Date.today >> 3).beginning_of_month %>
         <%=link_to "#{first_month + 3}月", supplier_activity_edit_stocks_next3_month_path(current_supplier, @activity),
           class: "month_tab #{'selected' if action_name == 'stock_edit_next3_month' || action_name == 'stock_new_next3_month'}" %>
       <% end %>

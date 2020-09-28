@@ -208,19 +208,7 @@ class ActivitiesController < ApplicationController
     if !@courses.blank?
       @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
       if @activity.is_all_year_open #　通年の体験
-        if @latest_stock_date < Date.today # 今日以降の在庫がない
-          render 'stock_new_first_month'
-        elsif @latest_stock_date >= Date.today && @latest_stock_date < Date.today.end_of_month
-          # 今日以降の在庫がある
-          @exist_stock_s_Date = Date.today
-          @exist_stock_e_Date = @latest_stock_date
-          @s_Date = @latest_stock_date + 1
-          @e_Date = Date.today.end_of_month
-        else # 月末まで在庫ある
-          @exist_stock_s_Date = Date.today
-          @exist_stock_e_Date = Date.today.end_of_month
-        end
-
+        set_all_year_activity_dates(action_name, @latest_stock_date)
       elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
         if @activity.end_date > Date.today
           if @activity.start_date <= Date.today # (1)開始日が今日以前
@@ -331,343 +319,90 @@ class ActivitiesController < ApplicationController
       else
         redirect_to_index_because_of_no_term
       end
-
       if !@s_Date.nil? && !@e_Date.nil?
         @dates = setDates(@s_Date, @e_Date)
       end
       if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
         @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
       end
-
     else
       redirect_to_index_because_of_no_term_or_no_courses
     end
   end
 
 
-
   def stock_edit_next_month
     @activity = Activity.find(params[:activity_id])
     @courses = @activity.activity_courses
-    if !@courses.blank?
-      @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
-      if @activity.is_all_year_open #　通年の体験
-        if @latest_stock_date <= Date.today.end_of_month
-          @s_Date = Date.today.end_of_month + 1
-          @e_Date = (Date.today >> 1).end_of_month
-        elsif @latest_stock_date > Date.today.end_of_month && @latest_stock_date < (Date.today >> 1).end_of_month # 在庫は翌月頭〜翌月末までの間
-          @exist_stock_s_Date = Date.today.end_of_month + 1
-          @exist_stock_e_Date = @latest_stock_date
-          @s_Date = @latest_stock_date + 1
-          @e_Date = (Date.today >> 1).end_of_month
-        else
-          @exist_stock_s_Date = Date.today.end_of_month + 1
-          @exist_stock_e_Date = (Date.today >> 1).end_of_month
-        end
-
-      elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
-        if @activity.end_date > Date.today.end_of_month || @activity.end_date > @activity.start_date.end_of_month
-
-          if @activity.start_date < Date.today.end_of_month #翌月 = 今日の翌月
-            if @latest_stock_date <= Date.today.end_of_month # 在庫が翌月分ない
-              if @activity.end_date > Date.today.end_of_month && @activity.end_date < (Date.today >> 1).end_of_month
-                @s_Date = Date.today.end_of_month + 1
-                @e_Date = @activity.end_date
-              else
-                @s_Date = Date.today.end_of_month + 1
-                @e_Date = (Date.today >> 1).end_of_month
-              end
-
-            elsif @latest_stock_date > Date.today.end_of_month && @latest_stock_date < (Date.today >> 1).end_of_month# 在庫が途中まである
-              if @activity.end_date > Date.today.end_of_month && @activity.end_date <= @latest_stock_date
-                @exist_stock_s_Date = Date.today.end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              elsif @activity.end_date > @latest_stock_date && @activity.end_date < (Date.today >> 1).end_of_month
-                @exist_stock_s_Date = Date.today.end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = Date.today.end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = (Date.today >> 1).end_of_month
-              end
-            else
-              if @activity.end_date > Date.today.end_of_month && @activity.end_date < (Date.today >> 1).end_of_month
-                @exist_stock_s_Date = Date.today.end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = Date.today.end_of_month + 1
-                @exist_stock_e_Date = (Date.today >> 1).end_of_month
-              end
-            end
-          else # 翌月 = start日の翌月
-            if @latest_stock_date <= @activity.start_date.end_of_month
-              if @activity.end_date > @activity.start_date.end_of_month && @activity.end_date < (@activity.start_date >> 1).end_of_month
-                @s_Date = @activity.start_date.end_of_month + 1
-                @e_Date = @activity.end_date
-              else
-                @s_Date = @activity.start_date.end_of_month + 1
-                @e_Date = (@activity.start_date >> 1).end_of_month
-              end
-            elsif @latest_stock_date > @activity.start_date.end_of_month && @latest_stock_date < (@activity.start_date >> 1).end_of_month
-              if @activity.end_date > @activity.start_date.end_of_month && @activity.end_date <= @latest_stock_date
-                @exist_stock_s_Date = @activity.start_date.end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              elsif @activity.end_date > @latest_stock_date && @activity.end_date < (@activity.start_date >> 1).end_of_month
-                @exist_stock_s_Date = @activity.start_date.end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = @activity.start_date.end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = (@activity.start_date >> 1).end_of_month
-              end
-            else
-              if @activity.end_date > @activity.start_date.end_of_month && @activity.end_date < (@activity.start_date >> 1).end_of_month
-                @exist_stock_s_Date = @activity.start_date.end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = @activity.start_date.end_of_month + 1
-                @exist_stock_e_Date = (@activity.start_date >> 1).end_of_month
-              end
-            end
-          end
-        else
-          # 体験が終了している時の処理
-          redirect_to_index_because_of_out_of_expiration
-        end
-      else
-        redirect_to_index_because_of_no_term
-      end
-      if !@s_Date.nil? && !@e_Date.nil?
-        @dates = setDates(@s_Date, @e_Date)
-      end
-      if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
-        @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
-      end
-    else
-      redirect_to_index_because_of_no_term_or_no_courses
-    end
+    set_dates_all_year_and_limit_term_activity(@activity, @courses)
+    # if !@courses.blank?
+    #   @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
+    #   if @activity.is_all_year_open #　通年の体験
+    #     set_all_year_activity_dates(action_name, @latest_stock_date)
+    #   elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
+    #     set_limit_term_activity_dates(action_name, @activity, @latest_stock_date)
+    #   else
+    #     redirect_to_index_because_of_no_term
+    #   end
+    #   if !@s_Date.nil? && !@e_Date.nil?
+    #     @dates = setDates(@s_Date, @e_Date)
+    #   end
+    #   if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
+    #     @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
+    #   end
+    # else
+    #   redirect_to_index_because_of_no_term_or_no_courses
+    # end
   end
 
 
   def stock_edit_next2_month
     @activity = Activity.find(params[:activity_id])
     @courses = @activity.activity_courses
-    if !@courses.blank?
-      @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
-      if @activity.is_all_year_open #　通年の体験
-        if @latest_stock_date <= (Date.today >> 1).end_of_month
-          @s_Date = (Date.today >> 1).end_of_month + 1
-          @e_Date = (Date.today >> 2).end_of_month
-        elsif @latest_stock_date > (Date.today >> 1).end_of_month && @latest_stock_date < (Date.today >> 2).end_of_month # 在庫は翌月頭〜翌月末までの間
-          @exist_stock_s_Date = (Date.today >> 1).end_of_month + 1
-          @exist_stock_e_Date = @latest_stock_date
-          @s_Date = @latest_stock_date + 1
-          @e_Date = (Date.today >> 2).end_of_month
-        else
-          @exist_stock_s_Date = (Date.today >> 1).end_of_month + 1
-          @exist_stock_e_Date = (Date.today >> 2).end_of_month
-        end
-
-      elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
-        if @activity.end_date > (Date.today >> 1).end_of_month || @activity.end_date > (@activity.start_date >> 1).end_of_month
-          if @activity.start_date < Date.today.end_of_month #翌々月 = 今日の翌々月
-            if @latest_stock_date <= (Date.today >> 1).end_of_month # 在庫が翌月分ない
-              if @activity.end_date > (Date.today >> 1).end_of_month && @activity.end_date < (Date.today >> 2).end_of_month
-                @s_Date = (Date.today >> 1).end_of_month + 1
-                @e_Date = @activity.end_date
-              else
-                @s_Date = (Date.today >> 1).end_of_month + 1
-                @e_Date = (Date.today >> 2).end_of_month
-              end
-
-            elsif @latest_stock_date > (Date.today >> 1).end_of_month && @latest_stock_date < (Date.today >> 2).end_of_month# 在庫が途中まである
-              if @activity.end_date > (Date.today >> 1).end_of_month && @activity.end_date <= @latest_stock_date
-                @exist_stock_s_Date = (Date.today >> 1).end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              elsif @activity.end_date > @latest_stock_date && @activity.end_date < (Date.today >> 2).end_of_month
-                @exist_stock_s_Date = (Date.today >> 1).end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = (Date.today >> 1).end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = (Date.today >> 2).end_of_month
-              end
-            else
-              if @activity.end_date > (Date.today >> 1).end_of_month && @activity.end_date < (Date.today >> 2).end_of_month
-                @exist_stock_s_Date = (Date.today >> 1).end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = (Date.today >> 1).end_of_month + 1
-                @exist_stock_e_Date = (Date.today >> 2).end_of_month
-              end
-            end
-          else # 翌月 = start日の翌月
-            if @latest_stock_date <= (@activity.start_date >> 1).end_of_month
-              if @activity.end_date > (@activity.start_date >> 1).end_of_month && @activity.end_date < (@activity.start_date >> 2).end_of_month
-                @s_Date = (@activity.start_date >> 1).end_of_month + 1
-                @e_Date = @activity.end_date
-              else
-                @s_Date = (@activity.start_date >> 1).end_of_month + 1
-                @e_Date = (@activity.start_date >> 2).end_of_month
-              end
-            elsif @latest_stock_date > (@activity.start_date >> 1).end_of_month && @latest_stock_date < (@activity.start_date >> 2).end_of_month
-              if @activity.end_date > (@activity.start_date >> 1).end_of_month && @activity.end_date <= @latest_stock_date
-                @exist_stock_s_Date = (@activity.start_date >> 1).end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              elsif @activity.end_date > @latest_stock_date && @activity.end_date < (@activity.start_date >> 2).end_of_month
-                @exist_stock_s_Date = (@activity.start_date >> 1).end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = (@activity.start_date >> 1).end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = (@activity.start_date >> 2).end_of_month
-              end
-            else
-              if @activity.end_date > (@activity.start_date >> 1).end_of_month && @activity.end_date < (@activity.start_date >> 2).end_of_month
-                @exist_stock_s_Date = (@activity.start_date >> 1).end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = (@activity.start_date >> 1).end_of_month + 1
-                @exist_stock_e_Date = (@activity.start_date >> 2).end_of_month
-              end
-            end
-          end
-        else
-          # 体験が終了している時の処理
-          redirect_to_index_because_of_out_of_expiration
-        end
-      else
-        redirect_to_index_because_of_no_term
-      end
-      if !@s_Date.nil? && !@e_Date.nil?
-        @dates = setDates(@s_Date, @e_Date)
-      end
-      if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
-        @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
-      end
-    else
-      redirect_to_index_because_of_no_term_or_no_courses
-    end
+    set_dates_all_year_and_limit_term_activity(@activity, @courses)
+    # if !@courses.blank?
+    #   @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
+    #   if @activity.is_all_year_open #　通年の体験
+    #     set_all_year_activity_dates(action_name, @latest_stock_date)
+    #   elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
+    #     set_limit_term_activity_dates(action_name, @activity, @latest_stock_date)
+    #   else
+    #     redirect_to_index_because_of_no_term
+    #   end
+    #   if !@s_Date.nil? && !@e_Date.nil?
+    #     @dates = setDates(@s_Date, @e_Date)
+    #   end
+    #   if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
+    #     @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
+    #   end
+    # else
+    #   redirect_to_index_because_of_no_term_or_no_courses
+    # end
   end
 
 
   def stock_edit_next3_month
     @activity = Activity.find(params[:activity_id])
     @courses = @activity.activity_courses
-    if !@courses.blank?
-      @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
-      if @activity.is_all_year_open #　通年の体験
-        if @latest_stock_date <= (Date.today >> 2).end_of_month
-          @s_Date = (Date.today >> 2).end_of_month + 1
-          @e_Date = (Date.today >> 3).end_of_month
-        elsif @latest_stock_date > (Date.today >> 2).end_of_month && @latest_stock_date < (Date.today >> 3).end_of_month # 在庫は翌月頭〜翌月末までの間
-          @exist_stock_s_Date = (Date.today >> 2).end_of_month + 1
-          @exist_stock_e_Date = @latest_stock_date
-          @s_Date = @latest_stock_date + 1
-          @e_Date = (Date.today >> 3).end_of_month
-        else
-          @exist_stock_s_Date = (Date.today >> 2).end_of_month + 1
-          @exist_stock_e_Date = (Date.today >> 3).end_of_month
-        end
-
-      elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
-        if @activity.end_date > (Date.today >> 2).end_of_month || @activity.end_date > (@activity.start_date >> 2).end_of_month
-          if @activity.start_date < Date.today.end_of_month #翌々月 = 今日の翌々月
-            if @latest_stock_date <= (Date.today >> 2).end_of_month # 在庫が翌月分ない
-              if @activity.end_date > (Date.today >> 2).end_of_month && @activity.end_date < (Date.today >> 3).end_of_month
-                @s_Date = (Date.today >> 2).end_of_month + 1
-                @e_Date = @activity.end_date
-              else
-                @s_Date = (Date.today >> 2).end_of_month + 1
-                @e_Date = (Date.today >> 3).end_of_month
-              end
-
-            elsif @latest_stock_date > (Date.today >> 2).end_of_month && @latest_stock_date < (Date.today >> 3).end_of_month# 在庫が途中まである
-              if @activity.end_date > (Date.today >> 2).end_of_month && @activity.end_date <= @latest_stock_date
-                @exist_stock_s_Date = (Date.today >> 2).end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              elsif @activity.end_date > @latest_stock_date && @activity.end_date < (Date.today >> 3).end_of_month
-                @exist_stock_s_Date = (Date.today >> 2).end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = (Date.today >> 2).end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = (Date.today >> 3).end_of_month
-              end
-            else
-              if @activity.end_date > (Date.today >> 2).end_of_month && @activity.end_date < (Date.today >> 3).end_of_month
-                @exist_stock_s_Date = (Date.today >> 2).end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = (Date.today >> 2).end_of_month + 1
-                @exist_stock_e_Date = (Date.today >> 3).end_of_month
-              end
-            end
-          else # 翌月 = start日の翌月
-            if @latest_stock_date <= (@activity.start_date >> 2).end_of_month
-              if @activity.end_date > (@activity.start_date >> 2).end_of_month && @activity.end_date < (@activity.start_date >> 3).end_of_month
-                @s_Date = (@activity.start_date >> 2).end_of_month + 1
-                @e_Date = @activity.end_date
-              else
-                @s_Date = (@activity.start_date >> 2).end_of_month + 1
-                @e_Date = (@activity.start_date >> 3).end_of_month
-              end
-            elsif @latest_stock_date > (@activity.start_date >> 2).end_of_month && @latest_stock_date < (@activity.start_date >> 3).end_of_month
-              if @activity.end_date > (@activity.start_date >> 2).end_of_month && @activity.end_date <= @latest_stock_date
-                @exist_stock_s_Date = (@activity.start_date >> 2).end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              elsif @activity.end_date > @latest_stock_date && @activity.end_date < (@activity.start_date >> 3).end_of_month
-                @exist_stock_s_Date = (@activity.start_date >> 2).end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = (@activity.start_date >> 2).end_of_month + 1
-                @exist_stock_e_Date = @latest_stock_date
-                @s_Date = @latest_stock_date + 1
-                @e_Date = (@activity.start_date >> 3).end_of_month
-              end
-            else
-              if @activity.end_date > (@activity.start_date >> 2).end_of_month && @activity.end_date < (@activity.start_date >> 3).end_of_month
-                @exist_stock_s_Date = (@activity.start_date >> 2).end_of_month + 1
-                @exist_stock_e_Date = @activity.end_date
-              else
-                @exist_stock_s_Date = (@activity.start_date >> 2).end_of_month + 1
-                @exist_stock_e_Date = (@activity.start_date >> 3).end_of_month
-              end
-            end
-          end
-        else
-          # 体験が終了している時の処理
-          redirect_to_index_because_of_out_of_expiration
-        end
-      else
-        redirect_to_index_because_of_no_term
-      end
-      if !@s_Date.nil? && !@e_Date.nil?
-        @dates = setDates(@s_Date, @e_Date)
-      end
-      if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
-        @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
-      end
-    else
-      redirect_to_index_because_of_no_term_or_no_courses
-    end
+    set_dates_all_year_and_limit_term_activity(@activity, @courses)
+    # if !@courses.blank?
+    #   @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
+    #   if @activity.is_all_year_open #　通年の体験
+    #     set_all_year_activity_dates(action_name, @latest_stock_date)
+    #   elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date # 期間限定の体験
+    #     set_limit_term_activity_dates(action_name, @activity, @latest_stock_date)
+    #   else
+    #     redirect_to_index_because_of_no_term
+    #   end
+    #   if !@s_Date.nil? && !@e_Date.nil?
+    #     @dates = setDates(@s_Date, @e_Date)
+    #   end
+    #   if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
+    #     @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
+    #   end
+    # else
+    #   redirect_to_index_because_of_no_term_or_no_courses
+    # end
   end
 
   private
@@ -694,6 +429,141 @@ class ActivitiesController < ApplicationController
                                        :course_id, :stock]])
     end
 
+    def set_all_year_activity_dates(action_name, latest_stock_date)
+      # 共通処理
+      case action_name
+      when 'stock_edit_next_month'
+        end_of_last_month = Date.today.end_of_month
+        end_of_this_month = (Date.today >> 1).end_of_month
+      when 'stock_edit_next2_month'
+        end_of_last_month = (Date.today >> 1).end_of_month
+        end_of_this_month = (Date.today >> 2).end_of_month
+      when 'stock_edit_next3_month'
+        end_of_last_month = (Date.today >> 2).end_of_month
+        end_of_this_month = (Date.today >> 3).end_of_month
+      end
+
+      if action_name == 'stock_edit_first_month'
+        if latest_stock_date < Date.today # 今日以降の在庫がない
+          render 'stock_new_first_month'
+        elsif latest_stock_date >= Date.today && latest_stock_date < Date.today.end_of_month
+          @exist_stock_s_Date = Date.today
+          @exist_stock_e_Date = latest_stock_date
+          @s_Date = latest_stock_date + 1
+          @e_Date = Date.today.end_of_month
+        else
+          @exist_stock_s_Date = Date.today
+          @exist_stock_e_Date = Date.today.end_of_month
+        end
+      else
+        if latest_stock_date <= end_of_last_month
+          @s_Date = end_of_last_month + 1
+          @e_Date = end_of_this_month
+        elsif latest_stock_date > end_of_last_month && latest_stock_date < end_of_this_month
+          @exist_stock_s_Date = end_of_last_month + 1
+          @exist_stock_e_Date = latest_stock_date
+          @s_Date = latest_stock_date + 1
+          @e_Date = end_of_this_month
+        else
+          @exist_stock_s_Date = end_of_last_month + 1
+          @exist_stock_e_Date = end_of_this_month
+        end
+      end
+    end
+
+    def set_limit_term_activity_dates(action_name, activity, latest_stock_date)
+      case action_name
+      when 'stock_edit_next_month'
+        end_of_last_month = Date.today.end_of_month
+        end_of_this_month = (Date.today >> 1).end_of_month
+        end_of_last_month_from_start_date = activity.start_date.end_of_month
+        end_of_this_month_from_start_date = (activity.start_date >> 1).end_of_month
+      when 'stock_edit_next2_month'
+        end_of_last_month = (Date.today >> 1).end_of_month
+        end_of_this_month = (Date.today >> 2).end_of_month
+        end_of_last_month_from_start_date = (@activity.start_date >> 1).end_of_month
+        end_of_this_month_from_start_date = (activity.start_date >> 2).end_of_month
+      when 'stock_edit_next3_month'
+        end_of_last_month = (Date.today >> 2).end_of_month
+        end_of_this_month = (Date.today >> 3).end_of_month
+        end_of_last_month_from_start_date = (@activity.start_date >> 2).end_of_month
+        end_of_this_month_from_start_date = (activity.start_date >> 3).end_of_month
+      end
+
+      if activity.end_date > end_of_last_month || activity.end_date > end_of_last_month_from_start_date
+        if activity.start_date < Date.today.end_of_month
+          if latest_stock_date <= end_of_last_month # 在庫が翌月分ない
+            if activity.end_date > end_of_last_month && activity.end_date < end_of_this_month
+              @s_Date = end_of_last_month + 1
+              @e_Date = activity.end_date
+            else
+              @s_Date = end_of_last_month + 1
+              @e_Date = end_of_this_month
+            end
+          elsif latest_stock_date > end_of_last_month && latest_stock_date < end_of_this_month # 在庫が途中まである
+            if activity.end_date > end_of_last_month && activity.end_date <= latest_stock_date
+              @exist_stock_s_Date = end_of_last_month + 1
+              @exist_stock_e_Date = activity.end_date
+            elsif activity.end_date > latest_stock_date && activity.end_date < end_of_this_month
+              @exist_stock_s_Date = end_of_last_month + 1
+              @exist_stock_e_Date = latest_stock_date
+              @s_Date = latest_stock_date + 1
+              @e_Date = activity.end_date
+            else
+              @exist_stock_s_Date = end_of_last_month + 1
+              @exist_stock_e_Date = latest_stock_date
+              @s_Date = latest_stock_date + 1
+              @e_Date = end_of_this_month
+            end
+          else
+            if activity.end_date > end_of_last_month && activity.end_date < end_of_this_month
+              @exist_stock_s_Date = end_of_last_month + 1
+              @exist_stock_e_Date = activity.end_date
+            else
+              @exist_stock_s_Date = end_of_last_month + 1
+              @exist_stock_e_Date = end_of_this_month
+            end
+          end
+        else #当月はstart月
+          if latest_stock_date <= end_of_last_month_from_start_date
+            if activity.end_date > end_of_last_month_from_start_date && activity.end_date < (@activity.start_date >> 3).end_of_month
+              @s_Date = end_of_last_month_from_start_date + 1
+              @e_Date = activity.end_date
+            else
+              @s_Date = end_of_last_month_from_start_date + 1
+              @e_Date = end_of_this_month_from_start_date
+            end
+          elsif latest_stock_date > end_of_last_month_from_start_date && latest_stock_date < end_of_this_month_from_start_date
+            if activity.end_date > end_of_last_month_from_start_date && activity.end_date <= latest_stock_date
+              @exist_stock_s_Date = end_of_last_month_from_start_date + 1
+              @exist_stock_e_Date = activity.end_date
+            elsif activity.end_date > latest_stock_date && activity.end_date < end_of_this_month_from_start_date
+              @exist_stock_s_Date = end_of_last_month_from_start_date + 1
+              @exist_stock_e_Date = latest_stock_date
+              @s_Date = latest_stock_date + 1
+              @e_Date = activity.end_date
+            else
+              @exist_stock_s_Date = end_of_last_month_from_start_date + 1
+              @exist_stock_e_Date = latest_stock_date
+              @s_Date = latest_stock_date + 1
+              @e_Date = end_of_this_month_from_start_date
+            end
+          else
+            if activity.end_date > end_of_last_month_from_start_date && activity.end_date < end_of_this_month_from_start_date
+              @exist_stock_s_Date = end_of_last_month_from_start_date + 1
+              @exist_stock_e_Date = activity.end_date
+            else
+              @exist_stock_s_Date = end_of_last_month_from_start_date + 1
+              @exist_stock_e_Date = end_of_this_month_from_start_date
+            end
+          end
+        end
+      else
+        # 体験が終了している時の処理
+        redirect_to_index_because_of_out_of_expiration
+      end
+    end
+
     def setDates(startDate, endDate)
       dateArray = []
       (startDate..endDate).each do |date|
@@ -715,6 +585,27 @@ class ActivitiesController < ApplicationController
     def redirect_to_index_because_of_no_term_or_no_courses
       flash[:alert] = '在庫を設定するには体験情報のコース時間または期間設定をしてください'
       redirect_to supplier_activities_path(current_supplier)
+    end
+
+    def set_dates_all_year_and_limit_term_activity(activity, courses)
+      if !courses.blank?
+        @latest_stock_date = ActivityStock.where(activity_course_id: activity.activity_courses.first.id).order(:date).last.date
+        if activity.is_all_year_open #　通年の体験
+          set_all_year_activity_dates(action_name, @latest_stock_date)
+        elsif !activity.is_all_year_open && activity.start_date && activity.end_date # 期間限定の体験
+          set_limit_term_activity_dates(action_name, activity, @latest_stock_date)
+        else
+          redirect_to_index_because_of_no_term
+        end
+        if !@s_Date.nil? && !@e_Date.nil?
+          @dates = setDates(@s_Date, @e_Date)
+        end
+        if !@exist_stock_s_Date.nil? && !@exist_stock_e_Date.nil?
+          @exist_stock_dates = setDates(@exist_stock_s_Date, @exist_stock_e_Date)
+        end
+      else
+        redirect_to_index_because_of_no_term_or_no_courses
+      end
     end
 
 end
