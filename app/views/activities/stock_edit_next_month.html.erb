@@ -9,39 +9,7 @@
         <div class="activity_index_top_box">
           <h3>在庫情報を編集</h3>
         </div>
-        <div class="cp_tab">
-          <% if !@s_Date.nil? %>
-            <%=link_to "#{(@s_Date << 1).month}月", supplier_activity_edit_stocks_first_month_path(current_supplier, @activity), class: "month_tab" %>
-            <%=link_to "#{@s_Date.month}月", supplier_activity_edit_stocks_next_month_path(current_supplier, @activity), class: "month_tab selected" %>
-            <% if @activity.is_all_year_open %>
-              <%=link_to "#{(@s_Date >> 1).month}月", supplier_activity_edit_stocks_next2_month_path(current_supplier, @activity), class: "month_tab" %>
-              <%=link_to "#{(@s_Date >> 2).month}月", supplier_activity_edit_stocks_next3_month_path(current_supplier, @activity), class: "month_tab" %>
-            <% else %>
-              <% if @activity.end_date > @s_Date.end_of_month %>
-                <%=link_to "#{(@s_Date >> 1).month}月", supplier_activity_edit_stocks_next2_month_path(current_supplier, @activity), class: "month_tab" %>
-              <% end %>
-              <% if @activity.end_date > (@s_Date >> 1).end_of_month %>
-                <%=link_to "#{(@s_Date >> 2).month}月", supplier_activity_edit_stocks_next3_month_path(current_supplier, @activity), class: "month_tab" %>
-              <% end %>
-            <% end %>
-          <% elsif @s_Date.nil? && !@exist_stock_s_Date.nil? %>
-            <%=link_to "#{(@exist_stock_s_Date << 1).month}月", supplier_activity_edit_stocks_first_month_path(current_supplier, @activity), class: "month_tab" %>
-            <%=link_to "#{@exist_stock_s_Date.month}月", supplier_activity_edit_stocks_next_month_path(current_supplier, @activity), class: "month_tab selected" %>
-            <% if @activity.is_all_year_open %>
-              <%=link_to "#{(@exist_stock_s_Date >> 1).month}月", supplier_activity_edit_stocks_next2_month_path(current_supplier, @activity), class: "month_tab" %>
-              <%=link_to "#{(@exist_stock_s_Date >> 2).month}月", supplier_activity_edit_stocks_next3_month_path(current_supplier, @activity), class: "month_tab" %>
-            <% else %>
-              <% if @activity.end_date > @exist_stock_s_Date.end_of_month %>
-                <%=link_to "#{(@exist_stock_s_Date >> 1).month}月", supplier_activity_edit_stocks_next2_month_path(current_supplier, @activity), class: "month_tab" %>
-              <% end %>
-              <% if @activity.end_date > (@exist_stock_s_Date >> 1).end_of_month %>
-                <%=link_to "#{(@exist_stock_s_Date >> 2).month}月", supplier_activity_edit_stocks_next3_month_path(current_supplier, @activity), class: "month_tab" %>
-              <% end %>
-            <% end %>
-          <% else %>
-            なし
-          <% end %>
-        </div>
+        <%= render 'month_tab' %>
         <%= render 'stock_edit_form' %>
       </div>
     </div><!--メインコンテンツ内部-->
