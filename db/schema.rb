@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_040614) do
+ActiveRecord::Schema.define(version: 2020_09_29_055530) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -97,12 +97,15 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.string "name"
     t.string "profile_image"
     t.text "profile_text"
-    t.boolean "apply_basic_info", default: true
+    t.boolean "apply_suuplier_address", default: true
+    t.boolean "apply_suuplier_phone", default: true
+    t.string "post_code"
     t.integer "prefecture_id"
     t.integer "area_id"
     t.integer "town_id"
     t.string "detail_address"
     t.string "building"
+    t.string "phone"
     t.boolean "has_insurance", default: false
     t.string "guide_certification"
     t.boolean "is_approved", default: false
@@ -174,6 +177,16 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.string "name"
   end
 
+  create_table "guides", force: :cascade do |t|
+    t.integer "activity_business_id", null: false
+    t.string "name"
+    t.string "avatar"
+    t.text "introduction"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["activity_business_id"], name: "index_guides_on_activity_business_id"
+  end
+
   create_table "languages", force: :cascade do |t|
     t.string "code"
     t.string "name"
@@ -218,6 +231,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
     t.string "manager_name"
     t.string "post_code"
     t.integer "prefecture_id"
+    t.integer "area_id"
     t.integer "town_id"
     t.string "detail_address"
     t.string "building"
@@ -335,6 +349,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_040614) do
   add_foreign_key "activity_courses", "activities"
   add_foreign_key "activity_stocks", "activity_courses"
   add_foreign_key "areas", "prefectures"
+  add_foreign_key "guides", "activity_businesses"
   add_foreign_key "project_invites", "projects"
   add_foreign_key "project_invites", "users", column: "inviter_id"
   add_foreign_key "supplier_profiles", "suppliers"

@@ -18,15 +18,45 @@
     </div>
   </div>
   <div class="form-group">
-    <%= form.label "事業名" %>
+    <%= form.label "体験事業名・屋号" %>
     <%= form.text_field :name, required: true, class: "form-control" %>
   </div>
   <div class="form-group">
-    <%= form.label "事業紹介" %>
+    <%= form.label "プロフィール" %>
     <%= form.text_area :profile_text, size: "22x5", class: "form-control" %>
   </div>
-  <div id="address_box">
+  <div id="guides">
+    <%= form.label "ガイド・案内人情報" %>
+    <%= form.fields_for :guides do |g| %>
+      <%= render "guide_fields", f: g %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association "ガイドを追加", form, :guides %>
+    </div>
+  </div>
+  <!-- <div class="form-group manage_agent_input_box">
+    <div class="form-group"><%# form.check_box :has_insurance %><%# form.label "保険に加入している" %></div>
+    <div class="form-group"><%# form.check_box :guide_certification %><%# form.label "ガイド認可を保有" %></div>
+  </div> -->
+  <div class="radio_item_box">
+    <%= form.label "住所" %>
+    <div class="radio_items">
+      <div class="radio_item on">
+        <%= form.radio_button :apply_suuplier_address, :true, onClick: "applySupplierAddress(this)" %>
+        <%= form.label :apply_suuplier_address, "登録されている基本住所と同じ", {value: :true, style: "display: inline-block;"} %>
+      </div>
+      <div class="radio_item off">
+        <%= form.radio_button :apply_suuplier_address, :false, onClick: "hasOwnSupplierAddress(this)" %>
+        <%= form.label :apply_suuplier_address, "別の住所を設定する", {value: :false, style: "display: inline-block;"} %>
+      </div>
+    </div>
+  </div>
+  <div id="address_box" class="<%= "hidden" if @activity_business.apply_suuplier_address %>">
     <div class="form-group">
+      <div class="form-group">
+        <%= form.label "郵便番号" %>
+        <%= form.text_field :post_code, class: "form-control" %>
+      </div>
       <div class="row">
         <div class="col-half">
           <%= form.label "都道府県" %>
@@ -34,15 +64,38 @@
           <%= form.select :prefecture_id, {'北海道': 2}, { include_blank: false}, { class: 'form-control' } %>
         </div>
         <div class="col-half">
-          <%= form.label "エリア" %>
-          <%= form.collection_select :area_id, Area.all, :id, :local_name,{prompt: "エリアを選択"}, class: "form-control" %>
+          <%= form.label "市区町村" %>
+          <%= form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市区町村を選択"}, class: "form-control" %>
         </div>
+      </div>
+      <div class="form-group">
+        <%= form.label "住所" %>
+        <%= form.text_field :detail_address, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= form.label "建物名・部屋番号など" %>
+        <%= form.text_field :building, class: "form-control" %>
       </div>
     </div>
   </div>
-  <div class="form-group manage_agent_input_box">
-    <div class="form-group"><%= form.check_box :has_insurance %><%= form.label "保険に加入している" %></div>
-    <div class="form-group"><%= form.check_box :guide_certification %><%= form.label "ガイド認可を保有" %></div>
+  <div class="radio_item_box">
+    <%= form.label "電話番号" %>
+    <div class="radio_items">
+      <div class="radio_item on">
+        <%= form.radio_button :apply_suuplier_phone, :true, onClick: "applySupplierPhone(this)" %>
+        <%= form.label :apply_suuplier_phone, "登録されている基本情報と同じ", {value: :true, style: "display: inline-block;"} %>
+      </div>
+      <div class="radio_item off">
+        <%= form.radio_button :apply_suuplier_phone, :false, onClick: "hasOwnSupplierPhone(this)" %>
+        <%= form.label :apply_suuplier_phone, "別の電話番号を設定する", {value: :false, style: "display: inline-block;"} %>
+      </div>
+    </div>
+  </div>
+  <div id="phone_box" class="<%= "hidden" if @activity_business.apply_suuplier_phone %>">
+    <div class="form-group">
+      <%= form.label "別の電話番号を入力してください（ハイフンなし）" %>
+      <%= form.text_field :phone, class: "form-control" %>
+    </div>
   </div>
   <div class="form_btns">
     <div class="row">
@@ -100,4 +153,49 @@
     height: 30px;
     /* vertical-align: middle; */
   }
+
+  .radio_item_box {
+      margin-top: 30px;
+      margin-bottom: 20px;
+  }
+  .radio_items {
+    display: flex
+  }
+  .delete_guide_btn svg {
+    color: red;
+  }
 </style>
+
+<script type="text/javascript">
+  function applySupplierAddress(obj) {
+    var isChecked = obj.checked;
+    var address_box = document.getElementById("address_box");
+    if (isChecked) {
+      address_box.classList.add("hidden");
+    }
+  }
+
+  function hasOwnSupplierAddress(obj) {
+    var isChecked = obj.checked;
+    var address_box = document.getElementById("address_box");
+    if (isChecked) {
+      address_box.classList.remove("hidden");
+    }
+  }
+
+  function applySupplierPhone(obj) {
+    var isChecked = obj.checked;
+    var phone_box = document.getElementById("phone_box");
+    if (isChecked) {
+      phone_box.classList.add("hidden");
+    }
+  }
+
+  function hasOwnSupplierPhone(obj) {
+    var isChecked = obj.checked;
+    var phone_box = document.getElementById("phone_box");
+    if (isChecked) {
+      phone_box.classList.remove("hidden");
+    }
+  }
+  </script>

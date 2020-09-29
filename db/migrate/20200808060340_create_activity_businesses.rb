@@ -5,12 +5,15 @@ class CreateActivityBusinesses < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :profile_image
       t.text :profile_text
-      t.boolean :apply_basic_info, default: true
+      t.boolean :apply_suuplier_address, default: true
+      t.boolean :apply_suuplier_phone, default: true
+      t.string :post_code
       t.integer :prefecture_id
       t.integer :area_id
       t.integer :town_id
       t.string :detail_address
       t.string :building
+      t.string :phone
       t.boolean :has_insurance, default: false
       t.string :guide_certification
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet

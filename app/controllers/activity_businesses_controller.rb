@@ -10,6 +10,7 @@ class ActivityBusinessesController < ApplicationController
     # @organization = Organization.find(current_supplier.organization_id)
     # @business = @organization.activity_businesses.build
     @activity_business = ActivityBusiness.new(supplier_id: current_supplier.id)
+    @guide = @activity_business.guides.build
   end
 
   def create
@@ -57,8 +58,11 @@ class ActivityBusinessesController < ApplicationController
     def activity_biz_params
         params.require(:activity_business).permit(:name, :profile_image, :profile_text,
                                                   :prefecture_id, :area_id, :town_id,
-                                                  :detail_address, :building, :apply_org_info,
-                                                  :apply_org_bank, :has_insurance, :guide_certification)
+                                                  :detail_address, :building, :apply_suuplier_address,
+                                                  :apply_suuplier_phone, :post_code, :has_insurance,
+                                                  :guide_certification, :phone,
+                                                  guides_attributes: [:id, :activity_business_id, :name,
+                                                  :avatar, :avatar_cache, :introduction, :_destroy])
     end
 
 end
