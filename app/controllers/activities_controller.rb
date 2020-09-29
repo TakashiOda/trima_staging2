@@ -16,7 +16,6 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    binding.pry
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build(activity_params)
     if @activity.save
@@ -46,10 +45,10 @@ class ActivitiesController < ApplicationController
 
   def stock_new_first_month
     @activity = Activity.find(params[:activity_id])
+    set_day_of_open_array(@activity)
     @courses = @activity.activity_courses
     if !@courses.blank?
-      if @activity.is_all_year_open
-        #通年の体験
+      if @activity.is_all_year_open #通年の体験
         #当月分の在庫 new
         @s_Date = Date.today #体験の開始日
         @e_Date = Date.today.end_of_month #当月の末日
@@ -58,8 +57,7 @@ class ActivitiesController < ApplicationController
             @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
           end
         end
-      elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date
-        #期間限定の体験
+      elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date #期間限定の体験
         if @activity.start_date > Date.today
           @s_Date = @activity.start_date # start_dateが来月の場合もある
         else
@@ -88,117 +86,20 @@ class ActivitiesController < ApplicationController
 
   def stock_new_next_month
     @activity = Activity.find(params[:activity_id])
-    @courses = @activity.activity_courses
-    if !@courses.blank?
-      if @activity.is_all_year_open
-        #通年の体験
-        @s_Date = Date.today.end_of_month + 1 #翌月1日
-        @e_Date = @s_Date.end_of_month #翌月末
-        @courses.each do |course|
-          (@s_Date..@e_Date).each do |date|
-            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
-          end
-        end
-      elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date
-        #期間限定の体験
-        @s_Date = @activity.start_date.end_of_month + 1 # start_dateが来月の場合もある
-        if @activity.end_date <= (@activity.start_date >> 2).end_of_month
-          @e_Date = @activity.end_date
-        else
-          @e_Date = (@activity.start_date >> 2).end_of_month #end_dateが月末より前の可能性がある
-        end
-
-        @courses.each do |course|
-          (@s_Date..@e_Date).each do |date|
-            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
-          end
-        end
-      else
-        redirect_to_index_because_of_no_term
-      end
-      if !@s_Date.nil? && !@e_Date.nil?
-        @dates = setDates(@s_Date, @e_Date)
-      end
-    else
-      redirect_to_index_because_of_no_term_or_no_courses
-    end
+    set_day_of_open_array(@activity)
+    set_dates_for_stock_new_all_year_and_limit_term_activity(action_name, @activity)
   end
 
   def stock_new_next2_month
     @activity = Activity.find(params[:activity_id])
-    @courses = @activity.activity_courses
-    if !@courses.blank?
-      if @activity.is_all_year_open
-        #通年の体験
-        #当月分の在庫 new
-        @s_Date = (Date.today >> 1).end_of_month + 1 #翌月1日
-        @e_Date = @s_Date.end_of_month #翌月末
-        @courses.each do |course|
-          (@s_Date..@e_Date).each do |date|
-            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
-          end
-        end
-      elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date
-        #期間限定の体験
-        @s_Date = (@activity.start_date >> 1).end_of_month + 1 # start_dateが来月の場合もある
-        if @activity.end_date <= (@activity.start_date >> 3).end_of_month
-          @e_Date = @activity.end_date
-        else
-          @e_Date = (@activity.start_date >> 3).end_of_month #end_dateが月末より前の可能性がある
-        end
-
-        @courses.each do |course|
-          (@s_Date..@e_Date).each do |date|
-            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
-          end
-        end
-      else
-        redirect_to_index_because_of_no_term
-      end
-      if !@s_Date.nil? && !@e_Date.nil?
-        @dates = setDates(@s_Date, @e_Date)
-      end
-    else
-      redirect_to_index_because_of_no_term_or_no_courses
-    end
+    set_day_of_open_array(@activity)
+    set_dates_for_stock_new_all_year_and_limit_term_activity(action_name, @activity)
   end
 
   def stock_new_next3_month
     @activity = Activity.find(params[:activity_id])
-    @courses = @activity.activity_courses
-    if !@courses.blank?
-      if @activity.is_all_year_open
-        #通年の体験
-        #当月分の在庫 new
-        @s_Date = (Date.today >> 2).end_of_month + 1 #翌月1日
-        @e_Date = @s_Date.end_of_month #翌月末
-        @courses.each do |course|
-          (@s_Date..@e_Date).each do |date|
-            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
-          end
-        end
-      elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date
-        #期間限定の体験
-        @s_Date = (@activity.start_date >> 2).end_of_month + 1 # start_dateが来月の場合もある
-        if @activity.end_date <= (@activity.start_date >> 3).end_of_month
-          @e_Date = @activity.end_date
-        else
-          @e_Date = (@activity.start_date >> 3).end_of_month #end_dateが月末より前の可能性がある
-        end
-        @courses.each do |course|
-          (@s_Date..@e_Date).each do |date|
-            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
-          end
-        end
-      else
-        redirect_to_index_because_of_no_term
-      end
-      if !@s_Date.nil? && !@e_Date.nil?
-        @dates = setDates(@s_Date, @e_Date)
-      end
-    else
-      redirect_to_index_because_of_no_term_or_no_courses
-    end
+    set_day_of_open_array(@activity)
+    set_dates_for_stock_new_all_year_and_limit_term_activity(action_name, @activity)
   end
 
 
@@ -248,9 +149,9 @@ class ActivitiesController < ApplicationController
             end
           elsif @activity.start_date > Date.today && @activity.start_date <= Date.today.end_of_month #(2)開始日が今日以降 && 今月末より前
             if @latest_stock_date < @activity.start_date #在庫がstart日以降ない
-              if @activity.end_date > Date.today.end_of_month
+              if @activity.end_date < Date.today.end_of_month
                 @s_Date = @activity.start_date
-                @e_Date = @activity.start_date
+                @e_Date = @activity.end_date
               else
                 @s_Date = @activity.start_date
                 @e_Date = Date.today.end_of_month
@@ -333,22 +234,19 @@ class ActivitiesController < ApplicationController
 
   def stock_edit_next_month
     @activity = Activity.find(params[:activity_id])
-    @courses = @activity.activity_courses
-    set_dates_all_year_and_limit_term_activity(@activity, @courses)
+    set_dates_all_year_and_limit_term_activity(@activity)
   end
 
 
   def stock_edit_next2_month
     @activity = Activity.find(params[:activity_id])
-    @courses = @activity.activity_courses
-    set_dates_all_year_and_limit_term_activity(@activity, @courses)
+    set_dates_all_year_and_limit_term_activity(@activity)
   end
 
 
   def stock_edit_next3_month
     @activity = Activity.find(params[:activity_id])
-    @courses = @activity.activity_courses
-    set_dates_all_year_and_limit_term_activity(@activity, @courses)
+    set_dates_all_year_and_limit_term_activity(@activity)
   end
 
   private
@@ -359,6 +257,8 @@ class ActivitiesController < ApplicationController
                                       :normal_adult_price, :has_season_price,
                                       :maximum_num, :minimum_num, :available_age,  :is_all_year_open,
                                       :start_date, :end_date,
+                                      :monday_open, :tuesday_open, :wednesday_open, :thursday_open,
+                                      :friday_open, :saturday_open, :sunday_open,
                                       :january, :febrary, :march, :april,
                                       :may, :june, :july, :august, :september, :october,
                                       :november, :december, :advertise_activate, :is_approved,
@@ -427,12 +327,12 @@ class ActivitiesController < ApplicationController
       when 'stock_edit_next2_month'
         end_of_last_month = (Date.today >> 1).end_of_month
         end_of_this_month = (Date.today >> 2).end_of_month
-        end_of_last_month_from_start_date = (@activity.start_date >> 1).end_of_month
+        end_of_last_month_from_start_date = (activity.start_date >> 1).end_of_month
         end_of_this_month_from_start_date = (activity.start_date >> 2).end_of_month
       when 'stock_edit_next3_month'
         end_of_last_month = (Date.today >> 2).end_of_month
         end_of_this_month = (Date.today >> 3).end_of_month
-        end_of_last_month_from_start_date = (@activity.start_date >> 2).end_of_month
+        end_of_last_month_from_start_date = (activity.start_date >> 2).end_of_month
         end_of_this_month_from_start_date = (activity.start_date >> 3).end_of_month
       end
 
@@ -518,6 +418,32 @@ class ActivitiesController < ApplicationController
       return dateArray
     end
 
+    def set_day_of_open_array(activity)
+      # 最終的にactivityのモデルメソッドに
+      @days_of_open = []
+      if activity.sunday_open
+        @days_of_open.push(0)
+      end
+      if activity.monday_open
+        @days_of_open.push(1)
+      end
+      if activity.tuesday_open
+        @days_of_open.push(2)
+      end
+      if activity.wednesday_open
+        @days_of_open.push(3)
+      end
+      if activity.thursday_open
+        @days_of_open.push(4)
+      end
+      if activity.friday_open
+        @days_of_open.push(5)
+      end
+      if activity.saturday_open
+        @days_of_open.push(6)
+      end
+    end
+
     def redirect_to_index_because_of_no_term
       flash[:alert] = '在庫を設定するには体験情報にて期間設定をしてください'
       redirect_to supplier_activities_path(current_supplier)
@@ -533,8 +459,62 @@ class ActivitiesController < ApplicationController
       redirect_to supplier_activities_path(current_supplier)
     end
 
-    def set_dates_all_year_and_limit_term_activity(activity, courses)
-      if !courses.blank?
+    def set_dates_for_stock_new_all_year_and_limit_term_activity(action_name, activity)
+      case action_name
+      when 'stock_new_next_month'
+        end_of_last_month = Date.today.end_of_month
+        # end_of_this_month = (Date.today >> 1).end_of_month
+        end_of_last_month_from_start_date = activity.start_date.end_of_month
+        end_of_this_month_from_start_date = (activity.start_date >> 1).end_of_month
+      when 'stock_new_next2_month'
+        end_of_last_month = (Date.today >> 1).end_of_month
+        # end_of_this_month = (Date.today >> 2).end_of_month
+        end_of_last_month_from_start_date = (activity.start_date >> 1).end_of_month
+        end_of_this_month_from_start_date = (activity.start_date >> 2).end_of_month
+      when 'stock_new_next3_month'
+        end_of_last_month = (Date.today >> 2).end_of_month
+        # end_of_this_month = (Date.today >> 3).end_of_month
+        end_of_last_month_from_start_date = (activity.start_date >> 2).end_of_month
+        end_of_this_month_from_start_date = (activity.start_date >> 3).end_of_month
+      end
+
+      @courses = activity.activity_courses
+
+      if !@courses.blank?
+        if activity.is_all_year_open #通年の体験
+          @s_Date = end_of_last_month + 1
+          @e_Date = @s_Date.end_of_month
+          @courses.each do |course|
+            (@s_Date..@e_Date).each do |date|
+              @stock = course.activity_stocks.build(date: date, stock: activity.maximum_num)
+            end
+          end
+        elsif !activity.is_all_year_open && activity.start_date && activity.end_date #期間限定の体験
+          @s_Date = end_of_last_month_from_start_date + 1 # start_dateが来月の場合もある
+          if activity.end_date <= end_of_this_month_from_start_date
+            @e_Date = activity.end_date
+          else
+            @e_Date = end_of_this_month_from_start_date #end_dateが月末より前の可能性がある
+          end
+          @courses.each do |course|
+            (@s_Date..@e_Date).each do |date|
+              @stock = course.activity_stocks.build(date: date, stock: activity.maximum_num)
+            end
+          end
+        else
+          redirect_to_index_because_of_no_term
+        end
+        if !@s_Date.nil? && !@e_Date.nil?
+          @dates = setDates(@s_Date, @e_Date)
+        end
+      else
+        redirect_to_index_because_of_no_term_or_no_courses
+      end
+    end
+
+    def set_dates_all_year_and_limit_term_activity(activity)
+      @courses = activity.activity_courses
+      if !@courses.blank?
         @latest_stock_date = ActivityStock.where(activity_course_id: activity.activity_courses.first.id).order(:date).last.date
         if activity.is_all_year_open #　通年の体験
           set_all_year_activity_dates(action_name, @latest_stock_date)

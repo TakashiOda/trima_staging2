@@ -29,7 +29,7 @@
                   <div class="stock_input_box">
                     <%= stock.number_field :stock, class: 'form-control' %>
                   </div>
-                  <%if @activity.activity_courses.count == (course.index + 1) %>
+                  <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price %>
                     <div class="season_input_box <%= stock.index %>">
                       <%= stock.select :season_price,
                         {'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'},
@@ -237,7 +237,6 @@
 </style>
 
 <script type="text/javascript">
-
   function changeSeasonPrice(obj) {
     const parent = obj.parentNode;
     const inputSelectedIndex = obj.selectedIndex;
@@ -263,6 +262,3 @@
     }
   }
 </script>
-
-<!-- @activity.activity_courses.first.activity_stocks.where('date >= ?', Date.today).count
-@activity.activity_courses.second.activity_stocks.where('date >= ?', Date.today).count -->
