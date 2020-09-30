@@ -28,11 +28,15 @@ class ActivityBusinessesController < ApplicationController
     @supplier = current_supplier
     # @organization = Organization.find(current_supplier.organization_id)
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
+    # if @activity_business.guides.any?
+    #   @guide
+    # end
   end
 
   def update
     @supplier = current_supplier
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
+    # binding.pry
     if @activity_business.update(activity_biz_params)
       flash[:notice] = '体験事業の情報を更新しました'
       redirect_to supplier_path(@supplier)
@@ -56,12 +60,12 @@ class ActivityBusinessesController < ApplicationController
 
   private
     def activity_biz_params
-        params.require(:activity_business).permit(:name, :profile_image, :profile_text,
+        params.require(:activity_business).permit(:name, :profile_image, :profile_image_cache, :profile_text,
                                                   :prefecture_id, :area_id, :town_id,
                                                   :detail_address, :building, :apply_suuplier_address,
                                                   :apply_suuplier_phone, :post_code, :has_insurance,
                                                   :guide_certification, :phone,
-                                                  guides_attributes: [:id, :activity_business_id, :name,
+                                                  guides_attributes: [:id, :profile_image, :activity_business_id, :name,
                                                   :avatar, :avatar_cache, :introduction, :_destroy])
     end
 

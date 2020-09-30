@@ -5,7 +5,6 @@ class CreateGuides < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :avatar
       t.text :introduction
-      t.timestamps
     end
   end
 end

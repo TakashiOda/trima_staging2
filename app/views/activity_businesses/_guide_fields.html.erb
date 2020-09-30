@@ -1,18 +1,27 @@
 <div class="nested-fields">
   <div class="guide_item_left_box">
     <div class="guide_image_box_inside">
-      <img id="guide_image_prev" src="#" class="hidden" />
-      <% if current_supplier && @activity_business.profile_image? %>
-        <%= image_tag @activity_business.profile_image.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
+      <img id="guide_image_prev" src="#" class="hidden " />
+      <% if @activity_business.guides.any? && f.index.to_s =~ /^[0-9]+$/ %>
+        <%= image_tag @activity_business.guides.offset(f.index).first.avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
       <% else %>
         <%= image_tag 'default_images/no_avatar_image.png', class: 'guide_present_image', id: 'guide_present_image' %>
-        <%# f.hidden_field :avatar_cache %>
+        <%= f.hidden_field :avatar_cache %>
       <% end %>
+      <div id="user_edit_image_upload_btn_box">
+        <%= f.file_field :avatar, id: 'guide_image[f.index]', class: 'guide_image_upload_btn',onchange: 'selectFile(this)' %>
+        <span id="user_edit_image_upload_btn" onclick="guide_image_input_btn(this)"><i class="fas fa-camera"></i></span>
+      </div>
     </div>
-    <div id="user_edit_image_upload_btn_box">
-      <%= f.file_field :avatar, id: 'guide_image' %>
+    <%= f.index %>
+    <%# if f.index.to_s =~ /^[0-9]+$/ %>
+      <%# image_tag Guide.limit(1).offset(0).avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
+      <%#= image_tag @activity_business.guides.offset(f.index).first.avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
+    <%# end %>
+    <!-- <div id="user_edit_image_upload_btn_box">
+      <%#= f.file_field :avatar, id: 'guide_image' %>
       <span id="user_edit_image_upload_btn" onclick="guide_image_input_btn()"><i class="fas fa-camera"></i></span>
-    </div>
+    </div> -->
   </div>
   <div class="guide_item_right_box">
     <div class="guide_item_right_box_left">
@@ -48,6 +57,9 @@
     width: 75%;
     display: flex;
   }
+  .guide_image_box_inside {
+    position: relative;
+  }
   .guide_item_right_box_left {
     width: 90%;
   }
@@ -56,6 +68,16 @@
   }
   .guide_item_right_box_right {
     width: 10%;
+  }
+  div#user_edit_image_upload_btn_box {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    bottom: -1px;
+    right: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   /* .guide_name_box {
@@ -74,28 +96,38 @@
     height: 90px;
     object-fit: cover;
   }
-input#guide_image {
-  display: none;
-}
+  .guide_image_upload_btn {
+    display: none;
+  }
 </style>
 
 <script>
-  const guideSelectElement = document.querySelector('#guide_image');
-  function guide_image_input_btn() {
+
+  window.onload = function () {
+    //
+  };
+
+  function guide_image_input_btn(obj) {
+    const guideSelectElement = obj.parentNode.children[0];
     guideSelectElement.click();
   }
 
-  document.getElementById('guide_image').addEventListener('change', function (e) {
-    // 1枚だけ表示する
-    const guideFile = e.target.files[0];
-    // ファイルのブラウザ上でのURLを取得する
-    const blobUrl = window.URL.createObjectURL(guideFile);
-    // img要素に表示
-    const post_img = document.getElementById('guide_image_prev');
-    post_img.src = blobUrl;
-    post_img.classList.toggle("hidden");
-    const before_img = document.getElementById('guide_present_image');
-    before_img.classList.toggle("hidden");
-    // before_img.classList.remove("guide_present_image");
-  });
+  function selectFile(obj) {
+    // const guideFile = obj.event.target.files[0];
+    console.log(obj.target);
+  }
+
+  // document.getElementById('guide_image').addEventListener('change', function (e) {
+  //   // 1枚だけ表示する
+  //   const guideFile = e.target.files[0];
+  //   // ファイルのブラウザ上でのURLを取得する
+  //   const blobUrl = window.URL.createObjectURL(guideFile);
+  //   // img要素に表示
+  //   const post_img = document.getElementById('guide_image_prev');
+  //   post_img.src = blobUrl;
+  //   post_img.classList.toggle("hidden");
+  //   const before_img = document.getElementById('guide_present_image');
+  //   before_img.classList.toggle("hidden");
+  //   // before_img.classList.remove("guide_present_image");
+  // });
 </script>

@@ -1,5 +1,6 @@
 class Supplier < ApplicationRecord
   has_one :supplier_profile
+  has_one :activity_business
 
   mount_uploader :avatar, AvatarUploader
 
