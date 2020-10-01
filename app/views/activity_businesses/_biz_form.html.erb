@@ -31,7 +31,7 @@
       <%= render "guide_fields", f: g %>
     <% end %>
     <div class="links">
-      <%= link_to_add_association "ガイドを追加", form, :guides %>
+      <%= link_to_add_association "ガイドを追加", form, :guides, onClick: "addIdToGuideItem(this)" %>
     </div>
   </div>
   <div class="radio_item_box">
@@ -203,5 +203,23 @@
     if (isChecked) {
       phone_box.classList.remove("hidden");
     }
+  }
+
+  function addIdToGuideItem(obj) {
+    setTimeout(function(){
+      // const nestedFields = obj.parentNode.parentNode.getElementsByClassName('nested-fields');
+      // const nestedFieldsCount = nestedFields.length - 1;
+      // const newGuideElement = nestedFields[nestedFieldsCount];
+      const guideItems = document.querySelectorAll("div.nested-fields");
+      for (var i = 0; i < guideItems.length; i++) {
+        const guidePrevElement = guideItems[i].children[0].children[0].children[0];
+        guidePrevElement.id = 'guide_image_prev'+i;
+        // console.log(guide_prev.id);
+        const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
+        guidePresentElement.id = 'guide_present_image'+i;
+        const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
+        guideImageInput.id = i;
+      }
+    }, 100);
   }
   </script>

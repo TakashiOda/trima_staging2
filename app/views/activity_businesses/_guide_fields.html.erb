@@ -8,12 +8,11 @@
         <%= image_tag 'default_images/no_avatar_image.png', class: 'guide_present_image', id: 'guide_present_image' %>
         <%= f.hidden_field :avatar_cache %>
       <% end %>
-      <div id="user_edit_image_upload_btn_box">
-        <%= f.file_field :avatar, id: 'guide_image[f.index]', class: 'guide_image_upload_btn',onchange: 'selectFile(this)' %>
-        <span id="user_edit_image_upload_btn" onclick="guide_image_input_btn(this)"><i class="fas fa-camera"></i></span>
+      <div class="user_edit_image_upload_btn_box">
+        <%= f.file_field :avatar, id: 'guide_image_input', class: 'guide_image_upload_btn',onchange: 'selectFile(this)' %>
+        <span onclick="guide_image_input_btn(this)"><i class="fas fa-camera"></i></span>
       </div>
     </div>
-    <%= f.index %>
     <%# if f.index.to_s =~ /^[0-9]+$/ %>
       <%# image_tag Guide.limit(1).offset(0).avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
       <%#= image_tag @activity_business.guides.offset(f.index).first.avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
@@ -69,7 +68,7 @@
   .guide_item_right_box_right {
     width: 10%;
   }
-  div#user_edit_image_upload_btn_box {
+  div.user_edit_image_upload_btn_box {
     width: 35px;
     height: 35px;
     position: absolute;
@@ -80,12 +79,6 @@
     align-items: center;
   }
 
-  /* .guide_name_box {
-    width: 90%;
-  }
-  .guide_profile_box {
-    width: 90%;
-  } */
   div#guides .nested-fields {
     padding: 15px;
   }
@@ -99,12 +92,29 @@
   .guide_image_upload_btn {
     display: none;
   }
+  .user_edit_image_upload_btn_box svg{
+    background: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 9px;
+    border-radius: 50%;
+}
 </style>
 
 <script>
 
   window.onload = function () {
-    //
+    const guideItems = document.querySelectorAll("div.nested-fields");
+    for (var i = 0; i < guideItems.length; i++) {
+      const guidePrevElement = guideItems[i].children[0].children[0].children[0];
+      guidePrevElement.id = 'guide_image_prev'+i;
+      // console.log(guide_prev.id);
+      const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
+      guidePresentElement.id = 'guide_present_image'+i;
+      const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
+      guideImageInput.id = i;
+    }
   };
 
   function guide_image_input_btn(obj) {
@@ -113,21 +123,14 @@
   }
 
   function selectFile(obj) {
-    // const guideFile = obj.event.target.files[0];
-    console.log(obj.target);
+    const selfId = obj.id
+    const guideImageFile = obj.files[0];
+    const blobUrl = window.URL.createObjectURL(guideImageFile);
+    const post_img = document.getElementById(`guide_image_prev${selfId}`);
+    post_img.src = blobUrl;
+    post_img.classList.toggle("hidden");
+    const before_img = document.getElementById(`guide_present_image${selfId}`);
+    before_img.classList.toggle("hidden");
   }
 
-  // document.getElementById('guide_image').addEventListener('change', function (e) {
-  //   // 1枚だけ表示する
-  //   const guideFile = e.target.files[0];
-  //   // ファイルのブラウザ上でのURLを取得する
-  //   const blobUrl = window.URL.createObjectURL(guideFile);
-  //   // img要素に表示
-  //   const post_img = document.getElementById('guide_image_prev');
-  //   post_img.src = blobUrl;
-  //   post_img.classList.toggle("hidden");
-  //   const before_img = document.getElementById('guide_present_image');
-  //   before_img.classList.toggle("hidden");
-  //   // before_img.classList.remove("guide_present_image");
-  // });
 </script>

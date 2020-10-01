@@ -584,19 +584,11 @@
       if (isChecked){ //シーズン料金有りの場合
         for (var i = 0; i < seasonPriceBoxes.length; i++) {
           var hasHidden = seasonPriceBoxes[i].children[0].classList.contains('hidden');
-          // if (hasHidden) {
             seasonPriceBoxes[i].children[0].classList.remove("hidden");
-          // }
-          // if (seasonPriceBoxes[i].children[1] && seasonPriceBoxes[i].children[1].classList.contains('hidden')) {
-          //   seasonPriceBoxes[i].children[1].classList.remove("hidden");
-          // }
         }
       } else {
         for (var i = 0; i < seasonPriceBoxes.length; i++) {
-          // var hasHidden = seasonPriceBoxes[i].children[0].classList.contains('hidden');
           seasonPriceBoxes[i].children[0].classList.add("hidden");
-          // seasonPriceBoxes[i].children[0].classList.add("hidden");
-          // console.log(seasonPriceBoxes[i].children[1].classList);
         }
       }
     }, 100);

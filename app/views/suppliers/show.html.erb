@@ -4,23 +4,23 @@
     <%= render 'suppliers/supplier_page_front_sidebar' %>
   </div>
   <div class="supplier_show_main_content"><!--メインコンテンツ-->
-    <div class="supplier_show_content_inside"><!--メインコンテンツ内部-->
-      <div class="supplier_profile_box"><!--メインコンテンツprofile-->
-        <div class="user_show_avatar_box">
+    <div class="supplier_show_content_inside">
+      <!-- <div class="supplier_profile_box">
+        <!-- <div class="user_show_avatar_box">
           <div class="user_show_avatar_box_inside">
-            <% if @supplier.avatar.present? %>
-              <%= image_tag current_supplier.avatar.url, class: "user_avatar" %>
-            <% else %>
-              <%= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
-            <% end %>
+            <%# if @supplier.avatar.present? %>
+              <%#= image_tag current_supplier.avatar.url, class: "user_avatar" %>
+            <%# else %>
+              <%#= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
+            <%# end %>
           </div>
         </div>
         <div class="supplier_name">
-          <div><%= !@supplier.name.nil? ? @supplier.name : "お名前未登録" %></div>
+          <div><%#= !@supplier.name.nil? ? @supplier.name : "お名前未登録" %></div>
           <div class="supplier_profile_edit_btn">
-            <% if @supplier == current_supplier %>
-              <%= link_to "編集",edit_supplier_path(current_supplier), class: "org_edit_btn" %>
-            <% end %>
+            <%# if @supplier == current_supplier %>
+              <%#= link_to "編集",edit_supplier_path(current_supplier), class: "org_edit_btn" %>
+            <%# end %>
           </div>
         </div>
       </div><!--メインコンテンツprofile end-->
@@ -36,7 +36,7 @@
             </div>
           <!-- </div> -->
         </div>
-        <div id="supplier_info_contents" class="hidden">
+        <div id="activity_business_info_contents" class="">
           <% if @supplier_profile.nil? %>
             <div class="info_list_box_contents">
               <div>まだ体験事業情報がありません</div>
@@ -65,16 +65,19 @@
                 <tr>
                   <td class="td_front">登録ガイド</td>
                   <td class="td_end">
+                    <div class="supplier_show_guide_items">
                     <% if current_supplier.activity_business.guides.any? %>
-                      <%= current_supplier.activity_business.guides.each do |guide| %>
-                        <div>
-                          <div><%= guide.name %></div>
-                          <div><%= guide.introduction %></div>
+                      <% current_supplier.activity_business.guides.each do |guide| %>
+                        <div class="supplier_show_guide_item_box">
+                          <div class="supplier_show_guide_item_box__image"><%= image_tag guide.avatar.to_s, class: "user_avatar" %></div>
+                          <div class="supplier_show_guide_item_box__name"><%= guide.name %></div>
+                          <!-- <div><%#= guide.introduction %></div> -->
                         </div>
                       <% end %>
                     <% else %>
                       <div>ガイドは登録されていません</div>
                     <% end %>
+                    </div>
                   </td>
                 </tr>
               </table>
@@ -82,7 +85,7 @@
           <% end %>
         </div>
         <div class="info_list_box_title_btn">
-          <div onclick="toggleSupplierInfo(this)"><i class="fas fa-angle-down"></i></div>
+          <div onclick="toggleActiviyBusinessInfo(this)"><i class="fas fa-angle-down"></i></div>
         </div>
       </div>
       <!--体験事業情報---------------------------------------------------------------->
@@ -93,7 +96,7 @@
             <div>アカウント情報</div>
             <div>
               <% unless @supplier.supplier_profile.nil? %>
-                <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business), class: "org_edit_btn" %>
+                <%= link_to "編集", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
               <% end %>
             </div>
           <!-- </div> -->
@@ -151,6 +154,8 @@
     border-radius: 8px;
     padding: 12px 20px;
     margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0px 0px 5px -2px grey;
   }
   .supplier_profile_box {
     display: flex;
@@ -233,11 +238,11 @@
     font-weight: bold;
   }
   a.org_edit_btn {
-    background: #2bb561;
-    padding: 5px 9px;
-    font-size: 15px;
-    color: #fff;
-    border-radius: 5px;
+    background: #e6e6e6 !important;
+    padding: 7px 13px;
+    font-size: 11px;
+    color: #656565;
+    border-radius: 3px;
   }
   a.member_delete_btn.edit {
     background: #2bb560;
@@ -254,9 +259,37 @@
     height: 40px;
     border-radius: 50%;
   }
+  .supplier_show_guide_items {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+  }
+  .supplier_show_guide_item_box {
+    height: 70px;
+    display: flex;
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    align-items: center;
+  }
+  .supplier_show_guide_item_box__name {
+    font-size: 15px;
+    padding-left: 15px;
+  }
 </style>
 
 <script>
+  function toggleActiviyBusinessInfo(obj) {
+    profileBox = document.getElementById('activity_business_info_contents');
+    isHidden = profileBox.classList.contains('hidden');
+    if (isHidden) {
+      profileBox.classList.remove('hidden');
+      obj.innerHTML = '<i class="fas fa-angle-up"></i>';
+    } else {
+      profileBox.classList.add('hidden');
+      obj.innerHTML = '<i class="fas fa-angle-down"></i>';
+    }
+  }
+
   function toggleSupplierInfo(obj) {
     profileBox = document.getElementById('supplier_info_contents');
     isHidden = profileBox.classList.contains('hidden');
