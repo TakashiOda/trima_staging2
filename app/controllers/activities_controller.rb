@@ -19,6 +19,8 @@ class ActivitiesController < ApplicationController
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build(activity_params)
     if @activity.save
+      @activity.normal_adult_price = params[:activity][:activity_ageprices_attributes]["0"]["normal_price"]
+      @activity.save!
       redirect_to supplier_activities_path(current_supplier)
     else
       render 'new'
@@ -33,6 +35,8 @@ class ActivitiesController < ApplicationController
   def update
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
+      @activity.normal_adult_price = params[:activity][:activity_ageprices_attributes]["0"]["normal_price"]
+      @activity.save!
       redirect_to supplier_activities_path(current_supplier)
     else
       render 'edit'
@@ -40,6 +44,14 @@ class ActivitiesController < ApplicationController
   end
 
   def destroy
+    @activity = Activity.find(params[:id])
+    if @activity.destroy
+      flash[:notice] = '体験コンテンツを削除しました'
+      redirect_to supplier_activities_path(current_supplier)
+    else
+      flash[:alert] = '削除に失敗しました'
+      render 'edit'
+    end
   end
 
 
@@ -261,7 +273,7 @@ class ActivitiesController < ApplicationController
                                       :friday_open, :saturday_open, :sunday_open,
                                       :january, :febrary, :march, :april,
                                       :may, :june, :july, :august, :september, :october,
-                                      :november, :december, :advertise_activate, :is_approved,
+                                      :november, :december, :advertise_activate, :is_approved, :stop_now,
                                       activity_courses_attributes: [:id, :activity_id, :start_time, :_destroy,
                                         activity_stocks_attributes: [:id, :activity_id, :date,
                                         :activity_course_id, :stock, :season_price]],

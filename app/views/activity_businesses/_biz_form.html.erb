@@ -34,6 +34,10 @@
       <%= link_to_add_association "ガイドを追加", form, :guides, onClick: "addIdToGuideItem(this)" %>
     </div>
   </div>
+  <div class="form-group">
+     <%= form.label "対応可能言語" %><br>
+    <%= form.collection_check_boxes :language_ids, Language.where(id: [3,26,28]), :id, :name %>
+  </div>
   <div class="radio_item_box">
     <%= form.label "住所" %>
     <div class="radio_items">

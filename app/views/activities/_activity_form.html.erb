@@ -171,18 +171,25 @@
       </div>
     </div>
   </section>
-  <div class="form_btns">
-    <div class="row">
-      <div class="col-half">
-        <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
-      </div>
-      <div class="col-half">
-        <% if action_name == "new" %>
-          <%= f.submit('登録する',class: 'button btn-submit') %>
-        <% else %>
-          <%= f.submit('更新する',class: 'button btn-submit') %>
-        <% end %>
-      </div>
+</div>
+<div class="form_btns_box">
+  <div id="form_btns">
+    <div class="submit_btn_box">
+      <% if action_name == "new" %>
+        <%= f.submit('登録',class: 'button btn-submit') %>
+      <% else %>
+        <%= f.submit('保存',class: 'button btn-submit') %>
+      <% end %>
+    </div>
+    <div class="activity_activate_btn_box">
+      <div class="form-group"><%= f.check_box :stop_now %><%= f.label "stop_now","体験を一時停止", class: "activity_activate_check" %></div>
+    </div>
+    <div class="activity_delete_btn_box">
+      <%= link_to supplier_activity_path(current_supplier, @activity), method: :delete, data: { confirm: '本当にゴミ箱に移動しますか?' } do %>
+      <%#=link_to "#" do %>
+        <span><i class="far fa-trash-alt"></i></span>
+        <span>ゴミ箱に入れる</span>
+      <% end %>
     </div>
   </div>
 </div>
@@ -190,7 +197,11 @@
 
 <style lang="scss">
   section.form_section {
-    margin-bottom: 130px;
+    background: #fff;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 7px -1px #b7b7b7;
   }
   .form_big_title {
     border-left: solid 11px #0068b7;
@@ -201,9 +212,6 @@
   .form_big_title h3 {
     margin: 0px 0 0px;
     padding: 5px 0;
-  }
-  .form_big_title.after_second_title {
-    margin-top: 60px;
   }
   #user_edit_image_upload_btn:hover {
     cursor: pointer;
@@ -230,7 +238,11 @@
   .activity_openday_input_box input[type=checkbox] {
     display: none;
   }
-  input[type="checkbox"]:checked + label {
+  .activity_openday_input_box input[type="checkbox"]:checked + label {
+    background: #22a0ff;/* マウス選択時の背景色を指定する */
+    color: #ffffff; /* マウス選択時のフォント色を指定する */
+  }
+  .activity_season_input_box input[type="checkbox"]:checked + label {
     background: #22a0ff;/* マウス選択時の背景色を指定する */
     color: #ffffff; /* マウス選択時のフォント色を指定する */
   }
@@ -473,7 +485,42 @@
       flex-direction: column;
       align-items: baseline;
     }
-}
+  }
+
+  .form_btns_box {
+      width: 25%;
+      padding: 30px 15px 30px 15px;
+      /* height: 300px; */
+      margin-right: 10px;
+  }
+  .activity_index_activity_list_box form {
+    display: flex;
+  }
+  #form_btns {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+    background: #fff;
+    height: 180px;
+    padding: 10px 10px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 7px -1px #b7b7b7;
+  }
+  .activity_activate_btn_box,
+  .activity_delete_btn_box {
+    margin: 20px 5px;
+  }
+  .activate_btn_box div {
+    display: flex;
+    align-items: unset;
+  }
+  .activity_delete_btn_box svg {
+    color: #949494;
+    margin-right: 0px;
+  }
+  .activity_delete_btn_box a {
+    color: gray;
+  }
 </style>
 
 <script type="text/javascript">

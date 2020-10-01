@@ -18,8 +18,18 @@
                 <%= link_to edit_supplier_activity_path(current_supplier, activity), class: "link" do %>
                   <li class="activity_list_item">
                     <div class="activity_list_item_front">
-                      <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
-                      <%= activity.name %>
+                      <div class="activity_list_item_fron_image">
+                        <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
+                      </div>
+                      <div class="activity_list_item_fron_info">
+                        <%= activity.name %><br>
+                        <% if activity.is_all_year_open %>
+                          <div class="activity_index_detail_info">期間：通年のアクティビティ</div>
+                        <% else %>
+                          <div class="activity_index_detail_info">期間：<%= activity.start_date.strftime("%Y年%m月%d日") %>〜<%= activity.end_date.strftime("%Y年%m月%d日") %></div>
+                        <% end %>
+                        <div class="activity_index_detail_info">大人通常料金：<%= activity.normal_adult_price %>円</div>
+                      </div>
                     </div>
                     <div class="activity_list_item_back">
                       <% if activity.activity_courses.any? && activity.activity_courses.first.activity_stocks.any? %>
@@ -67,12 +77,19 @@
     font-weight: bold;
   }
   li.activity_list_item {
-    padding: 10px 0;
+    padding: 10px 20px 10px 15px;
     border-bottom: solid 1px #dfdfdf;
     border-top: solid 1px #dfdfdf;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: #fff;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    box-shadow: 0px 0px 7px -4px grey;
+  }
+  a.link:link, a.link:visited, a.link:hover, a.link:active {
+    color: #565656;
   }
   .activity_list_item_front {
     display: flex;
@@ -82,6 +99,10 @@
     width: 100px;
     margin-right: 20px;
     border-radius: 7px;
+  }
+  .activity_index_detail_info {
+    font-size: 11px;
+    color: darkgrey;
   }
 
 </style>

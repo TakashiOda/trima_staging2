@@ -59,7 +59,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       #その他設定
       t.boolean :advertise_activate, default: false #0 => approved, 1 =>not yet
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
-      t.boolean :activate, default: true
+      t.boolean :stop_now, default: false
 
     end
     add_index :activities, :prefecture_id

@@ -7,10 +7,9 @@ class ActivityBusinessesController < ApplicationController
 
   def new
     @supplier = current_supplier
-    # @organization = Organization.find(current_supplier.organization_id)
-    # @business = @organization.activity_businesses.build
     @activity_business = ActivityBusiness.new(supplier_id: current_supplier.id)
     @guide = @activity_business.guides.build
+    # @language = @activity_business.languages.build
   end
 
   def create
@@ -26,11 +25,7 @@ class ActivityBusinessesController < ApplicationController
 
   def edit
     @supplier = current_supplier
-    # @organization = Organization.find(current_supplier.organization_id)
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
-    # if @activity_business.guides.any?
-    #   @guide
-    # end
   end
 
   def update
@@ -61,6 +56,7 @@ class ActivityBusinessesController < ApplicationController
   private
     def activity_biz_params
         params.require(:activity_business).permit(:name, :profile_image, :profile_image_cache, :profile_text,
+                                                  { :language_ids=> [] },
                                                   :prefecture_id, :area_id, :town_id,
                                                   :detail_address, :building, :apply_suuplier_address,
                                                   :apply_suuplier_phone, :post_code, :has_insurance,

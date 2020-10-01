@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_29_055530) do
+ActiveRecord::Schema.define(version: 2020_10_01_074737) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 2020_09_29_055530) do
     t.boolean "sunday_open", default: true
     t.boolean "advertise_activate", default: false
     t.boolean "is_approved", default: false
-    t.boolean "activate", default: true
-    t.index ["activate"], name: "index_activities_on_activate"
+    t.boolean "stop_now", default: false
+    t.index "\"activate\"", name: "index_activities_on_activate"
     t.index ["activity_business_id"], name: "index_activities_on_activity_business_id"
     t.index ["advertise_activate"], name: "index_activities_on_advertise_activate"
     t.index ["april"], name: "index_activities_on_april"
@@ -131,6 +131,14 @@ ActiveRecord::Schema.define(version: 2020_09_29_055530) do
     t.index ["activity_id"], name: "index_activity_courses_on_activity_id"
   end
 
+  create_table "activity_languages", force: :cascade do |t|
+    t.integer "activity_business_id", null: false
+    t.integer "language_id", null: false
+    t.index ["activity_business_id", "language_id"], name: "activity_languages_unique_index", unique: true
+    t.index ["activity_business_id"], name: "index_activity_languages_on_activity_business_id"
+    t.index ["language_id"], name: "index_activity_languages_on_language_id"
+  end
+
   create_table "activity_stocks", force: :cascade do |t|
     t.integer "activity_course_id", null: false
     t.integer "activity_id", null: false
@@ -182,8 +190,6 @@ ActiveRecord::Schema.define(version: 2020_09_29_055530) do
     t.string "name"
     t.string "avatar"
     t.text "introduction"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["activity_business_id"], name: "index_guides_on_activity_business_id"
   end
 
@@ -347,6 +353,8 @@ ActiveRecord::Schema.define(version: 2020_09_29_055530) do
   add_foreign_key "activity_ageprices", "activities"
   add_foreign_key "activity_businesses", "suppliers"
   add_foreign_key "activity_courses", "activities"
+  add_foreign_key "activity_languages", "activity_businesses"
+  add_foreign_key "activity_languages", "languages"
   add_foreign_key "activity_stocks", "activity_courses"
   add_foreign_key "areas", "prefectures"
   add_foreign_key "guides", "activity_businesses"
