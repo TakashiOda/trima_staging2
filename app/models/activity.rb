@@ -7,6 +7,9 @@ class Activity < ApplicationRecord
   accepts_nested_attributes_for :activity_ageprices, allow_destroy: true
 
   mount_uploader :main_image, MainImageUploader
+  mount_uploader :second_image, MainImageUploader
+  mount_uploader :third_image, MainImageUploader
+  mount_uploader :fourth_image, MainImageUploader
 
   #バリデーション
   validate :limitedOpen_require_date

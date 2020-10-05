@@ -9,17 +9,20 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])
   end
 
+  # PICTURE_COUNT = 3
+
   def new
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build
     @activity.activity_ageprices.build
+    # PICTURE_COUNT.times { @activity.activity_images.build }
   end
 
   def create
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build(activity_params)
     if @activity.save
-      @activity.normal_adult_price = params[:activity][:activity_ageprices_attributes]["0"]["normal_price"]
+      @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
       @activity.save!
       redirect_to supplier_activities_path(current_supplier)
     else
@@ -30,12 +33,14 @@ class ActivitiesController < ApplicationController
   def edit
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = Activity.find(params[:id])
+    # count = @activity.activity_images.count
+    # (PICTURE_COUNT - count).times { @activity.activity_images.build }
   end
 
   def update
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
-      @activity.normal_adult_price = params[:activity][:activity_ageprices_attributes]["0"]["normal_price"]
+      @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
       @activity.save!
       redirect_to supplier_activities_path(current_supplier)
     else
@@ -264,7 +269,10 @@ class ActivitiesController < ApplicationController
   private
     def activity_params
       params.require(:activity).permit(:name, :description, :activity_business_id,
-                                      :activity_category_id, :main_image, :activity_minutes,
+                                      :activity_category_id, :main_image, :second_image,
+                                      :third_image, :fourth_image,
+                                      :remove_main_image, :remove_second_image, :remove_third_image, :remove_fourth_image,
+                                      :activity_minutes,
                                       :detail_address, :longitude, :latitude,
                                       :normal_adult_price, :has_season_price,
                                       :maximum_num, :minimum_num, :available_age,  :is_all_year_open,

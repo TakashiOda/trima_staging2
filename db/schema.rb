@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_074737) do
+ActiveRecord::Schema.define(version: 2020_10_05_065230) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -18,6 +18,9 @@ ActiveRecord::Schema.define(version: 2020_10_01_074737) do
     t.integer "activity_category_id", null: false
     t.text "description"
     t.string "main_image"
+    t.string "second_image"
+    t.string "third_image"
+    t.string "fourth_image"
     t.integer "activity_minutes"
     t.integer "prefecture_id"
     t.integer "area_id"
@@ -129,6 +132,12 @@ ActiveRecord::Schema.define(version: 2020_10_01_074737) do
     t.time "start_time"
     t.index ["activity_id", "start_time"], name: "index_activity_courses_on_activity_id_and_start_time", unique: true
     t.index ["activity_id"], name: "index_activity_courses_on_activity_id"
+  end
+
+  create_table "activity_images", force: :cascade do |t|
+    t.integer "activity_id", null: false
+    t.string "image"
+    t.index ["activity_id"], name: "index_activity_images_on_activity_id"
   end
 
   create_table "activity_languages", force: :cascade do |t|
@@ -353,6 +362,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_074737) do
   add_foreign_key "activity_ageprices", "activities"
   add_foreign_key "activity_businesses", "suppliers"
   add_foreign_key "activity_courses", "activities"
+  add_foreign_key "activity_images", "activities"
   add_foreign_key "activity_languages", "activity_businesses"
   add_foreign_key "activity_languages", "languages"
   add_foreign_key "activity_stocks", "activity_courses"

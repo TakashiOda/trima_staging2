@@ -6,6 +6,9 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.integer :activity_category_id, null: false, foreign_key: true
       t.text    :description
       t.string  :main_image
+      t.string  :second_image
+      t.string  :third_image
+      t.string  :fourth_image
       t.integer :activity_minutes
 
       # 住所情報

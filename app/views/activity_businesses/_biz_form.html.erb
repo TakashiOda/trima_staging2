@@ -110,7 +110,7 @@
 </div>
 <!-- </form> -->
 
-<script>
+<!-- <script>
   const selectElement = document.querySelector('#post_image');
   function image_input_btn() {
     selectElement.click();
@@ -129,7 +129,7 @@
     before_img.classList.toggle("hidden");
     // before_img.classList.remove("user_present_image");
   });
-</script>
+</script> -->
 
 <style lang="scss">
   #user_edit_image_upload_btn:hover {
@@ -161,8 +161,18 @@
   .radio_items {
     display: flex
   }
+  .delete_guide_btn {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffebeb;
+    border-radius: 7px;
+  }
   .delete_guide_btn svg {
-    color: red;
+      color: red;
+      margin: 0;
   }
   .links {
     text-align: center;
@@ -177,6 +187,25 @@
 </style>
 
 <script type="text/javascript">
+  const selectElement = document.querySelector('#post_image');
+  function image_input_btn() {
+    selectElement.click();
+  }
+
+  document.getElementById('post_image').addEventListener('change', function (e) {
+    // 1枚だけ表示する
+    const file = e.target.files[0];
+    // ファイルのブラウザ上でのURLを取得する
+    const blobUrl = window.URL.createObjectURL(file);
+    // img要素に表示
+    const post_img = document.getElementById('user_image_prev');
+    post_img.src = blobUrl;
+    post_img.classList.toggle("hidden");
+    const before_img = document.getElementById('user_present_image');
+    before_img.classList.toggle("hidden");
+    // before_img.classList.remove("user_present_image");
+  });
+
   function applySupplierAddress(obj) {
     var isChecked = obj.checked;
     var address_box = document.getElementById("address_box");

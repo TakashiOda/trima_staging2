@@ -19,7 +19,15 @@
                   <li class="activity_list_item">
                     <div class="activity_list_item_front">
                       <div class="activity_list_item_fron_image">
-                        <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
+                        <% if !activity.main_image.blank? %>
+                          <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
+                        <% elsif !activity.second_image.blank? %>
+                          <%= image_tag activity.second_image.to_s, class: 'activity_icon_image' %>
+                        <% elsif !activity.third_image.blank? %>
+                          <%= image_tag activity.third_image.to_s, class: 'activity_icon_image' %>
+                        <% elsif !activity.fourth_image.blank? %>
+                          <%= image_tag activity.fourth_image.to_s, class: 'activity_icon_image' %>
+                        <% end %>
                       </div>
                       <div class="activity_list_item_fron_info">
                         <%= activity.name %><br>
