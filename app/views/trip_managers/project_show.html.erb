@@ -1,0 +1,102 @@
+<div class="container user_show container-fluid">
+  <div class="trip_manage_side">
+    <%= render 'user_trip_manager_sidebar' %>
+  </div>
+  <div class="project_index_container">
+    <div class="project_index_container_innner">
+      <div class="page_title_box">
+        <h3><%= @project.name %></h3>
+        <% if @accept_invite == 1 %>
+          <div class="btn_box">
+            <%= link_to "Accept Project", user_accept_project_path(current_user, @project) %>
+          </div>
+        <% elsif @owner == current_user %>
+        <div class="btn_box">
+          <%= link_to "Edit Project", edit_user_project_path(current_user, @project) %>
+        </div>
+        <% end %>
+      </div>
+      <div class="project_show_items">
+        <div class="form-group">
+          <div class="row">
+            <div class="date_pick_box">
+              <span>Start At</span><br/>
+              <span><%= @project.start_date ? @project.start_date : "no set start date" %></span>
+            </div>
+            <div class="date_pick_box">
+              <span>End At</span><br/>
+              <span><%= @project.start_date ? @project.start_date : "no set start date" %></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="date_pick_box">
+              <span>Start Place</span>
+              <span><%= @project.start_date ? @project.start_date : "no set start date" %></span>
+            </div>
+            <div class="date_pick_box">
+              <span>End Place</span>
+              <span><%= @project.start_date ? @project.start_date : "no set start date" %></span>
+            </div>
+          </div>
+        </div>
+        <div class="project_show_item">
+          <span>Project Owner</span><br/>
+          <span><%= @owner.username %></span>
+        </div>
+        <div class="project_members_box">
+          <table class="project_members_list">
+            <tr>
+              <th>status</th>
+              <th>UserName</th>
+              <th>Member</th>
+              <th>Role</th>
+              <th></th>
+            </tr>
+            <% if !@user_projects.nil? %>
+              <% @user_projects.each do |user_project| %>
+                <% user = User.find(user_project.user_id) %>
+                <tr>
+                  <td><%= user_project.accept_invite = 0 ? "Joined" : "Waiting Accept" %></td>
+                  <td><%= user.username %></td>
+                  <td><%= user.email%></td>
+                  <td><%= user_project.control_level == 0 ? "Owner" : "Editor" %></td>
+                  <td>
+                    <% if @owner == current_user && user != current_user %>
+                      <%= link_to "Delete" ,
+                      user_project_member_delete_path(current_user.id, @project.id, user.id),
+                      class: "member_delete_btn",
+                      method: :delete, data: { confirm: "Are you sure to delete member?" }
+                      %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+
+            <% if !@inviting_users.nil? %>
+              <% @inviting_users.each do |inviting_user| %>
+                <tr>
+                  <td>Waiting SignUp</td>
+                  <td><%= inviting_user.invited_email %></td>
+                  <td>Editor</td>
+                  <td>
+                    <% if @owner == current_user %>
+                      <%= link_to "Delete" ,
+                      project_invitation_delete_path(@project.id, inviting_user.id ),
+                      class: "member_delete_btn",
+                      method: :delete, data: { confirm: "Are you sure to delete invitation?" }
+                      %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

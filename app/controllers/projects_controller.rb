@@ -112,7 +112,7 @@ class ProjectsController < ApplicationController
   private
     def project_params
       params.require(:project).permit(:name, :start_date, :end_date,
-                                      :start_place, :end_place,
+                                      :start_place, :end_place, :icon,
                                       :destination_area_id, { invite_emails: [] })
     end
 

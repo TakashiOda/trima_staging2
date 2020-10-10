@@ -8,6 +8,27 @@
         </div>
       <% end %>
     </div>
+    <div class="all_input_container">
+      <div class="date_column_allset">
+        <div class="date_item_allset">一括設定</div>
+      </div>
+      <div class="all_input_stock">
+        <% @activity.activity_courses.each_with_index do |ac_course, i| %>
+          <div class="all_stock_input_box">
+            <div class="all_stock_input">
+              <%= number_field_tag :all_stock, value = @activity.maximum_num, options = { min: 0, max: 10, class: 'form-control' }%>
+              <button type="button" onclick="changeAllofColumnStock(this)" class="form-control" id="<%=i%>">設定</button>
+            </div>
+            <% if @activity.activity_courses.count == i+1 && @activity.has_season_price %>
+              <div class="season_input_box">
+                <%= select_tag 'all_season_price', options_for_select({'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'}, 1), include_blank: false, class: 'form-control' %>
+                <button type="button" onclick="changeAllofColumnSeason(this)" class="form-control">設定</button>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
     <div class="field">
       <div class="date_list date_column">
         <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
@@ -38,7 +59,7 @@
                   </div>
                 <% else %>
                   <div class="season_input_box <%= stock.index %>">
-                    <%= stock.hidden_field :season_price, value: "通常料金" %>
+                    <%= stock.hidden_field :season_price, value: "normal" %>
                   </div>
                 <% end %>
               <% else %>
@@ -180,9 +201,171 @@
   .stock_is_close {
     background: #d8d8d8;
   }
+  .all_input_container {
+    height: 65px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .date_column_allset {
+    width: 160px;
+    /* padding-right: 10px; */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .date_item_allset {
+    font-size: 12px;
+    padding: 5px 10px 5px 5px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border-bottom: solid 1px lightgray; */
+  }
+  .all_input_stock {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    height: 55px;
+    /* border-bottom: solid 1px lightgray; */
+  }
+  .all_stock_input_box {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    height: 55px;
+    /* border-bottom: solid 1px lightgray; */
+  }
+  .all_stock_input {
+    display: flex;
+    flex-direction: column;
+  }
+  .all_stock_input input {
+    font-size: 19px;
+    width: 64px;
+    height: 15px;
+    text-align: right;
+    padding-right: 5px;
+    margin-right: 5px;
+    border: solid 1px #d0d0d0;
+    border-radius: 6px;
+    color: #504f4f;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+  }
+  .all_season_input_box select {
+    height: 35px;
+    font-size: 12px;
+  }
+  #all_season_price {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+  }
+  .all_stock_input button {
+    height: 18px;
+    width: 81px;
+    font-size: 10px;
+    background: #5bace8;
+    border: solid 0.5px lightgray;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: none;
+  }
+  .all_stock_input button:hover {
+    cursor: pointer;
+  }
+  .season_input_box button {
+    height: 18px;
+    width: 138px;
+    font-size: 10px;
+    background: #5bace8;
+    border: solid 0.5px lightgray;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: none;
+  }
+  .season_input_box button:hover {
+    cursor: pointer;
+  }
 </style>
 
 <script type="text/javascript">
+
+  function confirmAllStockChange(){
+  	if(window.confirm('コースの全在庫を設定します。よろしいですか？')){
+  		return true;
+  	} else{
+      return false;
+  	}
+  }
+
+  function confirmAllSeasonChange(){
+  	if(window.confirm('月のシーズン情報を全て変更します。よろしいですか？')){
+  		return true;
+  	} else{
+      return false;
+  	}
+  }
+
+  function changeAllofColumnStock(obj) {
+    if (confirmAllStockChange()) {
+      const prevInput = obj.parentNode.children[0].value;
+      const prevInputId = obj.id;
+      const stockColumns = document.querySelectorAll("div.course_stock_column");
+      const targetColumnItems = stockColumns[prevInputId].children;
+      for (var i = 0; i < targetColumnItems.length; i++) {
+        let targetBox = targetColumnItems[i].children[2];
+        let targetField = targetBox.children[0];
+        targetField.value = prevInput;
+      }
+    }
+  }
+
+  function changeAllofColumnSeason(obj) {
+    if (confirmAllSeasonChange()) {
+      const allSeasonInput = obj.parentNode.children[0].value;
+      const inputSelectedIndex = obj.parentNode.children[0].selectedIndex;
+      const allHiddenSeasonInputBox = document.querySelectorAll("div.season_input_box");
+      for (var i = 0; i < allHiddenSeasonInputBox.length; i++) {
+        if (allHiddenSeasonInputBox[i].children[0].type == 'hidden') {
+          allHiddenSeasonInputBox[i].children[0].value = allSeasonInput;
+        } else if (allHiddenSeasonInputBox[i].children[0].type == 'select-one') {
+          allHiddenSeasonInputBox[i].children[0].selectedIndex = inputSelectedIndex;
+        }
+      }
+
+      const inputContainers = document.querySelectorAll("div.activity_stock_input_box");
+      for (var i = 0; i < inputContainers.length; i++) {
+        const target = inputContainers[i];
+        if (inputSelectedIndex == 1){
+          target.classList.add("is_high_season");
+          target.classList.remove("is_low_season");
+        } else if (inputSelectedIndex == 2) {
+          target.classList.add("is_low_season");
+          target.classList.remove("is_high_season");
+        } else {
+          target.classList.remove("is_low_season");
+          target.classList.remove("is_high_season");
+        }
+      }
+    }
+  }
 
   function changeSeasonPrice(obj) {
     const parent = obj.parentNode;

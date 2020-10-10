@@ -2,6 +2,21 @@
   <%= form.label "Project Name" %>
   <%= form.text_field :name, required: true, class: "form-control" %>
 </div>
+
+<div class="form-group">
+  <%= form.label "Project Icon" %>
+  <div class="project_icon_radio_box">
+      <% project_icon_list = [
+      'project_icon-01','project_icon-02','project_icon-03','project_icon-04','project_icon-05',
+      'project_icon-06','project_icon-07','project_icon-08','project_icon-09','project_icon-10',
+      ]%>
+      <% project_icon_list.each_with_index do |icon, index| %>
+        <%= form.radio_button :icon, icon, id: "project_icon_#{index}", class: 'project_icon_radio_btn hidden' %>
+        <%= form.label index, image_tag("project_icons/#{icon}"), :for => "project_icon_#{index}" %>
+      <% end %>
+  </div>
+</div>
+
 <div class="form-group">
   <div class="row">
     <div class="date_pick_box">
@@ -60,3 +75,26 @@
     </div>
   </div>
 </div>
+
+<style lang="scss">
+  .project_icon_radio_box {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .project_icon_radio_box label {
+    width: 20%;
+    opacity: 0.5;
+  }
+  .project_icon_radio_box input[type="radio"]:checked + label {
+    /* background: #23a0ff;/* マウス選択時の背景色を指定する */
+    opacity: 1;
+  }
+  .project_icon_radio_box img {
+    width: 90%;
+    border-radius: 7px;
+    margin: 5px;
+  }
+  .project_icon_radio_box img:hover {
+    opacity: 0.9;
+  }
+</style>

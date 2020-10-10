@@ -35,7 +35,9 @@ Rails.application.routes.draw do
   delete "projects/:id/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
 
   resources :users do
-    resources :projects
+    resources :projects do
+      get "project_home", to: "trip_managers#home", as: :trip_managers_home
+    end
     get "projects/:id", to: "projects#accept_project", as: :accept_project
     delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
     # delete "projects/:id/invitation_delete/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete

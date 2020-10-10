@@ -6,6 +6,7 @@ class CreateProjects < ActiveRecord::Migration[6.0]
       t.date :end_date
       t.string :start_place
       t.string :end_place
+      t.string :icon, default: 'icon1'
     end
   end
 end
