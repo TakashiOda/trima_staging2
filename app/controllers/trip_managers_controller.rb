@@ -3,6 +3,7 @@ class TripManagersController < ApplicationController
   def home
     # binding.pry
     @project = Project.find(params[:project_id])
+    @areas = @project.areas
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
     @accept_invite = UserProject.find_by(user_id: current_user.id, project_id: @project.id).accept_invite
     @user_projects = UserProject.where(project_id: @project.id)

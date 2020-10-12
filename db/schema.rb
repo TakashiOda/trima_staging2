@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_074737) do
+ActiveRecord::Schema.define(version: 2020_10_12_061902) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -156,6 +156,16 @@ ActiveRecord::Schema.define(version: 2020_10_01_074737) do
     t.index ["stock"], name: "index_activity_stocks_on_stock"
   end
 
+  create_table "activity_translations", force: :cascade do |t|
+    t.integer "activity_id", null: false
+    t.integer "language_id"
+    t.string "name"
+    t.text "profile_text"
+    t.text "notes"
+    t.index ["activity_id", "language_id"], name: "activity_translation_unique_index", unique: true
+    t.index ["activity_id"], name: "index_activity_translations_on_activity_id"
+  end
+
   create_table "areas", force: :cascade do |t|
     t.integer "prefecture_id", null: false
     t.string "en_name"
@@ -213,6 +223,14 @@ ActiveRecord::Schema.define(version: 2020_10_01_074737) do
     t.text "cn_introduction"
     t.text "tw_introduction"
     t.string "image"
+  end
+
+  create_table "project_areas", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "area_id", null: false
+    t.index ["area_id"], name: "index_project_areas_on_area_id"
+    t.index ["project_id", "area_id"], name: "index_project_areas_on_project_id_and_area_id", unique: true
+    t.index ["project_id"], name: "index_project_areas_on_project_id"
   end
 
   create_table "project_invites", force: :cascade do |t|
@@ -361,8 +379,11 @@ ActiveRecord::Schema.define(version: 2020_10_01_074737) do
   add_foreign_key "activity_languages", "activity_businesses"
   add_foreign_key "activity_languages", "languages"
   add_foreign_key "activity_stocks", "activity_courses"
+  add_foreign_key "activity_translations", "activities"
   add_foreign_key "areas", "prefectures"
   add_foreign_key "guides", "activity_businesses"
+  add_foreign_key "project_areas", "areas"
+  add_foreign_key "project_areas", "projects"
   add_foreign_key "project_invites", "projects"
   add_foreign_key "project_invites", "users", column: "inviter_id"
   add_foreign_key "supplier_profiles", "suppliers"

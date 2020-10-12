@@ -15,6 +15,7 @@ class ActivitiesController < ApplicationController
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build
     @activity.activity_ageprices.build
+    @activity.activity_translations.build
     # PICTURE_COUNT.times { @activity.activity_images.build }
   end
 
@@ -33,6 +34,9 @@ class ActivitiesController < ApplicationController
   def edit
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = Activity.find(params[:id])
+    if @activity.activity_translations.find_by(language_id: 3).nil?
+      @activity.activity_translations.build
+    end
     # count = @activity.activity_images.count
     # (PICTURE_COUNT - count).times { @activity.activity_images.build }
   end
@@ -287,7 +291,9 @@ class ActivitiesController < ApplicationController
                                         activity_stocks_attributes: [:id, :activity_id, :date,
                                         :activity_course_id, :stock, :season_price]],
                                       activity_ageprices_attributes: [:id, :activity_id, :age_from,
-                                      :age_to, :normal_price, :high_price, :low_price, :_destroy])
+                                      :age_to, :normal_price, :high_price, :low_price, :_destroy],
+                                      activity_translations_attributes: [:id, :activity_id, :language_id,
+                                      :name, :profile_text, :notes])
     end
 
     def activity_stock_params

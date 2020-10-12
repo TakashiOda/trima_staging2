@@ -6,6 +6,9 @@ class Activity < ApplicationRecord
   has_many :activity_ageprices, dependent: :destroy
   accepts_nested_attributes_for :activity_ageprices, allow_destroy: true
 
+  has_many :activity_translations, dependent: :destroy
+  accepts_nested_attributes_for :activity_translations, allow_destroy: true
+
   mount_uploader :main_image, MainImageUploader
   mount_uploader :second_image, MainImageUploader
   mount_uploader :third_image, MainImageUploader

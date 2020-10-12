@@ -12,8 +12,9 @@
  *
  *= require_self
  */
-@import "bootstrap-sprockets";
-@import "bootstrap";
+
+// @import "bootstrap";
+// @import "bootstrap-sprockets";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 
 $user-main-color: #2bb560;

@@ -27,13 +27,22 @@
   </div>
     <% end %>
   </div>
+  <ul>
+    <% if !@areas.nil? %>
+      <% @areas.each do |area| %>
+        <li class="trip_manager_side_area_item">
+          <%= area.en_name %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
   <div class="trip_profile_schedule_item">
     <span class="trip_profile_schedule_item_title"><i class="far fa-calendar-alt"></i>From</span>
-    <span><%= @project.start_date ? @project.start_date : "no set start date" %></span>
+    <span><%= @project.start_date ? @project.start_date : "no date" %></span>
   </div>
   <div class="trip_profile_schedule_item">
     <span class="trip_profile_schedule_item_title"><i class="far fa-calendar-alt"></i>To</span>
-    <span><%= @project.start_date ? @project.start_date : "no set start date" %></span>
+    <span><%= @project.start_date ? @project.start_date : "no date" %></span>
   </div>
   <ul>
     <% if !@user_projects.nil? %>
@@ -127,5 +136,12 @@
   }
   .trip_profile_schedule_item svg {
     margin-right: 5px;
+  }
+  li.trip_manager_side_area_item {
+    background: #ababab;
+    padding: 2px 15px;
+    width: fit-content;
+    border-radius: 15px;
+    color: #fff;
   }
 </style>

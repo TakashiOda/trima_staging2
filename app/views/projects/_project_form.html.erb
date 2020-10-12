@@ -16,16 +16,23 @@
       <% end %>
   </div>
 </div>
-
+<%= form.fields_for :project_areas do |area| %>
+  <div class="field">
+    <%= render 'project_areas_fields', f: area %>
+  </div>
+<%- end %>
+<div class="links">
+  <%= link_to_add_association "Add Area", form, :project_areas, partial: 'project_areas_fields' %>
+</div>
 <div class="form-group">
   <div class="row">
     <div class="date_pick_box">
       <%= form.label "Start Date" %>
-      <%= form.date_field :start_date, use_month_numbers: true, class: "form-control"  %>
+      <%= form.date_field :start_date, use_month_numbers: true, class: "form-control" %>
     </div>
     <div class="date_pick_box">
       <%= form.label "End Date" %>
-      <%= form.date_field :start_date, use_month_numbers: true, class: "form-control"  %>
+      <%= form.date_field :start_date, use_month_numbers: true, class: "form-control" %>
     </div>
   </div>
 </div>
@@ -97,4 +104,29 @@
   .project_icon_radio_box img:hover {
     opacity: 0.9;
   }
+  .project_area_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .project_area_row select {
+    width: 90%;
+  }
+  .links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  .links a.add_fields {
+    background: #2bb560;
+    color: #fff;
+    padding: 3px 15px;
+    border-radius: 30px;
+  }
 </style>
+
+<script type="text/javascript">
+  function toggleDescriptionTab(obj) {
+  }
+</script>
