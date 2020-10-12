@@ -4,28 +4,83 @@
     <div class="form_big_title">
       <h3>アクティビティの基本情報</h3>
     </div>
+    <div>
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="active" role="presentation">
+          <a aria-controls="tab_a" data-toggle="tab" href="#tab_a" role="tab">日本語</a>
+        </li>
+        <li role="presentation">
+          <a aria-controls="tab_b" data-toggle="tab" href="#tab_b" role="tab">英語</a>
+        </li>
+        <li role="presentation">
+          <a aria-controls="tab_c" data-toggle="tab" href="#tab_c" role="tab">中国語（繁体字）</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_a" role="tabpanel">
+          <p>
+            タブAだよ
+          </p>
+        </div>
+        <div class="tab-pane" id="tab_b" role="tabpanel">
+          <p>
+            タブBです
+          </p>
+        </div>
+        <div class="tab-pane" id="tab_c" role="tabpanel">
+          <p>
+            タブC!!
+          </p>
+        </div>
+      </div>
+    </div>
     <div class="form-group">
       <%= f.label "体験名" %>
       <%= f.text_field :name, required: true, class: "form-control" %>
     </div>
     <div class="form-group">
       <%= f.label "体験の紹介文" %>
-      <%= f.text_area :description, required: true, class: "form-control" %>
+      <%= f.text_area :description, rows: 7, required: true, class: "form-control" %>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <div class="row">
         <div class="col-half">
-          <%= f.label "体験所用時間（分）" %>
-          <%= f.number_field :activity_minutes, min: 20 ,step: 5, required: true, class: "form-control", id: "activity_minutes" %>
+          <%#= f.label "体験所用時間（分）" %>
+          <%#= f.number_field :activity_minutes, min: 20 ,step: 5, required: true, class: "form-control", id: "activity_minutes" %>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="form-group">
       <div class="row">
         <div class="col-half">
           <%= f.label "体験カテゴリー" %>
           <%= f.collection_select :activity_category_id, ActivityCategory.all, :id, :jp_name,{prompt: "選択してください"}, required: true, class: "form-control" %>
         </div>
+        <!-- <div class="col-half">
+          <%#= f.label "参加できる最低年齢" %>
+          <%#= f.number_field :available_age, min: 0, max: 110, required: true, class: "form-control" %>
+        </div>
+      </div> -->
+    </div>
+    <!-- <div class="form-group">
+      <div class="row">
+        <div class="col-half">
+          <%#= f.label "最少催行人数" %>
+          <%#= f.number_field :minimum_num, min: 1, max: 49, required: true, class: "form-control" %>
+        </div>
+        <div class="col-half">
+          <%#= f.label "最大人数" %>
+          <%#= f.number_field :maximum_num, min: 1, max: 50, required: true, class: "form-control" %>
+        </div>
+      </div>
+    </div> -->
+  </section>
+  <section class="form_section">
+    <div class="form_big_title">
+      <h3>参加条件</h3>
+    </div>
+    <div class="form-group">
+      <div class="row">
         <div class="col-half">
           <%= f.label "参加できる最低年齢" %>
           <%= f.number_field :available_age, min: 0, max: 110, required: true, class: "form-control" %>
@@ -41,6 +96,37 @@
         <div class="col-half">
           <%= f.label "最大人数" %>
           <%= f.number_field :maximum_num, min: 1, max: 50, required: true, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="form_section">
+    <div class="form_big_title">
+      <h3>アクティビティの位置情報</h3>
+    </div>
+    <div id="map"></div>
+    <%# <%= render 'activity_geolocation_input_map' %>
+    <div class="form-group">
+      <%= f.label "実施エリア" %>
+      <%= f.collection_select :area_id, Area.all, :id, :local_name, {prompt: "選択してください"}, required: true, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label "実施する市区町村" %>
+      <%= f.collection_select :town_id, Town.all, :id, :jp_name, {prompt: "選択してください"}, class: "form-control" %>
+    </div>
+    <!-- <div class="form-group">
+      <%#= f.label "実施する住所" %>
+      <%#= f.text_field :detail_address, class: "form-control" %>
+    </div> -->
+    <div class="form-group">
+      <div class="row">
+        <div class="col-half">
+          <%= f.label "経度" %>
+          <%= f.text_field :latitude, class: "form-control", id: 'latitude_input' %>
+        </div>
+        <div class="col-half">
+          <%= f.label "緯度" %>
+          <%= f.text_field :longitude, class: "form-control", id: 'longitude_input' %>
         </div>
       </div>
     </div>
@@ -161,6 +247,14 @@
     <div class="form_big_title after_second_title">
       <h3>アクティビティのスケジュール設定</h3>
     </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-half">
+          <%= f.label "体験所用時間（分）" %>
+          <%= f.number_field :activity_minutes, min: 20 ,step: 5, required: true, class: "form-control", id: "activity_minutes" %>
+        </div>
+      </div>
+    </div>
     <%= f.label "実施期間は通年ですか？" %>
     <div class="season_price_radio_box_inner">
       <div class="season_price_radio_items">
@@ -211,6 +305,17 @@
         <div class="links">
           <%= link_to_add_association "コース時間を追加", f, :activity_courses, form_name: 'f', id:"course_add_btn" %>
         </div>
+      </div>
+    </div>
+  </section>
+  <section class="form_section">
+    <div class="form-group">
+      <div class="form_big_title after_second_title">
+        <h3>その他説明事項</h3>
+      </div>
+      <div class="form-group">
+        <%= f.label "注意事項・持ち物・装備など" %>
+        <%= f.text_area :notes, rows: 7, class: "form-control" %>
       </div>
     </div>
   </section>
@@ -551,7 +656,8 @@
 
   .form_btns_box {
     width: 25%;
-    padding: 30px 15px 30px 15px;
+    padding: 20px 10px 20px 10px;
+    /* padding: 30px 15px 30px 15px; */
     margin-right: 10px;
   }
   .activity_index_activity_list_box form {
@@ -612,6 +718,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  #map {
+    height: 400px;
+    margin-bottom: 20px;
+    border-radius: 8px;
   }
 </style>
 
@@ -872,4 +983,29 @@
       inputStartFrom.setAttribute('value', systemStartMaxToString);
     }
   }
+
+  function initMap() {
+    const latfield = document.getElementById('latitude_input');
+    const lngfield = document.getElementById('longitude_input');
+    var myLatlng = {lat: 43.067538712974866, lng: 141.34876574909862};
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 8, center: myLatlng});
+
+    // Create the initial InfoWindow.
+    var infoWindow = new google.maps.InfoWindow(
+        {content: 'アクティビティの実施場所にピンを落としてください', position: myLatlng});
+    infoWindow.open(map);
+
+    // Configure the click listener.
+    map.addListener('click',function(mapsMouseEvent) {
+      infoWindow.close();
+      infoWindow = new google.maps.InfoWindow({position: mapsMouseEvent.latLng});
+      infoWindow.setContent(mapsMouseEvent.latLng.toString());
+      infoWindow.open(map);
+    });
+  }
+</script>
+
+<script defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8qlUsnzijhVLdxI5WPk6fy5dnrEGru8Q&callback=initMap">
 </script>

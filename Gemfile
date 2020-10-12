@@ -29,6 +29,10 @@ gem "jquery-rails"
 gem 'simple_calendar'
 
 
+gem "bootstrap-sass", "~>3.3.6"
+gem "jquery-ui-rails"
+
+
 group :development, :test do
   gem 'byebug',"11.1.3", platforms: [:mri, :mingw, :x64_mingw]
   gem 'sqlite3', '1.4.2'

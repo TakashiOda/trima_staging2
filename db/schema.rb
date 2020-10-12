@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_074737) do
     t.integer "activity_business_id", null: false
     t.integer "activity_category_id", null: false
     t.text "description"
+    t.text "notes"
     t.string "main_image"
     t.string "second_image"
     t.string "third_image"

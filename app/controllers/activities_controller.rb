@@ -268,12 +268,13 @@ class ActivitiesController < ApplicationController
 
   private
     def activity_params
-      params.require(:activity).permit(:name, :description, :activity_business_id,
+      params.require(:activity).permit(:name, :description, :notes, :activity_business_id,
                                       :activity_category_id, :main_image, :second_image,
                                       :third_image, :fourth_image,
                                       :remove_main_image, :remove_second_image, :remove_third_image, :remove_fourth_image,
-                                      :activity_minutes,
+                                      :prefecture_id, :area_id, :town_id,
                                       :detail_address, :longitude, :latitude,
+                                      :activity_minutes,
                                       :normal_adult_price, :has_season_price,
                                       :maximum_num, :minimum_num, :available_age,  :is_all_year_open,
                                       :start_date, :end_date,

@@ -5,6 +5,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.references :activity_business, null: false, foreign_key: true
       t.integer :activity_category_id, null: false, foreign_key: true
       t.text    :description
+      t.text    :notes
       t.string  :main_image
       t.string  :second_image
       t.string  :third_image
