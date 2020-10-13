@@ -1,281 +1,115 @@
-<%= stylesheet_link_tag 'suppliers' %>
-<div class="container user_show container-fluid">
-  <div class="user_show_side">
-    <%= render 'suppliers/supplier_page_front_sidebar' %>
-  </div>
-  <div class="supplier_show_main_content"><!--メインコンテンツ-->
-    <div class="supplier_show_content_inside">
-      <!-- <div class="supplier_profile_box">
-        <!-- <div class="user_show_avatar_box">
-          <div class="user_show_avatar_box_inside">
-            <%# if @supplier.avatar.present? %>
-              <%#= image_tag current_supplier.avatar.url, class: "user_avatar" %>
-            <%# else %>
-              <%#= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
-            <%# end %>
-          </div>
+<div class="supplier_show_content_inside">
+  <div class="activity_business_info_box"><!--メインコンテンツorg-->
+    <div class="info_list_box_title">
+      <div>体験事業情報</div>
+      <div>
+        <% unless @supplier.supplier_profile.nil? %>
+          <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business), class: "org_edit_btn" %>
+        <% end %>
+      </div>
+    </div>
+    <div id="activity_business_info_contents" class="">
+      <% if @supplier_profile.nil? %>
+        <div class="info_list_box_contents">
+          <div>まだ体験事業情報がありません</div>
+          <%= link_to "体験事業を登録", "#", class: "org_edit_btn" %>
         </div>
-        <div class="supplier_name">
-          <div><%#= !@supplier.name.nil? ? @supplier.name : "お名前未登録" %></div>
-          <div class="supplier_profile_edit_btn">
-            <%# if @supplier == current_supplier %>
-              <%#= link_to "編集",edit_supplier_path(current_supplier), class: "org_edit_btn" %>
-            <%# end %>
-          </div>
-        </div>
-      </div><!--メインコンテンツprofile end-->
-      <!--体験事業情報---------------------------------------------------------------->
-      <div class="activity_business_info_box"><!--メインコンテンツorg-->
-        <div class="info_list_box_title">
-          <!-- <div class="info_list_box_title_up"> -->
-            <div>体験事業情報</div>
-            <div>
-              <% unless @supplier.supplier_profile.nil? %>
-                <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business), class: "org_edit_btn" %>
-              <% end %>
-            </div>
-          <!-- </div> -->
-        </div>
-        <div id="activity_business_info_contents" class="">
-          <% if @supplier_profile.nil? %>
-            <div class="info_list_box_contents">
-              <div>まだ体験事業情報がありません</div>
-              <%= link_to "体験事業を登録", "#", class: "org_edit_btn" %>
-            </div>
-          <% else %>
-            <div class="info_list_box_contents">
-              <table class="info_list_table">
-                <tr>
-                  <td class="td_front">体験事業名</td>
-                  <td class="td_end"><%= current_supplier.activity_business.name if current_supplier.activity_business.name %></td>
-                </tr>
-                <tr>
-                  <td class="td_front">プロフィール</td>
-                  <td class="td_end">
-                    <%= current_supplier.activity_business.profile_text if current_supplier.activity_business.profile_text %>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="td_front">都道府県・エリア</td>
-                  <td class="td_end">
-                    <%= Prefecture.find(current_supplier.activity_business.prefecture_id).local_name if current_supplier.activity_business.prefecture_id %> /
-                    <%= Area.find(current_supplier.activity_business.area_id).local_name if current_supplier.activity_business.area_id %>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="td_front">登録ガイド</td>
-                  <td class="td_end">
-                    <div class="supplier_show_guide_items">
-                    <% if current_supplier.activity_business.guides.any? %>
-                      <% current_supplier.activity_business.guides.each do |guide| %>
-                        <div class="supplier_show_guide_item_box">
-                          <div class="supplier_show_guide_item_box__image"><%= image_tag guide.avatar.to_s, class: "user_avatar" %></div>
-                          <div class="supplier_show_guide_item_box__name"><%= guide.name %></div>
-                          <!-- <div><%#= guide.introduction %></div> -->
-                        </div>
-                      <% end %>
-                    <% else %>
-                      <div>ガイドは登録されていません</div>
-                    <% end %>
+      <% else %>
+        <div class="info_list_box_contents">
+          <table class="info_list_table">
+            <tr>
+              <td class="td_front">体験事業名</td>
+              <td class="td_end"><%= current_supplier.activity_business.name if current_supplier.activity_business.name %></td>
+            </tr>
+            <tr>
+              <td class="td_front">プロフィール</td>
+              <td class="td_end">
+                <%= current_supplier.activity_business.profile_text if current_supplier.activity_business.profile_text %>
+              </td>
+            </tr>
+            <tr>
+              <td class="td_front">都道府県・エリア</td>
+              <td class="td_end">
+                <%= Prefecture.find(current_supplier.activity_business.prefecture_id).local_name if current_supplier.activity_business.prefecture_id %> /
+                <%= Area.find(current_supplier.activity_business.area_id).local_name if current_supplier.activity_business.area_id %>
+              </td>
+            </tr>
+            <tr>
+              <td class="td_front">登録ガイド</td>
+              <td class="td_end">
+                <div class="supplier_show_guide_items">
+                <% if current_supplier.activity_business.guides.any? %>
+                  <% current_supplier.activity_business.guides.each do |guide| %>
+                    <div class="supplier_show_guide_item_box">
+                      <div class="supplier_show_guide_item_box__image"><%= image_tag guide.avatar.to_s, class: "user_avatar" %></div>
+                      <div class="supplier_show_guide_item_box__name"><%= guide.name %></div>
+                      <!-- <div><%#= guide.introduction %></div> -->
                     </div>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          <% end %>
+                  <% end %>
+                <% else %>
+                  <div>ガイドは登録されていません</div>
+                <% end %>
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
-        <div class="info_list_box_title_btn">
-          <div onclick="toggleActiviyBusinessInfo(this)"><i class="fas fa-angle-down"></i></div>
-        </div>
+      <% end %>
+    </div>
+    <div class="info_list_box_title_btn">
+      <div onclick="toggleActiviyBusinessInfo(this)"><i class="fas fa-angle-down"></i></div>
+    </div>
+  </div>
+  <!--事業者情報---------------------------------------------------------------->
+  <div class="supplier_info_box"><!--メインコンテンツorg-->
+    <div class="info_list_box_title">
+      <div>アカウント情報</div>
+      <div>
+        <% unless @supplier.supplier_profile.nil? %>
+          <%= link_to "編集", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
+        <% end %>
       </div>
-      <!--体験事業情報---------------------------------------------------------------->
-      <!--事業者情報---------------------------------------------------------------->
-      <div class="supplier_info_box"><!--メインコンテンツorg-->
-        <div class="info_list_box_title">
-          <!-- <div class="info_list_box_title_up"> -->
-            <div>アカウント情報</div>
-            <div>
-              <% unless @supplier.supplier_profile.nil? %>
-                <%= link_to "編集", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
-              <% end %>
-            </div>
-          <!-- </div> -->
+    </div>
+    <div id="supplier_info_contents" class="hidden">
+      <% if @supplier_profile.nil? %>
+        <div class="info_list_box_contents">
+          <div>まだ事業情報がありません</div>
+          <%= link_to "事業を登録", "#", class: "org_edit_btn" %>
         </div>
-        <div id="supplier_info_contents" class="hidden">
-          <% if @supplier_profile.nil? %>
-            <div class="info_list_box_contents">
-              <div>まだ事業情報がありません</div>
-              <%= link_to "事業を登録", "#", class: "org_edit_btn" %>
-            </div>
-          <% else %>
-            <div class="info_list_box_contents">
-              <table class="info_list_table">
-                <tr>
-                  <td class="td_front">責任者</td>
-                  <td class="td_end"><%= @supplier_profile.manager_name if @supplier_profile.manager_name %></td>
-                </tr>
-                <tr>
-                  <td class="td_front">ご契約の住所</td>
-                  <td class="td_end">
-                    <%= Prefecture.find(@supplier_profile .prefecture_id).local_name if @supplier_profile.prefecture_id %>
-                    <%= Town.find(@supplier_profile.town_id).jp_name if @supplier_profile.town_id %>
-                    <%= @supplier_profile.detail_address if @supplier_profile.detail_address %>
-                    <%= @supplier_profile.building if @supplier_profile.building %>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="td_front">電話番号</td>
-                  <td class="td_end">＊＊＊ - ＊＊＊＊ - <%= (@supplier_profile.phone.to_i % 10000) if @supplier_profile.phone %></td>
-                </tr>
-                <tr>
-                  <td class="td_front">プランの種類</td>
-                  <td class="td_end"><%= @supplier_profile.contract_plan if @supplier_profile.contract_plan %></td>
-                </tr>
-              </table>
-            </div>
-          <% end %>
+      <% else %>
+        <div class="info_list_box_contents">
+          <table class="info_list_table">
+            <tr>
+              <td class="td_front">責任者</td>
+              <td class="td_end"><%= @supplier_profile.manager_name if @supplier_profile.manager_name %></td>
+            </tr>
+            <tr>
+              <td class="td_front">ご契約の住所</td>
+              <td class="td_end">
+                <%= Prefecture.find(@supplier_profile .prefecture_id).local_name if @supplier_profile.prefecture_id %>
+                <%= Town.find(@supplier_profile.town_id).jp_name if @supplier_profile.town_id %>
+                <%= @supplier_profile.detail_address if @supplier_profile.detail_address %>
+                <%= @supplier_profile.building if @supplier_profile.building %>
+              </td>
+            </tr>
+            <tr>
+              <td class="td_front">電話番号</td>
+              <td class="td_end">＊＊＊ - ＊＊＊＊ - <%= (@supplier_profile.phone.to_i % 10000) if @supplier_profile.phone %></td>
+            </tr>
+            <tr>
+              <td class="td_front">プランの種類</td>
+              <td class="td_end"><%= @supplier_profile.contract_plan if @supplier_profile.contract_plan %></td>
+            </tr>
+          </table>
         </div>
-        <div class="info_list_box_title_btn">
-          <div onclick="toggleSupplierInfo(this)"><i class="fas fa-angle-down"></i></div>
-        </div>
-      </div>
-      <!--組織情報---------------------------------------------------------------->
-    </div><!--メインコンテンツ内部-->
-  </div><!--メインコンテンツ-->
-</div>
+      <% end %>
+    </div>
+    <div class="info_list_box_title_btn">
+      <div onclick="toggleSupplierInfo(this)"><i class="fas fa-angle-down"></i></div>
+    </div>
+  </div>
+</div><!--メインコンテンツ内部-->
 
-<style>
-  .supplier_show_content_inside {
-    padding: 20px 20px;
-  }
-  .activity_business_info_box,
-  .supplier_info_box {
-    border: solid 1px lightgray;
-    border-radius: 8px;
-    padding: 12px 20px;
-    margin-bottom: 20px;
-    background: #fff;
-    box-shadow: 0px 0px 5px -2px grey;
-  }
-  .supplier_profile_box {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  .supplier_name {
-    margin-left: 15px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-  .supplier_business_box {
-    margin-bottom: 70px;
-  }
-
-  table.info_list_table {
-    width: 100%;
-    font-size: 11px;
-  }
-  table.info_list_table tr .td_front {
-    width: 20%;
-  }
-
-  .info_list_box_title {
-    display: flex;
-    margin-bottom: 0px;
-    justify-content: space-between;
-  }
-
-  div#supplier_info_contents {
-      margin: 20px 0;
-  }
-  .info_list_box_title_btn {
-    text-align: center;
-  }
-  .info_list_box_title_btn div svg {
-    color: gray;
-    margin: 0;
-    width: 100px !important;
-    height: 20px;
-    cursor: pointer;
-  }
-  table.supplier_business_items {
-    font-size: 12px;
-    width: 100%;
-  }
-  table.supplier_business_items td.supplier_business_items_td1 {
-    width: 5%;
-    font-size: 10px;
-    padding: 5px;
-    text-align: center;
-  }
-  table.supplier_business_items td.supplier_business_items_td2 {
-    width: 8%;
-  }
-  table.supplier_business_items td.supplier_business_items_td3 {
-    width: 72%;
-  }
-  table.supplier_business_items td.supplier_business_items_td4 {
-    width: 15%;
-    text-align: end;
-  }
-  table.supplier_business_items td.supplier_business_items_blank_td2 {
-    width: 85%;
-  }
-  table.supplier_business_items td.supplier_business_items_blank_td3 {
-    width: 10%;
-  }
-  td.supplier_business_items_td2 div {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #17a599;
-    border-radius: 50%;
-    font-size: 16px;
-    color: #fff;
-    font-weight: bold;
-  }
-  a.org_edit_btn {
-    background: #e6e6e6 !important;
-    padding: 7px 13px;
-    font-size: 11px;
-    color: #656565;
-    border-radius: 3px;
-  }
-  a.member_delete_btn.edit {
-    background: #2bb560;
-  }
-  .info_list_box_contents {
-    padding: 0 3px;
-  }
-  .add_new_org_box {
-    display: flex;
-    justify-content: space-between;
-  }
-  img.business_icon_image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-  .supplier_show_guide_items {
-    display: flex;
-    padding: 10px;
-    flex-direction: column;
-  }
-  .supplier_show_guide_item_box {
-    height: 70px;
-    display: flex;
-    /* flex-direction: column; */
-    /* justify-content: center; */
-    align-items: center;
-  }
-  .supplier_show_guide_item_box__name {
-    font-size: 15px;
-    padding-left: 15px;
-  }
-</style>
 
 <script>
   function toggleActiviyBusinessInfo(obj) {

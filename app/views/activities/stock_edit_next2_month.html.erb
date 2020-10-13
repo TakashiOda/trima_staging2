@@ -1,17 +1,9 @@
-<%= stylesheet_link_tag 'suppliers' %>
-<div class="container user_show container-fluid">
-  <div class="user_show_side">
-    <%= render 'suppliers/supplier_page_front_sidebar' %>
+<div class="supplier_show_content_inside_form"><!--メインコンテンツ内部-->
+  <div class="supplier_activity_page_top">
+    <div class="activity_index_top_box">
+      <h3>在庫情報を編集</h3>
+    </div>
+    <%= render 'month_tab' %>
+    <%= render 'stock_edit_form' %>
   </div>
-  <div class="supplier_show_main_content"><!--メインコンテンツ-->
-    <div class="supplier_show_content_inside_form"><!--メインコンテンツ内部-->
-      <div class="supplier_activity_page_top">
-        <div class="activity_index_top_box">
-          <h3>在庫情報を編集</h3>
-        </div>
-        <%= render 'month_tab' %>
-        <%= render 'stock_edit_form' %>
-      </div>
-    </div><!--メインコンテンツ内部-->
-  </div><!--メインコンテンツ-->
-</div>
+</div><!--メインコンテンツ内部-->

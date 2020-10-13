@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <%= stylesheet_pack_tag "application", media: "all" %>
     <%= javascript_pack_tag 'application', media: 'all' %>
-    <!-- <meta name="viewport" content="initial-scale=1.0, user-scalable=no"> -->
     <meta charset="utf-8">
   </head>
 
@@ -23,7 +22,59 @@
       <p class="alert"><%= alert %></p>
     <% end %>
     <div class="body_content">
-      <%= yield %>
+      <%= controller.controller_name %>
+      <%= controller.action_name %>
+      <% if controller.action_name == "thank_you_for_registration_user" %>
+        <%= stylesheet_link_tag 'users' %>
+        <%= yield %>
+      <% elsif controller.action_name == "thank_you_for_registration_supplier" %>
+        <%= stylesheet_link_tag 'suppliers' %>
+        <%= yield %>
+      <% elsif controller.controller_name == "activities" || controller.controller_name == "activity_businesses" || controller.controller_name == "suppliers" %>
+        <%= stylesheet_link_tag 'suppliers' %>
+        <div class="container user_show container-fluid row">
+          <div class="user_show_side">
+            <%= render 'suppliers/supplier_page_front_sidebar' %>
+          </div>
+          <div class="user_show_content">
+            <%= yield %>
+          </div>
+        </div>
+      <% elsif controller.controller_name == "projects" && controller.action_name == "edit" %>
+        <%= stylesheet_link_tag 'users' %>
+        <div class="container user_show container-fluid">
+          <div class="trip_manage_side">
+            <%= render 'trip_managers/user_trip_manager_sidebar' %>
+          </div>
+          <div class="project_index_container">
+            <%= yield %>
+          </div>
+        </div>
+      <% elsif controller.controller_name == "users" || controller.controller_name == "projects" %>
+        <%= stylesheet_link_tag 'users' %>
+        <div class="container user_show container-fluid">
+          <div class="user_show_side">
+            <%= render 'users/user_page_front_sidebar' %>
+          </div>
+          <div class="user_show_main_content">
+            <%= yield %>
+          </div>
+        </div>
+      <% elsif controller.controller_name == "trip_managers" %>
+        <%= stylesheet_link_tag 'users' %>
+        <div class="container user_show container-fluid">
+          <div class="trip_manage_side">
+            <%= render 'user_trip_manager_sidebar' %>
+          </div>
+          <div class="project_index_container">
+            <%= yield %>
+          </div>
+        </div>
+
+      <% else %>
+        <%= yield %>
+      <% end %>
+
     </div>
     <% unless controller.controller_name == "home" && controller.action_name == "about" %>
       <%= render 'layouts/footer' %>

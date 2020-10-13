@@ -1,71 +1,74 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
  *= require_self
  */
 
-// @import "bootstrap";
-// @import "bootstrap-sprockets";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
-
 $user-main-color: #2bb560;
-$user-main-dark-color: #536A97;
 
+//目次==============================================
+//1.共通タグ
+//2.基本クラス
+//3.共通コンポーネント
+//4.共通パーツ
+//5.複数ページ共通
+//6.form関連
+//7.header
+//8.
+//9.
+//10.
+//11.
+//12.
+//13.
+//14.
+//15.
+//16.
+//17.
+//18.
+//19.
+//20.
+//=================================================
 
-
-/*基本css************************************/
-body.erb_body {
-  margin: 0 !important;
-  // width: 100vw;
-  height: 100vh;
-  // padding-bottom:100px;
-  // position: relative;
-}
-body.erb_body.add_padding_top {
-  padding-top: 0px;
-  position: relative;
-}
-.body_content {
-  // padding-top: 60px;
-  position: relative;
-}
+//1.基本タグ=========================================
 ul {
   list-style: none !important;
   padding: 0;
 }
 a {
   text-decoration: none;
+  :hover {
+    opacity: 0.8;
+  }
 }
-.button {
+
+
+//2.基本クラス=========================================
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+.col-half {
+  width: 48%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+//3.共通コンポーネント==================================
+.body_content {
+  position: relative;
   width: 100%;
-  display: block;
-  text-align: center;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  font-size: 17px;
-  box-sizing: border-box;
 }
-.btn-submit {
-  color: #fff;
-  background: $user-main-color;
+body.erb_body {
+  margin: 0 !important;
+  height: 100vh;
 }
-.btn-cansel {
-  color: #fff;
-  background: gray;
+body.erb_body.add_padding_top {
+  padding-top: 0px;
+  position: relative;
 }
-a:hover {
-  opacity: 0.8;
-}
+
+
 .notice {
   background: #069456a6;
   color: white;
@@ -90,7 +93,45 @@ a:hover {
   position: absolute;
   top: 60px;
 }
+
+
+//4.共通パーツ=======================================
+.button {
+  width: 100%;
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  box-sizing: border-box;
+}
+.btn-submit {
+  color: #fff;
+}
+.btn-cansel {
+  color: #fff;
+  background: gray;
+}
+
+//5.複数ページ共通====================================
+.thankyou_email_container {
+  background: #eaeaea;
+  // height: 100vh;
+  padding: 50px;
+}
+
+
+
+
+
+
+
+
+//6.form関連========================================
 .form-group {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   margin-bottom: 18px;
 }
@@ -105,6 +146,7 @@ a:hover {
 .form-group textarea {
   border-radius: 10px;
   box-sizing: border-box;
+  background: #f9f9f9;
 }
 .form-group.button {
   margin-top: 30px;
@@ -114,33 +156,21 @@ form label {
   color: #8a8a8a;
   font-weight: bold;
 }
+.form_btns {
+  margin: 50px 0;
+}
+// form関連====================終わり====================
 
 .child_position_center {
   display: flex;
   justify-content: center;
 }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-  /* width: 100%; */
-}
-.col-half {
-  width: 48%;
-}
 
-.hidden {
-  display: none !important;
-}
 
-.form_btns {
-  margin: 50px 0;
-}
-/*header************************************/
+//7.header========================================
 header.erb_header {
-  // background: linear-gradient(to right, #25d4c4, #0f9287);
-  // background: linear-gradient(to right, #25d4c4, #2bb560);
-  background: $user-main-color;
+  background: $user-main-color !important;
   padding: 0px;
   height: 60px;
   width: 100%;
@@ -191,8 +221,10 @@ img.header_avatar {
   background: #e4e4e4;
   margin-top: 3px;
 }
+//7.header====終わり====================================
 
-/* footer****************************/
+//8.footer========================================
+
 .footer_pc {
   background: #3e3e3e;
   padding: 20px 0px 15px;
@@ -232,6 +264,9 @@ img.header_avatar {
   color: #b9b9b9;
   font-weight: bold;
 }
+
+//8.footer====終わり====================================
+
 
 /*home************************************/
 .home_contents__top {
@@ -389,14 +424,12 @@ div#password_input_box {
   text-align: center;
 }
 
-/*user show************************************/
+//サイドバーありのUI************************************/
 .container.user_show.container-fluid {
   display: flex;
 }
 .user_show_side {
   width: 20%;
-  // background: #0f3a36;
-  background: #215234;
   padding: 20px 0 30px 30px;
 }
 .user_show_content {
@@ -416,8 +449,12 @@ div#password_input_box {
     color: #fff;
   }
 }
-.user_show_main_content {
-  padding: 40px 30px 50px 50px;
+
+.activity_index_top_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 15px;
 }
 .user_show_content_up {
   display: flex;
@@ -432,7 +469,6 @@ div#password_input_box {
   width: 60px;
   height: 60px;
   padding: 4px;
-  // background: linear-gradient(45deg, #2bb561, #7bff17);
   border-radius: 50%;
 }
 .user_show_avatar_box_inside {
@@ -483,14 +519,12 @@ img.user_avatar {
 .user_show_btn_box {
   padding-top: 10px;
   div a {
-    background: $user-main-color;
     padding: 8px 23px;
     color: #fff;
     font-weight: bold;
     border-radius: 30px;
     margin-top: 10px;
   }
-  // svg {margin-right: 5px;}
 }
 .user_show_content_down {
   margin: 0px 0;
@@ -523,13 +557,6 @@ img.user_avatar {
   width: 150px;
   height: 150px;
 }
-// .user_edit_image_box_inside {
-//   width: 100%;
-//   height: 100%;
-//   padding: 4px;
-//   background: linear-gradient(45deg, #2bb561, #7bff17);
-//   border-radius: 50%;
-// }
 .user_edit_image_box_inside img {
   background: #fff;
   border-radius: 50%;
@@ -563,7 +590,6 @@ span#user_edit_image_upload_btn {
 }
 .no_show_profile_input_box {
   padding: 20px 10px 5px;
-  /* width: 100%; */
   background: lightgray;
   margin-bottom: 20px;
 }
@@ -603,135 +629,6 @@ span.form_supplement {
   color: #8a8a8a;
   margin-left: 6px;
   font-weight: bold;
-}
-/*project index************************************/
-.project_index_container {
-  width: 80%;
-}
-.project_index_container_innner {
-  padding: 20px 50px 50px 40px;
-}
-.page_title_box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.btn_box a {
-  color: #fff;
-  background: $user-main-color;
-  border-radius: 6px;
-  padding: 10px 20px;
-}
-.page_list_box {
-  margin: 20px 0 80px;
-}
-.page_list_item_box .title_box {
-  border-bottom: solid 3px #2bb56169;
-  padding: 4px 10px;
-  /* margin-top: 20px; */
-}
-.page_list_item_box {
-  margin: 10px 0 60px;
-}
-.item_box ul {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.item_box li {
-  width: 120px;
-  height: 120px;
-  border: solid 1px lightgray;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  margin: 6px;
-  border-radius: 5px;
-}
-/*project new************************************/
-.form_title {
-  padding: 20px 15px 0;
-}
-.form_title h3 {
-  margin-bottom: 0;
-}
-
-.user_show_info_items_box {
-    width: 75%;
-    padding: 20px 15px;
-}
-
-.date_pick_box {
-  width: 48%;
-}
-.page_title_padding {
-  margin-bottom: 55px;
-  margin-top: 0;
-}
-
-.invite_member_box {
-  margin: 30px 0;
-  // padding: 13px 5px;
-  background: #eaeaea;
-  border-radius: 6px;
-}
-.invite_member_box span {
-  font-size: 12px;
-  color: gray;
-  font-weight: bold;
-  padding-left: 5px;
-  margin-top: 13px;
-  margin-bottom: 3px;
-  display: flex;
-}
-.invite_member_box input:nth-child(1) {
-  margin-bottom: 15px;
-}
-.form_inner_form_box {
-  padding: 5px 14px 25px;
-}
-
-.form_inner_form_title {
-  padding: 10px 14px 0;
-  color: gray;
-}
-
-/*project show************************************/
-.info_list_box_title {
-  margin-bottom: 13px;
-}
-.project_members_box {
-  margin: 40px 0;
-}
-
-table.project_members_list {
-  width: 100%;
-  text-align: left;
-  font-size: 14px;
-}
-table.project_members_list tr th,
-table.project_members_list tr td {
-  padding: 0 5px;
-  font-size: 11px;
-}
-table.project_members_list th:nth-child(1) {
-  width: 25%;
-}
-
-table.project_members_list th:nth-child(2) {
-  width: 55%;
-}
-table.project_members_list th:nth-child(3) {
-  width: 20%;
-}
-a.member_delete_btn {
-  background: #da5353;
-  padding: 5px 8px;
-  border-radius: 5px;
-  font-size: 12px;
-  color: #fff;
-  font-weight: bold;
-  /* margin-right: 0px; */
 }
 
 /************************************************************
@@ -785,6 +682,7 @@ a.member_delete_btn {
       transform: translateX(0);
     }
   }
+
   .menu_inside {
     width: 70%;
     background: #0f1d16f7;
@@ -831,10 +729,7 @@ a.member_delete_btn {
   }
 
   /*ヘッダーサイドメニュー終わり*/
-  .body_content {
-    width: 100%;
-    // height: 100vh;
-  }
+
   .sign_up_in_page {
     width: 100%;
     display: block;
@@ -891,6 +786,13 @@ a.member_delete_btn {
   }
 }
 
+/************************************************************
+*************************************************************
+***** スマホ用CSS***********終わり***********************************
+*************************************************************
+*************************************************************/
+
+
 /**admin********************/
 .for_admin_page_container {
   padding: 10px 15% 50px;
@@ -930,4 +832,67 @@ table th {
 
 table td {
   padding: 5px;
+}
+
+// サイドバーがあるformの基本構造
+//supplier=>体験,事業者登録,体験事業登録
+.activity_index_activity_list_box form {
+  display: flex;
+}
+.activity_index_top_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 15px;
+}
+.activity_index_top_box h3 {
+  margin-bottom: 0;
+  font-weight: normal;
+  color: #4c4c4c;
+}
+.form_big_title {
+  margin-bottom: 25px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form_big_title h3 {
+  margin: 0px 0 0px;
+  padding: 5px 20px;
+  width: 180px;
+  text-align: center;
+  background: #4c4c4c;
+  border-radius: 50px;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+
+.form_btns_box {
+  width: 25%;
+  padding: 20px 10px 20px 10px;
+  margin-right: 10px;
+}
+#form_btns {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px;
+  background: #fff;
+  height: 180px;
+  padding: 10px 10px;
+  border-radius: 7px;
+  box-shadow: 0px 0px 7px -1px #b7b7b7;
+}
+.activity_index_top_box a.add_btn {
+  background: #2bb561;
+  padding: 5px 15px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+}
+li.activity_list_item {
+  padding: 10px 0;
+  border-bottom: solid 1px #dfdfdf;
+  border-top: solid 1px #dfdfdf;
 }

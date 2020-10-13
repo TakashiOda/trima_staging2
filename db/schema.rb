@@ -252,7 +252,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.date "end_date"
     t.string "start_place"
     t.string "end_place"
-    t.string "icon", default: "icon1"
+    t.string "icon", default: "project_icon-01"
   end
 
   create_table "supplier_profiles", force: :cascade do |t|

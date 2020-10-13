@@ -1,66 +1,54 @@
-<%= stylesheet_link_tag 'suppliers' %>
-<div class="container user_show container-fluid">
-  <div class="user_show_side">
-    <%= render 'suppliers/supplier_page_front_sidebar' %>
+<div class="supplier_activity_page_top">
+  <div class="activity_index_top_box">
+    <h3>十勝ラフティングアドベンチャー</h3>
+    <%= link_to "体験を追加", new_supplier_activity_path(current_supplier), class: "add_btn" %>
   </div>
-  <div class="supplier_show_main_content"><!--メインコンテンツ-->
-    <div class="supplier_show_content_inside"><!--メインコンテンツ内部-->
-      <div class="supplier_activity_page_top">
-        <div class="activity_index_top_box">
-          <h3>十勝ラフティングアドベンチャー</h3>
-          <%= link_to "体験を追加", new_supplier_activity_path(current_supplier), class: "add_btn" %>
-        </div>
-        <div class="activity_index_activity_list_box">
-          <h3>体験一覧</h3>
-          <ul class="activity_list_items">
-            <% if !@activities.nil? %>
-              <% @activities.each do |activity|%>
-                <%= link_to edit_supplier_activity_path(current_supplier, activity), class: "link" do %>
-                  <li class="activity_list_item">
-                    <div class="activity_list_item_front">
-                      <div class="activity_list_item_fron_image">
-                        <% if !activity.main_image.blank? %>
-                          <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
-                        <% elsif !activity.second_image.blank? %>
-                          <%= image_tag activity.second_image.to_s, class: 'activity_icon_image' %>
-                        <% elsif !activity.third_image.blank? %>
-                          <%= image_tag activity.third_image.to_s, class: 'activity_icon_image' %>
-                        <% elsif !activity.fourth_image.blank? %>
-                          <%= image_tag activity.fourth_image.to_s, class: 'activity_icon_image' %>
-                        <% end %>
-                      </div>
-                      <div class="activity_list_item_fron_info">
-                        <%= activity.name %><br>
-                        <% if activity.is_all_year_open %>
-                          <div class="activity_index_detail_info">期間：通年のアクティビティ</div>
-                        <% else %>
-                          <div class="activity_index_detail_info">期間：<%= activity.start_date.strftime("%Y年%m月%d日") %>〜<%= activity.end_date.strftime("%Y年%m月%d日") %></div>
-                        <% end %>
-                        <div class="activity_index_detail_info">大人通常料金：<%= activity.normal_adult_price %>円</div>
-                      </div>
-                    </div>
-                    <div class="activity_list_item_back">
-                      <% if activity.activity_courses.any? && activity.activity_courses.first.activity_stocks.any? %>
-                        <%= link_to "在庫を編集", supplier_activity_edit_stocks_first_month_path(current_supplier, activity)%>
-                      <% else %>
-                        <%= link_to "在庫を作成", supplier_activity_new_stocks_first_month_path(current_supplier, activity)%>
-                      <% end %>
-                    </div>
-                  </li>
+  <div class="activity_index_activity_list_box">
+    <h3>体験一覧</h3>
+    <ul class="activity_list_items">
+      <% if !@activities.nil? %>
+        <% @activities.each do |activity|%>
+          <%= link_to edit_supplier_activity_path(current_supplier, activity), class: "link" do %>
+            <li class="activity_list_item">
+              <div class="activity_list_item_front">
+                <div class="activity_list_item_fron_image">
+                  <% if !activity.main_image.blank? %>
+                    <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
+                  <% elsif !activity.second_image.blank? %>
+                    <%= image_tag activity.second_image.to_s, class: 'activity_icon_image' %>
+                  <% elsif !activity.third_image.blank? %>
+                    <%= image_tag activity.third_image.to_s, class: 'activity_icon_image' %>
+                  <% elsif !activity.fourth_image.blank? %>
+                    <%= image_tag activity.fourth_image.to_s, class: 'activity_icon_image' %>
+                  <% end %>
+                </div>
+                <div class="activity_list_item_fron_info">
+                  <%= activity.name %><br>
+                  <% if activity.is_all_year_open %>
+                    <div class="activity_index_detail_info">期間：通年のアクティビティ</div>
+                  <% else %>
+                    <div class="activity_index_detail_info">期間：<%= activity.start_date.strftime("%Y年%m月%d日") %>〜<%= activity.end_date.strftime("%Y年%m月%d日") %></div>
+                  <% end %>
+                  <div class="activity_index_detail_info">大人通常料金：<%= activity.normal_adult_price %>円</div>
+                </div>
+              </div>
+              <div class="activity_list_item_back">
+                <% if activity.activity_courses.any? && activity.activity_courses.first.activity_stocks.any? %>
+                  <%= link_to "在庫を編集", supplier_activity_edit_stocks_first_month_path(current_supplier, activity)%>
+                <% else %>
+                  <%= link_to "在庫を作成", supplier_activity_new_stocks_first_month_path(current_supplier, activity)%>
                 <% end %>
-              <% end %>
-            <% else %>
-              <li class="activity_list_item">
-                <span>体験が登録されていません</span>
-              </li>
-            <% end %>
-          </ul>
-
-        </div>
-
-      </div>
-    </div><!--メインコンテンツ内部-->
-  </div><!--メインコンテンツ-->
+              </div>
+            </li>
+          <% end %>
+        <% end %>
+      <% else %>
+        <li class="activity_list_item">
+          <span>体験が登録されていません</span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
 
 <style>

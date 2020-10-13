@@ -1,29 +1,18 @@
-// Place all the styles related to the suppliers controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
-
 $user-main-color: #0068b7; //ヘッダーに適用・コバルトブルー
 $user-main-light-color: #23a0ff;; //ラジオやチェックボックスに適用
 $user-main-dark-color: #192f60; //サイドバーに適用・プルシャンブルー
 
-
+// 事業者の色が関係する部分============================================
 header.erb_header {
   background: $user-main-color !important;
-  padding: 0px;
-  height: 60px;
-  width: 100%;
-  z-index: 100;
 }
 
 .btn-submit {
-  color: #fff;
   background: $user-main-color !important;
 }
 
 .user_show_side {
-  width: 20%;
   background: $user-main-dark-color !important;
-  padding: 20px 0 30px 30px;
 }
 
 .activity_index_top_box a.add_btn {
@@ -32,4 +21,619 @@ header.erb_header {
 
 a.org_edit_btn {
   background: $user-main-color !important;
+}
+
+// 事業者thankyou メール===========================
+
+.static_pages.short_messages_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto 0px;
+  padding: 30px 0px;
+  width: 90vw;
+  min-width: 320px;
+  max-width: 490px;
+  background: #fff;
+  border-radius: 20px;
+}
+.short_messages_box_title {
+  margin-bottom: 20px;
+  font-size: 18px;
+  padding-bottom: 7px;
+  font-weight: bold;
+}
+.notice {
+  display: none !important;
+}
+// 事業者thankyou メール=======================終わり=======
+
+
+// Supplier Show==============================
+.supplier_show_content_inside {
+  padding: 20px 20px;
+}
+.activity_business_info_box,
+.supplier_info_box {
+  border: solid 1px lightgray;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  background: #fff;
+  box-shadow: 0px 0px 5px -2px grey;
+}
+.supplier_profile_box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.supplier_name {
+  margin-left: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.supplier_business_box {
+  margin-bottom: 70px;
+}
+
+table.info_list_table {
+  width: 100%;
+  font-size: 11px;
+}
+table.info_list_table tr .td_front {
+  width: 20%;
+}
+
+.info_list_box_title {
+  display: flex;
+  margin-bottom: 0px;
+  justify-content: space-between;
+}
+
+div#supplier_info_contents {
+    margin: 20px 0;
+}
+.info_list_box_title_btn {
+  text-align: center;
+}
+.info_list_box_title_btn div svg {
+  color: gray;
+  margin: 0;
+  width: 100px !important;
+  height: 20px;
+  cursor: pointer;
+}
+table.supplier_business_items {
+  font-size: 12px;
+  width: 100%;
+}
+table.supplier_business_items td.supplier_business_items_td1 {
+  width: 5%;
+  font-size: 10px;
+  padding: 5px;
+  text-align: center;
+}
+table.supplier_business_items td.supplier_business_items_td2 {
+  width: 8%;
+}
+table.supplier_business_items td.supplier_business_items_td3 {
+  width: 72%;
+}
+table.supplier_business_items td.supplier_business_items_td4 {
+  width: 15%;
+  text-align: end;
+}
+table.supplier_business_items td.supplier_business_items_blank_td2 {
+  width: 85%;
+}
+table.supplier_business_items td.supplier_business_items_blank_td3 {
+  width: 10%;
+}
+td.supplier_business_items_td2 div {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #17a599;
+  border-radius: 50%;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+}
+a.org_edit_btn {
+  background: #e6e6e6 !important;
+  padding: 7px 13px;
+  font-size: 11px;
+  color: #656565;
+  border-radius: 3px;
+}
+a.member_delete_btn.edit {
+  background: #2bb560;
+}
+.info_list_box_contents {
+  padding: 0 3px;
+}
+.add_new_org_box {
+  display: flex;
+  justify-content: space-between;
+}
+img.business_icon_image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.supplier_show_guide_items {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+}
+.supplier_show_guide_item_box {
+  height: 70px;
+  display: flex;
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  align-items: center;
+}
+.supplier_show_guide_item_box__name {
+  font-size: 15px;
+  padding-left: 15px;
+}
+
+// 事業者 体験============================================
+
+
+#user_edit_image_upload_btn:hover {
+  cursor: pointer;
+}
+.activity_season_input_box,
+.activity_openday_input_box {
+  display: flex;
+  flex-wrap: wrap;
+}
+.activity_season_input_box .form-group {
+  display: flex;
+  margin-bottom: 0px;
+  width: 16.6%;
+}
+
+.activity_openday_input_box .form-group {
+  margin-bottom: 0px;
+  width: 14.28%;
+}
+.activity_season_input_box input[type=checkbox],
+.activity_openday_input_box input[type=checkbox] {
+  display: none;
+}
+.activity_openday_input_box input[type="checkbox"]:checked + label {
+  background: #22a0ff;
+  color: #ffffff;
+}
+.activity_season_input_box input[type="checkbox"]:checked + label {
+  background: #22a0ff;
+  color: #ffffff;
+}
+
+
+.activity_season_input_box label,
+.activity_openday_input_box label {
+  padding: 5px 10px;
+  text-align: center;
+  background: #e8e8e8;
+  user-select: none;
+  width: 100%;
+}
+.activity_season_input_box label:hover,
+.activity_openday_input_box label:hover {
+  background: #22a0ff52;
+  color: #fff;
+}
+label.first_check_label {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+label.last_check_label {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.top_left_check_label {border-top-left-radius: 6px;}
+.top_right_check_label {border-top-right-radius: 6px;}
+.bottom_left_check_label {border-bottom-left-radius: 6px;}
+.bottom_right_check_label {border-bottom-right-radius: 6px;}
+.form-group.time_input input {
+  width: 60px;
+  border-radius: 6px;
+}
+
+#add_course_btn {
+  border: solid 1px #fff;
+  background: #ececec;
+  color: #656565;
+  padding: 3px 20px;
+  border-radius: 50px;
+  width: 160px;
+  text-align: center;
+  user-select:none;
+}
+#add_course_btn:hover {
+  cursor: pointer;
+  background: #d8d8d8;
+}
+#add_course_btn svg {
+  color: #7b7b7b;
+}
+div#courses .nested-fields .form-group {
+  align-items: center;
+  margin-bottom: 6px;
+}
+a.remove_course_btn {
+  background: #ef6c6c;
+  color: #fff;
+  border-radius: 93px;
+  padding: 3px 0;
+  font-size: 12px;
+}
+a.remove_course_btn span {
+  padding: 0px 9px 0px 10px;
+}
+.course_table_head {
+  display: flex;
+  background: gainsboro;
+  color: #fff;
+  font-size: 14px;
+}
+.course_row1 {
+  width: 60%;
+}
+
+.course_row2 {
+  width: 40%;
+  text-align: right;
+  padding-right: 10px;
+}
+select.time_input {
+  width: 70px;
+  margin: 4px 5px 0px;
+  height: 40px;
+  padding: 5px 10px;
+}
+.course_row2.time_select {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+.links {
+  text-align: center;
+  background: gainsboro;
+  margin: 10px 30%;
+  padding: 2px;
+  border-radius: 40px;
+  font-size: 14px;
+  /* color: #fff; */
+}
+.links a {
+  color: #777777;
+  display: block;
+  user-select: none;
+}
+
+.links:hover {
+  background: #b7b7b7;
+}
+a.disable {
+  pointer-events: none;
+}
+.ageprice_table_head {
+  display: flex;
+  align-items: center;
+  background: gainsboro;
+  color: #fff;
+  font-size: 10px;
+  width: 100%;
+}
+
+.ageprice_row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+.ageprice_row input {
+  padding: 8px 8px;
+  text-align: right;
+}
+.nested-fields {
+  display: flex;
+  align-items: center;
+}
+.agefrom, .ageto {
+  width: 13%;
+  padding: 0 0.5%;
+}
+
+.fromsign {
+  display: flex;
+  align-items: flex-end;
+  width: 3%;
+  padding: 0.5%;
+  font-size: 11px;
+}
+.normal_price,
+.season_price {
+  width: 18%;
+  padding-left: 2%;
+}
+.season_price_inner {
+  display: flex;
+  align-items: flex-end;
+}
+
+span.ageprice_unit {
+  font-size: 10px;
+  font-weight: bold;
+  color: gray;
+  padding: 0 0 1% 1%;
+}
+span.seasonal_price {
+  font-size: 12px;
+  color: #a2a2a2;
+}
+
+.row_delete {
+  width: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+a.remove_ageprice_btn {
+    padding: 5px;
+    font-size: 14px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+a.remove_ageprice_btn svg {
+  width:100%;
+  margin: 0;
+  color: #ef6c6c;
+}
+div#ageprice div.nested-fields:first-child div.ageto input,
+div#ageprice div.nested-fields:first-child div.ageto span {
+  display: none;
+}
+.form-group.season_price_radio_box {
+  flex-direction: column;
+}
+
+
+.season_price_radio_box_inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 90px;
+  padding: 0 10px;
+}
+.form-group.season_price_radio_box label:first-child {
+  margin-right: 20px;
+}
+.season_price_radio_items {
+  display: flex;
+  width: 30%;
+}
+.season_price_radio_items input[type=radio],
+.season_price_radio_items input[type=radio] {
+  display: none;
+}
+.season_price_radio_items label {
+  background: gainsboro;
+  padding: 3px 12px;
+  user-select: none;
+}
+.season_price_radio_item.on label {
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+.season_price_radio_item.off label {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.season_price_radio_items input[type="radio"]:checked + label {
+  background: #23a0ff;
+  color: #ffffff;
+}
+input.date_select {
+  font-size: 13px;
+}
+
+@media screen and (max-width: 787px) {
+  .season_price_radio_box_inner {
+    flex-direction: column;
+    align-items: baseline;
+  }
+}
+
+.activity_activate_btn_box,
+.activity_delete_btn_box {
+  margin: 20px 5px;
+}
+.activate_btn_box div {
+  display: flex;
+  align-items: unset;
+}
+.activity_delete_btn_box svg {
+  color: #949494;
+  margin-right: 0px;
+}
+.activity_delete_btn_box a {
+  color: gray;
+}
+.activity_image_items {
+  display: flex;
+  margin-bottom: 0;
+}
+.activity_image_item {
+  width: 24%;
+  margin-right: 1%;
+  margin-bottom: 0;
+}
+.activity_image_box_inside:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.activity_image_box_inside img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.activity_image_delete_box ul {
+  display: flex;
+  width: 100%;
+  margin-top: 0;
+}
+.activity_image_delete_box ul li {
+  width: 24%;
+  margin-right: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#map {
+  height: 400px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+ul.activity_description_language_box_tab_list {
+  display: flex;
+}
+ul.activity_description_language_box_tab_list li {
+  padding: 8px 20px;
+  background: #eee;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  margin-right: 2px;
+}
+
+ul.activity_description_language_box_tab_list li:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+ul.activity_description_language_box_tab_list li.active {
+  background: #0068b6;
+}
+ul.activity_description_language_box_tab_list li span {
+  font-size: 13px;
+  color: gray;
+}
+ul.activity_description_language_box_tab_list li.active span {
+  font-size: 13px;
+  color: #fff;
+}
+
+// guides fields====================================
+.nested-fields {
+  display: flex;
+}
+.guide_item_left_box {
+  width: 25%;
+  padding-top: 10px;
+  max-width: 120px;
+}
+.guide_item_right_box {
+  width: 75%;
+  display: flex;
+}
+.guide_image_box_inside {
+  position: relative;
+}
+.guide_item_right_box_left {
+  width: 90%;
+}
+.guide_item_right_box_left .form-control {
+  width: 90%;
+}
+.guide_item_right_box_right {
+  width: 10%;
+  padding-top: 20px;
+}
+div.user_edit_image_upload_btn_box {
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 60px;
+}
+
+div#guides .nested-fields {
+  padding: 15px;
+}
+.guide_image_box_inside img {
+  background: #ffcbcb;
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+.guide_image_upload_btn {
+  display: none;
+}
+.user_edit_image_upload_btn_box svg{
+  background: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 9px;
+  border-radius: 50%;
+}
+
+// biz==============================
+#user_edit_image_upload_btn:hover {
+  cursor: pointer;
+}
+.form-group.manage_agent_input_box {
+  flex-wrap: wrap;
+}
+.form-group.manage_agent_input_box .form-group {
+  align-items: center;
+  margin-bottom: 5px;
+  width: 46%;
+}
+.form-group.manage_agent_input_box input[type=checkbox] {
+  width: 25px;
+  height: 30px;
+}
+.radio_item_box {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.radio_items {
+  display: flex
+}
+.delete_guide_btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffebeb;
+  border-radius: 7px;
+}
+.delete_guide_btn svg {
+    color: red;
+    margin: 0;
+}
+.links {
+  text-align: center;
+}
+.links a {
+  width: 150px;
+  padding: 5px 15px;
+  background: #0068b6;
+  color: #fff;
+  border-radius: 20px;
 }

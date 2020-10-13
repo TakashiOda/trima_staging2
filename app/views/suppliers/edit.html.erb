@@ -1,10 +1,4 @@
-<%= stylesheet_link_tag 'suppliers' %>
-<div class="container user_show container-fluid">
-  <div class="user_show_side col-2">
-    <%= render 'suppliers/supplier_page_front_sidebar' %>
-  </div>
   <div class="user_show_content col-8">
-    <!-- <form> -->
     <%= form_for(@supplier) do |form| %>
     <div class="user_show_content_down">
       <%= render 'layouts/error_messages', model: form.object %>
@@ -43,10 +37,7 @@
       </div>
     </div>
     <% end %>
-    <!-- </form> -->
   </div>
-</div>
-<!-- </div> -->
 
 <script>
   const selectElement = document.querySelector('#post_image');
@@ -55,17 +46,13 @@
   }
 
   document.getElementById('post_image').addEventListener('change', function (e) {
-    // 1枚だけ表示する
     const file = e.target.files[0];
-    // ファイルのブラウザ上でのURLを取得する
     const blobUrl = window.URL.createObjectURL(file);
-    // img要素に表示
     const post_img = document.getElementById('user_image_prev');
     post_img.src = blobUrl;
     post_img.classList.toggle("hidden");
     const before_img = document.getElementById('user_present_image');
     before_img.classList.toggle("hidden");
-    // before_img.classList.remove("user_present_image");
   });
 </script>
 

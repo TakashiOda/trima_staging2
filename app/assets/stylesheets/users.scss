@@ -1,3 +1,400 @@
-// Place all the styles related to the Users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+$user-main-color: #33cc99; //ヘッダーに適用・コバルトブルー
+$user-main-light-color: #23a0ff;; //ラジオやチェックボックスに適用
+$user-main-dark-color: #215234; //サイドバーに適用・プルシャンブルー
+
+
+header.erb_header {
+  background: $user-main-color !important;
+}
+
+.btn-submit {
+  background: $user-main-color !important;
+}
+
+.user_show_side {
+  background: $user-main-dark-color !important;
+}
+
+.activity_index_top_box a.add_btn {
+  background: $user-main-color !important;
+}
+
+a.org_edit_btn {
+  background: $user-main-color !important;
+}
+
+.user_show_btn_box {
+  div a {
+    background: $user-main-color;
+  }
+}
+
+
+.btn_box a {
+  background: $user-main-color;
+}
+
+
+//Project Index========================================
+/*project index************************************/
+.project_index_container {
+  width: 80%;
+}
+.project_index_container_innner {
+  padding: 20px 50px 50px 40px;
+}
+.page_title_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btn_box a {
+  color: #fff;
+  border-radius: 6px;
+  padding: 10px 20px;
+}
+.page_list_box {
+  margin: 20px 0 80px;
+}
+.page_list_item_box .title_box {
+  border-bottom: solid 3px #2bb56169;
+  padding: 4px 10px;
+  /* margin-top: 20px; */
+}
+.page_list_item_box {
+  margin: 10px 0 60px;
+}
+.item_box ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.item_box li {
+  width: 120px;
+  height: 120px;
+  border: solid 1px lightgray;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 6px;
+  border-radius: 5px;
+}
+/*project new************************************/
+section.form_section {
+  background: #fff;
+  padding: 20px 30px;
+  margin-bottom: 20px;
+  border-radius: 7px;
+  box-shadow: 0px 0px 7px -1px #b7b7b7;
+}
+.activity_index_top_box h3 {
+  margin-bottom: 0;
+  font-weight: normal;
+  color: #4c4c4c;
+}
+.form_title {
+  padding: 20px 15px 0;
+}
+.form_title h3 {
+  margin-bottom: 0;
+}
+.form_big_title_questionIcon.baseInfo,
+.form_big_title_questionIcon.placeInfo,
+.form_big_title_questionIcon.scheduleInfo,
+.form_big_title_questionIcon.inviteFriends,
+ {
+  position: relative;
+}
+.form_big_title_questionIcon.baseInfo svg,
+.form_big_title_questionIcon.placeInfo svg,
+.form_big_title_questionIcon.scheduleInfo svg,
+.form_big_title_questionIcon.inviteFriends svg,
+{
+  color: #1bb0e0;
+  width: 20px !important;
+  height: 20px;
+}
+.fukidashi {
+  display: none;
+  width: 200px;
+  position: absolute;
+  bottom: 30px;
+  right: -100px;
+  z-index: 100;
+  padding: 16px;
+  border-radius: 5px;
+  background: #9e9e9e7a;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+}
+.fukidashi:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: auto;
+  right: auto;
+  bottom: -20px;
+  margin-left: 10px;
+  border: solid transparent;
+  border-color: rgba(51, 204, 153, 0);
+  border-top-color: #9e9e9e7a;
+  border-width: 10px;
+  pointer-events: none;
+  content: " ";
+}
+.form_big_title_questionIcon.baseInfo svg:hover + .fukidashi_baseInfo {
+  display: block;
+}
+.form_big_title_questionIcon.placeInfo svg:hover + .fukidashi_placeInfo {
+  display: block;
+}
+.form_big_title_questionIcon.scheduleInfo svg:hover + .fukidashi_scheduleInfo {
+  display: block;
+}
+.form_big_title_questionIcon.inviteFriends svg:hover + .fukidashi_inviteFriends {
+  display: block;
+}
+
+.user_show_info_items_box {
+  width: 75%;
+  padding: 20px 15px;
+}
+
+.date_pick_box {
+  width: 48%;
+}
+.page_title_padding {
+  margin-bottom: 55px;
+  margin-top: 0;
+}
+
+.invite_member_box {
+  margin: 30px 0;
+  border-radius: 6px;
+}
+.invite_member_box span {
+  font-size: 12px;
+  color: gray;
+  font-weight: bold;
+  padding-left: 5px;
+  margin-top: 13px;
+  margin-bottom: 3px;
+  display: flex;
+}
+.invite_member_box input:nth-child(1) {
+  margin-bottom: 15px;
+}
+.form_inner_form_box {
+  padding: 5px 14px 25px;
+}
+
+.form_inner_form_title {
+  padding: 10px 14px 0;
+  color: gray;
+}
+
+/*project show************************************/
+.info_list_box_title {
+  margin-bottom: 13px;
+}
+.project_members_box {
+  margin: 40px 0;
+}
+
+table.project_members_list {
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+}
+table.project_members_list tr th,
+table.project_members_list tr td {
+  padding: 0 5px;
+  font-size: 11px;
+}
+table.project_members_list th:nth-child(1) {
+  width: 25%;
+}
+
+table.project_members_list th:nth-child(2) {
+  width: 55%;
+}
+table.project_members_list th:nth-child(3) {
+  width: 20%;
+}
+a.member_delete_btn {
+  background: #da5353;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: bold;
+  /* margin-right: 0px; */
+}
+
+.item_box li {
+  width: 120px;
+  height: 120px;
+  border: none;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  margin: 6px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px -1px grey;
+}
+.item_box li a {
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+.project_title {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+}
+.item_box li img {
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+}
+
+
+//Project Form==============================================
+.project_icon_radio_box {
+  display: flex;
+  flex-wrap: wrap;
+}
+.project_icon_radio_box label {
+  width: 10%;
+  min-width: 57px;
+  opacity: 0.5;
+}
+.project_icon_radio_box input[type="radio"]:checked + label {
+  opacity: 1;
+}
+.project_icon_radio_box img {
+  width: 90%;
+  border-radius: 7px;
+  margin: 5px;
+}
+.project_icon_radio_box img:hover {
+  opacity: 0.9;
+}
+.project_area_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.project_area_row select {
+  width: 90%;
+}
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+.links a.add_fields {
+  background: #2bb560;
+  color: #fff;
+  padding: 3px 15px;
+  border-radius: 30px;
+}
+
+//trip manager sidebar==============================================
+.trip_manage_side {
+  width: 20%;
+  background: #215234;
+  padding: 20px 0 30px  15px;
+}
+.trip_manage_side_back_link a {
+  /* margin-right: 7px; */
+  color: #fff;
+}
+.trip_manage_side_back_link svg {
+  margin-right: 7px;
+  color: #fff;
+}
+.trip_manage_side_links {
+  padding-left: 15px;
+  margin-bottom: 30px;
+}
+.trip_manage_side_links h3 {
+  display: flex;
+  align-items: center;
+}
+.trip_manage_side_links img {
+  width: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.trip_manage_side_links svg {
+  color: #fff;
+  margin-right: 12px;
+}
+.trip_manage_side_links li a{
+  font-size: 17px;
+  color: #fff;
+}
+.trip_project_profile_box {
+  /* width: 100%; */
+  margin-right: 15px;
+  background: #ffffffc7;
+  font-size: 12px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: solid 1px #fff;
+}
+.trip_project_profile_box_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.trip_project_profile_box_title_text {
+  font-size: 16px;
+  font-weight: bold;
+  color: gray;
+}
+.trip_profile_edit_btn_box a {
+  color: #fff;
+  background: #ababab;
+  border-radius: 5px;
+  padding: 6px 8px;
+}
+
+.trip_profile_schedule_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+span.trip_profile_schedule_item_title {
+  background: #2bb560;
+  padding: 3px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  border-radius: 5px;
+  color: #fff;
+  margin-right: 5px;
+}
+.trip_profile_schedule_item svg {
+  margin-right: 5px;
+}
+li.trip_manager_side_area_item {
+  background: #ababab;
+  padding: 2px 15px;
+  width: fit-content;
+  border-radius: 15px;
+  color: #fff;
+}
+//trip manager sidebar======================終わり========================
