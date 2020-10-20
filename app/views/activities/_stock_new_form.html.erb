@@ -1,309 +1,100 @@
 <div class="stock_form">
   <%= form_for [current_supplier, @activity] do |f| %>
-    <div class="stock_table_header">
-      <div class="stock_table_th date_column">日付</div>
-      <% @activity.activity_courses.each do |ac_course| %>
-        <div class="stock_table_th course_column">
-          <%= ac_course.start_time.strftime("%H:%M") + "〜"  %>
-        </div>
-      <% end %>
-    </div>
-    <div class="all_input_container">
-      <div class="date_column_allset">
-        <div class="date_item_allset">一括設定</div>
+    <div class="stock_form_btn_box">
+      <div class="stock_form_btn_box_inner">
+        <%= f.submit('作成',class: 'button btn-submit stock_submit') %>
       </div>
-      <div class="all_input_stock">
-        <% @activity.activity_courses.each_with_index do |ac_course, i| %>
-          <div class="all_stock_input_box">
-            <div class="all_stock_input">
-              <%= number_field_tag :all_stock, value = @activity.maximum_num, options = { min: 0, max: 10, class: 'form-control' }%>
-              <button type="button" onclick="changeAllofColumnStock(this)" class="form-control" id="<%=i%>">設定</button>
-            </div>
-            <% if @activity.activity_courses.count == i+1 && @activity.has_season_price %>
-              <div class="season_input_box">
-                <%= select_tag 'all_season_price', options_for_select({'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'}, 1), include_blank: false, class: 'form-control' %>
-                <button type="button" onclick="changeAllofColumnSeason(this)" class="form-control">設定</button>
-              </div>
-            <% end %>
+    </div>
+    <div class="activity_stock_form_main_content">
+      <div class="activity_index_top_box">
+        <h3>在庫情報を作成</h3>
+      </div>
+      <div class="stock_form_tab_and_submit">
+        <%= render 'month_tab_new' %>
+      </div>
+      <div class="stock_table_header">
+        <div class="stock_table_th date_column">日付</div>
+        <% @activity.activity_courses.each_with_index do |ac_course, index| %>
+          <div class="stock_table_th course_column">
+            <span style="font-size: 10px;"><%= "コース#{index + 1}" %></span><br/>
+            <%= ac_course.start_time.strftime("%H:%M") + "〜"  %>
           </div>
         <% end %>
       </div>
-    </div>
-    <div class="field">
-      <div class="date_list date_column">
-        <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
-        <% (@s_Date..@e_Date).each do |date| %>
-          <% if @days_of_open.include?(date.wday) %>
-            <div class="date_item <%= wd[date.wday] == "土" ? "saturday" : wd[date.wday] == "日" ? "sunday" : ""%>"><%= date.strftime("%Y年%m月%d日(#{wd[date.wday]})")%></div>
-          <% else %>
-            <div class="date_item">定休日</div>
-          <% end %>
-        <% end %>
-      </div>
-      <div class="stock_items">
-      <%= f.fields_for :activity_courses do |course| %>
-        <div class="course_stock_column course_column">
-          <%= course.fields_for :activity_stocks do |stock| %>
-            <div class="form-group activity_stock_input_box" style="margin-bottom: 0;">
-              <%= stock.hidden_field :activity_id, value: @activity.id %>
-              <%= stock.hidden_field :date, :value => @dates[stock.index] %>
-              <% if @days_of_open.include?(@dates[stock.index].wday) %>
-                <div class="stock_input_box">
-                  <%= stock.number_field :stock, class: 'form-control' %>
+      <div class="all_input_container">
+        <div class="date_column_allset">
+          <div class="date_item_allset">コース別一括設定</div>
+        </div>
+        <div class="all_input_stock">
+          <% @activity.activity_courses.each_with_index do |ac_course, i| %>
+            <div class="all_stock_input_box">
+              <div class="all_stock_input">
+                <%= number_field_tag :all_stock, value = @activity.maximum_num, options = { min: 0, max: 10, class: 'form-control' }%>
+                <button type="button" onclick="changeAllofColumnStock(this)" class="form-control" id="<%=i%>">設定</button>
+              </div>
+              <% if @activity.activity_courses.count == i+1 && @activity.has_season_price %>
+                <div class="season_input_box">
+                  <%= select_tag 'all_season_price', options_for_select({'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'}, 1), include_blank: false, class: 'form-control' %>
+                  <button type="button" onclick="changeAllofColumnSeason(this)" class="form-control">設定</button>
                 </div>
-                <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price %>
-                  <div class="season_input_box <%= stock.index %>">
-                    <%= stock.select :season_price,
-                      {'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'},
-                      {}, {onChange: 'changeSeasonPrice(this)', class: 'form-control'} %>
-                  </div>
-                <% else %>
-                  <div class="season_input_box <%= stock.index %>">
-                    <%= stock.hidden_field :season_price, value: "normal" %>
-                  </div>
-                <% end %>
-              <% else %>
-                <div class="stock_input_box">
-                  <input type="text" name="" value="" class="form-control stock_is_close" disabled="disabled" >
-                  <%= stock.hidden_field :stock, value: @activity.maximum_num %>
-                </div>
-                <%= stock.hidden_field :season_price, value: "通常料金" %>
               <% end %>
             </div>
           <% end %>
         </div>
-      <% end %>
+      </div>
+      <div class="field">
+        <div class="date_list date_column">
+          <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
+          <% (@s_Date..@e_Date).each do |date| %>
+            <% if @days_of_open.include?(date.wday) %>
+              <div class="date_item <%= wd[date.wday] == "土" ? "saturday" : wd[date.wday] == "日" ? "sunday" : ""%>"><%= date.strftime("%Y年%m月%d日(#{wd[date.wday]})")%></div>
+            <% else %>
+              <div class="date_item">定休日</div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="stock_items">
+        <%= f.fields_for :activity_courses do |course| %>
+          <div class="course_stock_column course_column">
+            <%= course.fields_for :activity_stocks do |stock| %>
+              <div class="form-group activity_stock_input_box" style="margin-bottom: 0;">
+                <%= stock.hidden_field :activity_id, value: @activity.id %>
+                <%= stock.hidden_field :date, :value => @dates[stock.index] %>
+                <% if @days_of_open.include?(@dates[stock.index].wday) %>
+                  <div class="stock_input_box">
+                    <%= stock.number_field :stock, max: @activity.maximum_num, class: 'form-control' %>
+                  </div>
+                  <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price %>
+                    <div class="season_input_box <%= stock.index %>">
+                      <%= stock.select :season_price,
+                        {'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'},
+                        {}, {onChange: 'changeSeasonPrice(this)', class: 'form-control'} %>
+                    </div>
+                  <% else %>
+                    <div class="season_input_box <%= stock.index %>">
+                      <%= stock.hidden_field :season_price %>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <div class="stock_input_box">
+                    <input type="text" name="" value="" class="form-control stock_is_close" disabled="disabled" >
+                    <%= stock.hidden_field :stock %>
+                  </div>
+                  <%= stock.hidden_field :season_price %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        </div>
       </div>
     </div>
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+    <!-- <div class="actions">
+      <%#= f.submit, "更新", class: "button btn-submit" %>
+      <%#= f.submit('更新',class: 'button btn-submit') %>
+    </div> -->
   <% end %>
 </div>
-
-
-<style lang="scss">
-  .stock_form {
-    padding: 10px;
-    margin-top: 30px;
-  }
-  .stock_table_header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-  }
-  .field {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-  }
-  .course_stock_column,
-  .date_list {
-    display: flex;
-    flex-direction: column;
-  }
-  .date_column {
-    width: 160px;
-    /* padding-right: 10px; */
-    text-align: center;
-  }
-  .course_column {
-    /* width: 100px; */
-  }
-  .activity_stock_input_box {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    height: 35px;
-    border-bottom: solid 1px lightgray;
-  }
-  .is_high_season {
-    background: #ff8a8a;
-  }
-  .is_low_season {
-    background: #4e9bc7;
-  }
-  .stock_table_th.date_column {
-    /* text-align: center; */
-    width: 160px;
-    /* padding-right: 10px; */
-  }
-  .stock_table_th.course_column {
-    /* text-align: center; */
-    width: 84px;
-    height: 35px;
-    padding-left: 4px;
-    margin-right: 5px;
-  }
-  .date_item {
-    font-size: 12px;
-    padding: 5px 10px 5px 5px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: solid 1px lightgray;
-  }
-  .stock_items {
-    display: flex;
-    flex-direction: row;
-    /* height: 37px; */
-    /* margin-bottom: 7px; */
-  }
-  .stock_input_box input {
-    font-size: 19px;
-    width: 80px;
-    height: 35px;
-    text-align: right;
-    padding-right: 5px;
-    margin-right: 5px;
-    border: solid 1px #d0d0d0;
-    border-radius: 6px;
-    color: #504f4f;
-  }
-  .season_input_box select {
-    height: 35px;
-    font-size: 12px;
-  }
-  .date_item.saturday {
-    color: #2669ff;
-  }
-  .date_item.sunday {
-    color: red;
-  }
-  /* タブのCSS **************************************************************/
-  .cp_tab {
-    margin: 10px 0px 30px;
-    padding-left: 15px;
-    height: 50px;
-    display: flex;
-    /* align-items: center; */
-    border-bottom: solid 0.5px #b9b9b9;
-  }
-  a.month_tab {
-    padding: 15px 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    background: lightgray;
-    color: gray;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 8px;
-    border: solid 0.5px #b9b9b9;
-    border-bottom: none;
-  }
-  a.month_tab.selected {
-    background: #0068b6;
-    color: #fff;
-  }
-
-  .stock_is_close {
-    background: #d8d8d8;
-  }
-  .all_input_container {
-    height: 65px;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-  }
-  .date_column_allset {
-    width: 160px;
-    /* padding-right: 10px; */
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .date_item_allset {
-    font-size: 12px;
-    padding: 5px 10px 5px 5px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* border-bottom: solid 1px lightgray; */
-  }
-  .all_input_stock {
-    display: flex;
-    align-items: center;
-    padding: 5px 0;
-    height: 55px;
-    /* border-bottom: solid 1px lightgray; */
-  }
-  .all_stock_input_box {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    height: 55px;
-    /* border-bottom: solid 1px lightgray; */
-  }
-  .all_stock_input {
-    display: flex;
-    flex-direction: column;
-  }
-  .all_stock_input input {
-    font-size: 19px;
-    width: 64px;
-    height: 15px;
-    text-align: right;
-    padding-right: 5px;
-    margin-right: 5px;
-    border: solid 1px #d0d0d0;
-    border-radius: 6px;
-    color: #504f4f;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: none;
-  }
-  .all_season_input_box select {
-    height: 35px;
-    font-size: 12px;
-  }
-  #all_season_price {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: none;
-  }
-  .all_stock_input button {
-    height: 18px;
-    width: 81px;
-    font-size: 10px;
-    background: #5bace8;
-    border: solid 0.5px lightgray;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top: none;
-  }
-  .all_stock_input button:hover {
-    cursor: pointer;
-  }
-  .season_input_box button {
-    height: 18px;
-    width: 138px;
-    font-size: 10px;
-    background: #5bace8;
-    border: solid 0.5px lightgray;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top: none;
-  }
-  .season_input_box button:hover {
-    cursor: pointer;
-  }
-</style>
 
 <script type="text/javascript">
 
@@ -366,29 +157,61 @@
       }
     }
   }
-
+  
   function changeSeasonPrice(obj) {
     const parent = obj.parentNode;
     const inputSelectedIndex = obj.selectedIndex;
     const classNum = parseInt(parent.classList[1]);
+    // const classNumTwice = classNum*2;
     const stockColumns = document.querySelectorAll("div.course_stock_column");
-    for (var i = 0; i < stockColumns.length; i++) {
-      let targetBox = stockColumns[i].children[classNum];
+    for (var i = 0; i < (stockColumns.length); i++) {
+      let targetBox = stockColumns[i].children[classNum*2];
       let targetField = targetBox.children[3].children[0];
-
       if (inputSelectedIndex == 1){
-        targetField.value = "high";
+        if (i !== stockColumns.length) {
+          targetField.value = "high";
+        }
         targetBox.classList.add("is_high_season");
         targetBox.classList.remove("is_low_season");
       } else if (inputSelectedIndex == 2) {
-        targetField.value = "low";
+        if (i !== stockColumns.length) {
+          targetField.value = "low";
+        }
         targetBox.classList.add("is_low_season");
         targetBox.classList.remove("is_high_season");
       } else {
-        targetField.value = "normal";
+        if (i !== stockColumns.length) {
+          targetField.value = "normal";
+        }
+        // targetField.value = "normal";
         targetBox.classList.remove("is_low_season");
         targetBox.classList.remove("is_high_season");
       }
     }
   }
+
+  // function changeSeasonPrice(obj) {
+  //   const parent = obj.parentNode;
+  //   const inputSelectedIndex = obj.selectedIndex;
+  //   const classNum = parseInt(parent.classList[1]);
+  //   const stockColumns = document.querySelectorAll("div.course_stock_column");
+  //   for (var i = 0; i < stockColumns.length; i++) {
+  //     let targetBox = stockColumns[i].children[classNum];
+  //     let targetField = targetBox.children[3].children[0];
+  //
+  //     if (inputSelectedIndex == 1){
+  //       targetField.value = "high";
+  //       targetBox.classList.add("is_high_season");
+  //       targetBox.classList.remove("is_low_season");
+  //     } else if (inputSelectedIndex == 2) {
+  //       targetField.value = "low";
+  //       targetBox.classList.add("is_low_season");
+  //       targetBox.classList.remove("is_high_season");
+  //     } else {
+  //       targetField.value = "normal";
+  //       targetBox.classList.remove("is_low_season");
+  //       targetBox.classList.remove("is_high_season");
+  //     }
+  //   }
+  // }
 </script>

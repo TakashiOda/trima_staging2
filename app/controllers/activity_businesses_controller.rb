@@ -56,6 +56,8 @@ class ActivityBusinessesController < ApplicationController
   private
     def activity_biz_params
         params.require(:activity_business).permit(:name, :profile_image, :profile_image_cache, :profile_text,
+                                                  :en_name, :en_profile_text, :cn_name, :cn_profile_text,
+                                                  :tw_name, :tw_profile_text,
                                                   { :language_ids=> [] },
                                                   :prefecture_id, :area_id, :town_id,
                                                   :detail_address, :building, :apply_suuplier_address,

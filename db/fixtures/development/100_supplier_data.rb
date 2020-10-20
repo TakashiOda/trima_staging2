@@ -16,10 +16,10 @@ SupplierProfile.seed(:supplier_id) do |org|
   org.detail_address = "字屈足基線２４０"
   org.post_code = "081-0154"
   org.phone = "08044262491"
-  org.has_event = true
-  org.has_spot = true
-  org.has_restaurant = true
-  org.has_activity = true
+  # org.has_event = true
+  # org.has_spot = true
+  # org.has_restaurant = true
+  # org.has_activity = true
 end
 
 ActivityBusiness.seed(:id) do |biz|

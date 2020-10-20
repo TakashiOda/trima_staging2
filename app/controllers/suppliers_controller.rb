@@ -20,6 +20,10 @@ class SuppliersController < ApplicationController
 
   def edit
     @supplier = Supplier.find(params[:id])
+    if @supplier.supplier_profile.nil?
+      @supplier.build_supplier_profile
+    end
+    # @supplier.build_supplier_profile
   end
 
   def update
@@ -51,6 +55,10 @@ class SuppliersController < ApplicationController
 
   private
     def supplier_params
-        params.require(:supplier).permit(:avatar, :avatar_cache, :name)
+        params.require(:supplier).permit(:avatar, :avatar_cache, :name,
+                                          supplier_profile_attributes: [:supplier_id, :manager_name,
+                                          :post_code, :prefecture_id, :area_id, :town_id,
+                                          :detail_address, :building, :phone, :contract_plan,
+                                          :is_suspended])
     end
 end

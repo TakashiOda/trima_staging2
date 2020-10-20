@@ -148,6 +148,9 @@ body.erb_body.add_padding_top {
   box-sizing: border-box;
   background: #f9f9f9;
 }
+.form-group textarea {
+  width: 100% !important;
+}
 .form-group.button {
   margin-top: 30px;
 }
@@ -435,11 +438,62 @@ div#password_input_box {
 .user_show_content {
   padding: 0px;
   width: 80%;
+  background: #eaeaea;
+  form {
+    padding: 0 20px;
+    .user_show_content_down {
+      margin: 0px 0;
+      padding: 0px 0;
+      display: flex;
+      width: 100%;
+      .user_show_info_items_box {
+        width: 70%;
+        // padding: 10px;
+        padding: 10px 10px;
+        section.form_section {
+          background: #fff;
+          padding: 15px 20px;
+          margin-bottom: 25px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 5px -2px grey;
+        }
+      }
+      .user_show_info_button_box {
+        width: 30%;
+        padding: 10px 0 10px 20px;
+        height: 220px;
+        .form_sidebtns_container {
+          background: #fff;
+          height: 100%;
+          padding: 20px;
+          border-radius: 8px;
+          .form_sidebtn {
+            margin-bottom: 10px;
+          }
+        }
+
+      }
+      ul.user_show_info_items {
+        width: 100%;
+        li {
+          margin-bottom: 15px;
+          display: flex;
+        }
+        div.user_info_item_title {
+          font-weight: bold;
+          width: 15%;
+          text-align: end;
+          padding-right: 20px;
+        }
+      }
+    }
+  }
 }
+
 .user_show_main_content,
 .supplier_show_main_content {
   width: 80%;
-  background: #e5eaec;
+  background: #eaeaea;
 }
 
 .user_show_side ul li {
@@ -526,22 +580,13 @@ img.user_avatar {
     margin-top: 10px;
   }
 }
-.user_show_content_down {
-  margin: 0px 0;
-  padding: 0px 0;
-  ul.user_show_info_items {
-    width: 100%;
-    li {
-      margin-bottom: 15px;
-      display: flex;
-    }
-    div.user_info_item_title {
-      font-weight: bold;
-      width: 15%;
-      text-align: end;
-      padding-right: 20px;
-    }
-  }
+
+.supplier_activity_page_top {
+  padding: 20px 25px;
+  // position: relative;
+}
+.form-group.side_btns_suspend_check {
+  flex-direction: row;
 }
 
 /*user edit************************************/
@@ -844,6 +889,7 @@ table td {
   align-items: center;
   justify-content: space-between;
   padding: 0px 15px;
+  margin-bottom: 30px;
 }
 .activity_index_top_box h3 {
   margin-bottom: 0;
@@ -860,7 +906,7 @@ table td {
 .form_big_title h3 {
   margin: 0px 0 0px;
   padding: 5px 20px;
-  width: 180px;
+  // width: 180px;
   text-align: center;
   background: #4c4c4c;
   border-radius: 50px;
@@ -871,7 +917,7 @@ table td {
 
 .form_btns_box {
   width: 25%;
-  padding: 20px 10px 20px 10px;
+  padding: 10px 10px 20px 10px;
   margin-right: 10px;
 }
 #form_btns {

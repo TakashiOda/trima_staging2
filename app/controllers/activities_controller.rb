@@ -42,6 +42,7 @@ class ActivitiesController < ApplicationController
   end
 
   def update
+    # binding.pry
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
       @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
@@ -75,7 +76,7 @@ class ActivitiesController < ApplicationController
         @e_Date = Date.today.end_of_month #当月の末日
         @courses.each do |course|
           (@s_Date..@e_Date).each do |date|
-            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+            @stock = course.activity_stocks.build(date: date, stock: 0)
           end
         end
       elsif !@activity.is_all_year_open && @activity.start_date && @activity.end_date #期間限定の体験
@@ -91,7 +92,7 @@ class ActivitiesController < ApplicationController
         end
         @courses.each do |course|
           (@s_Date..@e_Date).each do |date|
-            @stock = course.activity_stocks.build(date: date, stock: @activity.maximum_num)
+            @stock = course.activity_stocks.build(date: date, stock: 0)
           end
         end
       else
@@ -487,22 +488,37 @@ class ActivitiesController < ApplicationController
     end
 
     def set_dates_for_stock_new_all_year_and_limit_term_activity(action_name, activity)
-      case action_name
-      when 'stock_new_next_month'
-        end_of_last_month = Date.today.end_of_month
-        # end_of_this_month = (Date.today >> 1).end_of_month
-        end_of_last_month_from_start_date = activity.start_date.end_of_month
-        end_of_this_month_from_start_date = (activity.start_date >> 1).end_of_month
-      when 'stock_new_next2_month'
-        end_of_last_month = (Date.today >> 1).end_of_month
-        # end_of_this_month = (Date.today >> 2).end_of_month
-        end_of_last_month_from_start_date = (activity.start_date >> 1).end_of_month
-        end_of_this_month_from_start_date = (activity.start_date >> 2).end_of_month
-      when 'stock_new_next3_month'
-        end_of_last_month = (Date.today >> 2).end_of_month
-        # end_of_this_month = (Date.today >> 3).end_of_month
-        end_of_last_month_from_start_date = (activity.start_date >> 2).end_of_month
-        end_of_this_month_from_start_date = (activity.start_date >> 3).end_of_month
+      if activity.is_all_year_open
+        case action_name
+        when 'stock_new_next_month'
+          end_of_last_month = Date.today.end_of_month
+          # end_of_last_month_from_start_date =
+          # end_of_this_month_from_start_date = (activity.start_date >> 1).end_of_month
+        when 'stock_new_next2_month'
+          end_of_last_month = (Date.today >> 1).end_of_month
+          # end_of_last_month_from_start_date = (activity.start_date >> 1).end_of_month
+          # end_of_this_month_from_start_date = (activity.start_date >> 2).end_of_month
+        when 'stock_new_next3_month'
+          end_of_last_month = (Date.today >> 2).end_of_month
+          # end_of_last_month_from_start_date = (activity.start_date >> 2).end_of_month
+          # end_of_this_month_from_start_date = (activity.start_date >> 3).end_of_month
+        end
+      else
+        case action_name
+        when 'stock_new_next_month'
+          end_of_last_month = Date.today.end_of_month
+          end_of_last_month_from_start_date = activity.start_date.end_of_month
+          end_of_this_month_from_start_date = (activity.start_date >> 1).end_of_month
+        when 'stock_new_next2_month'
+
+          end_of_last_month = (Date.today >> 1).end_of_month
+          end_of_last_month_from_start_date = (activity.start_date >> 1).end_of_month
+          end_of_this_month_from_start_date = (activity.start_date >> 2).end_of_month
+        when 'stock_new_next3_month'
+          end_of_last_month = (Date.today >> 2).end_of_month
+          end_of_last_month_from_start_date = (activity.start_date >> 2).end_of_month
+          end_of_this_month_from_start_date = (activity.start_date >> 3).end_of_month
+        end
       end
 
       @courses = activity.activity_courses
@@ -513,7 +529,7 @@ class ActivitiesController < ApplicationController
           @e_Date = @s_Date.end_of_month
           @courses.each do |course|
             (@s_Date..@e_Date).each do |date|
-              @stock = course.activity_stocks.build(date: date, stock: activity.maximum_num)
+              @stock = course.activity_stocks.build(date: date, stock: 0)
             end
           end
         elsif !activity.is_all_year_open && activity.start_date && activity.end_date #期間限定の体験
@@ -525,7 +541,7 @@ class ActivitiesController < ApplicationController
           end
           @courses.each do |course|
             (@s_Date..@e_Date).each do |date|
-              @stock = course.activity_stocks.build(date: date, stock: activity.maximum_num)
+              @stock = course.activity_stocks.build(date: date, stock: 0)
             end
           end
         else

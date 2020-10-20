@@ -98,9 +98,15 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
 
   create_table "activity_businesses", force: :cascade do |t|
     t.integer "supplier_id", null: false
-    t.string "name"
     t.string "profile_image"
+    t.string "name"
+    t.string "en_name"
+    t.string "cn_name"
+    t.string "tw_name"
     t.text "profile_text"
+    t.text "en_profile_text"
+    t.text "cn_profile_text"
+    t.text "tw_profile_text"
     t.boolean "apply_suuplier_address", default: true
     t.boolean "apply_suuplier_phone", default: true
     t.string "post_code"
@@ -147,7 +153,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.integer "activity_course_id", null: false
     t.integer "activity_id", null: false
     t.date "date"
-    t.integer "stock"
+    t.integer "stock", default: 0
     t.integer "book_amount", default: 0, null: false
     t.string "season_price", default: "normal"
     t.index ["activity_course_id", "date"], name: "index_activity_stocks_on_activity_course_id_and_date", unique: true
@@ -265,10 +271,6 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.string "detail_address"
     t.string "building"
     t.string "phone"
-    t.boolean "has_event", default: false, null: false
-    t.boolean "has_spot", default: false, null: false
-    t.boolean "has_activity", default: false, null: false
-    t.boolean "has_restaurant", default: false, null: false
     t.integer "contract_plan", default: 0, null: false
     t.boolean "is_suspended", default: false, null: false
     t.index ["supplier_id"], name: "index_supplier_profiles_on_supplier_id"

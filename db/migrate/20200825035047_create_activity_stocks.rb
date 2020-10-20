@@ -4,7 +4,7 @@ class CreateActivityStocks < ActiveRecord::Migration[6.0]
       t.references :activity_course, null: false, foreign_key: true
       t.integer :activity_id, null: false
       t.date    :date
-      t.integer :stock
+      t.integer :stock, default: 0
       t.integer :book_amount, null: false, default: 0
       t.string :season_price, default: "normal"
     end
