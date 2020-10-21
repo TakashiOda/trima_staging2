@@ -85,7 +85,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
     add_index :activities, :december
     add_index :activities, :advertise_activate
     add_index :activities, :is_approved
-    add_index :activities, :activate
+    add_index :activities, :stop_now
     add_index :activities, :is_all_year_open
     add_index :activities, :start_date
     add_index :activities, :end_date
