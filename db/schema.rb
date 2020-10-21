@@ -60,7 +60,8 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.boolean "advertise_activate", default: false
     t.boolean "is_approved", default: false
     t.boolean "stop_now", default: false
-    t.index "\"activate\"", name: "index_activities_on_activate"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["activity_business_id"], name: "index_activities_on_activity_business_id"
     t.index ["advertise_activate"], name: "index_activities_on_advertise_activate"
     t.index ["april"], name: "index_activities_on_april"
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.index ["prefecture_id"], name: "index_activities_on_prefecture_id"
     t.index ["september"], name: "index_activities_on_september"
     t.index ["start_date"], name: "index_activities_on_start_date"
+    t.index ["stop_now"], name: "index_activities_on_stop_now"
     t.index ["town_id"], name: "index_activities_on_town_id"
   end
 
@@ -119,6 +121,8 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.boolean "has_insurance", default: false
     t.string "guide_certification"
     t.boolean "is_approved", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["area_id"], name: "index_activity_businesses_on_area_id"
     t.index ["guide_certification"], name: "index_activity_businesses_on_guide_certification"
     t.index ["has_insurance"], name: "index_activity_businesses_on_has_insurance"
@@ -259,6 +263,8 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.string "start_place"
     t.string "end_place"
     t.string "icon", default: "project_icon-01"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "supplier_profiles", force: :cascade do |t|

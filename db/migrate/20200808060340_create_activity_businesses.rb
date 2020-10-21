@@ -23,6 +23,7 @@ class CreateActivityBusinesses < ActiveRecord::Migration[6.0]
       t.boolean :has_insurance, default: false
       t.string :guide_certification
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
+      t.timestamps
     end
     add_index :activity_businesses, :prefecture_id
     add_index :activity_businesses, :area_id

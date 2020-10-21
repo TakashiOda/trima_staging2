@@ -65,6 +65,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
       t.boolean :stop_now, default: false
 
+      t.timestamps
     end
     add_index :activities, :prefecture_id
     add_index :activities, :area_id
