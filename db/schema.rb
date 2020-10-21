@@ -214,6 +214,12 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.string "name"
     t.string "avatar"
     t.text "introduction"
+    t.string "roll"
+    t.boolean "speak_japanese", default: true
+    t.boolean "speak_english", default: false
+    t.boolean "speak_chinese", default: false
+    t.string "other_language"
+    t.boolean "stop_now", default: false
     t.index ["activity_business_id"], name: "index_guides_on_activity_business_id"
   end
 

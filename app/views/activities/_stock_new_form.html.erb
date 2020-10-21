@@ -2,12 +2,13 @@
   <%= form_for [current_supplier, @activity] do |f| %>
     <div class="stock_form_btn_box">
       <div class="stock_form_btn_box_inner">
-        <%= f.submit('作成',class: 'button btn-submit stock_submit') %>
+        <%= f.submit('在庫を登録',class: 'button btn-submit stock_submit') %>
       </div>
     </div>
     <div class="activity_stock_form_main_content">
-      <div class="activity_index_top_box">
-        <h3>在庫情報を作成</h3>
+      <div class="activity_stock_top_box">
+        <h3>在庫登録</h3>
+        <h5><span>体験名</span><%= @activity.name %></h5>
       </div>
       <div class="stock_form_tab_and_submit">
         <%= render 'month_tab_new' %>
@@ -62,7 +63,7 @@
                 <%= stock.hidden_field :date, :value => @dates[stock.index] %>
                 <% if @days_of_open.include?(@dates[stock.index].wday) %>
                   <div class="stock_input_box">
-                    <%= stock.number_field :stock, max: @activity.maximum_num, class: 'form-control' %>
+                    <%= stock.number_field :stock, min: 0, max: @activity.maximum_num, class: 'form-control' %>
                   </div>
                   <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price %>
                     <div class="season_input_box <%= stock.index %>">
@@ -157,7 +158,7 @@
       }
     }
   }
-  
+
   function changeSeasonPrice(obj) {
     const parent = obj.parentNode;
     const inputSelectedIndex = obj.selectedIndex;

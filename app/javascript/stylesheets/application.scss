@@ -33,10 +33,13 @@ ul {
   list-style: none !important;
   padding: 0;
 }
+label {
+  user-select: none !important;
+}
 a {
   text-decoration: none;
   :hover {
-    opacity: 0.8;
+    opacity: 0.75 !important;
   }
 }
 
@@ -105,13 +108,17 @@ body.erb_body.add_padding_top {
   border-radius: 10px;
   font-size: 17px;
   box-sizing: border-box;
+  height: 45px;
 }
 .btn-submit {
   color: #fff;
 }
+
 .btn-cansel {
-  color: #fff;
-  background: gray;
+    background: #eaeaea !important;
+    margin-bottom: 10px;
+    color: #797979;
+    font-size: 12px;
 }
 
 //5.複数ページ共通====================================
@@ -504,12 +511,27 @@ div#password_input_box {
   }
 }
 
-.activity_index_top_box {
+.activity_stock_top_box {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: baseline;
   padding: 0px 15px;
+  margin-bottom: 30px;
 }
+.activity_stock_top_box h3 {
+    margin: 15px 0 5px;
+}
+.activity_stock_top_box h5 {
+    margin: 10px 0;
+}
+.activity_stock_top_box h5 span {
+  background: lightgray;
+  padding: 5px 15px;
+  margin-right: 9px;
+  color: gray;
+  border-radius: 15px;
+}
+
 .user_show_content_up {
   display: flex;
   flex-direction: column;
@@ -897,6 +919,7 @@ table td {
   font-weight: normal;
   color: #4c4c4c;
 }
+
 .form_big_title {
   margin-bottom: 25px;
   border-radius: 50px;

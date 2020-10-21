@@ -13,24 +13,34 @@
         <span onclick="guide_image_input_btn(this)"><i class="fas fa-camera"></i></span>
       </div>
     </div>
-    <%# if f.index.to_s =~ /^[0-9]+$/ %>
-      <%# image_tag Guide.limit(1).offset(0).avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
-      <%#= image_tag @activity_business.guides.offset(f.index).first.avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
-    <%# end %>
-    <!-- <div id="user_edit_image_upload_btn_box">
-      <%#= f.file_field :avatar, id: 'guide_image' %>
-      <span id="user_edit_image_upload_btn" onclick="guide_image_input_btn()"><i class="fas fa-camera"></i></span>
-    </div> -->
   </div>
   <div class="guide_item_right_box">
     <div class="guide_item_right_box_left">
-      <div class="guide_name_box">
+      <div class="guide_input_box">
         <%= f.label "ガイド名" %>
         <%= f.text_field :name, class: "form-control", required: true %>
       </div>
-      <div class="guide_profile_box">
+      <div class="guide_input_box">
+        <%= f.label "担当アクティビティ" %>
+        <%= f.text_field :roll, class: "form-control" %>
+      </div>
+      <div class="guide_input_box profile">
         <%= f.label "プロフィール（200字以内）" %>
-        <%= f.text_area :introduction, class: "form-control", required: true %>
+        <%= f.text_area :introduction, class: "form-control" %>
+      </div>
+      <div class="guide_input_box guide_language_check_boxes">
+        <li>
+          <%= f.check_box :speak_japanese,:as => :boolean%>
+          <%= f.label :speak_japanese, :日本語 %>
+        </li>
+        <li>
+          <%= f.check_box :speak_english,:as => :boolean%>
+          <%= f.label :speak_english, :英語 %>
+        </li>
+        <li>
+          <%= f.check_box :speak_chinese,:as => :boolean%>
+          <%= f.label :speak_chinese, :中国語 %>
+        </li>
       </div>
 
     </div>

@@ -64,7 +64,9 @@ class ActivityBusinessesController < ApplicationController
                                                   :apply_suuplier_phone, :post_code, :has_insurance,
                                                   :guide_certification, :phone,
                                                   guides_attributes: [:id, :profile_image, :activity_business_id, :name,
-                                                  :avatar, :avatar_cache, :introduction, :_destroy])
+                                                  :avatar, :avatar_cache, :introduction, :roll, :speak_japanese,
+                                                  :speak_english, :speak_chinese, :other_language, :stop_now,
+                                                  :_destroy])
     end
 
 end

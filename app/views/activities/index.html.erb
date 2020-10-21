@@ -30,13 +30,18 @@
                     <div class="activity_index_detail_info">期間：<%= activity.start_date.strftime("%Y年%m月%d日") %>〜<%= activity.end_date.strftime("%Y年%m月%d日") %></div>
                   <% end %>
                   <div class="activity_index_detail_info">大人通常料金：<%= activity.normal_adult_price %>円</div>
+                  <% if !activity.activity_courses.any? %>
+                    <div class="no_stock_alert_box">
+                      <span>在庫が登録されていません</span>
+                    </div>
+                  <% end %>
                 </div>
               </div>
               <div class="activity_list_item_back">
                 <% if activity.activity_courses.any? && activity.activity_courses.first.activity_stocks.any? %>
-                  <%= link_to "在庫を編集", supplier_activity_edit_stocks_first_month_path(current_supplier, activity)%>
+                  <%= link_to "在庫を編集", supplier_activity_edit_stocks_first_month_path(current_supplier, activity), class: "to_stock_btn_on_activity_index edit_link" %>
                 <% else %>
-                  <%= link_to "在庫を作成", supplier_activity_new_stocks_first_month_path(current_supplier, activity)%>
+                  <%= link_to "在庫を登録", supplier_activity_new_stocks_first_month_path(current_supplier, activity), class: "to_stock_btn_on_activity_index add_link" %>
                 <% end %>
               </div>
             </li>
@@ -101,6 +106,30 @@
     font-size: 11px;
     color: darkgrey;
   }
+  .no_stock_alert_box span {
+    background: #ffc6c6;
+    padding: 4px 15px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 20px;
+  }
+  .to_stock_btn_on_activity_index {
+    padding: 6px 20px;
+    border-radius: 30px;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  .to_stock_btn_on_activity_index.edit_link {
+    background: lightgray;
+    color: #797979;
+  }
+  .to_stock_btn_on_activity_index.add_link {
+    background: #0068b6;
+    color: #fff;
+  }
+  .to_stock_btn_on_activity_index:hover {
+    opacity: 0.6;
+  }
   nav.pagination {
     /* background: #eee; */
     width: 90%;
@@ -140,4 +169,5 @@
   span.next {
     display: none;
   }
+
 </style>

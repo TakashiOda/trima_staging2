@@ -9,6 +9,7 @@ header.erb_header {
 
 .btn-submit {
   background: $user-main-color !important;
+  // height: 43px;
 }
 
 .user_show_side {
@@ -173,13 +174,29 @@ img.business_icon_image {
 .supplier_show_guide_item_box {
   height: 70px;
   display: flex;
-  /* flex-direction: column; */
-  /* justify-content: center; */
   align-items: center;
 }
 .supplier_show_guide_item_box__name {
   font-size: 15px;
   padding-left: 15px;
+}
+.guide_input_box {
+    margin-bottom: 10px;
+}
+.guide_language_check_boxes {
+  display: flex;
+  align-items: center;
+}
+.guide_language_check_boxes li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.guide_language_check_boxes li input {
+  margin: 0 6px 0 0;
+  width: 20px;
+  height: 20px;
 }
 .form-group.language_activity_list {
   display: flex;
@@ -591,6 +608,9 @@ div.user_edit_image_upload_btn_box {
 
 div#guides .nested-fields {
   padding: 15px;
+  background: #e8e8e8;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 .guide_image_box_inside img {
   background: #ffcbcb;

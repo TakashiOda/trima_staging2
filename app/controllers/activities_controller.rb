@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   def index
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
-    @activities = Activity.where(activity_business_id: @activity_business.id).page(params[:page]).per(10)
+    @activities = Activity.where(activity_business_id: @activity_business.id).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def show

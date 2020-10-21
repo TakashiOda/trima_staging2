@@ -1,31 +1,31 @@
 <%= form_for(@supplier) do |form| %>
 <div class="form_title">
-  <h3>事業者アカウント情報を編集</h3>
+  <h3>契約者情報を編集</h3>
 </div>
 <div class="user_show_content_down">
   <%= render 'layouts/error_messages', model: form.object %>
   <div class="user_show_info_items_box">
     <section class="form_section">
-      <div class="form_big_title">
-        <h3>企業・組織の基本情報</h3>
-      </div>
-      <div class="user_edit_image_container">
+      <!-- <div class="form_big_title">
+        <h3>契約者の基本情報</h3>
+      </div> -->
+      <!-- <div class="user_edit_image_container">
         <div class="form-group user_edit_image_box">
           <div class="user_edit_image_box_inside">
             <img id="user_image_prev" src="#" class="hidden" />
-            <% if current_supplier.persisted? && current_supplier.avatar? %>
-              <%= image_tag current_supplier.avatar.to_s, class: 'user_present_image', id: 'user_present_image' %>
-            <% else %>
-              <%= image_tag 'default_images/no_avatar_image.png', class: 'user_present_image', id: 'user_present_image' %>
-              <%= form.hidden_field :avatar_cache %>
-            <% end %>
+            <%# if current_supplier.persisted? && current_supplier.avatar? %>
+              <%#= image_tag current_supplier.avatar.to_s, class: 'user_present_image', id: 'user_present_image' %>
+            <%# else %>
+              <%#= image_tag 'default_images/no_avatar_image.png', class: 'user_present_image', id: 'user_present_image' %>
+              <%#= form.hidden_field :avatar_cache %>
+            <%# end %>
           </div>
           <div id="user_edit_image_upload_btn_box">
-            <%= form.file_field :avatar, id: 'post_image' %>
+            <%#= form.file_field :avatar, id: 'post_image' %>
             <span id="user_edit_image_upload_btn" onclick="image_input_btn()"><i class="fas fa-camera"></i></span>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="form-group">
         <%= form.label "企業または屋号名" %>
         <%= form.text_field :name, required: true, class: "form-control" %>

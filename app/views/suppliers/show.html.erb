@@ -1,7 +1,7 @@
 <div class="supplier_show_content_inside">
   <div class="activity_business_info_box"><!--メインコンテンツorg-->
     <div class="info_list_box_title">
-      <div>体験事業情報</div>
+      <div>企業情報</div>
       <div>
         <% unless @supplier.supplier_profile.nil? %>
           <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business), class: "org_edit_btn" %>
@@ -11,7 +11,7 @@
     <div id="activity_business_info_contents" class="">
       <% if @supplier_profile.nil? %>
         <div class="info_list_box_contents">
-          <div>まだ体験事業情報がありません</div>
+          <div>まだ企業情報がありません</div>
           <%= link_to "体験事業を登録", "#", class: "org_edit_btn" %>
         </div>
       <% else %>
@@ -63,7 +63,7 @@
   <!--事業者情報---------------------------------------------------------------->
   <div class="supplier_info_box"><!--メインコンテンツorg-->
     <div class="info_list_box_title">
-      <div>アカウント情報</div>
+      <div>契約者情報</div>
       <div>
         <% unless @supplier.supplier_profile.nil? %>
           <%= link_to "編集", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
@@ -73,8 +73,8 @@
     <div id="supplier_info_contents" class="hidden">
       <% if @supplier_profile.nil? %>
         <div class="info_list_box_contents">
-          <div>まだ事業情報がありません</div>
-          <%= link_to "事業を登録", "#", class: "org_edit_btn" %>
+          <div>まだ契約者情報がありません</div>
+          <%= link_to "契約者情報を登録", "#", class: "org_edit_btn" %>
         </div>
       <% else %>
         <div class="info_list_box_contents">

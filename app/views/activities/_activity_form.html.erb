@@ -328,6 +328,7 @@
     <div class="form_btns_box">
       <div id="form_btns">
         <div class="submit_btn_box">
+          <%=link_to "キャンセル", "#", class: 'button btn-cansel' %>
           <% if action_name == "new" %>
             <%= f.submit('登録',class: 'button btn-submit') %>
           <% else %>
@@ -335,7 +336,7 @@
           <% end %>
         </div>
         <div class="activity_activate_btn_box">
-          <div class="form-group side_btns_suspend_check"><%= f.check_box :stop_now %><%= f.label "stop_now","体験を一時停止", class: "activity_activate_check" %></div>
+          <div class="form-group side_btns_suspend_check"><%= f.check_box :stop_now %><%= f.label "stop_now","体験を非表示にする", class: "activity_activate_check" %></div>
         </div>
         <div class="activity_delete_btn_box">
           <% if action_name == 'edit' %>
