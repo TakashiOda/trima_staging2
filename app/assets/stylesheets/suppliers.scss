@@ -208,11 +208,16 @@ img.business_icon_image {
 }
 .activity_season_input_box .form-group {
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 0px;
   width: 16.6%;
 }
 
 .activity_openday_input_box .form-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 0px;
   width: 14.28%;
 }
@@ -258,6 +263,13 @@ label.last_check_label {
 .form-group.time_input input {
   width: 60px;
   border-radius: 6px;
+}
+
+div#courses .nested-fields .form-group {
+  align-items: center;
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: row;
 }
 
 #add_course_btn {

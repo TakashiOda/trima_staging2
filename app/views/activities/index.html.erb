@@ -42,6 +42,7 @@
             </li>
           <% end %>
         <% end %>
+        <%= paginate @activities %>
       <% else %>
         <li class="activity_list_item">
           <span>体験が登録されていません</span>
@@ -100,5 +101,43 @@
     font-size: 11px;
     color: darkgrey;
   }
-
+  nav.pagination {
+    /* background: #eee; */
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: solid 1px lightgray; */
+    /* border-radius: 6px; */
+    margin: 20px auto;
+  }
+  span.page {
+    width: 34px;
+    /* border-left: solid 0.5px lightgray; */
+    /* text-align: center; */
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+  }
+  span.page.current {
+    background: #0068b6;
+    color: #fff;
+    border-radius: 40px;
+  }
+  span.page a {
+    display: block;
+    width: 100%;
+    text-align: center;
+      /* padding: 6px 7px; */
+  }
+  span.next {
+    padding: 0 6px;
+  }
+  span.prev {
+    display: none;
+  }
+  span.next {
+    display: none;
+  }
 </style>

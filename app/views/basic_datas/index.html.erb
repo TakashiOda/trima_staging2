@@ -2,7 +2,7 @@
 <div class="basic_datas_box">
   <ul>
     <li>
-      <div>市区町村コード</div>
+      <!-- <div>市区町村コード</div> -->
       <div>都道府県</div>
       <div>エリア名</div>
       <div>英語名</div>
@@ -17,34 +17,77 @@
     </li>
     <% end %>
   </ul>
+  <%= paginate @towns %>
 </div>
 
 <style>
-  .basic_datas_box ul {
-    width: 100%;
-    max-width: 600px;
-  }
-  .basic_datas_box ul li {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-  }
-  .basic_datas_box ul li div:nth-child(1) {
-    width: 17%;
-  }
-  .basic_datas_box ul li div:nth-child(2) {
-    width: 12%;
-  }
-  .basic_datas_box ul li div:nth-child(3) {
-    width: 20%;
-  }
-  .basic_datas_box ul li div:nth-child(4) {
-    width: 20%;
-  }
-  .basic_datas_box {
-    padding: 0 30px;
-    display: flex;
-    justify-content: center;
-    font-size: 13px;
-  }
+.basic_datas_box ul {
+  width: 100%;
+  max-width: 600px;
+  padding: 30px 0;
+}
+.basic_datas_box ul li {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.basic_datas_box ul li div:nth-child(1) {
+  width: 20%;
+}
+.basic_datas_box ul li div:nth-child(2) {
+  width: 25%;
+}
+.basic_datas_box ul li div:nth-child(3) {
+  width: 25%;
+}
+.basic_datas_box ul li div:nth-child(4) {
+  width: 30%;
+}
+.basic_datas_box {
+  padding: 20px 30px 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-size: 13px;
+}
+nav.pagination {
+  /* background: #eee; */
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: solid 1px lightgray; */
+  /* border-radius: 6px; */
+  margin: 20px auto;
+}
+span.page {
+  width: 34px;
+  /* border-left: solid 0.5px lightgray; */
+  /* text-align: center; */
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+}
+span.page.current {
+  background: #0068b6;
+  color: #fff;
+  border-radius: 40px;
+}
+span.page a {
+  display: block;
+  width: 100%;
+  text-align: center;
+    /* padding: 6px 7px; */
+}
+span.next {
+  padding: 0 6px;
+}
+span.prev {
+  display: none;
+}
+span.next {
+  display: none;
+}
 </style>
