@@ -10,7 +10,6 @@
     </li>
     <% @towns.each do |town| %>
     <li>
-      <div><%= town.town_code %></div>
       <div><%= Prefecture.find(town.prefecture_id).local_name %></div>
       <div><%= Area.find(town.area_id).local_name %></div>
       <div><%= town.en_name %></div>

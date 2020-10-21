@@ -315,7 +315,6 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.text "tw_introduction"
     t.boolean "is_big_city"
     t.string "image"
-    t.index "\"town_code\"", name: "index_towns_on_town_code"
     t.index ["area_id"], name: "index_towns_on_area_id"
     t.index ["cn_name"], name: "index_towns_on_cn_name"
     t.index ["en_name"], name: "index_towns_on_en_name"

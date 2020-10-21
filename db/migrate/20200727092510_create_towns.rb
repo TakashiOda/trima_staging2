@@ -14,7 +14,6 @@ class CreateTowns < ActiveRecord::Migration[6.0]
       t.boolean :is_big_city
       t.string :image
     end
-    add_index :towns, :town_code
     add_index :towns, :en_name
     add_index :towns, :jp_name
     add_index :towns, :cn_name
