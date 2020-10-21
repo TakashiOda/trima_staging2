@@ -41,16 +41,16 @@ Supplier.seed(:email) do |sup|
   sup.confirmed_at = Time.now.utc
 end
 
-# SupplierProfile.seed(:supplier_id) do |org|
-#   org.id = 2
-#   org.supplier_id = 2
-#   org.manager_name = "部長"
-#   org.prefecture_id = 2
-#   org.town_id = 97
-#   org.detail_address = ""
-#   org.post_code = ""
-#   org.phone = ""
-# end
+SupplierProfile.seed(:supplier_id) do |org|
+  org.id = 2
+  org.supplier_id = 2
+  org.manager_name = "部長"
+  org.prefecture_id = 2
+  org.town_id = 97
+  org.detail_address = ""
+  org.post_code = ""
+  org.phone = ""
+end
 
 # 三人目***********************************
 Supplier.seed(:email) do |sup|
@@ -59,6 +59,16 @@ Supplier.seed(:email) do |sup|
   sup.password = "password"
   sup.name = "no name"
   sup.confirmed_at = Time.now.utc
+end
+SupplierProfile.seed(:supplier_id) do |org|
+  org.id = 3
+  org.supplier_id = 3
+  org.manager_name = "no name"
+  org.prefecture_id = 2
+  org.town_id = 97
+  org.detail_address = ""
+  org.post_code = ""
+  org.phone = ""
 end
 # ４人目***********************************
 Supplier.seed(:email) do |sup|
@@ -69,6 +79,16 @@ Supplier.seed(:email) do |sup|
   sup.confirmed_at = Time.now.utc
 end
 
+SupplierProfile.seed(:supplier_id) do |org|
+  org.id = 4
+  org.supplier_id = 4
+  org.manager_name = "no name"
+  org.prefecture_id = 2
+  org.town_id = 97
+  org.detail_address = ""
+  org.post_code = ""
+  org.phone = ""
+end
 # SupplierProfile.seed(:supplier_id) do |org|
 #   org.id = 2
 #   org.supplier_id = 2
