@@ -24,7 +24,15 @@
       </div>
       <div class="all_input_container">
         <div class="date_column_allset">
-          <div class="date_item_allset">コース別一括設定</div>
+          <div class="date_item_allset">
+            <div>一括設定</div>
+            <div class="form_big_title_questionIcon aboutAllStock">
+              <i class="far fa-question-circle"></i>
+              <p class="fukidashi fukidashi_aboutAllStock">
+                最上部の「一括設定」では、在庫数やシーズン料金を入力して「反映」ボタンを押すと、その月の時間コース全てに入力した在庫数を反映できます。
+              </p>
+            </div>
+          </div>
         </div>
         <div class="all_input_stock">
           <% @activity.activity_courses.each_with_index do |ac_course, i| %>
@@ -90,10 +98,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="actions">
-      <%#= f.submit, "更新", class: "button btn-submit" %>
-      <%#= f.submit('更新',class: 'button btn-submit') %>
-    </div> -->
   <% end %>
 </div>
 
