@@ -685,6 +685,22 @@ ul.activity_description_language_box_tab_list li.active span {
   color: #fff;
 }
 
+a.button.btn-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0068b6;
+  height: 40px;
+}
+a.button.btn-link span {
+  color: #fff;
+  font-size: 14px;
+}
+a.button.btn-link svg {
+  width: 20px;
+  height: 20px;
+}
+
 // guides fields====================================
 .nested-fields {
   display: flex;
@@ -925,6 +941,9 @@ input.button.btn-submit.stock_submit:hover {
 .date_item.sunday {
   color: red;
 }
+
+
+
 /* タブのCSS **************************************************************/
 .cp_tab {
   margin: 10px 0px 0px;

@@ -47,7 +47,9 @@ class ActivitiesController < ApplicationController
     if @activity.update(activity_params)
       @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
       @activity.save!
-      redirect_to supplier_activities_path(current_supplier)
+
+      redirect_to edit_supplier_activity_path(current_supplier, @activity)
+      # redirect_to supplier_activities_path(current_supplier)
     else
       render 'edit'
     end
