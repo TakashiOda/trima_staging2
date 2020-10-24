@@ -167,10 +167,9 @@
     const parent = obj.parentNode;
     const inputSelectedIndex = obj.selectedIndex;
     const classNum = parseInt(parent.classList[1]);
-    // const classNumTwice = classNum*2;
     const stockColumns = document.querySelectorAll("div.course_stock_column");
     for (var i = 0; i < (stockColumns.length); i++) {
-      let targetBox = stockColumns[i].children[classNum*2];
+      let targetBox = stockColumns[i].children[classNum];
       let targetField = targetBox.children[3].children[0];
       if (inputSelectedIndex == 1){
         if (i !== stockColumns.length) {
