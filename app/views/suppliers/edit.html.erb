@@ -11,42 +11,36 @@
       </div> -->
       <div class="form-group">
         <%= form.label "企業または屋号名" %>
-        <%= form.text_field :name, minlength: 3, maxlength: 40, required: true, class: "form-control" %>
+        <%= form.text_field :name, minlength: 3, maxlength: 40, required: true, class: "form-control", oninput: 'hasInput()' %>
       </div>
       <%= form.fields_for :supplier_profile do |pf| %>
         <div class="form-group">
           <%= pf.label :代表者のお名前 %>
-          <%= pf.text_field :manager_name, minlength: 3, maxlength: 40, required: true, class: "form-control" %>
+          <%= pf.text_field :manager_name, minlength: 3, maxlength: 40, required: true, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :郵便番号 %>
-          <%= pf.text_field :post_code, minlength: 7, maxlength: 8, required: true, class: "form-control" %>
+          <%= pf.text_field :post_code, minlength: 7, maxlength: 8, required: true, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :都道府県名 %>
-          <%= pf.select :prefecture_id, {'北海道': 2}, { include_blank: false}, { class: 'form-control' } %>
-          <%#= pf.text_field :prefecture_id, class: "form-control" %>
+          <%= pf.select :prefecture_id, {'北海道': 2}, { include_blank: false}, { class: 'form-control', oninput: 'hasInput()' } %>
         </div>
-        <!-- <div class="form-group">
-          <%#= pf.label :area_id %>
-          <%#= pf.text_field :area_id, class: "form-control" %>
-        </div> -->
         <div class="form-group">
           <%= pf.label :市区町村名 %>
-          <%= pf.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市区町村を選択"}, class: "form-control" %>
-          <%#= pf.text_field :town_id, class: "form-control" %>
+          <%= pf.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :以降のご住所 %>
-          <%= pf.text_field :detail_address, minlength: 3, maxlength: 50, class: "form-control" %>
+          <%= pf.text_field :detail_address, minlength: 3, maxlength: 50, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :建物名・部屋番号 %>
-          <%= pf.text_field :building, maxlength: 50, required: true, class: "form-control" %>
+          <%= pf.text_field :building, maxlength: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :お電話番号 %>
-          <%= pf.text_field :phone, minlength: 10, maxlength: 11, required: true, class: "form-control" %>
+          <%= pf.text_field :phone, minlength: 10, maxlength: 11, required: true, class: "form-control", oninput: 'hasInput()' %>
         </div>
       <% end %>
     </section>
@@ -58,7 +52,7 @@
           <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
         </div>
         <div class="form_sidebtn">
-          <%= form.submit('更新する',class: 'button btn-submit') %>
+          <%= form.submit('更新する',class: 'button btn-submit', id: "supplier_form_submit_btn") %>
         </div>
       </div>
     </div>
@@ -67,6 +61,11 @@
 <% end %>
 
 <script>
+  function hasInput() {
+    const submitBtn = document.getElementById('supplier_form_submit_btn');
+    submitBtn.classList.add('need_submit');
+  }
+
   const selectElement = document.querySelector('#post_image');
   function image_input_btn() {
     selectElement.click();

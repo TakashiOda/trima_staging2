@@ -21,7 +21,7 @@
               <% end %>
             </div>
             <div id="user_edit_image_upload_btn_box">
-              <%= form.file_field :profile_image, id: 'post_image' %>
+              <%= form.file_field :profile_image, id: 'post_image', oninput: 'hasInput()' %>
               <span id="user_edit_image_upload_btn" onclick="image_input_btn()"><i class="fas fa-camera"></i></span>
             </div>
           </div>
@@ -45,41 +45,41 @@
             <div id="japanese_tab_content">
               <div class="form-group">
                 <%= form.label "企業名または屋号・40字以内" %>
-                <%= form.text_field :name, minlength: 3, maxlength: 40, required: true, class: "form-control" %>
+                <%= form.text_field :name, minlength: 3, maxlength: 40, required: true, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
                 <%= form.label "企業・事業の紹介文（日本語）・200字以内" %>
-                <%= form.text_area :profile_text, rows: 7, minlength: 20, maxlength: 200, required: true, class: "form-control" %>
+                <%= form.text_area :profile_text, rows: 7, minlength: 20, maxlength: 200, required: true, class: "form-control", oninput: 'hasInput()' %>
               </div>
             </div>
             <div class="hidden" id="english_tab_content">
               <div class="form-group">
                 <%= form.label "体験事業名・屋号（英語）・40字以内" %>
-                <%= form.text_field :en_name, maxlength: 40, class: "form-control" %>
+                <%= form.text_field :en_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
                 <%= form.label "プロフィール（英語）・200字以内" %>
-                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 200, class: "form-control" %>
+                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
               </div>
             </div>
             <div class="hidden" id="chinese_tab_content">
               <div class="form-group">
                 <%= form.label "体験事業名・屋号（中国語・簡体字）・40字以内" %>
-                <%= form.text_field :cn_name, maxlength: 40, class: "form-control" %>
+                <%= form.text_field :cn_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
                 <%= form.label "プロフィール（中国語・簡体字）・200字以内" %>
-                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 200, class: "form-control" %>
+                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
               </div>
             </div>
             <div class="hidden" id="taiwanese_tab_content">
               <div class="form-group">
                 <%= form.label "体験事業名・屋号（中国語・繁体字）・40字以内" %>
-                <%= form.text_field :tw_name, maxlength: 40, class: "form-control" %>
+                <%= form.text_field :tw_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
                 <%= form.label "プロフィール（中国語・繁体字）・200字以内" %>
-                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 200, class: "form-control" %>
+                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
           <h3>対応可能言語</h3>
         </div>
         <div class="form-group language_activity_list">
-          <%= form.collection_check_boxes :language_ids, Language.where(id: [3,26,28]), :id, :name %>
+          <%= form.collection_check_boxes :language_ids, Language.where(id: [3,26,28]), :id, :name, {}, {:onChange=>"hasInput();"} %>
         </div>
       </section>
       <section class="form_section">
@@ -114,11 +114,11 @@
           <%= form.label "住所" %>
           <div class="radio_items">
             <div class="radio_item on">
-              <%= form.radio_button :apply_suuplier_address, :true, onClick: "applySupplierAddress(this)" %>
+              <%= form.radio_button :apply_suuplier_address, :true, onClick: "applySupplierAddress(this)", oninput: 'hasInput()' %>
               <%= form.label :apply_suuplier_address, "アカウント登録住所と同じ", {value: :true, style: "display: inline-block;"} %>
             </div>
             <div class="radio_item off">
-              <%= form.radio_button :apply_suuplier_address, :false, onClick: "hasOwnSupplierAddress(this)" %>
+              <%= form.radio_button :apply_suuplier_address, :false, onClick: "hasOwnSupplierAddress(this)", oninput: 'hasInput()' %>
               <%= form.label :apply_suuplier_address, "別の住所を設定する", {value: :false, style: "display: inline-block;"} %>
             </div>
           </div>
@@ -127,7 +127,7 @@
           <div class="form-group">
             <div class="form-group">
               <%= form.label "郵便番号" %>
-              <%= form.text_field :post_code, class: "form-control" %>
+              <%= form.text_field :post_code, class: "form-control", oninput: 'hasInput()' %>
             </div>
             <div class="row">
               <div class="col-half">
@@ -137,16 +137,16 @@
               </div>
               <div class="col-half">
                 <%= form.label "市区町村" %>
-                <%= form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市区町村を選択"}, class: "form-control" %>
+                <%= form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasInput()' %>
               </div>
             </div>
             <div class="form-group">
               <%= form.label "住所" %>
-              <%= form.text_field :detail_address, maxlength: 100, class: "form-control" %>
+              <%= form.text_field :detail_address, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
             </div>
             <div class="form-group">
               <%= form.label "建物名・部屋番号など" %>
-              <%= form.text_field :building, maxlength: 100, class: "form-control" %>
+              <%= form.text_field :building, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
             </div>
           </div>
         </div>
@@ -154,11 +154,11 @@
           <%= form.label "電話番号" %>
           <div class="radio_items">
             <div class="radio_item on">
-              <%= form.radio_button :apply_suuplier_phone, :true, onClick: "applySupplierPhone(this)" %>
+              <%= form.radio_button :apply_suuplier_phone, :true, onClick: "applySupplierPhone(this)", oninput: 'hasInput()' %>
               <%= form.label :apply_suuplier_phone, "アカウント登録電話番号と同じ", {value: :true, style: "display: inline-block;"} %>
             </div>
             <div class="radio_item off">
-              <%= form.radio_button :apply_suuplier_phone, :false, onClick: "hasOwnSupplierPhone(this)" %>
+              <%= form.radio_button :apply_suuplier_phone, :false, onClick: "hasOwnSupplierPhone(this)", oninput: 'hasInput()' %>
               <%= form.label :apply_suuplier_phone, "別の電話番号を設定する", {value: :false, style: "display: inline-block;"} %>
             </div>
           </div>
@@ -166,7 +166,7 @@
         <div id="phone_box" class="<%= "hidden" if @activity_business.apply_suuplier_phone %>">
           <div class="form-group">
             <%= form.label "別の電話番号を入力してください（ハイフンなし）" %>
-            <%= form.text_field :phone, class: "form-control" %>
+            <%= form.text_field :phone, class: "form-control", oninput: 'hasInput()' %>
           </div>
         </div>
       </section>
@@ -178,7 +178,7 @@
             <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
           </div>
           <div class="form_sidebtn">
-            <%= form.submit('更新する',class: 'button btn-submit') %>
+            <%= form.submit('更新する',class: 'button btn-submit', id: "biz_form_submit_btn") %>
           </div>
         </div>
       </div>
@@ -187,6 +187,11 @@
 <% end %>
 
 <script type="text/javascript">
+  function hasInput() {
+    const submitBtn = document.getElementById('biz_form_submit_btn');
+    submitBtn.classList.add('need_submit');
+  }
+
   function toggleDescriptionTab(obj) {
     const tabId = obj.id;
     const japaneseTab = document.getElementById('japanese_tab');

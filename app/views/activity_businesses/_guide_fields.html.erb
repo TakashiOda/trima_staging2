@@ -9,7 +9,7 @@
         <%= f.hidden_field :avatar_cache %>
       <% end %>
       <div class="user_edit_image_upload_btn_box">
-        <%= f.file_field :avatar, id: 'guide_image_input', class: 'guide_image_upload_btn',onchange: 'selectFile(this)' %>
+        <%= f.file_field :avatar, id: 'guide_image_input', class: 'guide_image_upload_btn',onchange: 'selectFile(this)', oninput: 'hasInput()' %>
         <span onclick="guide_image_input_btn(this)"><i class="fas fa-camera"></i></span>
       </div>
     </div>
@@ -18,27 +18,27 @@
     <div class="guide_item_right_box_left">
       <div class="guide_input_box">
         <%= f.label "ガイド名" %>
-        <%= f.text_field :name, class: "form-control", minlength: 3, maxlength: 30, required: true %>
+        <%= f.text_field :name, class: "form-control", minlength: 3, maxlength: 30, required: true, oninput: 'hasInput()' %>
       </div>
       <div class="guide_input_box">
         <%= f.label "担当アクティビティ" %>
-        <%= f.text_field :roll, maxlength: 30, class: "form-control" %>
+        <%= f.text_field :roll, maxlength: 30, class: "form-control", oninput: 'hasInput()' %>
       </div>
       <div class="guide_input_box profile">
         <%= f.label "プロフィール（200字以内）" %>
-        <%= f.text_area :introduction, maxlength: 200, class: "form-control" %>
+        <%= f.text_area :introduction, maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
       </div>
       <div class="guide_input_box guide_language_check_boxes">
         <li>
-          <%= f.check_box :speak_japanese,:as => :boolean%>
+          <%= f.check_box :speak_japanese,:as => :boolean, oninput: 'hasInput()'%>
           <%= f.label :speak_japanese, :日本語 %>
         </li>
         <li>
-          <%= f.check_box :speak_english,:as => :boolean%>
+          <%= f.check_box :speak_english,:as => :boolean, oninput: 'hasInput()'%>
           <%= f.label :speak_english, :英語 %>
         </li>
         <li>
-          <%= f.check_box :speak_chinese,:as => :boolean%>
+          <%= f.check_box :speak_chinese,:as => :boolean, oninput: 'hasInput()'%>
           <%= f.label :speak_chinese, :中国語 %>
         </li>
       </div>
@@ -46,7 +46,7 @@
     </div>
     <div class="guide_item_right_box_right">
       <div class="delete_guide_btn">
-        <%= link_to_remove_association f, class: "remove_guide_btn" do %>
+        <%= link_to_remove_association f, class: "remove_guide_btn", onClick: 'hasInput()' do %>
           <span><i class="far fa-trash-alt"></i></span>
         <% end %>
       </div>
