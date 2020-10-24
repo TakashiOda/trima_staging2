@@ -84,19 +84,30 @@ body.erb_body.add_padding_top {
   position: absolute;
   top: 60px;
 }
+// .alert {
+//   background: #ff282870;
+//   color: white;
+//   text-align: center;
+//   margin: 0;
+//   width: 100%;
+//   font-size: 14px;
+//   z-index: 100;
+//   padding: 5px;
+//   position: absolute;
+//   top: 60px;
+// }
 .alert {
-  background: #ff282870;
-  color: white;
-  text-align: center;
-  margin: 0;
-  width: 100%;
-  font-size: 14px;
-  z-index: 100;
-  padding: 5px;
-  position: absolute;
-  top: 60px;
+    background: #ff2828b8;
+    color: white;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    font-size: 14px;
+    z-index: 100;
+    padding: 5px;
+    position: sticky;
+    top: 0;
 }
-
 
 //4.共通パーツ=======================================
 .button {
@@ -442,6 +453,10 @@ div#password_input_box {
   width: 20%;
   padding: 20px 0 30px 30px;
 }
+.user_show_side ul {
+  position: sticky;
+  top: 20px;
+}
 .user_show_content {
   padding: 0px;
   width: 80%;
@@ -469,6 +484,8 @@ div#password_input_box {
         width: 30%;
         padding: 10px 0 10px 20px;
         height: 220px;
+        position: sticky;
+        top: 0;
         .form_sidebtns_container {
           background: #fff;
           height: 100%;

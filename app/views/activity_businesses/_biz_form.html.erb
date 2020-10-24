@@ -44,42 +44,42 @@
           <div class="tab-content-items">
             <div id="japanese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号" %>
-                <%= form.text_field :name, required: true, class: "form-control" %>
+                <%= form.label "企業名または屋号・40字以内" %>
+                <%= form.text_field :name, minlength: 3, maxlength: 40, required: true, class: "form-control" %>
               </div>
               <div class="form-group">
-                <%= form.label "体験の紹介文（日本語）" %>
-                <%= form.text_area :profile_text, rows: 7, required: true, class: "form-control" %>
+                <%= form.label "企業・事業の紹介文（日本語）・200字以内" %>
+                <%= form.text_area :profile_text, rows: 7, minlength: 20, maxlength: 200, required: true, class: "form-control" %>
               </div>
             </div>
             <div class="hidden" id="english_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（英語）" %>
-                <%= form.text_field :en_name, class: "form-control" %>
+                <%= form.label "体験事業名・屋号（英語）・40字以内" %>
+                <%= form.text_field :en_name, maxlength: 40, class: "form-control" %>
               </div>
               <div class="form-group">
-                <%= form.label "プロフィール（英語）" %>
-                <%= form.text_area :en_profile_text, size: "22x5", class: "form-control" %>
+                <%= form.label "プロフィール（英語）・200字以内" %>
+                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 200, class: "form-control" %>
               </div>
             </div>
             <div class="hidden" id="chinese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・簡体字）" %>
-                <%= form.text_field :cn_name, class: "form-control" %>
+                <%= form.label "体験事業名・屋号（中国語・簡体字）・40字以内" %>
+                <%= form.text_field :cn_name, maxlength: 40, class: "form-control" %>
               </div>
               <div class="form-group">
-                <%= form.label "プロフィール（中国語・簡体字）" %>
-                <%= form.text_area :cn_profile_text, size: "22x5", class: "form-control" %>
+                <%= form.label "プロフィール（中国語・簡体字）・200字以内" %>
+                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 200, class: "form-control" %>
               </div>
             </div>
             <div class="hidden" id="taiwanese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・繁体字）" %>
-                <%= form.text_field :tw_name, class: "form-control" %>
+                <%= form.label "体験事業名・屋号（中国語・繁体字）・40字以内" %>
+                <%= form.text_field :tw_name, maxlength: 40, class: "form-control" %>
               </div>
               <div class="form-group">
-                <%= form.label "プロフィール（中国語・繁体字）" %>
-                <%= form.text_area :tw_profile_text, size: "22x5", class: "form-control" %>
+                <%= form.label "プロフィール（中国語・繁体字）・200字以内" %>
+                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 200, class: "form-control" %>
               </div>
             </div>
           </div>
@@ -142,11 +142,11 @@
             </div>
             <div class="form-group">
               <%= form.label "住所" %>
-              <%= form.text_field :detail_address, class: "form-control" %>
+              <%= form.text_field :detail_address, maxlength: 100, class: "form-control" %>
             </div>
             <div class="form-group">
               <%= form.label "建物名・部屋番号など" %>
-              <%= form.text_field :building, class: "form-control" %>
+              <%= form.text_field :building, maxlength: 100, class: "form-control" %>
             </div>
           </div>
         </div>

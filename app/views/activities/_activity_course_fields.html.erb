@@ -1,7 +1,7 @@
 <div class="nested-fields">
   <div class="form-group">
     <div class="course_row1 time_select">
-      <%= f.time_select :start_time, {:minute_step => 10},class: "form-control time_input" %>
+      <%= f.time_select :start_time, {:minute_step => 10},class: "form-control time_input", oninput: 'hasInput()' %>
     </div>
     <div class="course_row2">
       <%= link_to_remove_association f, class: "remove_course_btn" do %>

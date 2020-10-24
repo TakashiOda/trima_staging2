@@ -18,15 +18,15 @@
     <div class="guide_item_right_box_left">
       <div class="guide_input_box">
         <%= f.label "ガイド名" %>
-        <%= f.text_field :name, class: "form-control", required: true %>
+        <%= f.text_field :name, class: "form-control", minlength: 3, maxlength: 30, required: true %>
       </div>
       <div class="guide_input_box">
         <%= f.label "担当アクティビティ" %>
-        <%= f.text_field :roll, class: "form-control" %>
+        <%= f.text_field :roll, maxlength: 30, class: "form-control" %>
       </div>
       <div class="guide_input_box profile">
         <%= f.label "プロフィール（200字以内）" %>
-        <%= f.text_area :introduction, class: "form-control" %>
+        <%= f.text_area :introduction, maxlength: 200, class: "form-control" %>
       </div>
       <div class="guide_input_box guide_language_check_boxes">
         <li>

@@ -8,7 +8,7 @@ header.erb_header {
 }
 
 .btn-submit {
-  background: $user-main-color !important;
+  background: #80acce;
 }
 
 .user_show_side {
@@ -23,6 +23,9 @@ a.org_edit_btn {
   background: $user-main-color !important;
 }
 
+input.need_submit {
+  background: #e04e4e !important;
+}
 // 事業者thankyou メール===========================
 .static_pages.short_messages_box {
   display: flex;
