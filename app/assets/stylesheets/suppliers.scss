@@ -711,6 +711,10 @@ input.button.btn-submit.stock_submit {
   border-radius: 6px;
   padding: 0;
 }
+input.button.btn-submit.stock_submit:hover {
+  cursor: pointer !important;
+  background: #037eda !important;
+}
 
 .stock_form {
   padding: 0 !important;
@@ -832,6 +836,11 @@ a.month_tab {
   border: solid 0.5px #b9b9b9;
   border-bottom: none;
 }
+a.month_tab:hover {
+  cursor: pointer !important;
+  opacity: 0.6;
+  // background: #037eda !important;
+}
 a.month_tab.selected {
   background: #0068b6;
   color: #fff;
@@ -903,7 +912,7 @@ a.month_tab.selected {
   height: 18px;
   width: 81px;
   font-size: 10px;
-  background: #5bace8;
+  background: #0068b6;
   border: solid 0.5px lightgray;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -914,15 +923,18 @@ a.month_tab.selected {
   align-items: center;
   justify-content: center;
   border-top: none;
+  // box-shadow: 1px 1px 4px -1px #888888;
 }
+
 .all_stock_input button:hover {
   cursor: pointer;
+  background: #037eda;
 }
 .season_input_box button {
   height: 18px;
   width: 138px;
   font-size: 10px;
-  background: #5bace8;
+  background: #0068b6;
   border: solid 0.5px lightgray;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -933,7 +945,11 @@ a.month_tab.selected {
   align-items: center;
   justify-content: center;
   border-top: none;
+  :hover {
+    opacity: 0.7;
+  }
 }
 .season_input_box button:hover {
   cursor: pointer;
+  background: #037eda;
 }

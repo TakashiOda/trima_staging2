@@ -31,12 +31,12 @@
             <div class="all_stock_input_box">
               <div class="all_stock_input">
                 <%= number_field_tag :all_stock, value = @activity.maximum_num, options = { min: 0, max: 10, class: 'form-control' }%>
-                <button type="button" onclick="changeAllofColumnStock(this)" class="form-control" id="<%=i%>">設定</button>
+                <button type="button" onclick="changeAllofColumnStock(this)" class="form-control" id="<%=i%>">反映</button>
               </div>
               <% if @activity.activity_courses.count == i+1 && @activity.has_season_price %>
                 <div class="season_input_box">
                   <%= select_tag 'all_season_price', options_for_select({'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'}, 1), include_blank: false, class: 'form-control' %>
-                  <button type="button" onclick="changeAllofColumnSeason(this)" class="form-control">設定</button>
+                  <button type="button" onclick="changeAllofColumnSeason(this)" class="form-control">反映</button>
                 </div>
               <% end %>
             </div>
