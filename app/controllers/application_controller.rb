@@ -13,13 +13,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def after_sign_in_path_for(resource)
+    if resource_name == :supplier
+      supplier_dashboard_path(resource)
+    else
+      root_path
+    end
+  end
   # def after_sign_in_path_for(resource_or_scope)
-  #   if resource_or_scope == :user
-  #     thank_you_for_registration_user_path
-  #   elsif resource_or_scope == :supplier
-  #     thank_you_for_registration_supplier_path
+  #   if resource_or_scope == :supplier
+  #     supplier_path(resource.id)
   #   else
-  #     thank_you_for_registration_user_path
+  #     root_path
   #   end
   # end
 

@@ -1,4 +1,5 @@
 <ul>
+  <li><i class="far fa-bookmark"></i><%= link_to "ダッシュボード", supplier_dashboard_path(current_supplier) %></li>
   <li>
     <i class="fas fa-suitcase"></i>
     <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>

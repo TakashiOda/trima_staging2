@@ -7,15 +7,16 @@ class SuppliersController < ApplicationController
   def index
   end
 
+  def dashboard
+    @supplier = current_supplier
+    @supplier_profile = @supplier.supplier_profile
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier)
+  end
+
   def show
     @supplier = Supplier.find(params[:id])
     @supplier_profile = @supplier.supplier_profile
     @activity_business = ActivityBusiness.find_by(supplier_id: @supplier.id)
-    # if !@supplier.organization_id.nil?
-      # @organization = Organization.find(@supplier.organization_id)
-      # @joined_members = Supplier.where(organization_id: @organization.id).where.not(id: current_supplier.id)
-      # @inviting_members = OrgInvite.where(organization_id: @organization.id, accept_invite: 1)
-    # end
   end
 
   def edit
@@ -23,7 +24,6 @@ class SuppliersController < ApplicationController
     if @supplier.supplier_profile.nil?
       @supplier.build_supplier_profile
     end
-    # @supplier.build_supplier_profile
   end
 
   def update
