@@ -9,7 +9,7 @@
       <% if !@activities.nil? %>
         <% @activities.each do |activity|%>
           <%= link_to edit_supplier_activity_path(current_supplier, activity), class: "link" do %>
-            <li class="activity_list_item">
+            <li class="activity_list_item <%= "no_stock" if !activity.activity_courses.any? || !activity.activity_courses[0].activity_stocks.any? %>">
               <div class="activity_list_item_front">
                 <div class="activity_list_item_fron_image">
                   <% if !activity.main_image.blank? %>
@@ -30,10 +30,20 @@
                     <div class="activity_index_detail_info">期間：<%= activity.start_date.strftime("%Y年%m月%d日") %>〜<%= activity.end_date.strftime("%Y年%m月%d日") %></div>
                   <% end %>
                   <div class="activity_index_detail_info">大人通常料金：<%= activity.normal_adult_price %>円</div>
-                  <% if !activity.activity_courses.any? %>
+                  <% if !activity.activity_courses.any? || !activity.activity_courses[0].activity_stocks.any? %>
                     <div class="no_stock_alert_box">
                       <span>在庫が登録されていません</span>
                     </div>
+                  <% else %>
+                    <% if activity.activity_courses.any? && activity.activity_courses[0].activity_stocks.any? %>
+                      <% @latest_date = activity.activity_courses[0].activity_stocks.order(date: "DESC").limit(1)[0].date %>
+                      <div class="latest_stock_box">
+                        <span class="latest_stock_text">最新の在庫：<%= @latest_date.year %>年<%=@latest_date.month %>月<%=@latest_date.day %>日まで</span>
+                        <% unless (Date.today + 14) < @latest_date %>
+                          <span class="stock_will_be_expire">あと<%= (@latest_date - Date.today).to_i %>日で在庫切れ</span>
+                        <% end %>
+                      </div>
+                    <% end %>
                   <% end %>
                 </div>
               </div>
@@ -56,118 +66,3 @@
     </ul>
   </div>
 </div>
-
-<style>
-  .supplier_show_content_inside {
-    padding: 20px 20px;
-  }
-  .supplier_profile_box {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  .activity_index_top_box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .activity_index_top_box a.add_btn {
-    background: #2bb561;
-    padding: 5px 15px;
-    border-radius: 8px;
-    color: #fff;
-    font-weight: bold;
-  }
-  li.activity_list_item {
-    padding: 10px 20px 10px 15px;
-    border-bottom: solid 1px #dfdfdf;
-    border-top: solid 1px #dfdfdf;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    border-radius: 6px;
-    margin-bottom: 5px;
-    box-shadow: 0px 0px 7px -4px grey;
-  }
-  a.link:link, a.link:visited, a.link:hover, a.link:active {
-    color: #565656;
-  }
-  .activity_list_item_front {
-    display: flex;
-    align-items: center;
-  }
-  img.activity_icon_image {
-    width: 100px;
-    margin-right: 20px;
-    border-radius: 7px;
-  }
-  .activity_index_detail_info {
-    font-size: 11px;
-    color: darkgrey;
-  }
-  .no_stock_alert_box span {
-    background: #ffc6c6;
-    padding: 4px 15px;
-    text-align: center;
-    font-size: 12px;
-    border-radius: 20px;
-  }
-  .to_stock_btn_on_activity_index {
-    padding: 6px 20px;
-    border-radius: 30px;
-    font-size: 12px;
-    margin-top: 5px;
-  }
-  .to_stock_btn_on_activity_index.edit_link {
-    background: lightgray;
-    color: #797979;
-  }
-  .to_stock_btn_on_activity_index.add_link {
-    background: #0068b6;
-    color: #fff;
-  }
-  .to_stock_btn_on_activity_index:hover {
-    opacity: 0.6;
-  }
-  nav.pagination {
-    /* background: #eee; */
-    width: 90%;
-    max-width: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* border: solid 1px lightgray; */
-    /* border-radius: 6px; */
-    margin: 20px auto;
-  }
-  span.page {
-    width: 34px;
-    /* border-left: solid 0.5px lightgray; */
-    /* text-align: center; */
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-  }
-  span.page.current {
-    background: #0068b6;
-    color: #fff;
-    border-radius: 40px;
-  }
-  span.page a {
-    display: block;
-    width: 100%;
-    text-align: center;
-      /* padding: 6px 7px; */
-  }
-  span.next {
-    padding: 0 6px;
-  }
-  span.prev {
-    display: none;
-  }
-  span.next {
-    display: none;
-  }
-
-</style>

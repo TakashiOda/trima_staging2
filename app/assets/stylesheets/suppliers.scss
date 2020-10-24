@@ -9,7 +9,6 @@ header.erb_header {
 
 .btn-submit {
   background: $user-main-color !important;
-  // height: 43px;
 }
 
 .user_show_side {
@@ -25,7 +24,6 @@ a.org_edit_btn {
 }
 
 // 事業者thankyou メール===========================
-
 .static_pages.short_messages_box {
   display: flex;
   flex-direction: column;
@@ -212,9 +210,122 @@ img.business_icon_image {
   }
 }
 
+
+// 事業者 体験一覧============================================
+.activity_index_top_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.activity_index_top_box a.add_btn {
+  padding: 5px 15px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+}
+li.activity_list_item {
+  padding: 10px 20px 10px 15px;
+  border-bottom: solid 1px #dfdfdf;
+  border-top: solid 1px #dfdfdf;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  box-shadow: 0px 0px 7px -4px grey;
+}
+li.activity_list_item.no_stock {
+    background: #cecece;
+}
+a.link:link, a.link:visited, a.link:hover, a.link:active {
+  color: #565656;
+}
+.activity_list_item_front {
+  display: flex;
+  align-items: center;
+}
+img.activity_icon_image {
+  width: 100px;
+  margin-right: 20px;
+  border-radius: 7px;
+}
+.activity_index_detail_info {
+  font-size: 11px;
+  color: darkgrey;
+}
+.no_stock_alert_box span {
+  background: #ffc6c6;
+  padding: 4px 15px;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 20px;
+}
+.latest_stock_box span.latest_stock_text {
+  font-size: 11px !important;
+  color: #888888 !important;
+  background: #d7eeff;
+  padding: 4px 15px;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 20px;
+}
+span.stock_will_be_expire {
+    font-size: 13px;
+    color: red;
+    margin-left: 5px;
+}
+.to_stock_btn_on_activity_index {
+  padding: 6px 20px;
+  border-radius: 30px;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.to_stock_btn_on_activity_index.edit_link {
+  background: lightgray;
+  color: #797979;
+}
+.to_stock_btn_on_activity_index.add_link {
+  background: #0068b6;
+  color: #fff;
+}
+.to_stock_btn_on_activity_index:hover {
+  opacity: 0.6;
+}
+nav.pagination {
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+span.page {
+  width: 34px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+}
+span.page.current {
+  background: #0068b6;
+  color: #fff;
+  border-radius: 40px;
+}
+span.page a {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+span.next {
+  padding: 0 6px;
+}
+span.prev {
+  display: none;
+}
+span.next {
+  display: none;
+}
 // 事業者 体験============================================
-
-
 #user_edit_image_upload_btn:hover {
   cursor: pointer;
 }
@@ -693,8 +804,6 @@ div#guides .nested-fields {
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  /* background: #ffffffd4; */
-  // float: right;
   margin-bottom: -50px;
 }
 .stock_form_btn_box_inner {
@@ -718,10 +827,7 @@ input.button.btn-submit.stock_submit:hover {
 
 .stock_form {
   padding: 0 !important;
-  // padding: 15px 5px;
-  // background: #fff;
   border-radius: 3px;
-  // border-top: solid 3px #0268b5;
 }
 .stock_form form {
     padding: 0 !important;
@@ -839,7 +945,6 @@ a.month_tab {
 a.month_tab:hover {
   cursor: pointer !important;
   opacity: 0.6;
-  // background: #037eda !important;
 }
 a.month_tab.selected {
   background: #0068b6;
@@ -860,7 +965,6 @@ a.month_tab.selected {
 }
 .date_column_allset {
   width: 160px;
-  // padding: 5px 0px 5px 5px;
 }
 .date_item_allset {
   font-size: 12px;
@@ -969,7 +1073,6 @@ a.month_tab.selected {
   align-items: center;
   justify-content: center;
   border-top: none;
-  // box-shadow: 1px 1px 4px -1px #888888;
 }
 
 .all_stock_input button:hover {
