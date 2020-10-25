@@ -27,7 +27,7 @@ gem 'nokogiri'
 gem 'cocoon'
 gem "jquery-rails"
 gem 'simple_calendar'
-
+gem "actionview", ">= 6.0.3.3"
 
 # gem "bootstrap-sass", "~>3.3.6"
 # gem "jquery-ui-rails"
