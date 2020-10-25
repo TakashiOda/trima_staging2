@@ -21,6 +21,14 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.float   :longitude
       t.float   :latitude
 
+      # 集合場所1
+      t.string  :meeting_spot1_japanese_address
+      # t.string  :meeting_spot1_english_address
+      t.text    :meeting_spot1_japanese_description
+      # t.text    :meeting_spot1_english_description
+      t.float   :meeting_spot1_longitude
+      t.float   :meeting_spot1_latitude
+
       #　参加条件
       t.integer :maximum_num, default: 1
       t.integer :minimum_num, default: 5
@@ -62,6 +70,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
 
       #その他設定
       t.boolean :advertise_activate, default: false #0 => approved, 1 =>not yet
+      t.string :status, default: 'draft' #draft, published, deleted
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
       t.boolean :stop_now, default: false
 

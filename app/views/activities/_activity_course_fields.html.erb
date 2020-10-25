@@ -4,7 +4,7 @@
       <%= f.time_select :start_time, {:minute_step => 10},class: "form-control time_input", oninput: 'hasInput()' %>
     </div>
     <div class="course_row2">
-      <%= link_to_remove_association f, class: "remove_course_btn", onClick: 'hasInput()' do %>
+      <%= link_to_remove_association f, class: "remove_course_btn", onClick: 'checkCourseNum()' do %>
         <span><i class="fas fa-times"></i>削除</span>
       <% end %>
     </div>

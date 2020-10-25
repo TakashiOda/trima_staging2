@@ -30,6 +30,10 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.string "building"
     t.float "longitude"
     t.float "latitude"
+    t.string "meeting_spot1_japanese_address"
+    t.text "meeting_spot1_japanese_description"
+    t.float "meeting_spot1_longitude"
+    t.float "meeting_spot1_latitude"
     t.integer "maximum_num", default: 1
     t.integer "minimum_num", default: 5
     t.integer "available_age", default: 6
@@ -58,6 +62,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.boolean "saturday_open", default: true
     t.boolean "sunday_open", default: true
     t.boolean "advertise_activate", default: false
+    t.string "status", default: "draft"
     t.boolean "is_approved", default: false
     t.boolean "stop_now", default: false
     t.datetime "created_at", precision: 6, null: false

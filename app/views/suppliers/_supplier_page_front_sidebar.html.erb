@@ -1,23 +1,62 @@
 <ul>
-  <li><i class="far fa-bookmark"></i><%= link_to "ダッシュボード", supplier_dashboard_path(current_supplier) %></li>
-  <li>
-    <i class="fas fa-suitcase"></i>
-    <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>
-      <%= link_to "体験事業", supplier_activities_path(current_supplier.id) %>
-    <% else %>
-      <%= link_to "体験事業", supplier_path(current_supplier) %>
-    <% end %>
-  </li>
+  <% if controller_name == 'suppliers' && action_name == 'dashboard' %>
+    <li class="selected_menu_item">
+      <i class="far fa-bookmark"></i>
+      <%= link_to "ダッシュボード", supplier_dashboard_path(current_supplier) %>
+    </li>
+  <% else %>
+    <li>
+      <i class="far fa-bookmark"></i>
+      <%= link_to "ダッシュボード", supplier_dashboard_path(current_supplier) %>
+    </li>
+  <% end %>
+  <% if controller_name == 'activities' %>
+    <li class="selected_menu_item">
+      <i class="fas fa-suitcase"></i>
+      <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>
+        <%= link_to "体験事業", supplier_activities_path(current_supplier.id) %>
+      <% else %>
+        <%= link_to "体験事業", supplier_path(current_supplier) %>
+      <% end %>
+    </li>
+  <% else %>
+    <li>
+      <i class="fas fa-suitcase"></i>
+      <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>
+        <%= link_to "体験事業", supplier_activities_path(current_supplier.id) %>
+      <% else %>
+        <%= link_to "体験事業", supplier_path(current_supplier) %>
+      <% end %>
+    </li>
+  <% end %>
   <li><i class="far fa-bookmark"></i><%= link_to "予約一覧", "#" %></li>
-  <li>
-    <i class="fas fa-user"></i>
-    <%= link_to "アカウント情報",supplier_path(current_supplier)%>
-  </li>
+  <% if controller_name == 'suppliers' || controller_name == 'activity_businesses' %>
+    <% if action_name != 'dashboard' %>
+      <li class="selected_menu_item">
+        <i class="fas fa-suitcase"></i>
+        <%= link_to "アカウント情報", supplier_path(current_supplier) %>
+      </li>
+    <% else %>
+      <li>
+        <i class="fas fa-suitcase"></i>
+        <%= link_to "アカウント情報", supplier_path(current_supplier) %>
+      </li>
+    <% end %>
+  <% else %>
+    <li>
+      <i class="fas fa-suitcase"></i>
+      <%= link_to "アカウント情報", supplier_path(current_supplier) %>
+    </li>
+  <% end %>
   <li><i class="fas fa-cog"></i><%= link_to "ログアウト", destroy_supplier_session_path %></li>
 </ul>
 <style>
   svg {
     color: #fff;
     margin-right: 12px;
+  }
+  li.selected_menu_item {
+    background: #3ea7f7;
+    border-radius: 50px;
   }
 </style>

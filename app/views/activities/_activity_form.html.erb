@@ -105,19 +105,41 @@
           <%= f.label "実施する市区町村" %>
           <%= f.collection_select :town_id, Town.all, :id, :jp_name, {prompt: "選択してください"}, class: "form-control", onChange: 'hasInput()' %>
         </div>
-        <!-- <div class="form-group">
-          <%#= f.label "実施する住所" %>
-          <%#= f.text_field :detail_address, class: "form-control" %>
-        </div> -->
         <div class="form-group">
           <div class="row">
             <div class="col-half">
-              <%= f.label "経度" %>
-              <%= f.text_field :latitude, class: "form-control", id: 'latitude_input', oninput: 'hasInput()' %>
+              <%= f.label "緯度" %>
+              <%= f.text_field :latitude, class: "form-control", id: 'latitude_input' %>
             </div>
             <div class="col-half">
-              <%= f.label "緯度" %>
-              <%= f.text_field :longitude, class: "form-control", id: 'longitude_input', oninput: 'hasInput()' %>
+              <%= f.label "経度" %>
+              <%= f.text_field :longitude, class: "form-control", id: 'longitude_input' %>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="form_section">
+        <div class="form_big_title">
+          <h3>集合場所</h3>
+        </div>
+        <div id="meetingmap"></div>
+        <div class="form-group">
+          <%= f.label "集合場所" %>
+          <%= f.text_field :meeting_spot1_japanese_address, maxlength: 80, class: "form-control", oninput: 'hasInput()' %>
+        </div>
+        <div class="form-group">
+          <%= f.label "集合場所の補足" %>
+          <%= f.text_area :meeting_spot1_japanese_description, maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-half">
+              <%= f.label "集合場所の緯度" %>
+              <%= f.text_field :meeting_spot1_latitude, class: "form-control", id: 'meeting_spot1_latitude' %>
+            </div>
+            <div class="col-half">
+              <%= f.label "集合場所の経度" %>
+              <%= f.text_field :meeting_spot1_longitude, class: "form-control", id: 'meeting_spot1_longitude' %>
             </div>
           </div>
         </div>
@@ -294,7 +316,7 @@
               <%= render "activity_course_fields", f: t %>
             <% end %>
             <div class="links">
-              <%= link_to_add_association "コース時間を追加", f, :activity_courses, form_name: 'f', id:"course_add_btn" %>
+              <%= link_to_add_association "体験時間を追加", f, :activity_courses, form_name: 'f', id:"course_add_btn" %>
             </div>
           </div>
         </div>
@@ -329,9 +351,11 @@
         <div class="submit_btn_box">
           <%=link_to "キャンセル", "#", class: 'button btn-cansel', id: "activity_form_cansel_btn" %>
           <% if action_name == "new" %>
-            <%= f.submit('登録',class: 'button btn-submit', id: "activity_form_submit_btn") %>
+            <%= f.submit('下書き保存', name: "save_status",value: "下書き保存", class: 'button btn-submit', id: "activity_form_draft_btn") %>
+            <%= f.submit('登録', name: "save_status",value: "登録",class: 'button btn-submit', id: "activity_form_submit_btn") %>
           <% else %>
-            <%= f.submit('保存',class: 'button btn-submit', id: "activity_form_submit_btn") %>
+            <%= f.submit('下書き保存', name: "save_status",value: "下書き保存",class: 'button btn-submit', id: "activity_form_draft_btn") %>
+            <%= f.submit('保存', name: "save_status",value: "保存",class: 'button btn-submit', id: "activity_form_submit_btn") %>
           <% end %>
         </div>
         <div class="activity_activate_btn_box">
@@ -339,10 +363,12 @@
         </div>
         <div class="activity_delete_btn_box">
           <% if action_name == 'edit' %>
-            <%= link_to supplier_activity_path(current_supplier, @activity), method: :delete, data: { confirm: '本当にゴミ箱に移動しますか?' } do %>
-              <span><i class="far fa-trash-alt"></i></span>
-              <span>ゴミ箱に入れる</span>
-            <% end %>
+            <%= link_to "ゴミ箱に入れる", supplier_activity_delete_activity_path(current_supplier, @activity), method: :put %>
+            <%#= link_to "ゴミ箱に入れる",supplier_activity_delete_activity_path(current_supplier, @activity), method: :patch %>
+            <%#= link_to supplier_activity_path(current_supplier, @activity), method: :delete, data: { confirm: '本当にゴミ箱に移動しますか?' } do %>
+              <!-- <span><i class="far fa-trash-alt"></i></span>
+              <span>ゴミ箱に入れる</span> -->
+            <%# end %>
           <% end %>
         </div>
         <div class="link_to_stockFrom_onActivityForm">
@@ -374,6 +400,8 @@
 
 <script type="text/javascript">
   function hasInput() {
+    const draftBtn = document.getElementById('activity_form_draft_btn');
+    draftBtn.classList.add('need_submit');
     const submitBtn = document.getElementById('activity_form_submit_btn');
     submitBtn.classList.add('need_submit');
   }
@@ -568,6 +596,7 @@
 
   // 年齢＆料金を追加する際にシーズン料金がONなら一定時間後にシーズン料金欄を表示
   document.getElementById("ageprice_add_btn").onclick = function(){
+    hasInput();
     setTimeout(function(){
       var isChecked = document.getElementById("activity_has_season_price_true").checked;
       var seasonPriceBoxes = document.querySelectorAll("div.season_price");
@@ -580,6 +609,56 @@
         for (var i = 0; i < seasonPriceBoxes.length; i++) {
           seasonPriceBoxes[i].children[0].classList.add("hidden");
         }
+      }
+
+      //作れる料金は3つまで
+      const agePriceItems = document.getElementById('ageprice').getElementsByClassName('nested-fields');
+      const addBtn = document.getElementById('ageprice_add_btn');
+      if (agePriceItems.length >= 3) {
+        addBtn.classList.add('disabled');
+        addBtn.text = '年齢別料金は3つまで';
+      } else {
+        addBtn.classList.remove('disabled');
+      }
+
+    }, 100);
+  }
+
+  function checkAgePriceNum() {
+    hasInput();
+    setTimeout(function(){
+      const courseItems = document.getElementById('ageprice').getElementsByClassName('nested-fields');
+      const addBtn = document.getElementById('ageprice_add_btn');
+      if (courseItems.length < 3) {
+        addBtn.classList.remove('disabled');
+        addBtn.text = '年齢別料金を追加';
+      }
+    }, 100);
+  }
+
+  // 作れるコースは5こまで
+  document.getElementById("course_add_btn").onclick = function(){
+    hasInput();
+    setTimeout(function(){
+      const courseItems = document.getElementById('courses').getElementsByClassName('nested-fields');
+      const addBtn = document.getElementById('course_add_btn');
+      if (courseItems.length >= 5) {
+        addBtn.classList.add('disabled');
+        addBtn.text = '体験時間は5つまで';
+      } else {
+        addBtn.classList.remove('disabled');
+      }
+    }, 100);
+  }
+
+  function checkCourseNum() {
+    hasInput();
+    setTimeout(function(){
+      const courseItems = document.getElementById('courses').getElementsByClassName('nested-fields');
+      const addBtn = document.getElementById('course_add_btn');
+      if (courseItems.length < 5) {
+        addBtn.classList.remove('disabled');
+        addBtn.text = '体験時間を追加';
       }
     }, 100);
   }
@@ -651,20 +730,54 @@
     var myLatlng = {lat: 43.067538712974866, lng: 141.34876574909862};
     var map = new google.maps.Map(
         document.getElementById('map'), {zoom: 8, center: myLatlng});
-
-    // Create the initial InfoWindow.
     var infoWindow = new google.maps.InfoWindow(
         {content: 'アクティビティの実施場所にピンを落としてください', position: myLatlng});
     infoWindow.open(map);
-
-    // Configure the click listener.
     map.addListener('click',function(mapsMouseEvent) {
+      const str = mapsMouseEvent.latLng.toString();
+      const deleteBlank = str.replace(/\s+/g,'');
+      const deleteBucket1 = deleteBlank.replace(/\(/g,'');
+      const deleteBucketAll = deleteBucket1.replace(/\)/g,'');
+      const latLngArray = deleteBucketAll.split(',');
+      const newLat = latLngArray[0];
+      const newLng = latLngArray[1];
+      latfield.value = newLat;
+      lngfield.value = newLng;
+
       infoWindow.close();
       infoWindow = new google.maps.InfoWindow({position: mapsMouseEvent.latLng});
       infoWindow.setContent(mapsMouseEvent.latLng.toString());
       infoWindow.open(map);
     });
+
+    //map2
+    const meet1latfield = document.getElementById('meeting_spot1_latitude');
+    const meet1lngfield = document.getElementById('meeting_spot1_longitude');
+    var meet1myLatlng = {lat: 43.067538712974866, lng: 141.34876574909862};
+    var meetingmap = new google.maps.Map(
+        document.getElementById('meetingmap'), {zoom: 8, center: meet1myLatlng});
+    var meet1infoWindow = new google.maps.InfoWindow(
+        {content: 'アクティビティの集合場所にピンを落としてください', position: meet1myLatlng});
+    meet1infoWindow.open(meetingmap);
+    meetingmap.addListener('click',function(mapsMouseEvent) {
+      const str = mapsMouseEvent.latLng.toString();
+      const deleteBlank = str.replace(/\s+/g,'');
+      const deleteBucket1 = deleteBlank.replace(/\(/g,'');
+      const deleteBucketAll = deleteBucket1.replace(/\)/g,'');
+      const latLngArray = deleteBucketAll.split(',');
+      const newLat = latLngArray[0];
+      const newLng = latLngArray[1];
+      meet1latfield.value = newLat;
+      meet1lngfield.value = newLng;
+
+      meet1infoWindow.close();
+      meet1infoWindow = new google.maps.InfoWindow({position: mapsMouseEvent.latLng});
+      meet1infoWindow.setContent(mapsMouseEvent.latLng.toString());
+      meet1infoWindow.open(meetingmap);
+
+    });
   }
+
 </script>
 <script defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8qlUsnzijhVLdxI5WPk6fy5dnrEGru8Q&callback=initMap">
