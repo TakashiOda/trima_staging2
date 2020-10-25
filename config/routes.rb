@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+
+  get "privacy_policy", to: "static_pages#privacy_policy", as: :privacy_policy
+  get "team_of_service", to: "static_pages#team_of_service", as: :team_of_service
+  get "cansel_policy", to: "static_pages#cansel_policy", as: :cansel_policy
+
+  # get 'static_pages/team_of_service'
+  # get 'static_pages/cansel_policy'
+
   get 'activity_stocks/new'
   get 'activity_stocks/edit'
   get 'basic_datas/index', to: 'basic_datas#index', as: :basic_index
