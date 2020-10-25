@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.boolean "saturday_open", default: true
     t.boolean "sunday_open", default: true
     t.boolean "advertise_activate", default: false
+    t.string "status", default: "draft"
     t.boolean "is_approved", default: false
     t.boolean "stop_now", default: false
     t.datetime "created_at", precision: 6, null: false

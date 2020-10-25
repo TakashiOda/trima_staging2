@@ -1,22 +1,41 @@
 class ActivitiesController < ApplicationController
   def index
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
-    @activities = Activity.where(activity_business_id: @activity_business.id).order(created_at: :desc).page(params[:page]).per(10)
+    @activities = Activity.where(activity_business_id: @activity_business.id)
+                          .order(created_at: :desc).page(params[:page]).per(10)
   end
+
+  def drafts_activities
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
+    @activities = Activity.where(activity_business_id: @activity_business.id)
+                          .where(status: 'draft').order(created_at: :desc).page(params[:page]).per(10)
+  end
+
+  def published_activities
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
+    @activities = Activity.where(activity_business_id: @activity_business.id)
+                          .where(status: 'published')
+                          .where(stop_now: false)
+                          .order(created_at: :desc).page(params[:page]).per(10)
+  end
+
+  def deleted_activities
+    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
+    @activities = Activity.where(activity_business_id: @activity_business.id)
+                          .where(status: 'deleted').order(created_at: :desc).page(params[:page]).per(10)
+  end
+
 
   def show
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = Activity.find(params[:id])
   end
 
-  # PICTURE_COUNT = 3
-
   def new
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build
     @activity.activity_ageprices.build
     @activity.activity_translations.build
-    # PICTURE_COUNT.times { @activity.activity_images.build }
   end
 
   def create
@@ -46,8 +65,12 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
       @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
+        if params[:save_status] == '下書き保存'
+          @activity.status = 'draft'
+        else
+          @activity.status = 'published'
+        end
       @activity.save!
-
       redirect_to edit_supplier_activity_path(current_supplier, @activity)
       # redirect_to supplier_activities_path(current_supplier)
     else
@@ -64,6 +87,20 @@ class ActivitiesController < ApplicationController
       flash[:alert] = '削除に失敗しました'
       render 'edit'
     end
+  end
+
+  def delete_activity
+    @activity = Activity.find(params[:activity_id])
+    # if !@activity.nil?
+      @activity.status = 'deleted'
+      @activity.stop_now = true
+      @activity.save!
+      redirect_to supplier_activities_path(current_supplier)
+      # else
+      #   flash[:alert] = '削除に失敗しました'
+      #   redirect_to supplier_activities_path(current_supplier)
+      # end
+    # end
   end
 
 
@@ -289,7 +326,7 @@ class ActivitiesController < ApplicationController
                                       :friday_open, :saturday_open, :sunday_open,
                                       :january, :febrary, :march, :april,
                                       :may, :june, :july, :august, :september, :october,
-                                      :november, :december, :advertise_activate, :is_approved, :stop_now,
+                                      :november, :december, :advertise_activate, :is_approved, :stop_now, :status,
                                       activity_courses_attributes: [:id, :activity_id, :start_time, :_destroy,
                                         activity_stocks_attributes: [:id, :activity_id, :date,
                                         :activity_course_id, :stock, :season_price]],

@@ -329,9 +329,11 @@
         <div class="submit_btn_box">
           <%=link_to "キャンセル", "#", class: 'button btn-cansel', id: "activity_form_cansel_btn" %>
           <% if action_name == "new" %>
-            <%= f.submit('登録',class: 'button btn-submit', id: "activity_form_submit_btn") %>
+            <%= f.submit('下書き保存', name: "save_status",value: "下書き保存", class: 'button btn-submit', id: "activity_form_draft_btn") %>
+            <%= f.submit('登録', name: "save_status",value: "登録",class: 'button btn-submit', id: "activity_form_submit_btn") %>
           <% else %>
-            <%= f.submit('保存',class: 'button btn-submit', id: "activity_form_submit_btn") %>
+            <%= f.submit('下書き保存', name: "save_status",value: "下書き保存",class: 'button btn-submit', id: "activity_form_draft_btn") %>
+            <%= f.submit('保存', name: "save_status",value: "保存",class: 'button btn-submit', id: "activity_form_submit_btn") %>
           <% end %>
         </div>
         <div class="activity_activate_btn_box">
@@ -339,10 +341,12 @@
         </div>
         <div class="activity_delete_btn_box">
           <% if action_name == 'edit' %>
-            <%= link_to supplier_activity_path(current_supplier, @activity), method: :delete, data: { confirm: '本当にゴミ箱に移動しますか?' } do %>
-              <span><i class="far fa-trash-alt"></i></span>
-              <span>ゴミ箱に入れる</span>
-            <% end %>
+            <%= link_to "ゴミ箱に入れる", supplier_activity_delete_activity_path(current_supplier, @activity), method: :put %>
+            <%#= link_to "ゴミ箱に入れる",supplier_activity_delete_activity_path(current_supplier, @activity), method: :patch %>
+            <%#= link_to supplier_activity_path(current_supplier, @activity), method: :delete, data: { confirm: '本当にゴミ箱に移動しますか?' } do %>
+              <!-- <span><i class="far fa-trash-alt"></i></span>
+              <span>ゴミ箱に入れる</span> -->
+            <%# end %>
           <% end %>
         </div>
         <div class="link_to_stockFrom_onActivityForm">
@@ -374,6 +378,8 @@
 
 <script type="text/javascript">
   function hasInput() {
+    const draftBtn = document.getElementById('activity_form_draft_btn');
+    draftBtn.classList.add('need_submit');
     const submitBtn = document.getElementById('activity_form_submit_btn');
     submitBtn.classList.add('need_submit');
   }

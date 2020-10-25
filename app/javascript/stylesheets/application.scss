@@ -123,6 +123,7 @@ body.erb_body.add_padding_top {
 }
 .btn-submit {
   color: #fff;
+  margin-bottom: 10px;
 }
 
 .btn-cansel {
@@ -451,7 +452,7 @@ div#password_input_box {
 }
 .user_show_side {
   width: 20%;
-  padding: 20px 0 30px 30px;
+  padding: 20px 10px 30px 20px;
 }
 .user_show_side ul {
   position: sticky;
@@ -521,11 +522,16 @@ div#password_input_box {
 }
 
 .user_show_side ul li {
-  margin-bottom: 6px;
-  font-size: 18px;
+  margin-bottom: 9px;
+  font-size: 16px;
+  padding: 0 15px;
   a {
     color: #fff;
   }
+}
+.user_show_side ul li:hover {
+  background: #2d426f;
+  border-radius: 50px;
 }
 
 .activity_stock_top_box {

@@ -62,6 +62,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
 
       #その他設定
       t.boolean :advertise_activate, default: false #0 => approved, 1 =>not yet
+      t.string :status, default: 'draft' #draft, published, deleted
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
       t.boolean :stop_now, default: false
 

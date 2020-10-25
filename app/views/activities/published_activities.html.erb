@@ -4,10 +4,10 @@
     <%= link_to "体験を追加", new_supplier_activity_path(current_supplier), class: "add_btn" %>
   </div>
   <div class="activity_index_activity_list_box">
-    <h3>体験一覧</h3>
+    <h3>公開または申請中の体験一覧</h3>
     <div class="activity_category_by_status_linkbox">
-      <%=link_to 'すべての体験', supplier_activities_path(current_supplier), class: 'selected' %>
-      <%=link_to '掲載または申請中', supplier_published_activities_path(current_supplier), class: '' %>
+      <%=link_to 'すべての体験', supplier_activities_path(current_supplier), class: '' %>
+      <%=link_to '掲載または申請中', supplier_published_activities_path(current_supplier), class: 'selected' %>
       <%=link_to '下書き', supplier_drafts_activities_path(current_supplier), class: '' %>
       <%=link_to 'ゴミ箱', supplier_deleted_activities_path(current_supplier), class: '' %>
     </div>

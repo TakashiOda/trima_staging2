@@ -1,13 +1,24 @@
 <ul>
   <li><i class="far fa-bookmark"></i><%= link_to "ダッシュボード", supplier_dashboard_path(current_supplier) %></li>
-  <li>
-    <i class="fas fa-suitcase"></i>
-    <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>
-      <%= link_to "体験事業", supplier_activities_path(current_supplier.id) %>
-    <% else %>
-      <%= link_to "体験事業", supplier_path(current_supplier) %>
-    <% end %>
-  </li>
+  <% if controller_name == 'activities' %>
+    <li class="selected_menu_item">
+      <i class="fas fa-suitcase"></i>
+      <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>
+        <%= link_to "体験事業", supplier_activities_path(current_supplier.id) %>
+      <% else %>
+        <%= link_to "体験事業", supplier_path(current_supplier) %>
+      <% end %>
+    </li>
+  <% else %>
+    <li>
+      <i class="fas fa-suitcase"></i>
+      <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>
+        <%= link_to "体験事業", supplier_activities_path(current_supplier.id) %>
+      <% else %>
+        <%= link_to "体験事業", supplier_path(current_supplier) %>
+      <% end %>
+    </li>
+  <% end %>
   <li><i class="far fa-bookmark"></i><%= link_to "予約一覧", "#" %></li>
   <li>
     <i class="fas fa-user"></i>
@@ -19,5 +30,9 @@
   svg {
     color: #fff;
     margin-right: 12px;
+  }
+  li.selected_menu_item {
+    background: #3ea7f7;
+    border-radius: 50px;
   }
 </style>
