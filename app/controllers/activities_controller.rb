@@ -318,6 +318,8 @@ class ActivitiesController < ApplicationController
                                       :remove_main_image, :remove_second_image, :remove_third_image, :remove_fourth_image,
                                       :prefecture_id, :area_id, :town_id,
                                       :detail_address, :longitude, :latitude,
+                                      :meeting_spot1_japanese_address, :meeting_spot1_japanese_description,
+                                      :meeting_spot1_longitude, :meeting_spot1_latitude,
                                       :activity_minutes,
                                       :normal_adult_price, :has_season_price,
                                       :maximum_num, :minimum_num, :available_age,  :is_all_year_open,

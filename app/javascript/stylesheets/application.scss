@@ -42,6 +42,10 @@ a {
     opacity: 0.75 !important;
   }
 }
+a.disabled{
+  pointer-events: none !important;
+  background: lightgray !important;
+}
 
 
 //2.基本クラス=========================================
