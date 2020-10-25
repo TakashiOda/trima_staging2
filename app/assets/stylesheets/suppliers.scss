@@ -233,11 +233,11 @@ img.business_icon_image {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  background: lightgray;
+  background: #e0e0e0;
   border-radius: 50px;
 }
 .activity_category_by_status_linkbox a {
-  background: gainsboro;
+  background: #cecece;
   padding: 4px 11px;
   width: 21%;
   height: 14px;
@@ -248,6 +248,9 @@ img.business_icon_image {
   justify-content: center;
   align-items: center;
   border-radius: 50px;
+}
+.activity_category_by_status_linkbox a:hover {
+  opacity: 0.7;
 }
 .activity_category_by_status_linkbox a.selected {
   background: #0068b6;
