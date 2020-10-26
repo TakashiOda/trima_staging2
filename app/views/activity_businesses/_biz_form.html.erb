@@ -16,7 +16,7 @@
               <% if current_supplier && @activity_business.profile_image? %>
                 <%= image_tag @activity_business.profile_image.to_s, class: 'user_present_image', id: 'user_present_image' %>
               <% else %>
-                <%= image_tag 'default_images/no_avatar_image.png', class: 'user_present_image', id: 'user_present_image' %>
+                <%= image_tag 'default_images/no_avatar_for_biz.png', class: 'user_present_image', id: 'user_present_image' %>
                 <%= form.hidden_field :profile_image_cache %>
               <% end %>
             </div>
@@ -44,42 +44,42 @@
           <div class="tab-content-items">
             <div id="japanese_tab_content">
               <div class="form-group">
-                <%= form.label "企業名または屋号・40字以内" %>
-                <%= form.text_field :name, minlength: 3, maxlength: 40, required: true, class: "form-control", oninput: 'hasInput()' %>
+                <%= form.label "企業名または屋号" %>
+                <%= form.text_field :name, minlength: 3, maxlength: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <%= form.label "企業・事業の紹介文（日本語）・200字以内" %>
-                <%= form.text_area :profile_text, rows: 7, minlength: 20, maxlength: 200, required: true, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>企業・事業の紹介文（日本語・残り</span><span id="biz_japanese_description_count">200</span><span>字）</span></label>
+                <%= form.text_area :profile_text, rows: 7, minlength: 20, maxlength: 200, required: true, class: "form-control", oninput: 'countBizDescriptionJP(this)' %>
               </div>
             </div>
             <div class="hidden" id="english_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（英語）・40字以内" %>
+                <%= form.label "体験事業名・屋号（英語）" %>
                 <%= form.text_field :en_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <%= form.label "プロフィール（英語）・200字以内" %>
-                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>企業・事業の紹介文（英語・残り</span><span id="biz_english_description_count">200</span><span>字）</span></label>
+                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'countBizDescriptionEN(this)' %>
               </div>
             </div>
             <div class="hidden" id="chinese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・簡体字）・40字以内" %>
+                <%= form.label "体験事業名・屋号（中国語・簡体字）" %>
                 <%= form.text_field :cn_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <%= form.label "プロフィール（中国語・簡体字）・200字以内" %>
-                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>企業・事業の紹介文（中国語・簡体字・残り</span><span id="biz_chinese_description_count">200</span><span>字）</span></label>
+                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'countBizDescriptionCN(this)' %>
               </div>
             </div>
             <div class="hidden" id="taiwanese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・繁体字）・40字以内" %>
+                <%= form.label "体験事業名・屋号（中国語・繁体字）" %>
                 <%= form.text_field :tw_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <%= form.label "プロフィール（中国語・繁体字）・200字以内" %>
-                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>企業・事業の紹介文（中国語・繁体字・残り</span><span id="biz_taiwanese_description_count">200</span><span>字）</span></label>
+                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'countBizDescriptionTW(this)' %>
               </div>
             </div>
           </div>
@@ -187,9 +187,48 @@
 <% end %>
 
 <script type="text/javascript">
+  (window.onload = function() {
+    const description = document.getElementById('activity_business_profile_text');
+    const enDescription = document.getElementById('activity_business_en_profile_text');
+    const cnDescription = document.getElementById('activity_business_cn_profile_text');
+    const twDescription = document.getElementById('activity_business_tw_profile_text');
+    changeCountAndColor(description, 'biz_japanese_description_count', 200)
+    changeCountAndColor(enDescription, 'biz_english_description_count', 200)
+    changeCountAndColor(cnDescription, 'biz_chinese_description_count', 200)
+    changeCountAndColor(twDescription, 'biz_taiwanese_description_count', 200)
+  })();
+
   function hasInput() {
     const submitBtn = document.getElementById('biz_form_submit_btn');
     submitBtn.classList.add('need_submit');
+  }
+
+  function countBizDescriptionJP(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_japanese_description_count', 200);
+  }
+  function countBizDescriptionEN(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_english_description_count', 200);
+  }
+  function countBizDescriptionCN(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_chinese_description_count', 200);
+  }
+  function countBizDescriptionTW(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_taiwanese_description_count', 200);
+  }
+
+  // textを変更するtarget idと数字を入れると、数字を超えたときにtargetのtextと色を変えてくれる
+  function changeCountAndColor(obj, targetId, textNum) {
+    const leftTextTarget = document.getElementById(targetId);
+    leftTextTarget.innerHTML = textNum-obj.value.length;
+    if ((textNum-obj.value.length) < 20) {
+      leftTextTarget.style.color = 'red';
+    } else {
+      leftTextTarget.style.color = '#8a8a8a';
+    }
   }
 
   function toggleDescriptionTab(obj) {

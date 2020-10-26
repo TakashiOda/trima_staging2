@@ -29,6 +29,11 @@ class ActivitiesController < ApplicationController
   def show
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = Activity.find(params[:id])
+    if @activity.nil?
+      redirect_to new_supplier_activity_path(current_supplier)
+    else
+      redirect_to edit_supplier_activity_path(current_supplier, @activity)
+    end
   end
 
   def new
@@ -44,6 +49,7 @@ class ActivitiesController < ApplicationController
     if @activity.save
       @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
       @activity.save!
+      flash[:notice] = '体験情報が作成されました'
       redirect_to supplier_activities_path(current_supplier)
     else
       render 'new'
@@ -56,12 +62,9 @@ class ActivitiesController < ApplicationController
     if @activity.activity_translations.find_by(language_id: 3).nil?
       @activity.activity_translations.build
     end
-    # count = @activity.activity_images.count
-    # (PICTURE_COUNT - count).times { @activity.activity_images.build }
   end
 
   def update
-    # binding.pry
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
       @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
@@ -71,6 +74,7 @@ class ActivitiesController < ApplicationController
           @activity.status = 'published'
         end
       @activity.save!
+      flash[:notice] = '体験情報が保存されました'
       redirect_to edit_supplier_activity_path(current_supplier, @activity)
       # redirect_to supplier_activities_path(current_supplier)
     else
@@ -91,16 +95,19 @@ class ActivitiesController < ApplicationController
 
   def delete_activity
     @activity = Activity.find(params[:activity_id])
-    # if !@activity.nil?
+    if !@activity.nil?
       @activity.status = 'deleted'
       @activity.stop_now = true
-      @activity.save!
+      if @activity.save
+        redirect_to supplier_activities_path(current_supplier)
+      else
+        flash[:alert] = '削除に失敗しました'
+        redirect_to supplier_activities_path(current_supplier)
+      end
+    else
+      flash[:alert] = 'まだ作成されていないため削除できません'
       redirect_to supplier_activities_path(current_supplier)
-      # else
-      #   flash[:alert] = '削除に失敗しました'
-      #   redirect_to supplier_activities_path(current_supplier)
-      # end
-    # end
+    end
   end
 
 

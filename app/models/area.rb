@@ -1,6 +1,6 @@
 class Area < ApplicationRecord
   belongs_to :prefecture
-
+  has_many :towns
   has_many :project_areas
   has_many :projects, through: :project_areas
 

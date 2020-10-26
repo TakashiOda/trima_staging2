@@ -46,9 +46,9 @@ input.need_submit {
   padding-bottom: 7px;
   font-weight: bold;
 }
-.notice {
-  display: none !important;
-}
+// .notice {
+//   display: none !important;
+// }
 // 事業者thankyou メール=======================終わり=======
 
 
@@ -183,6 +183,11 @@ img.business_icon_image {
 }
 .guide_input_box {
     margin-bottom: 10px;
+}
+.guide_input_box.profile textarea {
+  width: 100% !important;
+  max-height: 200px !important;
+  min-height: 90px !important;
 }
 .guide_language_check_boxes {
   display: flex;
@@ -588,22 +593,35 @@ div#ageprice div.nested-fields:first-child div.ageto span {
   display: none;
 }
 .form-group.season_price_radio_box {
-  flex-direction: column;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+}
+.form-group.activity_season_radio {
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+    justify-content: space-between;
 }
 
 .season_price_radio_box_inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 90px;
+  // height: 90px;
   padding: 0 10px;
+}
+div#activity_date_input_box {
+    margin-bottom: 40px;
 }
 .form-group.season_price_radio_box label:first-child {
   margin-right: 20px;
 }
 .season_price_radio_items {
   display: flex;
-  width: 30%;
+  // width: 30%;
 }
 .season_price_radio_items input[type=radio],
 .season_price_radio_items input[type=radio] {

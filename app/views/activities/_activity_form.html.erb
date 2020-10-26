@@ -29,12 +29,12 @@
                 <%= f.text_field :name, minlength: 6, maxlength: 40, required: true, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <%= f.label "体験の紹介文（日本語）" %>
-                <%= f.text_area :description, rows: 7, minlength: 20, maxlength: 200, required: true, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>体験の紹介文（日本語・残り</span><span id="activity_description_count">200</span><span>字）</span></label>
+                <%= f.text_area :description, rows: 6, minlength: 20, maxlength: 200, required: true, class: "form-control", oninput: 'countDescription(this)' %>
               </div>
               <div class="form-group">
-                <%= f.label "注意事項・持ち物・装備など" %>
-                <%= f.text_area :notes, rows: 7, maxlength: 500, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>注意事項・持ち物・装備など（日本語・残り</span><span id="activity_notes_count">500</span><span>字）</span></label>
+                <%= f.text_area :notes, rows: 7, maxlength: 500, class: "form-control", oninput: 'countNotes(this)' %>
               </div>
             </div>
             <div class="hidden" id="english_tab_content">
@@ -45,12 +45,12 @@
                   <%= english.text_field :name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
                 </div>
                 <div class="form-group">
-                  <%= english.label "体験の紹介文（英語）" %>
-                  <%= english.text_area :profile_text, rows: 7, maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+                  <label><span>体験の紹介文（英語・残り</span><span id="activity_english_description_count">200</span><span>字）</span></label>
+                  <%= english.text_area :profile_text, rows: 6, maxlength: 200, class: "form-control", oninput: 'countEnglishDescription(this)' %>
                 </div>
                 <div class="form-group">
-                  <%= english.label "注意事項・持ち物・装備など" %>
-                  <%= english.text_area :notes, rows: 7, maxlength: 500, class: "form-control", oninput: 'hasInput()' %>
+                  <label><span>注意事項・持ち物・装備など（英語・残り</span><span id="activity_english_notes_count">500</span><span>字）</span></label>
+                  <%= english.text_area :notes, rows: 7, maxlength: 500, class: "form-control", oninput: 'countEnglishNotes(this)' %>
                 </div>
               <% end %>
             </div>
@@ -74,7 +74,7 @@
           <div class="row">
             <div class="col-half">
               <%= f.label "参加できる最低年齢" %>
-              <%= f.number_field :available_age, min: 0, max: 110, required: true, class: "form-control", oninput: 'hasInput()' %>
+              <%= f.number_field :available_age, min: 0, max: 100, required: true, class: "form-control", oninput: 'hasInput()' %>
             </div>
           </div>
         </div>
@@ -82,10 +82,10 @@
           <div class="row">
             <div class="col-half">
               <%= f.label "最少催行人数" %>
-              <%= f.number_field :minimum_num, min: 1, max: 49, required: true, class: "form-control", oninput: 'hasInput()' %>
+              <%= f.number_field :minimum_num, min: 1, max: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
             </div>
             <div class="col-half">
-              <%= f.label "最大人数" %>
+              <%= f.label "最大参加可能人数" %>
               <%= f.number_field :maximum_num, min: 1, max: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
             </div>
           </div>
@@ -96,10 +96,9 @@
           <h3>アクティビティの位置情報</h3>
         </div>
         <div id="map"></div>
-        <%# <%= render 'activity_geolocation_input_map' %>
         <div class="form-group">
           <%= f.label "実施エリア" %>
-          <%= f.collection_select :area_id, Area.all, :id, :local_name, {prompt: "選択してください"}, required: true, class: "form-control", onChange: 'hasInput()' %>
+          <%= f.collection_select :area_id, Area.all, :id, :local_name, {prompt: "選択してください"}, class: "form-control", onChange: 'setActivityArea(this)' %>
         </div>
         <div class="form-group">
           <%= f.label "実施する市区町村" %>
@@ -128,8 +127,8 @@
           <%= f.text_field :meeting_spot1_japanese_address, maxlength: 80, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
-          <%= f.label "集合場所の補足" %>
-          <%= f.text_area :meeting_spot1_japanese_description, maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+          <label><span>集合場所の補足（残り</span><span id="meeting_spot1_japanese_description_count">200</span><span>字）</span></label>
+          <%= f.text_area :meeting_spot1_japanese_description, rows: 6, maxlength: 200, class: "form-control", oninput: 'countMeetingSpot1JPDescription(this)' %>
         </div>
         <div class="form-group">
           <div class="row">
@@ -264,32 +263,35 @@
           <div class="row">
             <div class="col-half">
               <%= f.label "体験所用時間（分）" %>
-              <%= f.number_field :activity_minutes, min: 20 ,step: 5, required: true, class: "form-control", id: "activity_minutes", oninput: 'hasInput()' %>
+              <%= f.number_field :activity_minutes, min: 20, max: 480 ,step: 5, required: true, class: "form-control", id: "activity_minutes", oninput: 'hasInput()' %>
             </div>
           </div>
         </div>
-        <%= f.label "実施期間は通年ですか？" %>
-        <div class="season_price_radio_box_inner">
-          <div class="season_price_radio_items">
-            <div class="season_price_radio_item on">
-              <%= f.radio_button :is_all_year_open, :true, onClick: "isAllYearOpen(this)", oninput: 'hasInput()' %>
-              <%= f.label :is_all_year_open, "通年", {value: :true, style: "display: inline-block;"} %>
+        <div class="form-group activity_season_radio">
+          <%= f.label "実施期間は通年ですか？" %>
+          <div class="season_price_radio_box_inner">
+            <div class="season_price_radio_items">
+              <div class="season_price_radio_item on">
+                <%= f.radio_button :is_all_year_open, :true, onClick: "isAllYearOpen(this)", oninput: 'hasInput()' %>
+                <%= f.label :is_all_year_open, "通年", {value: :true, style: "display: inline-block;"} %>
+              </div>
+              <div class="season_price_radio_item off">
+                <%= f.radio_button :is_all_year_open, :false, onClick: "isLimitedOpen(this)", oninput: 'hasInput()' %>
+                <%= f.label :is_all_year_open, "期間限定", {value: :false, style: "display: inline-block;"} %>
+              </div>
             </div>
-            <div class="season_price_radio_item off">
-              <%= f.radio_button :is_all_year_open, :false, onClick: "isLimitedOpen(this)", oninput: 'hasInput()' %>
-              <%= f.label :is_all_year_open, "期間限定", {value: :false, style: "display: inline-block;"} %>
-            </div>
+
           </div>
-          <div class="form-group <%= "hidden" if @activity.is_all_year_open %>" id="activity_date_input_box">
-            <div class="row">
-              <div class="col-half">
-                <%= f.label "期間の開始日" %>
-                <%= f.date_field :start_date, min: Date.today ,class: "form-control date_select", id: "activity_start_select", onChange: "changeStartDate(this)", oninput: 'hasInput()' %>
-              </div>
-              <div class="col-half">
-                <%= f.label "期間の終了日" %>
-                <%= f.date_field :end_date, min: Date.today ,class: "form-control date_select", id: "activity_end_select", onChange: "changeEndDate(this)", oninput: 'hasInput()' %>
-              </div>
+        </div>
+        <div class="form-group <%= "hidden" if @activity.is_all_year_open %>" id="activity_date_input_box">
+          <div class="row">
+            <div class="col-half">
+              <%= f.label "期間の開始日" %>
+              <%= f.date_field :start_date, min: Date.today ,class: "form-control date_select", id: "activity_start_select", onChange: "changeStartDate(this)", oninput: 'hasInput()' %>
+            </div>
+            <div class="col-half">
+              <%= f.label "期間の終了日" %>
+              <%= f.date_field :end_date, min: Date.today ,class: "form-control date_select", id: "activity_end_select", onChange: "changeEndDate(this)", oninput: 'hasInput()' %>
             </div>
           </div>
         </div>
@@ -349,7 +351,7 @@
     <div class="form_btns_box">
       <div id="form_btns">
         <div class="submit_btn_box">
-          <%=link_to "キャンセル", "#", class: 'button btn-cansel', id: "activity_form_cansel_btn" %>
+          <%=link_to "キャンセル", supplier_activities_path(current_supplier), class: 'button btn-cansel', id: "activity_form_cansel_btn" %>
           <% if action_name == "new" %>
             <%= f.submit('下書き保存', name: "save_status",value: "下書き保存", class: 'button btn-submit', id: "activity_form_draft_btn") %>
             <%= f.submit('登録', name: "save_status",value: "登録",class: 'button btn-submit', id: "activity_form_submit_btn") %>
@@ -380,13 +382,13 @@
                 <span>在庫を編集する</span>
               <% end %>
             <% else %>
-              <%= link_to supplier_activity_new_stocks_first_month_path(current_supplier, @activity), class: 'button btn-link' do %>
+              <%= link_to supplier_activity_new_stocks_first_month_path(current_supplier.id, @activity.id), class: 'button btn-link' do %>
                 <span><i class="fas fa-cubes"></i></span>
                 <span>在庫を登録する</span>
               <% end %>
             <% end %>
           <% else %>
-            <%= link_to supplier_activity_new_stocks_first_month_path(current_supplier, @activity), class: 'button btn-link' do %>
+            <%= link_to supplier_activity_new_stocks_first_month_path(current_supplier.id, @activity.id), class: 'button btn-link' do %>
               <span><i class="fas fa-cubes"></i></span>
               <span>在庫を登録する</span>
             <% end %>
@@ -399,12 +401,60 @@
 
 
 <script type="text/javascript">
+  (window.onload = function() {
+    const description = document.getElementById('activity_description');
+    const notes = document.getElementById('activity_notes');
+    const engDescription = document.getElementById('activity_activity_translations_attributes_0_profile_text');
+    const engNotes = document.getElementById('activity_activity_translations_attributes_0_notes');
+    const meetingDescription = document.getElementById('activity_meeting_spot1_japanese_description');
+    changeCountAndColor(description, 'activity_description_count', 200);
+    changeCountAndColor(notes, 'activity_notes_count', 500);
+    changeCountAndColor(engDescription, 'activity_english_description_count', 200);
+    changeCountAndColor(engNotes, 'activity_english_notes_count', 500);
+    changeCountAndColor(meetingDescription, 'meeting_spot1_japanese_description_count', 200);
+  })();
+
   function hasInput() {
     const draftBtn = document.getElementById('activity_form_draft_btn');
     draftBtn.classList.add('need_submit');
     const submitBtn = document.getElementById('activity_form_submit_btn');
     submitBtn.classList.add('need_submit');
   }
+
+  function countDescription(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'activity_description_count', 200);
+  }
+  function countNotes(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'activity_notes_count', 500);
+  }
+  function countEnglishDescription(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'activity_english_description_count', 200);
+  }
+
+  function countEnglishNotes(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'activity_english_notes_count', 500);
+  }
+  function countMeetingSpot1JPDescription(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'meeting_spot1_japanese_description_count', 200);
+  }
+
+  // textを変更するtarget idと数字を入れると、数字を超えたときにtargetのtextと色を変えてくれる
+  function changeCountAndColor(obj, targetId, textNum) {
+    const leftTextTarget = document.getElementById(targetId);
+    leftTextTarget.innerHTML = textNum-obj.value.length;
+    if ((textNum-obj.value.length) < 20) {
+      leftTextTarget.style.color = 'red';
+    } else {
+      leftTextTarget.style.color = '#8a8a8a';
+    }
+  }
+
+
 
   function toggleDescriptionTab(obj) {
     const tabId = obj.id;
@@ -774,7 +824,6 @@
       meet1infoWindow = new google.maps.InfoWindow({position: mapsMouseEvent.latLng});
       meet1infoWindow.setContent(mapsMouseEvent.latLng.toString());
       meet1infoWindow.open(meetingmap);
-
     });
   }
 

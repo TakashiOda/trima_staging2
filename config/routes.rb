@@ -62,7 +62,7 @@ Rails.application.routes.draw do
     get "deleted_activities", to: "activities#deleted_activities", as: :deleted_activities
     resources :activities do
       put "delete_activity", to: "activities#delete_activity", as: :delete_activity
-      get "stocknew", to: "activities#stock_new", as: :new_stocks
+      # get "stocknew", to: "activities#stock_new", as: :new_stocks
       get "stock_new_first_month", to: "activities#stock_new_first_month", as: :new_stocks_first_month
       get "stock_new_next_month", to: "activities#stock_new_next_month", as: :new_stocks_next_month
       get "stock_new_next2_month", to: "activities#stock_new_next2_month", as: :new_stocks_next2_month
