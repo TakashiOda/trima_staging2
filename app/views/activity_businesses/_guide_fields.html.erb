@@ -26,7 +26,8 @@
       </div>
       <div class="guide_input_box profile">
         <%= f.label "プロフィール（200字以内）" %>
-        <%= f.text_area :introduction, maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+        <label><span>プロフィール（残り</span><span class="biz_guide_description_count">200</span><span>字）</span></label>
+        <%= f.text_area :introduction, maxlength: 200, class: "form-control", oninput: 'countGuideProfile(this)' %>
       </div>
       <div class="guide_input_box guide_language_check_boxes">
         <li>

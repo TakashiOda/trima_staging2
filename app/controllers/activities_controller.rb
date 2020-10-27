@@ -29,6 +29,11 @@ class ActivitiesController < ApplicationController
   def show
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = Activity.find(params[:id])
+    if @activity.nil?
+      redirect_to new_supplier_activity_path(current_supplier)
+    else
+      redirect_to edit_supplier_activity_path(current_supplier, @activity)
+    end
   end
 
   def new
@@ -44,6 +49,7 @@ class ActivitiesController < ApplicationController
     if @activity.save
       @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
       @activity.save!
+      flash[:notice] = '体験情報が作成されました'
       redirect_to supplier_activities_path(current_supplier)
     else
       render 'new'
@@ -56,12 +62,9 @@ class ActivitiesController < ApplicationController
     if @activity.activity_translations.find_by(language_id: 3).nil?
       @activity.activity_translations.build
     end
-    # count = @activity.activity_images.count
-    # (PICTURE_COUNT - count).times { @activity.activity_images.build }
   end
 
   def update
-    # binding.pry
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
       @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
@@ -71,6 +74,7 @@ class ActivitiesController < ApplicationController
           @activity.status = 'published'
         end
       @activity.save!
+      flash[:notice] = '体験情報が保存されました'
       redirect_to edit_supplier_activity_path(current_supplier, @activity)
       # redirect_to supplier_activities_path(current_supplier)
     else
@@ -91,16 +95,47 @@ class ActivitiesController < ApplicationController
 
   def delete_activity
     @activity = Activity.find(params[:activity_id])
-    # if !@activity.nil?
+    if !@activity.nil?
       @activity.status = 'deleted'
       @activity.stop_now = true
-      @activity.save!
+      if @activity.save
+        redirect_to supplier_activities_path(current_supplier)
+      else
+        flash[:alert] = '削除に失敗しました'
+        redirect_to supplier_activities_path(current_supplier)
+      end
+    else
+      flash[:alert] = 'まだ作成されていないため削除できません'
       redirect_to supplier_activities_path(current_supplier)
-      # else
-      #   flash[:alert] = '削除に失敗しました'
-      #   redirect_to supplier_activities_path(current_supplier)
-      # end
-    # end
+    end
+  end
+
+  def copy_activity
+    @activity = Activity.find(params[:activity_id])
+    @new_activity = @activity.dup
+    @new_activity.name = "#{@activity.name}のコピー"
+    # agepricesを複製
+    ageprices = @activity.activity_ageprices
+    ageprices.each do |ageprice|
+      @new_activity.activity_ageprices.build(age_from: ageprice.age_from, age_to: ageprice.age_to,
+                                            normal_price: ageprice.normal_price, high_price: ageprice.high_price,
+                                            low_price: ageprice.low_price)
+    end
+    #coursesを複製
+    course_times = @activity.activity_courses.pluck(:start_time)
+    course_times.each do |course_time|
+      @new_activity.activity_courses.build(start_time: course_time)
+    end
+    #translationを複製
+    translations = @activity.activity_translations
+    translations.each do |translation|
+      @new_activity.activity_translations.build(language_id: translation.language_id, name: translation.name,
+                                                profile_text: translation.profile_text, notes: translation.notes)
+    end
+
+    @new_activity.save!
+    flash[:alert] = '体験を複製しました'
+    redirect_to edit_supplier_activity_path(current_supplier, @new_activity)
   end
 
 
@@ -326,9 +361,9 @@ class ActivitiesController < ApplicationController
                                       :start_date, :end_date,
                                       :monday_open, :tuesday_open, :wednesday_open, :thursday_open,
                                       :friday_open, :saturday_open, :sunday_open,
-                                      :january, :febrary, :march, :april,
-                                      :may, :june, :july, :august, :september, :october,
-                                      :november, :december, :advertise_activate, :is_approved, :stop_now, :status,
+                                      :january, :febrary, :march, :april, :may, :june, :july,
+                                      :august, :september, :october, :november, :december,
+                                      :advertise_activate, :is_approved, :stop_now, :status, :rain_or_shine,
                                       activity_courses_attributes: [:id, :activity_id, :start_time, :_destroy,
                                         activity_stocks_attributes: [:id, :activity_id, :date,
                                         :activity_course_id, :stock, :season_price]],

@@ -56,9 +56,9 @@
         </div>
       <% end %>
     </div>
-    <div class="info_list_box_title_btn">
+    <!-- <div class="info_list_box_title_btn">
       <div onclick="toggleActiviyBusinessInfo(this)"><i class="fas fa-angle-down"></i></div>
-    </div>
+    </div> -->
   </div>
   <!--事業者情報---------------------------------------------------------------->
   <div class="supplier_info_box"><!--メインコンテンツorg-->
@@ -70,7 +70,8 @@
         <% end %>
       </div>
     </div>
-    <div id="supplier_info_contents" class="hidden">
+    <div id="supplier_info_contents">
+    <!-- <div id="supplier_info_contents" class="hidden"> -->
       <% if @supplier_profile.nil? %>
         <div class="info_list_box_contents">
           <div>まだ契約者情報がありません</div>
@@ -104,13 +105,13 @@
         </div>
       <% end %>
     </div>
-    <div class="info_list_box_title_btn">
+    <!-- <div class="info_list_box_title_btn">
       <div onclick="toggleSupplierInfo(this)"><i class="fas fa-angle-down"></i></div>
-    </div>
+    </div> -->
   </div>
 </div><!--メインコンテンツ内部-->
 
-
+<!-- 
 <script>
   function toggleActiviyBusinessInfo(obj) {
     profileBox = document.getElementById('activity_business_info_contents');
@@ -135,4 +136,4 @@
       obj.innerHTML = '<i class="fas fa-angle-down"></i>';
     }
   }
-</script>
+</script> -->

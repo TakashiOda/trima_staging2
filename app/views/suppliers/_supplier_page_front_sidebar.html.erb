@@ -1,55 +1,45 @@
 <ul>
-  <% if controller_name == 'suppliers' && action_name == 'dashboard' %>
-    <li class="selected_menu_item">
+  <%= link_to supplier_dashboard_path(current_supplier) do %>
+    <li class="<%= 'selected_menu_item' if controller_name == 'suppliers' && action_name == 'dashboard' %>">
       <i class="far fa-bookmark"></i>
-      <%= link_to "ダッシュボード", supplier_dashboard_path(current_supplier) %>
-    </li>
-  <% else %>
-    <li>
-      <i class="far fa-bookmark"></i>
-      <%= link_to "ダッシュボード", supplier_dashboard_path(current_supplier) %>
+      <span>ダッシュボード</span>
     </li>
   <% end %>
-  <% if controller_name == 'activities' %>
-    <li class="selected_menu_item">
-      <i class="fas fa-suitcase"></i>
-      <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>
-        <%= link_to "体験事業", supplier_activities_path(current_supplier.id) %>
-      <% else %>
-        <%= link_to "体験事業", supplier_path(current_supplier) %>
-      <% end %>
-    </li>
-  <% else %>
-    <li>
-      <i class="fas fa-suitcase"></i>
-      <% if !ActivityBusiness.find_by(supplier_id:current_supplier.id).nil? %>
-        <%= link_to "体験事業", supplier_activities_path(current_supplier.id) %>
-      <% else %>
-        <%= link_to "体験事業", supplier_path(current_supplier) %>
-      <% end %>
+  <%= link_to supplier_activities_path(current_supplier.id) do %>
+    <li class="<%= 'selected_menu_item' if controller_name == 'activities' %>">
+      <i class="far fa-bookmark"></i>
+      <span>体験事業</span>
     </li>
   <% end %>
-  <li><i class="far fa-bookmark"></i><%= link_to "予約一覧", "#" %></li>
-  <% if controller_name == 'suppliers' || controller_name == 'activity_businesses' %>
-    <% if action_name != 'dashboard' %>
-      <li class="selected_menu_item">
-        <i class="fas fa-suitcase"></i>
-        <%= link_to "アカウント情報", supplier_path(current_supplier) %>
-      </li>
+  <%= link_to "#" do %>
+    <li class="<%= 'selected_menu_item' if controller_name == 'bookings' %>">
+      <i class="far fa-bookmark"></i>
+      <span>予約一覧</span>
+    </li>
+  <% end %>
+  <%= link_to supplier_path(current_supplier.id) do %>
+    <% if controller_name == 'suppliers' || controller_name == 'activity_businesses' %>
+      <% if action_name != 'dashboard' %>
+        <li class="selected_menu_item">
+          <i class="fas fa-suitcase"></i>
+          <span>アカウント情報</span>
+        </li>
+      <% else %>
+        <li>
+          <i class="fas fa-suitcase"></i>
+          <span>アカウント情報</span>
+        </li>
+      <% end %>
     <% else %>
       <li>
         <i class="fas fa-suitcase"></i>
-        <%= link_to "アカウント情報", supplier_path(current_supplier) %>
+        <span>アカウント情報</span>
       </li>
     <% end %>
-  <% else %>
-    <li>
-      <i class="fas fa-suitcase"></i>
-      <%= link_to "アカウント情報", supplier_path(current_supplier) %>
-    </li>
   <% end %>
   <li><i class="fas fa-cog"></i><%= link_to "ログアウト", destroy_supplier_session_path %></li>
 </ul>
+
 <style>
   svg {
     color: #fff;
@@ -58,5 +48,8 @@
   li.selected_menu_item {
     background: #3ea7f7;
     border-radius: 50px;
+  }
+  .user_show_side ul a li span {
+    color: #fff;
   }
 </style>

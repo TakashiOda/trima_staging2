@@ -16,7 +16,7 @@
               <% if current_supplier && @activity_business.profile_image? %>
                 <%= image_tag @activity_business.profile_image.to_s, class: 'user_present_image', id: 'user_present_image' %>
               <% else %>
-                <%= image_tag 'default_images/no_avatar_image.png', class: 'user_present_image', id: 'user_present_image' %>
+                <%= image_tag 'default_images/no_avatar_for_biz.png', class: 'user_present_image', id: 'user_present_image' %>
                 <%= form.hidden_field :profile_image_cache %>
               <% end %>
             </div>
@@ -44,42 +44,42 @@
           <div class="tab-content-items">
             <div id="japanese_tab_content">
               <div class="form-group">
-                <%= form.label "企業名または屋号・40字以内" %>
-                <%= form.text_field :name, minlength: 3, maxlength: 40, required: true, class: "form-control", oninput: 'hasInput()' %>
+                <%= form.label "企業名または屋号" %>
+                <%= form.text_field :name, minlength: 3, maxlength: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <%= form.label "企業・事業の紹介文（日本語）・200字以内" %>
-                <%= form.text_area :profile_text, rows: 7, minlength: 20, maxlength: 200, required: true, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>企業・事業の紹介文（日本語・残り</span><span id="biz_japanese_description_count">200</span><span>字）</span></label>
+                <%= form.text_area :profile_text, rows: 7, minlength: 20, maxlength: 200, required: true, class: "form-control", oninput: 'countBizDescriptionJP(this)' %>
               </div>
             </div>
             <div class="hidden" id="english_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（英語）・40字以内" %>
+                <%= form.label "体験事業名・屋号（英語）" %>
                 <%= form.text_field :en_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <%= form.label "プロフィール（英語）・200字以内" %>
-                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>企業・事業の紹介文（英語・残り</span><span id="biz_english_description_count">200</span><span>字）</span></label>
+                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'countBizDescriptionEN(this)' %>
               </div>
             </div>
             <div class="hidden" id="chinese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・簡体字）・40字以内" %>
+                <%= form.label "体験事業名・屋号（中国語・簡体字）" %>
                 <%= form.text_field :cn_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <%= form.label "プロフィール（中国語・簡体字）・200字以内" %>
-                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>企業・事業の紹介文（中国語・簡体字・残り</span><span id="biz_chinese_description_count">200</span><span>字）</span></label>
+                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'countBizDescriptionCN(this)' %>
               </div>
             </div>
             <div class="hidden" id="taiwanese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・繁体字）・40字以内" %>
+                <%= form.label "体験事業名・屋号（中国語・繁体字）" %>
                 <%= form.text_field :tw_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <%= form.label "プロフィール（中国語・繁体字）・200字以内" %>
-                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'hasInput()' %>
+                <label><span>企業・事業の紹介文（中国語・繁体字・残り</span><span id="biz_taiwanese_description_count">200</span><span>字）</span></label>
+                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'countBizDescriptionTW(this)' %>
               </div>
             </div>
           </div>
@@ -104,6 +104,72 @@
         </div>
         <div class="form-group language_activity_list">
           <%= form.collection_check_boxes :language_ids, Language.where(id: [3,26,28]), :id, :name, {}, {:onChange=>"hasInput();"} %>
+        </div>
+      </section>
+      <section class="form_section">
+        <div class="form_big_title">
+          <h3>体験のキャンセル設定</h3>
+        </div>
+        <div class="radio_item_box">
+          <%= form.label "無料キャンセルの期限" %>
+          <div class="radio_items cansel_setting_radio">
+            <div class="radio_item">
+              <%= form.radio_button :no_charge_cansel_before, :the_day_before, onClick: 'showExplanation(this)', oninput: 'hasInput()' %>
+              <%= form.label :no_charge_cansel_before, "前日まで無料/それ以降は100%", {value: :the_day_before, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item">
+              <%= form.radio_button :no_charge_cansel_before, :three_days_before, onClick: 'showExplanation(this)', oninput: 'hasInput()' %>
+              <%= form.label :no_charge_cansel_before, "3日前まで無料/それ以降は100%", {value: :three_days_before, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item">
+              <%= form.radio_button :no_charge_cansel_before, :a_week_before, onClick: 'showExplanation(this)', oninput: 'hasInput()' %>
+              <%= form.label :no_charge_cansel_before, "1週間前まで無料/それ以降は100%", {value: :a_week_before, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div class="explanation_about_cansel">
+          <div id="explanation_about_the_day_before" class="">
+            <div class="hosoku_title_box">
+              <span class="hosoku_title">補足</span>
+              <span class="hosoku_sub_title">前日まで無料の場合</span>
+            </div>
+            <ul>
+              <li>ユーザーが体験実施日の前日23時59分（現地時間）までにキャンセルする場合、
+              無料キャンセルとなり体験料金は事業者様に支払われません。</li>
+              <li>例えば体験実施日が1月20日の場合、前日1月19日の23時59分までにキャンセルされた場合は
+                無料キャンセルとなり事業者様に料金は支払われず、
+                1月20日0時00分を過ぎてキャンセルされた場合は通常の手数料を差し引いた
+                体験料金の100%が事業者様に支払われます。</li>
+            </ul>
+          </div>
+          <div id="explanation_about_three_days_before" class="hidden">
+            <div class="hosoku_title_box">
+              <span class="hosoku_title">補足</span>
+              <span class="hosoku_sub_title">３日前まで無料の場合</span>
+            </div>
+            <ul>
+              <li>ユーザーが体験実施日の3日前の23時59分（現地時間）までにキャンセルする場合、
+              無料キャンセルとなり体験料金は事業者様に支払われません。</li>
+              <li>例えば体験実施日が1月20日の場合、３日前の1月17日の23時59分までにキャンセルされた場合は
+                無料キャンセルとなり事業者様に料金は支払われず、
+                1月18日0時00分を過ぎてキャンセルされた場合は通常の手数料を差し引いた
+                体験料金の100%が事業者様に支払われます。</li>
+            </ul>
+          </div>
+          <div id="explanation_about_a_week_before" class="hidden">
+            <div class="hosoku_title_box">
+              <span class="hosoku_title">補足</span>
+              <span class="hosoku_sub_title">１週間前まで無料の場合</span>
+            </div>
+            <ul>
+              <li>ユーザーは体験を実施日の１週間前の23時59分（現地時間）までにキャンセルする場合、
+              無料キャンセルとなり体験料金は事業者様に支払われません。</li>
+              <li>例えば体験実施日が1月20日の場合、１週間前の1月13日の23時59分までにキャンセルされた場合は
+                無料キャンセルとなり事業者様に料金は支払われず、
+                1月14日0時00分を過ぎてキャンセルされた場合は通常の手数料を差し引いた
+                体験料金の100%が事業者様に支払われます。</li>
+            </ul>
+          </div>
         </div>
       </section>
       <section class="form_section">
@@ -186,10 +252,119 @@
   </div>
 <% end %>
 
+<style>
+  .radio_items.cansel_setting_radio {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .radio_items.cansel_setting_radio .radio_item {
+    display: flex;
+    align-items: center;
+    border: solid 1px lightgray;
+    margin-bottom: 3px;
+    padding: 5px 0px;
+    border-radius: 5px;
+    width: 100%;
+    height: 30px;
+  }
+  .radio_items.cansel_setting_radio input {
+    margin-left: 15px;
+    width: 10%;
+    height: 20px;
+  }
+  .radio_items.cansel_setting_radio label {
+    width: 90%;
+  }
+  .hosoku_title {
+    font-size: 12px;
+    background: #d0d0d0;
+    display: inline-block;
+    padding: 1px 15px;
+    color: gray;
+    border-radius: 30px;
+    margin: 0;
+  }
+  .hosoku_sub_title {
+    margin: 3px 0;
+    color: gray;
+    font-size: 15px;
+  }
+  div#explanation_about_the_day_before ul,
+  div#explanation_about_three_days_before ul,
+  div#explanation_about_a_week_before ul {
+    list-style: disc !important;
+    padding-left: 20px;
+    margin: 15px 0;
+  }
+  div#explanation_about_the_day_before ul li,
+  div#explanation_about_three_days_before ul li,
+  div#explanation_about_a_week_before ul li {
+    font-size: 12px;
+    color: gray;
+    margin-bottom: 5px;
+  }
+
+
+</style>
+
 <script type="text/javascript">
+  (window.onload = function() {
+    //読み込み時に残り文字数カウント
+    const description = document.getElementById('activity_business_profile_text');
+    const enDescription = document.getElementById('activity_business_en_profile_text');
+    const cnDescription = document.getElementById('activity_business_cn_profile_text');
+    const twDescription = document.getElementById('activity_business_tw_profile_text');
+    changeCountAndColor(description, 'biz_japanese_description_count', 200)
+    changeCountAndColor(enDescription, 'biz_english_description_count', 200)
+    changeCountAndColor(cnDescription, 'biz_chinese_description_count', 200)
+    changeCountAndColor(twDescription, 'biz_taiwanese_description_count', 200)
+
+    const theDayBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_the_day_before");
+    const threeDaysBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_three_days_before");
+    const aWeekBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_a_week_before");
+    // console.log(theDayBeforeRadio.checked);
+    if (theDayBeforeRadio.checked) {
+      showExplanationWithValue('the_day_before');
+    } else if (threeDaysBeforeRadio.checked) {
+      showExplanationWithValue('three_days_before');
+    } else {
+      showExplanationWithValue('a_week_before');
+    }
+
+  })();
+
   function hasInput() {
     const submitBtn = document.getElementById('biz_form_submit_btn');
     submitBtn.classList.add('need_submit');
+  }
+
+  function countBizDescriptionJP(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_japanese_description_count', 200);
+  }
+  function countBizDescriptionEN(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_english_description_count', 200);
+  }
+  function countBizDescriptionCN(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_chinese_description_count', 200);
+  }
+  function countBizDescriptionTW(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_taiwanese_description_count', 200);
+  }
+
+  // textを変更するtarget idと数字を入れると、数字を超えたときにtargetのtextと色を変えてくれる
+  function changeCountAndColor(obj, targetId, textNum) {
+    const leftTextTarget = document.getElementById(targetId);
+    leftTextTarget.innerHTML = textNum-obj.value.length;
+    if ((textNum-obj.value.length) < 20) {
+      leftTextTarget.style.color = 'red';
+    } else {
+      leftTextTarget.style.color = '#8a8a8a';
+    }
   }
 
   function toggleDescriptionTab(obj) {
@@ -263,7 +438,6 @@
     post_img.classList.toggle("hidden");
     const before_img = document.getElementById('user_present_image');
     before_img.classList.toggle("hidden");
-    // before_img.classList.remove("user_present_image");
   });
 
   function applySupplierAddress(obj) {
@@ -300,19 +474,39 @@
 
   function addIdToGuideItem(obj) {
     setTimeout(function(){
-      // const nestedFields = obj.parentNode.parentNode.getElementsByClassName('nested-fields');
-      // const nestedFieldsCount = nestedFields.length - 1;
-      // const newGuideElement = nestedFields[nestedFieldsCount];
       const guideItems = document.querySelectorAll("div.nested-fields");
       for (var i = 0; i < guideItems.length; i++) {
         const guidePrevElement = guideItems[i].children[0].children[0].children[0];
         guidePrevElement.id = 'guide_image_prev'+i;
-        // console.log(guide_prev.id);
         const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
         guidePresentElement.id = 'guide_present_image'+i;
         const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
         guideImageInput.id = i;
       }
     }, 100);
+  }
+
+  function showExplanation(obj) {
+    const radioVal = obj.value;
+    showExplanationWithValue(radioVal);
+  }
+
+  function showExplanationWithValue(value) {
+    const theDayBefore = document.getElementById("explanation_about_the_day_before");
+    const threeDaysBefore = document.getElementById("explanation_about_three_days_before");
+    const aWeekBefore = document.getElementById("explanation_about_a_week_before");
+    if (value == 'the_day_before') {
+      theDayBefore.classList.remove('hidden');
+      threeDaysBefore.classList.add('hidden');
+      aWeekBefore.classList.add('hidden');
+    } else if (value == 'three_days_before') {
+      theDayBefore.classList.add('hidden');
+      threeDaysBefore.classList.remove('hidden');
+      aWeekBefore.classList.add('hidden');
+    } else {
+      theDayBefore.classList.add('hidden');
+      threeDaysBefore.classList.add('hidden');
+      aWeekBefore.classList.remove('hidden');
+    }
   }
   </script>
