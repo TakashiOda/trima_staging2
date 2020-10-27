@@ -21,7 +21,7 @@
       </div>
       <div class="form-group agree_check">
         <input type="checkbox" id="agree_checkbox" value="" required>
-        <label for="agree_checkbox">I agree <%= link_to "term of servise", "#", class: "agree_link" %>&nbsp;&&nbsp;<%= link_to "privacy policy", "#", class: "agree_link" %></label>
+        <label for="agree_checkbox">I agree <%= link_to "term of servise", term_of_service_en_path, class: "agree_link" %>&nbsp;&&nbsp;<%= link_to "privacy policy", privacy_policy_en_path, class: "agree_link" %></label>
       </div>
       <div class="form-group user login_button">
         <%= f.submit "Sign up", class: "button btn-submit" %>

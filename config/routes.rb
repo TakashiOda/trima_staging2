@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
 
-  get "privacy_policy", to: "static_pages#privacy_policy", as: :privacy_policy
-  get "team_of_service", to: "static_pages#team_of_service", as: :team_of_service
-  get "cansel_policy", to: "static_pages#cansel_policy", as: :cansel_policy
+  get "privacy_policy", to: "static_pages#privacy_policy_en", as: :privacy_policy_en
+  get "term_of_service", to: "static_pages#term_of_service_en", as: :term_of_service_en
+  get "cansel_policy", to: "static_pages#cansel_policy_en", as: :cansel_policy_en
+  get "privacy_policy_jp", to: "static_pages#privacy_policy_jp", as: :privacy_policy_jp
+  get "term_of_service_jp", to: "static_pages#term_of_service_jp", as: :term_of_service_jp
+  get "term_of_service_for_supplier", to: "static_pages#term_of_service_for_supplier", as: :term_of_service_for_supplier
+  get "cansel_policy_jp", to: "static_pages#cansel_policy_jp", as: :cansel_policy_jp
 
   get 'activity_stocks/new'
   get 'activity_stocks/edit'

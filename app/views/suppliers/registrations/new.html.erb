@@ -23,7 +23,7 @@
       </div>
       <div class="form-group agree_check">
         <input type="checkbox" id="agree_checkbox" value="" required>
-        <label for="agree_checkbox"><%= link_to "利用規約", "#", class: "agree_link" %>&nbsp;と&nbsp;<%= link_to "プライバシーポリシー", "#", class: "agree_link" %>に同意する</label>
+        <label for="agree_checkbox"><%= link_to "利用規約", "#", class: "agree_link" %>&nbsp;と&nbsp;<%= link_to "プライバシーポリシー", privacy_policy_jp_path, target: :_blank, class: "agree_link" %>に同意する</label>
       </div>
       <div class="form-group supplier login_button">
         <%= f.submit "事業者登録する", class: "button btn-submit" %>

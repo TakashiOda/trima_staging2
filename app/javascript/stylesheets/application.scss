@@ -296,7 +296,142 @@ img.header_avatar {
 
 //8.footer====終わり====================================
 
+// 静的ページ static_pages ************************************
+.static_page_container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  color: #514745;
+}
 
+.static_page_inner_container {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  padding: 40px 30px 80px;
+}
+.static_page_inner_container a {
+  color: #0099CC;
+}
+
+.static_page_inner_container .breadcrumb ul {
+  display: flex;
+  margin: 10px 0 0px;
+}
+.static_page_inner_container .breadcrumb ul li {
+  margin-right: 10px;
+}
+.static_page_heading_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+h3.static_page_heading_title {
+  font-size: 24px;
+}
+.static_page_inner_container .inline-radio {
+  display: flex;
+  width: 160px;
+  height: 25px;
+  /* border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #b6b6b6; */
+}
+.static_page_inner_container .inline-radio input {
+  display: none;
+}
+.static_page_inner_container .inline-radio label {
+  background: #eee;
+  padding: 3px 12px;
+  font-size: 13px;
+  width: 50%;
+  text-align: center;
+}
+.static_page_inner_container label#english {
+  border-top-left-radius: 13px;
+  border-bottom-left-radius: 13px;
+}
+.static_page_inner_container label#japanese {
+  border-top-right-radius: 13px;
+  border-bottom-right-radius: 13px;
+}
+.static_page_inner_container input:checked + label {
+  background: #0b9bcc;
+  font-weight: 500;
+  color: #fff;
+}
+.static_page_inner_container section {
+  margin-bottom: 30px;
+}
+.static_page_inner_container section h4 {
+  font-size: 23px;
+  margin-top: 0;
+  margin-bottom: 0px;
+}
+h4.static_pages_section_sub_title {
+    font-size: 15px !important;
+}
+.static_page_inner_container ul.static_page__content_list {
+  padding-left: 30px;
+}
+.static_page_inner_container p, li {
+  font-size: 13px;
+}
+.static_page_inner_container p.static_page_last_created_date {
+  text-align: end;
+}
+.static_page_inner_container ul.static_page__content_list.english_list {
+  padding-left: 0 !important;
+  margin-bottom: 30px;
+}
+
+ul.static_page__content_list.english_list li {
+  margin-bottom: 10px;
+  display: flex;
+}
+span.static_page_list_num {
+  margin-right: 10px;
+}
+ul.static_page__content_sub_list.english_list {
+  padding-left: 40px;
+}
+table.static_page_table {
+  border: solid 1px lightgray;
+  margin: 30px 0 !important;
+  width: 95%;
+  margin-left: 5% !important;
+}
+table.static_page_table tr th {
+  padding: 10px;
+  font-size: 13px;
+  width: 33%;
+  background: lightblue;
+  border: solid 1px #b3b3b3;
+  text-align: left;
+}
+table.static_page_table tr td {
+  padding: 5px 10px;
+  font-size: 11px;
+  border: solid 1px lightgray;
+}
+span.static_page_list_num.hidden_num_on_list {
+    color: transparent;
+}
+
+ul.static_page__content_list.list_with_num {
+    list-style: decimal !important;
+    /* list-style-position: outside !important; */
+}
+ul.static_page__heading_text_list li {
+    margin-left: 20px;
+}
+ul.static_page__heading_text_list {
+    list-style: decimal !important;
+}
 /*home************************************/
 .home_contents__top {
   background-image: url("../images/home_bg_biei_dark.jpg");
