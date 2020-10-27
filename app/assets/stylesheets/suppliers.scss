@@ -11,6 +11,10 @@ header.erb_header {
   background: #80acce;
 }
 
+.form-group.supplier.login_button input.button {
+  background: #0068b6;
+}
+
 .user_show_side {
   background: $user-main-dark-color !important;
 }
@@ -646,6 +650,16 @@ div#activity_date_input_box {
 }
 input.date_select {
   font-size: 13px;
+}
+
+.radio_items.rain_or_shine_radio .radio_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.radio_items.rain_or_shine_radio label {
+  display: block;
+  width: 100%;
 }
 
 @media screen and (max-width: 787px) {

@@ -26,6 +26,8 @@
                     <%= image_tag activity.third_image.to_s, class: 'activity_icon_image' %>
                   <% elsif !activity.fourth_image.blank? %>
                     <%= image_tag activity.fourth_image.to_s, class: 'activity_icon_image' %>
+                  <% else %>
+                    <%= image_tag 'default_images/no_activity_image_canoe.png', class: 'activity_icon_image' %>
                   <% end %>
                 </div>
                 <div class="activity_list_item_fron_info">

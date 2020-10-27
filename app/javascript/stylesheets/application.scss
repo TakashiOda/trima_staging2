@@ -47,6 +47,9 @@ a.disabled{
   background: lightgray !important;
 }
 
+.form-group.user.login_button input.button {
+  background: #2bb560;
+}
 
 //2.基本クラス=========================================
 .row {
@@ -395,6 +398,8 @@ form#new_supplier {
 .form-group.agree_check {
   display: flex;
   align-items: center;
+  flex-direction: row;
+  margin-bottom: 5px;
 }
 input#agree_checkbox {
   margin-bottom: 0;
@@ -422,6 +427,9 @@ div#password_input_box {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.form-group.login_button input.button {
+  margin-top: 15px;
 }
 /*after_send_email***************************/
 .static_pages.short_messages_box {

@@ -110,6 +110,34 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def copy_activity
+    @activity = Activity.find(params[:activity_id])
+    @new_activity = @activity.dup
+    @new_activity.name = "#{@activity.name}のコピー"
+    # agepricesを複製
+    ageprices = @activity.activity_ageprices
+    ageprices.each do |ageprice|
+      @new_activity.activity_ageprices.build(age_from: ageprice.age_from, age_to: ageprice.age_to,
+                                            normal_price: ageprice.normal_price, high_price: ageprice.high_price,
+                                            low_price: ageprice.low_price)
+    end
+    #coursesを複製
+    course_times = @activity.activity_courses.pluck(:start_time)
+    course_times.each do |course_time|
+      @new_activity.activity_courses.build(start_time: course_time)
+    end
+    #translationを複製
+    translations = @activity.activity_translations
+    translations.each do |translation|
+      @new_activity.activity_translations.build(language_id: translation.language_id, name: translation.name,
+                                                profile_text: translation.profile_text, notes: translation.notes)
+    end
+
+    @new_activity.save!
+    flash[:alert] = '体験を複製しました'
+    redirect_to edit_supplier_activity_path(current_supplier, @new_activity)
+  end
+
 
   def stock_new_first_month
     @activity = Activity.find(params[:activity_id])
@@ -333,9 +361,9 @@ class ActivitiesController < ApplicationController
                                       :start_date, :end_date,
                                       :monday_open, :tuesday_open, :wednesday_open, :thursday_open,
                                       :friday_open, :saturday_open, :sunday_open,
-                                      :january, :febrary, :march, :april,
-                                      :may, :june, :july, :august, :september, :october,
-                                      :november, :december, :advertise_activate, :is_approved, :stop_now, :status,
+                                      :january, :febrary, :march, :april, :may, :june, :july,
+                                      :august, :september, :october, :november, :december,
+                                      :advertise_activate, :is_approved, :stop_now, :status, :rain_or_shine,
                                       activity_courses_attributes: [:id, :activity_id, :start_time, :_destroy,
                                         activity_stocks_attributes: [:id, :activity_id, :date,
                                         :activity_course_id, :stock, :season_price]],

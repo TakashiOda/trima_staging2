@@ -23,9 +23,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
 
       # 集合場所1
       t.string  :meeting_spot1_japanese_address
-      # t.string  :meeting_spot1_english_address
       t.text    :meeting_spot1_japanese_description
-      # t.text    :meeting_spot1_english_description
       t.float   :meeting_spot1_longitude
       t.float   :meeting_spot1_latitude
 
@@ -56,8 +54,6 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       #　シーズン料金設定
       t.integer :normal_adult_price
       t.boolean :has_season_price, default: false
-      # t.float   :low_price_ratio, default: 0.8
-      # t.float   :high_price_ratio, default: 1.2
 
       # 定休日情報
       t.boolean :monday_open, default: true
@@ -69,6 +65,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.boolean :sunday_open, default: true
 
       #その他設定
+      t.boolean :rain_or_shine, default: false #false=>雨天中止 true=>雨天決行
       t.boolean :advertise_activate, default: false #0 => approved, 1 =>not yet
       t.string :status, default: 'draft' #draft, published, deleted
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet

@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.boolean "friday_open", default: true
     t.boolean "saturday_open", default: true
     t.boolean "sunday_open", default: true
+    t.boolean "rain_or_shine", default: false
     t.boolean "advertise_activate", default: false
     t.string "status", default: "draft"
     t.boolean "is_approved", default: false
@@ -123,6 +124,7 @@ ActiveRecord::Schema.define(version: 2020_10_12_061902) do
     t.string "detail_address"
     t.string "building"
     t.string "phone"
+    t.string "no_charge_cansel_before", default: "three_days_before"
     t.boolean "has_insurance", default: false
     t.string "guide_certification"
     t.boolean "is_approved", default: false

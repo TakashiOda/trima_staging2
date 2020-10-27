@@ -11,6 +11,10 @@ header.erb_header {
   background: $user-main-color !important;
 }
 
+.form-group.user.login_button input.button {
+  background: $user-main-color !important;
+}
+
 .user_show_side {
   background: $user-main-dark-color !important;
 }
