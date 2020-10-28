@@ -1,4 +1,11 @@
 class StaticPagesController < ApplicationController
+
+  def about_for_user
+  end
+
+  def about_for_supplier
+  end
+
   def privacy_policy_jp
   end
 

@@ -7,12 +7,12 @@ Rails.application.routes.draw do
   get "term_of_service_jp", to: "static_pages#term_of_service_jp", as: :term_of_service_jp
   get "term_of_service_for_supplier", to: "static_pages#term_of_service_for_supplier", as: :term_of_service_for_supplier
   get "cansel_policy_jp", to: "static_pages#cansel_policy_jp", as: :cansel_policy_jp
+  get "about_trima", to: 'static_pages#about_for_user', as: :about_for_user
+  get "about_trima_for_supplier", to: 'static_pages#about_for_supplier', as: :about_for_supplier
 
-  get 'activity_stocks/new'
-  get 'activity_stocks/edit'
+
   get 'basic_datas/index', to: 'basic_datas#index', as: :basic_index
   root to: 'home#index'
-  get "about", to: 'home#about_page_for_user', as: :about_user
   get "thank_you_for_registration_user", :to => 'users#thank_you_for_registration_user'
   get "thank_you_for_registration_supplier", :to => 'suppliers#thank_you_for_registration_supplier'
 
