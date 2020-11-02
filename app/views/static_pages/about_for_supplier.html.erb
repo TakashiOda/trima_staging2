@@ -1,14 +1,344 @@
+<header class="lp_pc_header" id="supplier_lp_header">
+  <div class="header_inner">
+    <%= link_to "trima", root_path, id: "supplier_lp_header_logo" %>
+    <ul class="header__links">
+      <% if supplier_signed_in? %>
+        <li><%= link_to "事業者ページ", supplier_path(current_supplier)  %></li>
+      <% else %>
+        <li><%= link_to "会社情報", "#" %></li>
+        <li><%=link_to "ログイン", "#" %></li>
+        <li id="lp_pc_header_apply_btn"><%=link_to "事業者申込み", "#" %></li>
+      <% end %>
+    </ul>
+  </div>
+</header>
 <div class="static_page_container">
-  <div class="static_page_inner_container">
+  <div class="static_page_lp_eyecatch_container">
     <section class="eyecatch">
-      <p>trimaについて</p>
+      <%=image_tag 'lp_image_supplier/trima_eyecatch_pc_wide_transparent02.png', class: 'eyecatch_pc_image' %>
+      <div class="eyecatch_pc_contents_box">
+        <h3 class="eyecatch_pc_contents_box_title">trima なら<br>体験も、宿泊も、交通も</h3>
+        <p class="eyecatch_pc_contents_box_text">あらゆる旅行商品をカンタンに<br>オンライン販売できるプラットフォーム</p>
+        <%=link_to "事業者申し込み", "#", class:"eyecatch_pc_contents_btn" %>
+      </div>
     </section>
     <section class="about_section">
-      <h5 class="about_english_title">About</h5>
-      <h3 class="about_Japanese_title">trimaとは？</h3>
-      <div class="about_section_contents">
-        <p>あああああああああああああああああああああああああああああああああああああああああ</p>
+      <div class="lp_section_inner">
+        <div class="lp_section_title_box">
+          <span class="about_english_title">About</span>
+          <span class="about_Japanese_title">trimaとは？</span>
+        </div>
+        <div class="about_section_contents">
+          <div class="about_section_contents_left">
+            <div class="trima_mock_image_bg">
+
+            </div>
+            <%=image_tag 'lp_image_supplier/trima_mock01.png', id: 'trima_mock_image' %>
+          </div>
+          <div class="about_section_contents_right">
+            <h5 class="about_section_contents_right_title">
+              旅行客向けサービスをオンライン予約・決済
+            </h5>
+            <p class="about_section_contents_right_text">
+              あああああああああああああああああああああああああああああああああああ
+              ああああああああああああああああああああああああああああああああ
+              ああああああああああああああああああああああああああああああああ
+              ああああああああああああああああああああああああ
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="about_section gray_bg">
+      <div class="lp_section_inner">
+        <div class="lp_section_title_box">
+          <span class="about_english_title">Features</span>
+          <span class="about_Japanese_title">サービスの機能</span>
+        </div>
+        <ul class="features_section_contents">
+          <li>
+            <div class="features_item_text_side">
+              <h4 class="features_item_text_side_number_title_left">01</h4>
+              <div class="features_item_text_side_contents_left">
+                <h5>カンタンに在庫を登録</h5>
+                <p>ああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ</p>
+              </div>
+            </div>
+            <div class="features_item_image_side">
+              <%=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_right' %>
+            </div>
+          </li>
+          <li>
+            <div class="features_item_image_side">
+              <%=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_left' %>
+            </div>
+            <div class="features_item_text_side">
+              <h4 class="features_item_text_side_number_title_right">02</h4>
+              <div class="features_item_text_side_contents_right">
+                <h5>カンタンに在庫を登録</h5>
+                <p>ああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="features_item_text_side">
+              <h4 class="features_item_text_side_number_title_left">03</h4>
+              <div class="features_item_text_side_contents_left">
+                <h5>カンタンに在庫を登録</h5>
+                <p>ああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ</p>
+              </div>
+            </div>
+            <div class="features_item_image_side">
+              <%=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_right' %>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
   </div>
 </div>
+
+<style>
+  header.erb_header {
+    display: none !important;
+  }
+  header#supplier_lp_header.lp_pc_header {
+    background: #2bb56000 !important;
+    padding: 0px;
+    height: 60px;
+    width: 100%;
+    z-index: 100;
+    background: linear-gradient(to right, #2193b0, #6dd5ed) !important;
+  }
+  header#supplier_lp_header.lp_pc_header .header_inner {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px 5px 30px;
+  }
+  a#supplier_lp_header_logo {
+    font-size: 36px;
+    color: #fff;
+    font-family: sans-serif;
+    font-weight: bold;
+    letter-spacing: 4px;
+  }
+  header#supplier_lp_header.lp_pc_header ul.header__links {
+    display: flex;
+    margin-right: 15px;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 3px;
+    align-items: center;
+  }
+  header#supplier_lp_header.lp_pc_header ul.header__links li {
+    margin: 0 10px;
+  }
+  header#supplier_lp_header.lp_pc_header ul.header__links li:hover {
+    opacity: 0.5;
+  }
+  header#supplier_lp_header.lp_pc_header ul.header__links li a {
+    color: #fff;
+  }
+  li#lp_pc_header_apply_btn {
+    border: solid 1px #fff;
+    padding: 5px 15px;
+    border-radius: 50px;
+  }
+  section.eyecatch {
+    position: relative;
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+  }
+  .eyecatch_pc_contents_box {
+    position: absolute;
+    top: 130px;
+    right: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  h3.eyecatch_pc_contents_box_title {
+    font-size: 36px;
+    margin: 10px 0;
+    color: #fff;
+    text-align: end;
+  }
+  p.eyecatch_pc_contents_box_text {
+    color: #fff;
+    text-align: end;
+    font-size: 21px;
+    font-weight: bold;
+    margin: 10px 0 30px;
+  }
+  a.eyecatch_pc_contents_btn {
+    background: linear-gradient(to right,#f4a440, #f8dc45);
+    padding: 10px 70px;
+    border-radius: 60px;
+    color: #184968;
+    font-weight: bold;
+  }
+  section.about_section {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  section.about_section.gray_bg {
+    background: #e9f1f4;
+  }
+  .lp_section_inner {
+    width: 90%;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 10px 50px;
+  }
+  .lp_section_title_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 1px #3e3e3e;
+  }
+  span.about_english_title {
+    color: #2596b2;
+    font-weight: bold;
+    letter-spacing: 3px;
+    font-size: 20px;
+  }
+  span.about_Japanese_title {
+    font-size: 23px;
+    color: #3e3e3e;
+  }
+  .about_section_contents {
+    display: flex;
+    width: 100%;
+  }
+  .about_section_contents {
+    display: flex;
+    width: 100%;
+    padding: 30px 0 30px;
+  }
+  .about_section_contents_left {
+    width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .about_section_contents_right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .trima_mock_image_bg {
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 20px;
+    background: aliceblue;
+    z-index: 0;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px 6px #eff8fe;
+  }
+  img#trima_mock_image {
+    height: 300px;
+    z-index: 100;
+  }
+  ul.features_section_contents {
+    width: 100%;
+    margin: 0;
+    padding: 40px 0;
+  }
+  ul.features_section_contents li {
+    width: 100%;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 2px 20px -6px #d4d4d4;
+    border-radius: 10px;
+    background: #fff;
+    margin-bottom: 40px;
+  }
+  .features_item_text_side {
+    width: 50%;
+    height: 100%;
+    position: relative;
+  }
+  h4.features_item_text_side_number_title_left {
+    position: absolute;
+    top: -30px;
+    left: 20px;
+    font-size: 55px;
+    margin: 0;
+    color: #6bd3ea;
+  }
+  h4.features_item_text_side_number_title_right {
+    position: absolute;
+    top: -30px;
+    right: 20px;
+    font-size: 55px;
+    margin: 0;
+    color: #6bd3ea;
+  }
+  .features_item_text_side_contents_left {
+    position: absolute;
+    top: 40px;
+    height: 180px;
+    padding: 0 20px 20px;
+  }
+  .features_item_text_side_contents_right {
+    position: absolute;
+    top: 40px;
+    height: 180px;
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .features_item_text_side_contents_right p {
+    text-align: right;
+  }
+  .features_item_image_side {
+    width: 50%;
+    height: 100%;
+  }
+
+  img.trima_features_image_right {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  img.trima_features_image_left {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+  .features_item_text_side_contents_left h5,
+  .features_item_text_side_contents_right h5 {
+    font-size: 18px;
+    margin: 10px 0 15px;
+    color: #6cd4ea;
+  }
+</style>
