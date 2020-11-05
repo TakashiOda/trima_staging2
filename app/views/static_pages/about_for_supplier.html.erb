@@ -17,7 +17,10 @@
     <section class="eyecatch">
       <%=image_tag 'lp_image_supplier/trima_eyecatch_pc_wide_transparent02.png', class: 'eyecatch_pc_image' %>
       <div class="eyecatch_pc_contents_box">
-        <h3 class="eyecatch_pc_contents_box_title">trima なら<br>体験も、宿泊も、交通も</h3>
+        <h3 class="eyecatch_pc_contents_box_title">
+          <span class="trima_letter_space" id="eyecatch_trima_spell_parent">trima</span>なら<br>体験も、宿泊も、交通も
+        </h3>
+        <span id="eyecatch_trima_spell_child">トリマ</span>
         <p class="eyecatch_pc_contents_box_text">あらゆる旅行商品をカンタンに<br>オンライン販売できるプラットフォーム</p>
         <%=link_to "事業者申し込み", "#", class:"eyecatch_pc_contents_btn" %>
       </div>
@@ -34,14 +37,14 @@
           </div>
           <div class="about_section_contents_right">
             <h5 class="about_section_contents_right_title">
-              旅行客向けサービスの<br>
+              あらゆる旅行客向けサービスの<br>
               オンライン予約・決済サイト
             </h5>
             <p class="about_section_contents_right_text">
-              あああああああああああああああああああああああああああああああああああ
-              ああああああああああああああああああああああああああああああああ
-              ああああああああああああああああああああああああああああああああ
-              ああああああああああああああああああああああああ
+              <span class="trima_spell trima_letter_space">trima</span>（トリマ）は<br>アクティビティ、レストラン、宿泊、イベント、交通といった
+              あらゆる旅行者向けサービスを一括予約・決済できる総合旅行プラットフォームです。
+              他にも観光スポット検索、旅程＆ルート作成、旅行プロジェクトのメンバー共有など旅行に関する様々な便利機能を提供します。
+              2021年春に北海道からサービスをスタートします。
             </p>
 
           </div>
@@ -58,43 +61,43 @@
           <li class="about_section_feature_item">
             <%=image_tag 'lp_image_supplier/trima_supplier_feature_book_transparent.png', class: 'about_section_feature_item_icon' %>
             <div class="about_section_feature_item_title">カンタン予約管理</div>
-            <div class="about_section_feature_item_text">アクティビティ予約を簡単受付</div>
+            <div class="about_section_feature_item_text">アクティビティ予約をオンラインで一元管理</div>
           </li>
           <li class="about_section_feature_item">
             <%=image_tag 'lp_image_supplier/trima_supplier_feature_calender_transparent.png', class: 'about_section_feature_item_icon' %>
             <div class="about_section_feature_item_title">カンタン在庫管理</div>
-            <div class="about_section_feature_item_text">アクティビティ予約を簡単受付</div>
+            <div class="about_section_feature_item_text">在庫登録も一括操作でカンタン登録</div>
           </li>
           <li class="about_section_feature_item">
             <%=image_tag 'lp_image_supplier/trima_supplier_feature_credit_transparent.png', class: 'about_section_feature_item_icon' %>
             <div class="about_section_feature_item_title">オンライン決済</div>
-            <div class="about_section_feature_item_text">アクティビティ予約を簡単受付</div>
+            <div class="about_section_feature_item_text">事前クレジット決済で徴収の手間が省けます</div>
           </li>
           <li class="about_section_feature_item">
             <%=image_tag 'lp_image_supplier/trima_supplier_feature_group_transparent.png', class: 'about_section_feature_item_icon' %>
             <div class="about_section_feature_item_title">グループ予約受付</div>
-            <div class="about_section_feature_item_text">アクティビティ予約を簡単受付</div>
+            <div class="about_section_feature_item_text">グループのお客様でもスムーズに予約を受けられます</div>
           </li>
-          <li class="about_section_feature_item">
-            <%=image_tag 'lp_image_supplier/trima_supplier_feature_guide_transparent.png', class: 'about_section_feature_item_icon' %>
+          <!-- <li class="about_section_feature_item">
+            <%#=image_tag 'lp_image_supplier/trima_supplier_feature_guide_transparent.png', class: 'about_section_feature_item_icon' %>
             <div class="about_section_feature_item_title">事業者の顔が見える</div>
-            <div class="about_section_feature_item_text">アクティビティ予約を簡単受付</div>
-          </li>
-          <li class="about_section_feature_item">
-            <%=image_tag 'lp_image_supplier/trima_supplier_feature_translate_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_text">事業者の顔が見えるサイトなのでお客様も安心、事業者のブランド力向上にもつながります</div>
+          </li> -->
+          <!-- <li class="about_section_feature_item">
+            <%#=image_tag 'lp_image_supplier/trima_supplier_feature_translate_transparent.png', class: 'about_section_feature_item_icon' %>
             <div class="about_section_feature_item_title">多言語発信</div>
-            <div class="about_section_feature_item_text">アクティビティ予約を簡単受付</div>
-          </li>
-          <li class="about_section_feature_item">
-            <%=image_tag 'lp_image_supplier/trima_supplier_feature_circle_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_text">日本語だけでなく、英語、中国語（簡体字・繁体字）対応。翻訳を依頼することもできます</div>
+          </li> -->
+          <!-- <li class="about_section_feature_item">
+            <%#=image_tag 'lp_image_supplier/trima_supplier_feature_circle_transparent.png', class: 'about_section_feature_item_icon' %>
             <div class="about_section_feature_item_title">交通や宿泊と連携</div>
-            <div class="about_section_feature_item_text">アクティビティ予約を簡単受付</div>
-          </li>
-          <li class="about_section_feature_item">
-            <%=image_tag 'lp_image_supplier/trima_supplier_feature_analyze_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_text">あらゆる旅行サービス同士が連携することで、ホテルや交通手段の予約からの流入が見込めます</div>
+          </li> -->
+          <!-- <li class="about_section_feature_item">
+            <%#=image_tag 'lp_image_supplier/trima_supplier_feature_analyze_transparent.png', class: 'about_section_feature_item_icon' %>
             <div class="about_section_feature_item_title">マーケティング分析</div>
-            <div class="about_section_feature_item_text">アクティビティ予約を簡単受付</div>
-          </li>
+            <div class="about_section_feature_item_text">予約や閲覧ユーザーの国や地域、、属性などのデータを分析できます</div>
+          </li> -->
         </ul>
       </div>
     </section>
@@ -109,19 +112,20 @@
             <div class="features_item_text_side">
               <h4 class="features_item_text_side_number_title_left">01</h4>
               <div class="features_item_text_side_contents_left">
-                <h5>予約受付・スケジュール管理の手間を大幅削減</h5>
+                <h5>予約受付・スケジュール管理の<br>手間と時間を大幅削減</h5>
                 <p>ああああああああああああああああああああああああああああああああ
                   あああああああああああああああああああああああああああああああああ
                   あああああああああああああああああああああああああああああああああ</p>
               </div>
             </div>
-            <div class="features_item_image_side">
-              <%=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_right' %>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_time_transparent.png', class: 'about_section_advantages_image_icon' %>
             </div>
           </li>
           <li>
-            <div class="features_item_image_side">
-              <%=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_left' %>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_guide_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_left' %>
             </div>
             <div class="features_item_text_side">
               <h4 class="features_item_text_side_number_title_right">02</h4>
@@ -143,13 +147,15 @@
                   あああああああああああああああああああああああああああああああああ</p>
               </div>
             </div>
-            <div class="features_item_image_side">
-              <%=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_right' %>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_circle_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_right' %>
             </div>
           </li>
           <li>
-            <div class="features_item_image_side">
-              <%=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_left' %>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_translate_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_left' %>
             </div>
             <div class="features_item_text_side">
               <h4 class="features_item_text_side_number_title_right">04</h4>
@@ -159,6 +165,22 @@
                   あああああああああああああああああああああああああああああああああ
                   あああああああああああああああああああああああああああああああああ</p>
               </div>
+            </div>
+          </li>
+          <li>
+            <div class="features_item_text_side">
+              <h4 class="features_item_text_side_number_title_left">05</h4>
+              <div class="features_item_text_side_contents_left">
+                <h5>閲覧・予約データを元に<br>マーケティング分析が可能</h5>
+                <p>ああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ
+                  あああああああああああああああああああああああああああああああああ</p>
+              </div>
+            </div>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_analyze_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_supplier_feature_circle_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_right' %>
             </div>
           </li>
         </ul>
@@ -272,6 +294,26 @@
     padding: 5px 15px;
     border-radius: 50px;
   }
+  .trima_letter_space {
+    font-weight: bold;
+    letter-spacing: 4px;
+  }
+  span.trima_spell {
+    font-size: 19px;
+    color: #2896b2;
+  }
+  span#eyecatch_trima_spell_parent {
+    position: relative;
+  }
+  span#eyecatch_trima_spell_child {
+    position: absolute;
+    top: 5px;
+    right: 91px;
+    letter-spacing: 15px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+  }
   section.eyecatch {
     position: relative;
     background: linear-gradient(to right, #2193b0, #6dd5ed);
@@ -298,11 +340,16 @@
     margin: 10px 0 30px;
   }
   a.eyecatch_pc_contents_btn {
-    background: linear-gradient(to right,#f4a440, #f8dc45);
+    background: linear-gradient(to right,#e3973a, #e8cd3f);
     padding: 10px 70px;
     border-radius: 60px;
     color: #184968;
     font-weight: bold;
+  }
+  a.eyecatch_pc_contents_btn:hover {
+    /* opacity: 0.7; */
+    background: linear-gradient(to right,#ffab43, #ffe240);
+    /* background: linear-gradient(to right,#f4a440, #f8dc45); */
   }
   section.about_section {
     width: 100vw;
@@ -314,8 +361,8 @@
     background: #e9f1f4;
   }
   .lp_section_inner {
-    width: 90%;
-    max-width: 700px;
+    width: 95%;
+    max-width: 750px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -361,12 +408,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 10px 25px;
+    /* padding: 10px 25px; */
+    padding: 0px 0px 0px 30px;
   }
   h5.about_section_contents_right_title {
     font-size: 21px;
     margin: 0 0 10px;
     color: #522504;
+  }
+  p.about_section_contents_right_text {
+    margin: 0;
   }
   img#trima_mock_image {
     height: 300px;
@@ -388,11 +439,15 @@
     background: #fff;
     margin-bottom: 40px;
   }
+  ul.features_section_contents li:hover {
+    box-shadow: 1px 2px 18px -1px #6cd4eb;
+  }
   .features_item_text_side {
     width: 50%;
     height: 100%;
     position: relative;
   }
+
   h4.features_item_text_side_number_title_left {
     position: absolute;
     top: -30px;
@@ -431,6 +486,12 @@
     width: 50%;
     height: 100%;
   }
+  .features_item_image_side.for_icon {
+    text-align: center;
+  }
+  img.about_section_advantages_image_icon {
+    height: 240px;
+  }
 
   img.trima_features_image_right {
     width: 100%;
@@ -457,7 +518,7 @@
   }
   ul.about_section_feature_list_box {
     width: 100%;
-    padding: 50px 0;
+    padding: 50px 0 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -466,7 +527,7 @@
     width: 25%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     margin-bottom: 35px;
   }
@@ -476,8 +537,12 @@
     /* border-radius: 10px;
     box-shadow: 1px 1px 9px -2px #8a8a8a; */
   }
+  img.about_section_feature_item_icon:hover {
+    background: #cde3eb;
+    border-radius: 50%;
+  }
   .about_section_feature_item_title {
-    margin: 10px 0 0px;
+    margin: 0px 0px 5px;
     width: 140px;
     text-align: center;
     font-weight: bold;
@@ -492,6 +557,13 @@
   }
   section.about_section.apply_section.last_section {
     padding-bottom: 50px;
+  }
+  section.about_section.apply_section span.about_english_title,
+  section.about_section.apply_section span.about_Japanese_title {
+    color: #fff;
+  }
+  section.about_section.apply_section .lp_section_title_box {
+    border-bottom: solid 1px #fff;
   }
   .about_section_contents_apply_box {
     display: flex;
