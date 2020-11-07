@@ -18,6 +18,8 @@ class SupplierAppliesController < ApplicationController
   end
 
   def download_supplier_docs
+    download_file_name = "public/download_docs/sample.pdf"
+    send_file download_file_name
   end
 
   def index

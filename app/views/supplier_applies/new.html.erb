@@ -1,7 +1,9 @@
 <div class="apply_form_container">
   <section class="apply_form_section section_top">
-    <h4>事業者申込フォーム</h4>
-    <p>ああああああああああああああああああああ</p>
+    <h4><span>trima</span>事業者申込フォーム</h4>
+    <p>事業者としてのご参加に興味のある方は以下のフォームにご記入の上、資料をダウンロードしてください。
+      資料ダウンロードの際に事業者アカウントが作成できます
+    </p>
   </section>
   <section class="apply_form_section">
     <%= form_for(@supplier_apply) do |form| %>
@@ -62,7 +64,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
+  }
+  section.apply_form_section.section_top h4 {
+    color: #184968;
+    font-size: 23px;
+  }
+  section.apply_form_section.section_top > h4 > span {
+    letter-spacing: 4px;
   }
   section.apply_form_section {
     padding: 20px;
