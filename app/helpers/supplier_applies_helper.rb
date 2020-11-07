@@ -1,0 +1,2 @@
+module SupplierAppliesHelper
+end
