@@ -113,9 +113,9 @@
               <h4 class="features_item_text_side_number_title_left">01</h4>
               <div class="features_item_text_side_contents_left">
                 <h5>予約受付・スケジュール管理の<br>手間と時間を大幅削減</h5>
-                <p>ああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ</p>
+                <p>trimaならアクティビティを簡単に登録でき、スムーズな予約受付、
+                  そして在庫管理が可能です。予約受付と在庫管理に費やしていた時間を
+                  より生産的な業務に充てられます</p>
               </div>
             </div>
             <div class="features_item_image_side for_icon">
@@ -131,9 +131,9 @@
               <h4 class="features_item_text_side_number_title_right">02</h4>
               <div class="features_item_text_side_contents_right">
                 <h5>事業者の顔が見える設計で<br>お客様への安心感UP</h5>
-                <p>ああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ</p>
+                <p>trimaは、アクティビティを提供するガイドの方や事業者の顔が見える設計です。
+                予約をするお客様に安心感を与えられ、事業者の人となりが見えることで
+                サービスへの信頼も高まります</p>
               </div>
             </div>
           </li>
@@ -141,10 +141,10 @@
             <div class="features_item_text_side">
               <h4 class="features_item_text_side_number_title_left">03</h4>
               <div class="features_item_text_side_contents_left">
-                <h5>事前オンライン決済で<br>決済の手間も省けます</h5>
-                <p>ああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ</p>
+                <h5>様々な旅行サービスとの連携により<br>他の業種からの流入が見込めます</h5>
+                <p>体験アクティビティだけでなく、trimaではレストラン予約や宿泊予約、
+                  交通予約、スポット検索など旅行に関する様々なサービスを予約できるため、
+                  同じ地域の他のサービスを予約したお客様によるあなたのサービスへの流入が見込めます</p>
               </div>
             </div>
             <div class="features_item_image_side for_icon">
@@ -160,10 +160,10 @@
             <div class="features_item_text_side">
               <h4 class="features_item_text_side_number_title_right">04</h4>
               <div class="features_item_text_side_contents_right">
-                <h5>多言語対応で<br>サービスを世界へ発信</h5>
-                <p>ああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ</p>
+                <h5>多言語対応で<br>地域のサービスを世界へ発信</h5>
+                <p>長年、海外に多数のサーバーを設置し、訪日WEBメディアを運営してきた経験から、
+                  効果的な多言語による発信を可能にします。特に中国国内では中国政府の許可を得て
+                  サーバーを設置しているため、中国大陸への発信・流入には大きな強みを持っています</p>
               </div>
             </div>
           </li>
@@ -172,9 +172,8 @@
               <h4 class="features_item_text_side_number_title_left">05</h4>
               <div class="features_item_text_side_contents_left">
                 <h5>閲覧・予約データを元に<br>マーケティング分析が可能</h5>
-                <p>ああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ
-                  あああああああああああああああああああああああああああああああああ</p>
+                <p>どの国と地域から、どんな属性のユーザーが閲覧・予約したかなど細かいデータを提供します.
+                それにより、ターゲットを絞ったマーケティング戦略を構築することが可能になります。</p>
               </div>
             </div>
             <div class="features_item_image_side for_icon">
@@ -347,7 +346,6 @@
     font-weight: bold;
   }
   a.eyecatch_pc_contents_btn:hover {
-    /* opacity: 0.7; */
     background: linear-gradient(to right,#ffab43, #ffe240);
     /* background: linear-gradient(to right,#f4a440, #f8dc45); */
   }
@@ -468,13 +466,13 @@
     position: absolute;
     top: 40px;
     height: 180px;
-    padding: 0 20px 20px;
+    padding: 0 0 20px 30px;
   }
   .features_item_text_side_contents_right {
     position: absolute;
     top: 40px;
     height: 180px;
-    padding: 0 20px 20px;
+    padding: 0 30px 20px 0;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -510,11 +508,16 @@
   .features_item_text_side_contents_left h5,
   .features_item_text_side_contents_right h5 {
     font-size: 18px;
-    margin: 10px 0 15px;
+    margin: 10px 0 5px;
     color: #6cd4ea;
   }
   .features_item_text_side_contents_right h5 {
     text-align: right;
+  }
+  .features_item_text_side_contents_left p,
+  .features_item_text_side_contents_right p {
+    margin: 10px 0 0;
+    line-height: 18px;
   }
   ul.about_section_feature_list_box {
     width: 100%;
@@ -527,15 +530,12 @@
     width: 50%;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
     margin-bottom: 35px;
   }
   img.about_section_feature_item_icon {
     width: 200px;
     height: 200px;
-    /* border-radius: 10px;
-    box-shadow: 1px 1px 9px -2px #8a8a8a; */
   }
   img.about_section_feature_item_icon:hover {
     background: #cde3eb;
