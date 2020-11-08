@@ -1,5 +1,6 @@
 class SuppliersController < ApplicationController
-  before_action :authenticate_supplier!, except: [:thank_you_for_registration_supplier, :index]
+  before_action :authenticate_supplier!,
+  except: [:thank_you_for_registration_supplier, :index]
 
   def thank_you_for_registration_supplier
   end

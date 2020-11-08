@@ -1,0 +1,126 @@
+<div class="apply_form_container">
+  <section class="apply_form_section section_top">
+    <h4>お申し込みありがとうございます</h4>
+    <p>以下の手順で資料ダウンロード、アカウント作成とお進みください</p>
+  </section>
+  <section class="apply_form_section">
+    <ul class="features_section_contents">
+      <li>
+        <h4 class="features_item_text_side_number_title_left">STEP 1・資料のダウンロード</h4>
+        <p>まずは以下のリンクから資料をダウンロードしていただきお読みください</p>
+        <%= button_to download_supplier_docs_path, method: :get, class: 'btn btn-info', id: 'download_supplier_docs_btn' do %>
+          <span>trimaの資料をダウンロード<i class="far fa-file-alt"></i></span>
+        <% end %>
+      </li>
+      <li>
+        <h4 class="features_item_text_side_number_title_left">STEP 2・事業者アカウント作成</h4>
+        <p>事業者としてアカウントを作成された方は以下のリンクから事業者登録が可能です</p>
+        <%= link_to '事業者アカウントを作成', new_supplier_registration_path, class: 'btn btn-info', id: 'to_supplier_register_btn' %>
+      </li>
+    </ul>
+  </section>
+</div>
+
+<style lang="scss">
+  .apply_form_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 100px;
+    background: #e9f1f4;
+  }
+  section.apply_form_section.section_top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  section.apply_form_section {
+    width: 100%;
+    max-width: 600px;
+  }
+  button#download_supplier_docs_btn {
+    background: linear-gradient(to right,#e3973a, #e8cd3f);
+    color: #184968;
+    font-weight: bold;
+    border: none;
+    padding: 10px 40px;
+    border-radius: 50px;
+    margin-top: 20px;
+  }
+
+  button#download_supplier_docs_btn {
+    background: linear-gradient(to right,#e3973a, #e8cd3f);
+    color: #184968;
+    font-weight: bold;
+    border: none;
+    padding: 10px 40px;
+    border-radius: 50px;
+    margin-top: 20px;
+    width: 280px;
+  }
+  button#download_supplier_docs_btn:hover {
+    background: linear-gradient(to right,#ffab43, #ffe240);
+    cursor: pointer;
+  }
+  button#download_supplier_docs_btn:focus {
+    outline: 0;
+  }
+
+  button#download_supplier_docs_btn span {
+      display: flex;
+      align-items: center;
+  }
+  button#download_supplier_docs_btn svg {
+    margin-left: 10px;
+    width: 17px;
+    height: 17px;
+  }
+
+  a#to_supplier_register_btn {
+    background: linear-gradient(to right,#1c829c, #60bcd2);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    text-align: center;
+    padding: 10px 0px;
+    border-radius: 50px;
+    margin-top: 20px;
+    width: 280px;
+  }
+  a#to_supplier_register_btn:hover {
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+    /* background: linear-gradient(to right,#ffab43, #ffe240); */
+    cursor: pointer;
+  }
+
+  ul.features_section_contents {
+    width: 100%;
+    margin: 0;
+    /* padding: 40px 0; */
+  }
+  ul.features_section_contents li {
+    width: 100%;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 1px 2px 20px -6px #d4d4d4;
+    border-radius: 10px;
+    background: #fff;
+    margin-bottom: 30px;
+    padding: 15px 20px 15px;
+  }
+
+  h4.features_item_text_side_number_title_left {
+    font-size: 22px;
+    margin: 0;
+    color: #6bd3ea;
+  }
+  .after_apply_link_box {
+    text-align: center;
+  }
+</style>

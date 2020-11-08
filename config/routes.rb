@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get "thank_you_for_registration_user", :to => 'users#thank_you_for_registration_user'
   get "thank_you_for_registration_supplier", :to => 'suppliers#thank_you_for_registration_supplier'
+  get "thank_you_for_apply", :to => 'supplier_applies#thank_you_for_apply'
+  get "download_supplier_docs", :to => 'supplier_applies#download_supplier_docs', as: :download_supplier_docs
+
+  resources :supplier_applies, only: [:index, :show, :new, :create]
 
   devise_scope :user do
     get "users/sign_in", :to => "users/sessions#new"
