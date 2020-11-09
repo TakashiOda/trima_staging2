@@ -8,21 +8,14 @@
       <% if user_signed_in? %>
         <%= link_to(user_path(current_user), class: 'header_mypage_link') do %>
           <li class="header_to_dashboad_text">My Page
-            <%# if current_user.username %>
-              <%#= current_user.username %>
-            <%# else %>
-              <%# dashboard %>
-            <%# end %>
           </li>
           <li>
             <% if !current_user.avatar.blank? %>
-              <%# image_tag 'default_images/no_avatar_image.png', class: 'header_avatar' %>
               <%= image_tag current_user.avatar.url, class: 'header_avatar' %>
             <% else %>
               <div class="header_link_icon">
                 <%= current_user.username[0] %>
               </div>
-              <%#= image_tag 'default_images/no_avatar_image.png', class: 'header_avatar' %>
             <% end %>
           </li>
 
@@ -41,7 +34,7 @@
           <% end %>
         </li>
       <% else %>
-        <li><%= link_to "About", about_for_user_path %></li>
+        <li><%= link_to "About", about_for_supplier_path %></li>
         <li><%= link_to "事業者の方", suppliers_sign_in_path %></li>
         <li><%=link_to "SignIn", users_sign_in_path %></li>
         <li class="header_signup_link"><%=link_to "SignUp", new_user_registration_path %></li>

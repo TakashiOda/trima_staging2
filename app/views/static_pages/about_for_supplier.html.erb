@@ -3,8 +3,8 @@
     <%= link_to "trima", root_path, id: "supplier_lp_header_logo" %>
     <ul class="header__links">
       <li><%= link_to "会社情報", "#" %></li>
-      <li><%=link_to "ログイン", "#" %></li>
-      <li id="lp_pc_header_apply_btn"><%=link_to "事業者申込み", "#" %></li>
+      <li><%=link_to "事業者ログイン", suppliers_sign_in_path %></li>
+      <li id="lp_pc_header_apply_btn"><%=link_to "事業者お申込み", new_supplier_apply_path %></li>
     </ul>
   </div>
 </header>

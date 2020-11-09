@@ -1,16 +1,22 @@
 <%= stylesheet_link_tag 'suppliers' %>
 <div class="row sign_up_in_page">
+
   <div class="col sign_up_in_page_front">
-    <h2>trima</h2>
-    <p>is a travel platform</p>
+    <div class="sign_up_in_page_front_image_box">
+      <%=image_tag 'lp_image_supplier/trima_icons_for_supplier.png', class: 'supplier_login_icon' %>
+    </div>
+    <div class="sign_up_in_page_front_text_box">
+      <h2>trima</h2>
+      <p>北海道の旅行体験を世界へ</p>
+    </div>
   </div>
   <div class="col sign_up_in_page_end">
-    <h3>事業者としてログインする</h3>
+    <h3>事業者ログイン</h3>
     <%# form_with model: @supplier, url: supplier_session_path(@supplier), id: 'new_user', class: 'new_user', local: true do |f| %>
     <%= form_for(resource, as: resource_name, url: supplier_session_path) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div class="form-group">
-        <%= f.label :メールアドレス %><br />
+        <%= f.label :メールアドレス %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
       </div>
       <div class="form-group">
@@ -32,14 +38,37 @@
       </div>
     <% end %>
     <div class="another_way_btn_box">
-      <%= link_to "事業者登録", new_supplier_registration_path %>
+      <%= link_to "事業者登録をご希望の方はコチラ", about_for_supplier_path %>
     </div>
     <div class="didnt_recieve_btn_box">
-      <%= link_to "パスワードを忘れた方はこちら", new_supplier_password_path %><br />
-      <%= link_to "パスワードを複数回間違えた方はこちら", new_supplier_unlock_path %><br />
+      <%= link_to "パスワードを忘れた方", new_supplier_password_path %>
+      <%= link_to "パスワードを複数回間違えた方", new_supplier_unlock_path %>
     </div>
   </div>
 </div>
+
+<style lan="scss">
+  .sign_up_in_page_front {
+    position: relative;
+    background: linear-gradient(to right, #2193b0, #58c1db) !important;
+    padding: 40px 60px;
+  }
+  img.supplier_login_icon {
+    width: 200px;
+  }
+  .didnt_recieve_btn_box a {
+    display: flex;
+    color: #48aada;
+    font-size: 13px;
+    justify-content: center;
+  }
+  .col.sign_up_in_page_end h3 {
+    color: #888888;
+    font-weight: initial;
+    font-size: 19px;
+  }
+
+</style>
 
 <script type="text/javascript">
   document.getElementById("password_visible_btn").onclick = function() {

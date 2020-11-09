@@ -1,43 +1,96 @@
 <%= stylesheet_link_tag 'suppliers' %>
 <div class="sign_up_in_page">
-  <div class="sign_up_in_page_front">
+  <!-- <div class="sign_up_in_page_front">
     <h2>trima</h2>
     <h4>旅行・観光事業者のためのall in oneツール</h4>
     <p>お店や施設の情報発信をひとまとめに</p>
     <p>予約管理が簡単に</p>
-  </div>
+  </div> -->
   <div class="sign_up_in_page_end">
     <h3>事業者アカウントを作成する</h3>
-    <%= form_with model: @supplier, url: supplier_registration_path(@supplier), id: 'new_user', class: 'new_user', local: true do |f| %>
+    <%= form_with model: @supplier, url: supplier_registration_path(@supplier), id: 'new_supplier', class: 'new_user', local: true do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
-      <div class="form-group">
-        <%= f.label :メールアドレス %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :パスワード %>
-        <div id="password_input_box">
-          <%= f.password_field :password, autocomplete: "new-password", class: "form-control invisible" ,id: "password-input", required: true %>
-          <div id="password_visible_btn"><i class='fas fa-eye'></i></div>
+      <div class="supplier_signup_input_box">
+        <div class="form-group">
+          <%= f.label :メールアドレス %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true %>
+        </div>
+        <div class="form-group">
+          <%= f.label :パスワード %>
+          <div id="password_input_box">
+            <%= f.password_field :password, autocomplete: "new-password", class: "form-control invisible" ,id: "password-input", required: true %>
+            <div id="password_visible_btn"><i class='fas fa-eye-slash'></i></div>
+          </div>
         </div>
       </div>
-      <div class="form-group agree_check">
-        <input type="checkbox" id="agree_checkbox" value="" required>
-        <label for="agree_checkbox"><%= link_to "利用規約", "#", class: "agree_link" %>&nbsp;と&nbsp;<%= link_to "プライバシーポリシー", privacy_policy_jp_path, target: :_blank, class: "agree_link" %>に同意する</label>
+      <div class="supplier_signup_input_box">
+        <div class="form-group agree_check">
+          <input type="checkbox" id="agree_checkbox" value="" required>
+          <label for="agree_checkbox">
+            私は事業者向けダウンロード資料の内容を理解し<br>
+            <%= link_to "共通利用規約", term_of_service_for_supplier_path, class: "agree_link" %>、
+            <%= link_to "事業者利用規約", term_of_service_for_supplier_path, class: "agree_link" %>、<%= link_to "プライバシーポリシー", privacy_policy_jp_path, target: :_blank, class: "agree_link" %>の<br>
+            内容すべてに同意します
+          </label>
+        </div>
       </div>
-      <div class="form-group supplier login_button">
-        <%= f.submit "事業者登録する", class: "button btn-submit" %>
+      <div class="supplier_signup_input_box">
+        <div class="form-group supplier login_button">
+          <%= f.submit "事業者登録する", class: "button btn-submit" %>
+        </div>
       </div>
     <% end %>
     <div class="another_way_btn_box">
-      <span>すでにアカウントをお持ちですか？</span><br />
-      <%= link_to "ログインする", suppliers_sign_in_path %>
+      <li><span>すでにアカウントをお持ちの方は<%= link_to "ログイン", suppliers_sign_in_path %></span></li>
+      <li><span>認証メールが届かない方は<%= link_to "コチラ", new_supplier_confirmation_path %></span></li>
     </div>
-    <div class="didnt_recieve_btn_box">
+    <!-- <div class="didnt_recieve_btn_box">
       <%= link_to "認証メールが届かない方はこちら", new_supplier_confirmation_path %>
-    </div>
+    </div> -->
   </div>
 </div>
+
+<style lang="scss">
+  .sign_up_in_page_end {
+    padding: 40px 0px;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+  }
+  .sign_up_in_page_end h3 {
+    color: #2393b0;
+    margin: 20px 0 30px;
+  }
+  #new_supplier {
+    width: 100% !important;
+  }
+  .supplier_signup_input_box {
+    width: 70%;
+    margin: 0 auto;
+  }
+  .form-group.agree_check {
+    background: #eee;
+    border: solid 1px lightgray;
+    border-radius: 5px;
+    width: 100%;
+    margin: 0 auto 10px;
+    max-width: 500px;
+  }
+  input#agree_checkbox {
+    margin: 0 15px 0 20px;
+    width: 22px;
+    height: 22px;
+    min-height: 22px;
+    min-width: 22px;
+    max-width: 22px;
+    max-height: 22px;
+  }
+  .form-group.agree_check label {
+    padding: 15px 20px 15px 0;
+  }
+</style>
 
 <script type="text/javascript">
   document.getElementById("password_visible_btn").onclick = function() {
@@ -46,10 +99,11 @@
     const pwdIcon = document.getElementById('password_visible_btn');
     if(pwdClass == false){
       pwd.setAttribute('type', 'text');
-      pwdIcon.innerHTML = '<i class="fas fa-eye-slash"></i>';
+      pwdIcon.innerHTML = '<i class="fas fa-eye"></i>';
+      // pwdIcon.innerHTML = '<i class="fas fa-eye-slash"></i>';
     } else {
       pwd.setAttribute('type', 'password');
-      pwdIcon.innerHTML = '<i class="fas fa-eye"></i>';
+      pwdIcon.innerHTML = '<i class="fas fa-eye-slash"></i>';
     }
   };
 </script>

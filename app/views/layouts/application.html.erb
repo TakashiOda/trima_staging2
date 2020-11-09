@@ -11,10 +11,11 @@
     <meta charset="utf-8">
   </head>
 
+  <%# <body class="erb_body <%= "add_padding_top" unless controller.action_name == "about" %>
   <body class="erb_body <%= "add_padding_top" unless controller.action_name == "about" %>">
-    <% unless controller.action_name == "about" %>
+    <%# unless controller.action_name == "about" %>
       <%= render 'layouts/header'%>
-    <% end %>
+    <%# end %>
     <% if notice %>
       <p class="notice"><%= notice %></p>
     <% end %>
@@ -27,7 +28,7 @@
       <% if controller.action_name == "thank_you_for_registration_user" %>
         <%= stylesheet_link_tag 'users' %>
         <%= yield %>
-      <% elsif controller.action_name == "thank_you_for_registration_supplier" %>
+      <% elsif controller.action_name == "thank_you_for_registration_supplier" || controller.controller_name == 'supplier_applies' %>
         <%= stylesheet_link_tag 'suppliers' %>
         <%= yield %>
       <% elsif controller.controller_name == "activities" || controller.controller_name == "activity_businesses" || controller.controller_name == "suppliers" %>
@@ -81,3 +82,8 @@
     <% end %>
   </body>
 </html>
+
+<script type="text/javascript">
+  $(".notice" ).fadeOut(2000);
+  $(".alert" ).fadeOut(2000);
+</script>
