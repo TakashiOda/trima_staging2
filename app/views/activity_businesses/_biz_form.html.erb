@@ -176,7 +176,20 @@
         <div class="form_big_title">
           <h3>保険加入について</h3>
         </div>
-        <div class="form-group">
+        <div class="radio_item_box">
+          <%= form.label "保険に加入していますか？" %>
+          <div class="radio_items">
+            <div class="radio_item on">
+              <%= form.radio_button :has_insurance, :false, onClick: "hideInsuranceUploader()", oninput: 'hasInput()' %>
+              <%= form.label :has_insurance, "加入していない", {value: :false, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item off">
+              <%= form.radio_button :has_insurance, :true, onClick: "showInsuranceUploader()", oninput: 'hasInput()' %>
+              <%= form.label :has_insurance, "加入している", {value: :true, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group hidden" id="insurance_uploader_box">
           <%= form.label "加入保険の証書アップロード" %>
           <%= form.file_field :insurance_image, id: 'insurance_image_form', oninput: 'hasInput()' %>
         </div>
@@ -325,7 +338,25 @@
     color: gray;
     margin-bottom: 5px;
   }
-
+  input#insurance_image_form {
+    /* height: 40px; */
+    display: flex;
+    border-radius: 0;
+    background: #fff;
+    margin: 10px 0 0;
+  }
+  .explanation_about_cansel {
+    margin-top: 30px;
+  }
+  div#insurance_uploader_box {
+    background: lightgray;
+    padding: 15px 10px;
+    border-radius: 5px;
+    width: 90%;
+  }
+  .form-group input{
+    background: lightgray !important;
+}
 
 </style>
 
@@ -530,4 +561,15 @@
       aWeekBefore.classList.remove('hidden');
     }
   }
+
+  function hideInsuranceUploader(obj) {
+    const uploadBox = document.getElementById("insurance_uploader_box");
+    uploadBox.classList.add('hidden');
+  }
+
+  function showInsuranceUploader(obj) {
+    const uploadBox = document.getElementById("insurance_uploader_box");
+    uploadBox.classList.remove('hidden');
+  }
+
   </script>
