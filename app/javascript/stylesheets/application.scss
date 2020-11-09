@@ -82,7 +82,7 @@ body.erb_body.add_padding_top {
 
 
 .notice {
-  background: #05c773db;
+  background: #05c77399;
   color: white;
   text-align: center;
   margin: 0;
@@ -90,32 +90,28 @@ body.erb_body.add_padding_top {
   font-size: 14px;
   z-index: 100;
   padding: 5px;
-  position: absolute;
-  top: 60px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
 }
-// .alert {
-//   background: #ff282870;
-//   color: white;
-//   text-align: center;
-//   margin: 0;
-//   width: 100%;
-//   font-size: 14px;
-//   z-index: 100;
-//   padding: 5px;
-//   position: absolute;
-//   top: 60px;
-// }
 .alert {
-    background: #ff2828b8;
-    color: white;
-    text-align: center;
-    margin: 0;
-    width: 100%;
-    font-size: 14px;
-    z-index: 100;
-    padding: 5px;
-    position: sticky;
-    top: 0;
+  background: #ff2828b8;
+  color: white;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+  font-size: 14px;
+  z-index: 100;
+  padding: 5px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
 }
 
 //4.共通パーツ=======================================
@@ -213,13 +209,23 @@ header.erb_header {
   // background: $user-main-color !important;
   // background: linear-gradient(45deg, #08AEEA, #2AF598);
   // background: linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 80%, #0cb567);
-  background: linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
-  background: -moz-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
-  background: -webkit-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
+  // background: linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
+  // background: -moz-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
+  // background: -webkit-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
+  // padding: 0px;
+  // height: 60px;
+  // width: 100%;
+  // z-index: 100;
+  background: linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
+  background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
+  /* background: transparent; */
   padding: 0px;
-  height: 60px;
+  height: 56px;
   width: 100%;
-  z-index: 100;
+  z-index: 93;
+  box-shadow: 0px 4px 5px -5px #00000082;
+  position: fixed;
+  top: 0;
   .header_inner {
     height: 100%;
     display: flex;
@@ -483,13 +489,58 @@ ul.static_page__heading_text_list {
 }
 /*home************************************/
 .home_contents__top {
-  background-image: url("../images/home_bg_biei_dark.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 400px;
-  height: 350px;
-  padding: 50px 8%;
+  // background-image: url("../images/home_bg_biei_dark.jpg");
+  // background-size: cover;
+  // background-position: center;
+  // height: 250px;
+  // padding: 40px 20px;
+  background: linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
+  background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
+  height: 300px;
+  padding: 56px 7% 20px;
+  // position: relative;
+  display: flex;
+  // flex-direction: column;
+  align-items: center;
 }
+
+img.eyecatch_image_home {
+    // position: absolute;
+    bottom: -12px;
+    left: 100px;
+    width: 220px;
+}
+.home_contents__top__right {
+    width: 84%;
+    display: flex;
+    flex-direction: column;
+    // align-items: flex-end;
+}
+.home_contents__top__up {
+  color: #fff;
+  // margin: 0;
+  h4 {
+    font-size: 30px;
+    margin: 0;
+    letter-spacing: 4px;
+  }
+  p {
+    font-size: 25px;
+    // margin-bottom: 10px;
+    margin: 0 0 10px;
+  }
+}
+.home_top_downner {
+  display: flex;
+  align-items: center;
+  height: 250px;
+  justify-content: space-between;
+  width: 100%;
+  img.eyecatch_image_home_middle {
+      width: 200px;
+  }
+}
+
 .home_contents__itembox {
   display: flex;
   justify-content: center;
@@ -522,11 +573,24 @@ ul.static_page__heading_text_list {
   margin: 15px 0;
 }
 .home_contents__top__down ul li a {
-  color: #fff;
-  background: #2bb561;
-  font-size: 24px;
-  padding: 8px 19px;
-  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  padding: 5px 20px;
+  border-radius: 40px;
+  height: 25px;
+  width: 160px;
+}
+a.home_eyecatch_first_btn {
+  // background: linear-gradient(90deg, #ff8e00,#ffba3b);
+  background: linear-gradient(90deg, #ffd400, #fff700 80%);
+  color: #2d5092 !important;
+}
+a.home_eyecatch_second_btn {
+  // background: linear-gradient(90deg, #e8701b, #ff7700);
+  background: linear-gradient(90deg, #ff9c20, #ffc520);
+  color: #2f5390 !important;
 }
 
 /*sign_up************************************/
@@ -646,6 +710,7 @@ div#password_input_box {
 //サイドバーありのUI************************************/
 .container.user_show.container-fluid {
   display: flex;
+  margin-top: 56px;
 }
 .user_show_side {
   width: 20%;

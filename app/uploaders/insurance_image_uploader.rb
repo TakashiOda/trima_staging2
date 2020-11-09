@@ -22,7 +22,7 @@ class InsuranceImageUploader < CarrierWave::Uploader::Base
 
   # 許可する画像の拡張子
   def extension_whitelist
-     %w(jpg jpeg png)
+     %w(jpg jpeg png pdf)
   end
 
   # 保存するファイルの命名規則

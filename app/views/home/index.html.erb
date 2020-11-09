@@ -1,20 +1,23 @@
 <div class="home_contents">
   <div class="home_contents__top">
-    <div class="home_contents__top__up">
-      <h4>trima</h4>
-      <p>Lets make amazing trip!</p>
+
+    <div class="home_contents__top__right">
+      <div class="home_contents__top__up">
+        <p>旅行の計画、下調べ、予約は<br>トリマでぜんぶカンタンに</p>
+      </div>
+      <div class="home_contents__top__down">
+        <ul>
+          <% if current_user %>
+            <li><%= link_to "旅行プロジェクトをつくる", new_user_project_path(current_user), class: 'home_eyecatch_first_btn' %></li>
+            <li><%= link_to "使い方を見てみる", "#", class: 'home_eyecatch_second_btn' %></li>
+          <% else %>
+            <li><%= link_to "trimaについて", "#", class: 'home_eyecatch_first_btn' %></li>
+            <li><%= link_to "新規登録", new_user_registration_path, class: 'home_eyecatch_second_btn' %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-    <div class="home_contents__top__down">
-      <ul>
-        <% if current_user %>
-          <li><%= link_to "Create Project", new_user_project_path(current_user) %></li>
-          <li><%= link_to "How to Use", "#" %></li>
-        <% else %>
-          <li><%= link_to "About Service", "#" %></li>
-          <li><%= link_to "Sign UP", new_user_registration_path %></li>
-        <% end %>
-      </ul>
-    </div>
+    <%=image_tag 'home_eye_catch01.png', class: 'eyecatch_image_home' %>
   </div>
   <div class="home_contents__itembox">
     <div class="itembox__inner">

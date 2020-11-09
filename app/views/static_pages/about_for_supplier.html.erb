@@ -2,13 +2,9 @@
   <div class="header_inner">
     <%= link_to "trima", root_path, id: "supplier_lp_header_logo" %>
     <ul class="header__links">
-      <% if supplier_signed_in? %>
-        <li><%= link_to "事業者ページ", supplier_path(current_supplier)  %></li>
-      <% else %>
-        <li><%= link_to "会社情報", "#" %></li>
-        <li><%=link_to "ログイン", "#" %></li>
-        <li id="lp_pc_header_apply_btn"><%=link_to "事業者申込み", "#" %></li>
-      <% end %>
+      <li><%= link_to "会社情報", "#" %></li>
+      <li><%=link_to "ログイン", "#" %></li>
+      <li id="lp_pc_header_apply_btn"><%=link_to "事業者申込み", "#" %></li>
     </ul>
   </div>
 </header>
@@ -253,8 +249,11 @@
     padding: 0px;
     height: 60px;
     width: 100%;
-    z-index: 100;
+    z-index: 200;
     background: linear-gradient(to right, #2193b0, #6dd5ed) !important;
+    position: fixed;
+    top: 0;
+    box-shadow: 0px 4px 5px -5px #00000082;
   }
   header#supplier_lp_header.lp_pc_header .header_inner {
     height: 100%;
@@ -262,13 +261,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 5px 10px 5px 30px;
   }
   a#supplier_lp_header_logo {
-    font-size: 36px;
     color: #fff;
-    font-family: sans-serif;
+    font-size: 30px;
     font-weight: bold;
+    margin-left: 25px;
     letter-spacing: 4px;
   }
   header#supplier_lp_header.lp_pc_header ul.header__links {
