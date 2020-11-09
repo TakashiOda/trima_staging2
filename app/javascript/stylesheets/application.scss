@@ -48,7 +48,9 @@ a.disabled{
 }
 
 .form-group.user.login_button input.button {
-  background: #2bb560;
+  // background: #2bb560;
+  background: linear-gradient(45deg, #1a68ca, #08AEEA 20%, #2AF598) !important;
+  background: -webkit-linear-gradient(45deg, #1a68ca, #08AEEA 20%, #2AF598) !important;
 }
 
 //2.基本クラス=========================================
@@ -121,7 +123,7 @@ body.erb_body.add_padding_top {
   width: 100%;
   display: block;
   text-align: center;
-  padding: 10px;
+  padding: 10px 0;
   border: none;
   border-radius: 10px;
   font-size: 17px;
@@ -131,6 +133,8 @@ body.erb_body.add_padding_top {
 .btn-submit {
   color: #fff;
   margin-bottom: 10px;
+  background: linear-gradient(45deg, #1a68ca, #08AEEA 20%, #2AF598);
+  background: -webkit-linear-gradient(45deg, #1a68ca, #08AEEA 20%, #2AF598);
 }
 
 .btn-cansel {
@@ -146,11 +150,6 @@ body.erb_body.add_padding_top {
   // height: 100vh;
   padding: 50px;
 }
-
-
-
-
-
 
 // lp
 img.eyecatch_pc_image {
@@ -176,12 +175,21 @@ img.eyecatch_pc_image {
   border-radius: 10px;
   box-sizing: border-box;
   background: #f9f9f9;
+  // padding-left: 15px !important;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: 0 !important;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: lightgray;
 }
 .form-group textarea {
   width: 100% !important;
 }
 .form-group.button {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 form label {
   font-size: 12px;
@@ -202,7 +210,12 @@ form label {
 
 //7.header========================================
 header.erb_header {
-  background: $user-main-color !important;
+  // background: $user-main-color !important;
+  // background: linear-gradient(45deg, #08AEEA, #2AF598);
+  // background: linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 80%, #0cb567);
+  background: linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
+  background: -moz-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
+  background: -webkit-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
   padding: 0px;
   height: 60px;
   width: 100%;
@@ -224,26 +237,41 @@ header.erb_header {
   }
   a#logo {
     color: #fff;
-    font-size: 18px;
-    margin-left: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 25px;
+    letter-spacing: 4px;
   }
   ul.header__links {
     display: flex;
-    margin-right: 15px;
+    align-items: center;
+    margin-right: 10px;
     margin-bottom: 0;
     margin-top: 0;
-    padding-top: 3px;
+    // padding-top: 3px;
     a.header_mypage_link {
       display: flex;
       align-items: center;
     }
     li {
       margin: 0 7px;
+      color: #fff;
+      font-size: 15px;
       a {
         color: #fff;
       }
+      :hover {opacity: 0.5;}
+    }
+    li.header_signup_link {
+      border: solid 1px #fff;
+      padding: 3px 10px;
+      border-radius: 20px;
     }
   }
+}
+.header_to_dashboad_text {
+  margin: 0 !important;
+  font-size: 15px;
 }
 img.header_avatar {
   width: 33px;
@@ -252,6 +280,24 @@ img.header_avatar {
   /* padding: 2px; */
   background: #e4e4e4;
   margin-top: 3px;
+}
+a#header_current_supplier_link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.header_link_icon {
+  margin-left: 15px;
+  background: blueviolet;
+  padding: 8px 8px;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #fff;
 }
 //7.header====終わり====================================
 
@@ -510,6 +556,7 @@ ul.static_page__heading_text_list {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 480px;
 }
 form#new_user,
 form#new_supplier {
