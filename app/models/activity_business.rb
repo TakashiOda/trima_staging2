@@ -9,5 +9,6 @@ class ActivityBusiness < ApplicationRecord
   accepts_nested_attributes_for :activity_languages
 
   mount_uploader :profile_image, AvatarUploader
+  mount_uploader :insurance_image, InsuranceImageUploader
 
 end

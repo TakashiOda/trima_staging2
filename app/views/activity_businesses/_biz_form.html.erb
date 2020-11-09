@@ -174,6 +174,27 @@
       </section>
       <section class="form_section">
         <div class="form_big_title">
+          <h3>保険加入について</h3>
+        </div>
+        <div class="form-group">
+          <%= form.label "加入保険の証書アップロード" %>
+          <%= form.file_field :insurance_image, id: 'insurance_image_form', oninput: 'hasInput()' %>
+        </div>
+        <div class="explanation_about_cansel">
+          <div id="explanation_about_the_day_before" class="">
+            <div class="hosoku_title_box">
+              <span class="hosoku_title">補足</span>
+              <span class="hosoku_sub_title">保険の加入について</span>
+            </div>
+            <ul>
+              <li>保険の加入と保険への加入は任意ですが、保険への加入有無はユーザーに表示されます</li>
+              <li>提供されるアクティビティによっては（ウォータースポーツなど）保険への加入を必須とさせていただく場合がございます。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="form_section">
+        <div class="form_big_title">
           <h3>所在地・連絡先</h3>
         </div>
         <div class="radio_item_box">

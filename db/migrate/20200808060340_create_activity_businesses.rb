@@ -23,6 +23,7 @@ class CreateActivityBusinesses < ActiveRecord::Migration[6.0]
       t.string :no_charge_cansel_before, default: 'three_days_before' # 0=>'前日まで無料', 1=>'3日前まで無料', 2=>'1週間前まで無料'
       t.boolean :has_insurance, default: false
       t.string :guide_certification
+      t.string :insurance_image
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
       t.timestamps
     end
