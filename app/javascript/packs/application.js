@@ -9,3 +9,5 @@ import "cocoon";
 
 const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+// $(".notice" ).fadeOut(2000);
+// $(".alert" ).fadeOut(2000);

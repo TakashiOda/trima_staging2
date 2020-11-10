@@ -48,7 +48,9 @@ a.disabled{
 }
 
 .form-group.user.login_button input.button {
-  background: #2bb560;
+  // background: #2bb560;
+  background: linear-gradient(45deg, #1a68ca, #08AEEA 20%, #2AF598) !important;
+  background: -webkit-linear-gradient(45deg, #1a68ca, #08AEEA 20%, #2AF598) !important;
 }
 
 //2.基本クラス=========================================
@@ -68,19 +70,23 @@ a.disabled{
 .body_content {
   position: relative;
   width: 100%;
+  // height: 100%;
+  min-height: 80vh;
+  margin-top: 56px;
 }
 body.erb_body {
   margin: 0 !important;
-  height: 100vh;
+  // height: 100vh;
 }
 body.erb_body.add_padding_top {
   padding-top: 0px;
   position: relative;
+  // height: 100vh;
 }
 
 
 .notice {
-  background: #05c773db;
+  background: #05c77399;
   color: white;
   text-align: center;
   margin: 0;
@@ -88,32 +94,28 @@ body.erb_body.add_padding_top {
   font-size: 14px;
   z-index: 100;
   padding: 5px;
-  position: absolute;
-  top: 60px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
 }
-// .alert {
-//   background: #ff282870;
-//   color: white;
-//   text-align: center;
-//   margin: 0;
-//   width: 100%;
-//   font-size: 14px;
-//   z-index: 100;
-//   padding: 5px;
-//   position: absolute;
-//   top: 60px;
-// }
 .alert {
-    background: #ff2828b8;
-    color: white;
-    text-align: center;
-    margin: 0;
-    width: 100%;
-    font-size: 14px;
-    z-index: 100;
-    padding: 5px;
-    position: sticky;
-    top: 0;
+  background: #ff2828b8;
+  color: white;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+  font-size: 14px;
+  z-index: 100;
+  padding: 5px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
 }
 
 //4.共通パーツ=======================================
@@ -121,7 +123,7 @@ body.erb_body.add_padding_top {
   width: 100%;
   display: block;
   text-align: center;
-  padding: 10px;
+  padding: 10px 0;
   border: none;
   border-radius: 10px;
   font-size: 17px;
@@ -131,6 +133,8 @@ body.erb_body.add_padding_top {
 .btn-submit {
   color: #fff;
   margin-bottom: 10px;
+  background: linear-gradient(45deg, #1a68ca, #08AEEA 20%, #2AF598);
+  background: -webkit-linear-gradient(45deg, #1a68ca, #08AEEA 20%, #2AF598);
 }
 
 .btn-cansel {
@@ -146,11 +150,6 @@ body.erb_body.add_padding_top {
   // height: 100vh;
   padding: 50px;
 }
-
-
-
-
-
 
 // lp
 img.eyecatch_pc_image {
@@ -176,12 +175,21 @@ img.eyecatch_pc_image {
   border-radius: 10px;
   box-sizing: border-box;
   background: #f9f9f9;
+  // padding-left: 15px !important;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: 0 !important;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: lightgray;
 }
 .form-group textarea {
   width: 100% !important;
 }
 .form-group.button {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 form label {
   font-size: 12px;
@@ -202,11 +210,26 @@ form label {
 
 //7.header========================================
 header.erb_header {
-  background: $user-main-color !important;
+  // background: $user-main-color !important;
+  // background: linear-gradient(45deg, #08AEEA, #2AF598);
+  // background: linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 80%, #0cb567);
+  // background: linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
+  // background: -moz-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
+  // background: -webkit-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
+  // padding: 0px;
+  // height: 60px;
+  // width: 100%;
+  // z-index: 100;
+  background: linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
+  background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
+  /* background: transparent; */
   padding: 0px;
-  height: 60px;
+  height: 56px;
   width: 100%;
-  z-index: 100;
+  z-index: 93;
+  box-shadow: 0px 4px 5px -5px #00000082;
+  position: fixed;
+  top: 0;
   .header_inner {
     height: 100%;
     display: flex;
@@ -224,26 +247,41 @@ header.erb_header {
   }
   a#logo {
     color: #fff;
-    font-size: 18px;
-    margin-left: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 25px;
+    letter-spacing: 4px;
   }
   ul.header__links {
     display: flex;
-    margin-right: 15px;
+    align-items: center;
+    margin-right: 10px;
     margin-bottom: 0;
     margin-top: 0;
-    padding-top: 3px;
+    // padding-top: 3px;
     a.header_mypage_link {
       display: flex;
       align-items: center;
     }
     li {
       margin: 0 7px;
+      color: #fff;
+      font-size: 15px;
       a {
         color: #fff;
       }
+      :hover {opacity: 0.5;}
+    }
+    li.header_signup_link {
+      border: solid 1px #fff;
+      padding: 3px 10px;
+      border-radius: 20px;
     }
   }
+}
+.header_to_dashboad_text {
+  margin: 0 !important;
+  font-size: 15px;
 }
 img.header_avatar {
   width: 33px;
@@ -252,6 +290,24 @@ img.header_avatar {
   /* padding: 2px; */
   background: #e4e4e4;
   margin-top: 3px;
+}
+a#header_current_supplier_link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.header_link_icon {
+  margin-left: 15px;
+  background: blueviolet;
+  padding: 8px 8px;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #fff;
 }
 //7.header====終わり====================================
 
@@ -437,13 +493,47 @@ ul.static_page__heading_text_list {
 }
 /*home************************************/
 .home_contents__top {
-  background-image: url("../images/home_bg_biei_dark.jpg");
-  background-size: cover;
-  background-position: center;
-  height: 400px;
-  height: 350px;
-  padding: 50px 8%;
+  background: linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
+  background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
+  height: 300px;
+  padding: 56px 7% 20px;
+  display: flex;
+  align-items: center;
 }
+
+img.eyecatch_image_home {
+  bottom: -12px;
+  left: 100px;
+  width: 220px;
+}
+.home_contents__top__right {
+  width: 84%;
+  display: flex;
+  flex-direction: column;
+}
+.home_contents__top__up {
+  color: #fff;
+  h4 {
+    font-size: 30px;
+    margin: 0;
+    letter-spacing: 4px;
+  }
+  p {
+    font-size: 25px;
+    margin: 0 0 10px;
+  }
+}
+.home_top_downner {
+  display: flex;
+  align-items: center;
+  height: 250px;
+  justify-content: space-between;
+  width: 100%;
+  img.eyecatch_image_home_middle {
+      width: 200px;
+  }
+}
+
 .home_contents__itembox {
   display: flex;
   justify-content: center;
@@ -476,11 +566,22 @@ ul.static_page__heading_text_list {
   margin: 15px 0;
 }
 .home_contents__top__down ul li a {
-  color: #fff;
-  background: #2bb561;
-  font-size: 24px;
-  padding: 8px 19px;
-  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  padding: 5px 20px;
+  border-radius: 40px;
+  height: 25px;
+  width: 160px;
+}
+a.home_eyecatch_first_btn {
+  background: linear-gradient(90deg, #ffd400, #fff700 80%);
+  color: #2d5092 !important;
+}
+a.home_eyecatch_second_btn {
+  background: linear-gradient(90deg, #ff9c20, #ffc520);
+  color: #2f5390 !important;
 }
 
 /*sign_up************************************/
@@ -488,6 +589,7 @@ ul.static_page__heading_text_list {
 .sign_up_in_page {
   width: 100%;
   display: flex;
+  justify-content: center;
 }
 .sign_up_in_page_front {
   background-image: url("../images/biei_dark.jpg");
@@ -510,10 +612,11 @@ ul.static_page__heading_text_list {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 480px;
 }
 form#new_user,
 form#new_supplier {
-  width: 80%;
+  width: 65%;
   margin: auto;
 }
 .supplement_text {
@@ -527,8 +630,17 @@ form#new_supplier {
   border-radius: 30px;
 }
 .another_way_btn_box {
-  margin: 20px auto;
+  margin: 10px auto;
   text-align: center;
+  list-style: none;
+}
+.another_way_btn_box a {
+  color: #48aada;
+  font-size: 13px;
+  margin-left: 6px;
+}
+.another_way_btn_box span {
+    color: #5f5f5f;
 }
 .didnt_recieve_btn_box {
   margin: 25px auto;
@@ -599,19 +711,23 @@ div#password_input_box {
 //サイドバーありのUI************************************/
 .container.user_show.container-fluid {
   display: flex;
+  margin-top: 56px;
+  height: 100%;
 }
 .user_show_side {
   width: 20%;
   padding: 20px 10px 30px 20px;
+  min-height: 80vh !important;
 }
 .user_show_side ul {
   position: sticky;
-  top: 20px;
+  top: 65px;
 }
 .user_show_content {
   padding: 0px;
   width: 80%;
   background: #eaeaea;
+  min-height: 80vh !important;
   form {
     padding: 0 20px;
     .user_show_content_down {
@@ -636,7 +752,7 @@ div#password_input_box {
         padding: 10px 0 10px 20px;
         height: 220px;
         position: sticky;
-        top: 0;
+        top: 60px;
         .form_sidebtns_container {
           background: #fff;
           height: 100%;

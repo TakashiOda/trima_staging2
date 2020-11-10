@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_031852) do
     t.string "no_charge_cansel_before", default: "three_days_before"
     t.boolean "has_insurance", default: false
     t.string "guide_certification"
+    t.string "insurance_image"
     t.boolean "is_approved", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
