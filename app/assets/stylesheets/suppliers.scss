@@ -899,7 +899,7 @@ div#guides .nested-fields {
   margin-bottom: -50px;
 }
 .stock_form_btn_box_inner {
-  width: 300px;
+  width: 400px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -915,7 +915,7 @@ input.button.btn-submit.stock_submit {
 }
 input.button.btn-submit.stock_submit:hover {
   cursor: pointer !important;
-  background: #037eda !important;
+  opacity: 0.6;
 }
 
 .stock_form {
@@ -1022,7 +1022,7 @@ input.button.btn-submit.stock_submit:hover {
 .cp_tab {
   margin: 10px 0px 0px;
   padding-left: 15px;
-  height: 50px;
+  height: 45px;
   display: flex;
 }
 a.month_tab {
@@ -1077,6 +1077,43 @@ a.month_tab.selected {
 }
 
 //吹き出し*******************************************************************
+.form_big_title_questionIcon.about_stock_term {
+  position: relative;
+}
+
+.fukidashi {
+  display: none;
+  width: 200px;
+  position: absolute;
+  bottom: 30px;
+  right: -89px;
+  z-index: 100;
+  padding: 16px;
+  border-radius: 5px;
+  background: #9e9e9eeb;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+}
+.fukidashi:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 100px;
+  right: 100px;
+  bottom: -20px;
+  margin-left: 10px;
+  border: solid transparent;
+  border-color: rgba(51, 204, 153, 0);
+  border-top-color: #9e9e9eeb;
+  border-width: 10px;
+  pointer-events: none;
+  content: " ";
+}
+.date_item_allset svg:hover + .fukidashi_about_stock_term {
+  display: block;
+}
+
 .form_big_title_questionIcon.aboutAllStock {
   position: relative;
 }
@@ -1197,4 +1234,10 @@ a.month_tab.selected {
 .season_input_box button:hover {
   cursor: pointer;
   background: #037eda;
+}
+
+.all_stock_input_box input:focus,
+.all_stock_input_box button:focus,
+ {
+    outline: 0;
 }

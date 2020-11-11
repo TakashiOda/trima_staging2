@@ -1,13 +1,14 @@
 <div class="stock_form">
   <%= form_for [current_supplier, @activity] do |f| %>
     <div class="stock_form_btn_box">
+      <%= f.hidden_field :this_page_path, value: action_name %>
       <div class="stock_form_btn_box_inner">
-        <%= f.submit('在庫を登録',class: 'button btn-submit stock_submit') %>
+        <%= f.submit('在庫を登録',class: 'button btn-submit stock_submit', id: 'stock_new_submit_btn') %>
       </div>
     </div>
     <div class="activity_stock_form_main_content">
       <div class="activity_stock_top_box">
-        <h3>在庫登録</h3>
+        <h5><%=link_to "体験編集に戻る", edit_supplier_activity_path(current_supplier, @activity) %> > 在庫を作成</h5>
         <h5><span>体験名</span><%= @activity.name %></h5>
       </div>
       <div class="stock_form_tab_and_submit">
@@ -71,7 +72,7 @@
                 <%= stock.hidden_field :date, :value => @dates[stock.index] %>
                 <% if @days_of_open.include?(@dates[stock.index].wday) %>
                   <div class="stock_input_box">
-                    <%= stock.number_field :stock, min: 0, max: @activity.maximum_num, class: 'form-control' %>
+                    <%= stock.number_field :stock, min: 0, max: @activity.maximum_num, class: 'form-control', oninput: 'hasInput()' %>
                   </div>
                   <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price %>
                     <div class="season_input_box <%= stock.index %>">
@@ -101,8 +102,16 @@
   <% end %>
 </div>
 
-<script type="text/javascript">
+<style lang="scss">
+  .stock_form_btn_box_inner span {
+    font-size: 12px;
+    margin-right: 10px;
+    color: red;
+  }
+</style>
 
+
+<script type="text/javascript">
   function confirmAllStockChange(){
   	if(window.confirm('コースの全在庫を設定します。よろしいですか？')){
   		return true;
@@ -121,6 +130,7 @@
 
   function changeAllofColumnStock(obj) {
     if (confirmAllStockChange()) {
+      hasInput();
       const prevInput = obj.parentNode.children[0].value;
       const prevInputId = obj.id;
       const stockColumns = document.querySelectorAll("div.course_stock_column");
@@ -135,6 +145,7 @@
 
   function changeAllofColumnSeason(obj) {
     if (confirmAllSeasonChange()) {
+      hasInput();
       const allSeasonInput = obj.parentNode.children[0].value;
       const inputSelectedIndex = obj.parentNode.children[0].selectedIndex;
       const allHiddenSeasonInputBox = document.querySelectorAll("div.season_input_box");
@@ -192,30 +203,16 @@
         targetBox.classList.remove("is_high_season");
       }
     }
+    hasInput();
   }
 
-  // function changeSeasonPrice(obj) {
-  //   const parent = obj.parentNode;
-  //   const inputSelectedIndex = obj.selectedIndex;
-  //   const classNum = parseInt(parent.classList[1]);
-  //   const stockColumns = document.querySelectorAll("div.course_stock_column");
-  //   for (var i = 0; i < stockColumns.length; i++) {
-  //     let targetBox = stockColumns[i].children[classNum];
-  //     let targetField = targetBox.children[3].children[0];
-  //
-  //     if (inputSelectedIndex == 1){
-  //       targetField.value = "high";
-  //       targetBox.classList.add("is_high_season");
-  //       targetBox.classList.remove("is_low_season");
-  //     } else if (inputSelectedIndex == 2) {
-  //       targetField.value = "low";
-  //       targetBox.classList.add("is_low_season");
-  //       targetBox.classList.remove("is_high_season");
-  //     } else {
-  //       targetField.value = "normal";
-  //       targetBox.classList.remove("is_low_season");
-  //       targetBox.classList.remove("is_high_season");
-  //     }
-  //   }
-  // }
+  function hasInput() {
+    const submitBtn = document.getElementById('stock_new_submit_btn');
+    submitBtn.classList.add('need_submit');
+  }
+
+  function alertNeedToSave(){
+    hasInput();
+    alert('まだアクティビティに在庫がない状態で他の月に移動する場合は直近の月の在庫を保存する必要があります');
+  }
 </script>
