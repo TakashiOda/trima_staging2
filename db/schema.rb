@@ -296,7 +296,10 @@ ActiveRecord::Schema.define(version: 2020_11_07_031852) do
 
   create_table "supplier_profiles", force: :cascade do |t|
     t.integer "supplier_id", null: false
+    t.string "representative_name"
+    t.string "representative_kana"
     t.string "manager_name"
+    t.string "manager_name_kana"
     t.string "post_code"
     t.integer "prefecture_id"
     t.integer "area_id"

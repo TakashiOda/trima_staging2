@@ -892,7 +892,7 @@ div#guides .nested-fields {
 
 .stock_form_btn_box {
   position: sticky;
-  top: 0px;
+  top: 56px;
   display: flex;
   justify-content: flex-end;
   width: 100%;
@@ -902,15 +902,16 @@ div#guides .nested-fields {
   width: 300px;
   display: flex;
   justify-content: flex-end;
-  padding: 10px;
-  background: #ffffffd4;
+  align-items: center;
+  padding: 10px 20px;
 }
 
 input.button.btn-submit.stock_submit {
-  width: 115px;
+  width: 130px;
   height: 40px;
   border-radius: 6px;
   padding: 0;
+  margin-bottom: 0;
 }
 input.button.btn-submit.stock_submit:hover {
   cursor: pointer !important;

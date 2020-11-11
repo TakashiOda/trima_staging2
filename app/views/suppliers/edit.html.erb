@@ -6,40 +6,50 @@
   <%= render 'layouts/error_messages', model: form.object %>
   <div class="user_show_info_items_box">
     <section class="form_section">
-      <!-- <div class="form_big_title">
-        <h3>契約者の基本情報</h3>
-      </div> -->
       <div class="form-group">
-        <%= form.label "企業または屋号名" %>
-        <%= form.text_field :name, minlength: 3, maxlength: 40, required: true, class: "form-control", oninput: 'hasInput()' %>
+        <%= form.label "企業 / 屋号名 / 組織名" %>
+        <%= form.text_field :name, required: true, class: "form-control", oninput: 'hasInput()' %>
       </div>
       <%= form.fields_for :supplier_profile do |pf| %>
         <div class="form-group">
-          <%= pf.label :代表者のお名前 %>
-          <%= pf.text_field :manager_name, minlength: 3, maxlength: 40, required: true, class: "form-control", oninput: 'hasInput()' %>
+          <%= pf.label :代表者氏名（漢字） %>
+          <%= pf.text_field :representative_name, required: true, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
-          <%= pf.label :郵便番号 %>
-          <%= pf.text_field :post_code, minlength: 7, maxlength: 8, required: true, class: "form-control", oninput: 'hasInput()' %>
+          <%= pf.label :代表者氏名（カナ） %>
+          <%= pf.text_field :representative_kana, required: true, class: "form-control", oninput: 'hasInput()' %>
+        </div>
+        <div class="form-group">
+          <%= pf.label :予約サイト担当者氏名（漢字） %>
+          <%= pf.label :※代表者様以外にご担当者がいらっしゃる場合にご入力ください, class: 'form_label_hosoku' %>
+          <%= pf.text_field :manager_name, class: "form-control", oninput: 'hasInput()' %>
+        </div>
+        <div class="form-group">
+          <%= pf.label :予約サイト担当者氏名（カナ） %>
+          <%= pf.text_field :manager_name_kana, class: "form-control", oninput: 'hasInput()' %>
+        </div>
+        <div class="form-group">
+          <%= pf.label :郵便番号（ハイフンあり・半角数字） %>
+          <%= pf.text_field :post_code, minlength: 8, maxlength: 8, required: true, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :都道府県名 %>
           <%= pf.select :prefecture_id, {'北海道': 2}, { include_blank: false}, { class: 'form-control', oninput: 'hasInput()' } %>
         </div>
         <div class="form-group">
-          <%= pf.label :市区町村名 %>
-          <%= pf.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasInput()' %>
+          <%= pf.label :市町村名 %>
+          <%= pf.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市町村を選択"}, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :以降のご住所 %>
-          <%= pf.text_field :detail_address, minlength: 3, maxlength: 50, class: "form-control", oninput: 'hasInput()' %>
+          <%= pf.text_field :detail_address, minlength: 3, maxlength: 70, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :建物名・部屋番号 %>
-          <%= pf.text_field :building, maxlength: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
+          <%= pf.text_field :building, maxlength: 50, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
-          <%= pf.label :お電話番号 %>
+          <%= pf.label :お電話番号（ハイフンなし・半角数字） %>
           <%= pf.text_field :phone, minlength: 10, maxlength: 11, required: true, class: "form-control", oninput: 'hasInput()' %>
         </div>
       <% end %>
@@ -104,5 +114,10 @@
     width: 25px;
     height: 30px;
     /* vertical-align: middle; */
+  }
+  label.form_label_hosoku {
+    font-size: 10px;
+    font-weight: unset;
+    color: #a7a7a7;
   }
 </style>

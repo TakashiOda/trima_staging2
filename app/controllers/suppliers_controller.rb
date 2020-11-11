@@ -57,9 +57,19 @@ class SuppliersController < ApplicationController
   private
     def supplier_params
         params.require(:supplier).permit(:avatar, :avatar_cache, :name,
-                                          supplier_profile_attributes: [:supplier_id, :manager_name,
-                                          :post_code, :prefecture_id, :area_id, :town_id,
-                                          :detail_address, :building, :phone, :contract_plan,
-                                          :is_suspended])
+                                          supplier_profile_attributes: [:supplier_id,
+                                                                        :representative_name,
+                                                                        :representative_kana,
+                                                                        :manager_name,
+                                                                        :manager_name_kana,
+                                                                        :post_code,
+                                                                        :prefecture_id,
+                                                                        :area_id,
+                                                                        :town_id,
+                                                                        :detail_address,
+                                                                        :building,
+                                                                        :phone,
+                                                                        :contract_plan,
+                                                                        :is_suspended])
     end
 end
