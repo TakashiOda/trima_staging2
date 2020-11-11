@@ -1,0 +1,38 @@
+<div class="admin_container_inner">
+  <div class="admin_contents_title_box">
+    <h5>事業者一覧</h5>
+  </div>
+  <div class="activity_category_by_status_linkbox">
+    <%=link_to 'すべての事業者', "#", class: 'selected' %>
+    <%=link_to '承認待ち', "#", class: '' %>
+    <%=link_to '承認済み', "#", class: '' %>
+    <%=link_to '拒否リスト', "#", class: '' %>
+  </div>
+  <div class="admin_contents_list_box">
+    <ul class="suppliers_list_items">
+      <% if !@suppliers.nil? %>
+        <% @suppliers.each do |supplier|%>
+          <%= link_to supplier_detail_path(supplier), class: "link" do %>
+            <li class="supplier_list_item">
+              <div class="activity_list_item_front">
+                <div class="activity_list_item_fron_image">
+                  <%= image_tag 'default_images/no_activity_image_canoe.png', class: 'activity_icon_image' %>
+                </div>
+                <div class="activity_list_item_fron_info">
+                  <%= supplier.name %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        <% end %>
+        <%#= paginate @suppliers %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<style lang="scss">
+  li.activity_list_item.no_stock > a.link {
+    width: 85%;
+  }
+</style>

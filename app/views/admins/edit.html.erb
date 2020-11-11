@@ -1,0 +1,31 @@
+<div class="admin_container_inner">
+  <%= form_for(@admin) do |form| %>
+    <%= render 'layouts/error_messages', model: form.object %>
+    <div class="admin_edit_form_inner">
+      <div class="form-group">
+        <%= form.label "管理者名" %>
+        <%= form.text_field :name, required: true, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= form.label "メールアドレス" %>
+        <%= form.email_field :email, required: true, class: "form-control" %>
+      </div>
+      <div class="form_btns">
+        <%= form.submit('更新',class: 'button btn-submit') %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+<style lang="scss">
+  #user_edit_image_upload_btn:hover {
+    cursor: pointer;
+  }
+  .hidden {
+    display: none;
+  }
+  .user_show_content {
+    padding: 0px;
+  }
+</style>

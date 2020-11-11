@@ -72,6 +72,16 @@
             <%= yield %>
           </div>
         </div>
+      <% elsif current_admin || controller.controller_name == "admins" %>
+        <%= stylesheet_link_tag 'admins' %>
+        <div class="container user_show container-fluid">
+          <div class="admin_side_menu_container">
+            <%= render 'admins/admin_page_front_sidebar' %>
+          </div>
+          <div class="admin_container">
+            <%= yield %>
+          </div>
+        </div>
 
       <% else %>
         <%= yield %>
@@ -85,6 +95,6 @@
 </html>
 
 <script type="text/javascript">
-  $(".notice" ).fadeOut(2000);
-  $(".alert" ).fadeOut(2000);
+  $(".notice" ).fadeOut(4000);
+  $(".alert" ).fadeOut(4000);
 </script>
