@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 2020_11_11_072224) do
     t.boolean "has_insurance", default: false
     t.string "guide_certification"
     t.string "insurance_image"
+    t.string "status", default: "inputing"
     t.boolean "is_approved", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

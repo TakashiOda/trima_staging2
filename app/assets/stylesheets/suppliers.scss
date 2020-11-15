@@ -54,9 +54,7 @@ input.need_submit {
   padding-bottom: 7px;
   font-weight: bold;
 }
-// .notice {
-//   display: none !important;
-// }
+
 // 事業者thankyou メール=======================終わり=======
 
 
@@ -98,10 +96,21 @@ table.info_list_table tr .td_front {
 
 .info_list_box_title {
   display: flex;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
   justify-content: space-between;
 }
-
+.info_list_box_title_no_info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+.info_list_box_no_bix_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
 div#supplier_info_contents {
     margin: 20px 0;
 }

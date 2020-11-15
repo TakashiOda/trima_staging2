@@ -9,12 +9,10 @@ class ActivityBusinessesController < ApplicationController
     @supplier = current_supplier
     @activity_business = ActivityBusiness.new(supplier_id: current_supplier.id)
     @guide = @activity_business.guides.build
-    # @language = @activity_business.languages.build
   end
 
   def create
     @supplier = current_supplier
-    # @organization = Organization.find(current_supplier.organization_id)
     @activity_business = ActivityBusiness.new(activity_biz_params)
     if @activity_business.save
       redirect_to supplier_path(current_supplier)
@@ -31,7 +29,6 @@ class ActivityBusinessesController < ApplicationController
   def update
     @supplier = current_supplier
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
-    # binding.pry
     if @activity_business.update(activity_biz_params)
       flash[:notice] = '体験事業の情報を更新しました'
       redirect_to supplier_path(@supplier)
@@ -57,7 +54,7 @@ class ActivityBusinessesController < ApplicationController
     def activity_biz_params
         params.require(:activity_business).permit(:name, :profile_image, :profile_image_cache, :profile_text,
                                                   :en_name, :en_profile_text, :cn_name, :cn_profile_text,
-                                                  :tw_name, :tw_profile_text,
+                                                  :tw_name, :tw_profile_text, :status,
                                                   { :language_ids=> [] },
                                                   :prefecture_id, :area_id, :town_id,
                                                   :detail_address, :building, :apply_suuplier_address,

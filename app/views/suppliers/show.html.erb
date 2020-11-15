@@ -1,20 +1,30 @@
 <div class="supplier_show_content_inside">
   <div class="activity_business_info_box"><!--メインコンテンツorg-->
-    <div class="info_list_box_title">
-      <div>企業情報</div>
-      <div>
-        <% unless @supplier.supplier_profile.nil? %>
-          <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business), class: "org_edit_btn" %>
-        <% end %>
-      </div>
-    </div>
-    <div id="activity_business_info_contents" class="">
-      <% if @supplier_profile.nil? %>
-        <div class="info_list_box_contents">
-          <div>まだ企業情報がありません</div>
-          <%= link_to "体験事業を登録", "#", class: "org_edit_btn" %>
+    <% if !@activity_business.nil? %>
+      <div class="info_list_box_title">
+        <div class="info_list_box_title_inner">
+          企業情報
+          <% if @activity_business.is_approved %>
+            <div class="activity_business_status is_approved">
+              承認済み
+            </div>
+          <% else %>
+            <% if @activity_business.status == 'inputing' %>
+              <div class="activity_business_status inputting">
+                まだ事業者申請がされていません
+              </div>
+            <% else %>
+              <div class="activity_business_status send_approve">
+                承認待ち
+              </div>
+            <% end %>
+          <% end %>
         </div>
-      <% else %>
+        <div>
+          <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business), class: "org_edit_btn" %>
+        </div>
+      </div>
+      <div id="activity_business_info_contents" class="">
         <div class="info_list_box_contents">
           <table class="info_list_table">
             <tr>
@@ -43,7 +53,6 @@
                     <div class="supplier_show_guide_item_box">
                       <div class="supplier_show_guide_item_box__image"><%= image_tag guide.avatar.to_s, class: "user_avatar" %></div>
                       <div class="supplier_show_guide_item_box__name"><%= guide.name %></div>
-                      <!-- <div><%#= guide.introduction %></div> -->
                     </div>
                   <% end %>
                 <% else %>
@@ -54,11 +63,16 @@
             </tr>
           </table>
         </div>
-      <% end %>
-    </div>
-    <!-- <div class="info_list_box_title_btn">
-      <div onclick="toggleActiviyBusinessInfo(this)"><i class="fas fa-angle-down"></i></div>
-    </div> -->
+      </div>
+    <% else %>
+      <div class="info_list_box_title_no_info">
+        <div class="info_list_box_title_inner">企業情報</div>
+        <div class="info_list_box_no_bix_info">
+          <div>まだ事業情報がありません</div>
+          <%= link_to "体験事業を登録", new_supplier_activity_business_path(current_supplier), class: "org_edit_btn" %>
+        </div>
+      </div>
+    <% end %>
   </div>
   <!--事業者情報---------------------------------------------------------------->
   <div class="supplier_info_box"><!--メインコンテンツorg-->
@@ -71,7 +85,6 @@
       </div>
     </div>
     <div id="supplier_info_contents">
-    <!-- <div id="supplier_info_contents" class="hidden"> -->
       <% if @supplier_profile.nil? %>
         <div class="info_list_box_contents">
           <div>まだ契約者情報がありません</div>
@@ -93,47 +106,34 @@
                 <%= @supplier_profile.building if @supplier_profile.building %>
               </td>
             </tr>
-            <tr>
-              <td class="td_front">電話番号</td>
-              <td class="td_end">＊＊＊ - ＊＊＊＊ - <%= (@supplier_profile.phone.to_i % 10000) if @supplier_profile.phone %></td>
-            </tr>
-            <tr>
-              <td class="td_front">プランの種類</td>
-              <td class="td_end"><%= @supplier_profile.contract_plan if @supplier_profile.contract_plan %></td>
-            </tr>
           </table>
         </div>
       <% end %>
     </div>
-    <!-- <div class="info_list_box_title_btn">
-      <div onclick="toggleSupplierInfo(this)"><i class="fas fa-angle-down"></i></div>
-    </div> -->
   </div>
-</div><!--メインコンテンツ内部-->
+</div>
 
-<!-- 
-<script>
-  function toggleActiviyBusinessInfo(obj) {
-    profileBox = document.getElementById('activity_business_info_contents');
-    isHidden = profileBox.classList.contains('hidden');
-    if (isHidden) {
-      profileBox.classList.remove('hidden');
-      obj.innerHTML = '<i class="fas fa-angle-up"></i>';
-    } else {
-      profileBox.classList.add('hidden');
-      obj.innerHTML = '<i class="fas fa-angle-down"></i>';
-    }
+<style lang="scss">
+  .info_list_box_title_inner {
+    display: flex;
+  }
+  .activity_business_status {
+    padding: 2px 20px;
+    font-size: 13px;
+    color: #fff;
+    margin-left: 15px;
+    border-radius: 40px;
+    /* display: flex; */
+    /* align-items: center; */
+  }
+  .is_approved {
+    background: #47d23e;
+  }
+  .send_approve {
+    background: #ff9292;
+  }
+  .inputting {
+    background: #b3b3b3;
   }
 
-  function toggleSupplierInfo(obj) {
-    profileBox = document.getElementById('supplier_info_contents');
-    isHidden = profileBox.classList.contains('hidden');
-    if (isHidden) {
-      profileBox.classList.remove('hidden');
-      obj.innerHTML = '<i class="fas fa-angle-up"></i>';
-    } else {
-      profileBox.classList.add('hidden');
-      obj.innerHTML = '<i class="fas fa-angle-down"></i>';
-    }
-  }
-</script> -->
+</style>

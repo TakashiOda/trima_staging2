@@ -16,6 +16,8 @@ class SuppliersController < ApplicationController
 
   def show
     @supplier = Supplier.find(params[:id])
+    # @supplier_profile = nil
+    # @supplier_profile = Supplier.find(2).supplier_profile
     @supplier_profile = @supplier.supplier_profile
     @activity_business = ActivityBusiness.find_by(supplier_id: @supplier.id)
   end

@@ -92,7 +92,12 @@ Rails.application.routes.draw do
 
   resources :admins
   get "supplier_index", to: "admins#supplier_index", as: :supplier_index
+  get "supplier_approved_list", to: "admins#supplier_approved_list", as: :supplier_approved_list
+  get "supplier_waiting_list", to: "admins#supplier_waiting_list", as: :supplier_waiting_list
+  get "supplier_inputing_list", to: "admins#supplier_inputing_list", as: :supplier_inputing_list
   get "supplier_detail/:supplier_id", to: "admins#supplier_detail", as: :supplier_detail
+  patch "supplier_activity_biz_approve/:activity_business_id", to: "admins#supplier_activity_biz_approve", as: :activity_biz_approve
+
   resources :areas, only: [:index, :show, :edit, :update]
 
 end

@@ -273,6 +273,21 @@
     </div>
     <div class="user_show_info_button_box">
       <div class="form_sidebtns_container">
+        <div class="biz_form_status_toggle_box">
+          <div class="biz_form_status_toggle_box_title">
+            この内容で事業者申請しますか？
+          </div>
+          <div class="biz_form_status_toggle_radio_items">
+            <div class="biz_form_status_toggle_radio_item on">
+              <%= form.radio_button :status, :inputing, oninput: 'hasInput()' %>
+              <%= form.label :status, "下書き", {value: :inputing, style: "display: inline-block;"} %>
+            </div>
+            <div class="biz_form_status_toggle_radio_item off">
+              <%= form.radio_button :status, :send_approve, oninput: 'hasInput()'%>
+              <%= form.label :status, "承認申請", {value: :send_approve, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
         <div class="form_sidebtns">
           <div class="form_sidebtn">
             <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
@@ -356,8 +371,49 @@
   }
   .form-group input{
     background: lightgray !important;
-}
-
+  }
+  .biz_form_status_toggle_box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 40px;
+    width: 100%;
+  }
+  .biz_form_status_toggle_box_title {
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 2px;
+    color: #8a8a8a;
+  }
+  .biz_form_status_toggle_radio_items {
+    width: 100%;
+    display: flex;
+  }
+  .biz_form_status_toggle_radio_items input[type=radio] {
+    display: none;
+  }
+  .biz_form_status_toggle_radio_item label {
+    width: 100%;
+    padding: 3px 0;
+    text-align: center;
+    background: #eaeaea;
+  }
+  .biz_form_status_toggle_radio_items input[type="radio"]:checked + label {
+    background: #23a0ff;
+    color: #ffffff;
+  }
+  .biz_form_status_toggle_radio_item.on,
+  .biz_form_status_toggle_radio_item.off {
+    width: 50%;
+  }
+  .biz_form_status_toggle_radio_item.on label {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+  .biz_form_status_toggle_radio_item.off label {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
 </style>
 
 <script type="text/javascript">
