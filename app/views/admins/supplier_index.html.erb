@@ -13,7 +13,7 @@
       <% if !@suppliers.nil? %>
         <% @suppliers.each do |supplier|%>
           <%= link_to supplier_detail_path(supplier), class: "link" do %>
-            <li class="supplier_list_item">
+            <li class="supplier_list_item <%= "no_activity_biz" if supplier.activity_business.nil? %>">
               <div class="activity_list_item_front">
                 <div class="activity_list_item_fron_image">
                   <% if !supplier.activity_business.nil? && !supplier.activity_business.profile_image.blank? %>
@@ -27,6 +27,7 @@
                     <div>契約社名：<%= supplier.name %></div>
                     <div>代表者名：<%= supplier.supplier_profile.representative_name if !supplier.supplier_profile.representative_name.nil? %></div>
                     <div>体験事業名：<%= supplier.activity_business.name if !supplier.activity_business.nil? %></div>
+                    <div>Email：<%= supplier.email %></div>
                   </div>
                   <div class="activity_list_item_fron_info_right">
                       <% if !supplier.activity_business.nil? %>
@@ -88,6 +89,9 @@
     background: #b7b7b7;
   }
   .supplier_list_no_biz_info {
-    background: #e2e2e2;
+    background: #7d7d7d;
+  }
+  li.supplier_list_item.no_activity_biz {
+    background: #bdbdbd;
   }
 </style>
