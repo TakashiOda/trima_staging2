@@ -1,0 +1,70 @@
+<ul>
+  <%= link_to admin_path(current_admin) do %>
+    <li>
+      <i class="far fa-bookmark"></i>
+      <span>ダッシュボード</span>
+    </li>
+  <% end %>
+  <%= link_to supplier_index_path do %>
+    <li>
+      <i class="far fa-bookmark"></i>
+      <span>事業者一覧</span>
+    </li>
+  <% end %>
+  <%= link_to "#" do %>
+    <li>
+      <i class="far fa-bookmark"></i>
+      <span>体験一覧</span>
+    </li>
+  <% end %>
+  <%= link_to "#" do %>
+    <li>
+      <i class="far fa-bookmark"></i>
+      <span>予約一覧</span>
+    </li>
+  <% end %>
+  <%= link_to edit_admin_path(current_admin) do %>
+    <li>
+      <i class="fas fa-suitcase"></i>
+      <span>管理者情報</span>
+    </li>
+  <% end %>
+  <%= link_to destroy_admin_session_path, method: 'delete' do %>
+    <li>
+      <i class="fas fa-cog"></i>
+      <span>管理者ログアウト</span>
+    </li>
+  <% end %>
+</ul>
+
+<style>
+  .admin_side_menu_container {
+    width: 20%;
+    background: #630b0b;
+    padding: 20px 10px 30px 20px;
+    min-height: 80vh !important;
+  }
+  .admin_side_menu_container ul {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 65px;
+  }
+  .admin_side_menu_container ul li {
+    margin-bottom: 9px;
+    font-size: 16px;
+    padding: 0 15px;
+  }
+  svg {
+    color: #fff;
+    margin-right: 12px;
+  }
+  li.selected_menu_item {
+    background: #3ea7f7;
+    border-radius: 50px;
+  }
+  .admin_side_menu_container ul a li span {
+    color: #fff;
+    font-size: 16px;
+  }
+
+</style>

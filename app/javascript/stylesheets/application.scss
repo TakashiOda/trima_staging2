@@ -144,6 +144,12 @@ body.erb_body.add_padding_top {
     font-size: 12px;
 }
 
+.btn-submit:hover,
+.btn-cansel:hover,
+.link_to_stockFrom_onActivityForm:hover {
+  opacity: 0.6;
+}
+
 //5.複数ページ共通====================================
 .thankyou_email_container {
   background: #eaeaea;
@@ -812,6 +818,11 @@ div#password_input_box {
 }
 .activity_stock_top_box h5 {
     margin: 10px 0;
+    z-index: 50;
+    color: #6f6f6f;
+}
+.activity_stock_top_box h5 a {
+    color: #009edc;
 }
 .activity_stock_top_box h5 span {
   background: lightgray;
@@ -1236,7 +1247,7 @@ table td {
 #form_btns {
   position: -webkit-sticky;
   position: sticky;
-  top: 20px;
+  top: 65px;
   background: #fff;
   // height: 180px;
   padding: 20px 15px 30px;

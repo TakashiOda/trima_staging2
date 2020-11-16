@@ -65,6 +65,9 @@ class ActivitiesController < ApplicationController
   end
 
   def update
+    # puts params[:activity][:this_page_path]
+    # binding.pry
+    # params[:activity][:this_page_path]
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
       @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
@@ -74,9 +77,23 @@ class ActivitiesController < ApplicationController
           @activity.status = 'published'
         end
       @activity.save!
-      flash[:notice] = '体験情報が保存されました'
-      redirect_to edit_supplier_activity_path(current_supplier, @activity)
-      # redirect_to supplier_activities_path(current_supplier)
+
+      if params[:activity][:this_page_path] == 'stock_edit_first_month' || params[:activity][:this_page_path] == 'stock_new_first_month'
+        flash[:notice] = '在庫情報が保存されました'
+        redirect_to supplier_activity_edit_stocks_first_month_path(current_supplier, @activity)
+      elsif params[:activity][:this_page_path] == 'stock_edit_next_month'
+        flash[:notice] = '在庫情報が保存されました'
+        redirect_to supplier_activity_edit_stocks_next_month_path(current_supplier, @activity)
+      elsif params[:activity][:this_page_path] == 'stock_edit_next2_month'
+        flash[:notice] = '在庫情報が保存されました'
+        redirect_to supplier_activity_edit_stocks_next2_month_path(current_supplier, @activity)
+      elsif params[:activity][:this_page_path] == 'stock_edit_next3_month'
+        flash[:notice] = '在庫情報が保存されました'
+        redirect_to supplier_activity_edit_stocks_next3_month_path(current_supplier, @activity)
+      else
+        flash[:notice] = '体験情報が保存されました'
+        redirect_to edit_supplier_activity_path(current_supplier, @activity)
+      end
     else
       render 'edit'
     end

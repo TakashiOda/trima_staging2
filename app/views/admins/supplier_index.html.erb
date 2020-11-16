@@ -1,0 +1,93 @@
+<div class="admin_container_inner">
+  <div class="admin_contents_title_box">
+    <h5>事業者一覧</h5>
+  </div>
+  <div class="activity_category_by_status_linkbox">
+    <%=link_to 'すべての事業者', supplier_index_path, class: 'selected' %>
+    <%=link_to '承認待ち', supplier_waiting_list_path, class: '' %>
+    <%=link_to '承認済み', supplier_approved_list_path, class: '' %>
+    <%=link_to '事業情報作成中', supplier_inputing_list_path, class: '' %>
+  </div>
+  <div class="admin_contents_list_box">
+    <ul class="suppliers_list_items">
+      <% if !@suppliers.nil? %>
+        <% @suppliers.each do |supplier|%>
+          <%= link_to supplier_detail_path(supplier), class: "link" do %>
+            <li class="supplier_list_item">
+              <div class="activity_list_item_front">
+                <div class="activity_list_item_fron_image">
+                  <% if !supplier.activity_business.nil? && !supplier.activity_business.profile_image.blank? %>
+                    <%= image_tag supplier.activity_business.profile_image.to_s, class: 'activity_icon_image' %>
+                  <% else %>
+                    <%= image_tag 'default_images/no_activity_image_canoe.png', class: 'activity_icon_image' %>
+                  <% end %>
+                </div>
+                <div class="activity_list_item_fron_info">
+                  <div class="activity_list_item_fron_info_left">
+                    <div>契約社名：<%= supplier.name %></div>
+                    <div>代表者名：<%= supplier.supplier_profile.representative_name if !supplier.supplier_profile.representative_name.nil? %></div>
+                    <div>体験事業名：<%= supplier.activity_business.name if !supplier.activity_business.nil? %></div>
+                  </div>
+                  <div class="activity_list_item_fron_info_right">
+                      <% if !supplier.activity_business.nil? %>
+                        <% if supplier.activity_business.is_approved %>
+                          <div class="supplier_list_approve_done">承認済み</div>
+                        <% else %>
+                          <% if supplier.activity_business.status == 'inputing' %>
+                            <div class="supplier_list_no_input">事業情報作成中</div>
+                          <% else %>
+                            <div class="supplier_list_approve_waiting">承認待ち</div>
+                          <% end %>
+                        <% end %>
+                      <% else %>
+                        <div class="supplier_list_no_biz_info">契約情報のみ</div>
+                      <% end %>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        <% end %>
+        <%#= paginate @suppliers %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<style lang="scss">
+  li.activity_list_item.no_stock > a.link {
+    width: 85%;
+  }
+  .activity_list_item_fron_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .activity_list_item_fron_info_left {
+    width: 80%;
+  }
+  .activity_list_item_fron_info_right {
+    width: 20%;
+  }
+  .activity_list_item_fron_info_right > div {
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    font-weight: bold;
+    padding: 2px 0px;
+    border-radius: 20px;
+  }
+  .supplier_list_approve_done {
+    background: #50bb8d;
+  }
+  .supplier_list_approve_waiting {
+    background: #ff6c6c;
+  }
+  .supplier_list_no_input {
+    background: #b7b7b7;
+  }
+  .supplier_list_no_biz_info {
+    background: #e2e2e2;
+  }
+</style>

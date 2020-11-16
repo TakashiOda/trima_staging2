@@ -24,6 +24,7 @@ class CreateActivityBusinesses < ActiveRecord::Migration[6.0]
       t.boolean :has_insurance, default: false
       t.string :guide_certification
       t.string :insurance_image
+      t.string :status, default: 'inputing' # 'inputing', 'send_approve'
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
       t.timestamps
     end

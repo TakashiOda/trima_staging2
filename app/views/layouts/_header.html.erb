@@ -33,6 +33,15 @@
             </div>
           <% end %>
         </li>
+      <% elsif admin_signed_in? %>
+        <li>
+          <%= link_to admin_path(current_admin), id: 'header_current_supplier_link' do %>
+            <div class="header_to_dashboad_text">管理者ページ</div>
+            <div class="header_link_icon">
+              <%= current_admin.name[0] if current_admin.name %>
+            </div>
+          <% end %>
+        </li>
       <% else %>
         <li><%= link_to "About", about_for_supplier_path %></li>
         <li><%= link_to "事業者の方", suppliers_sign_in_path %></li>

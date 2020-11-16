@@ -1,13 +1,15 @@
 <div class="stock_form">
   <%= form_for [current_supplier, @activity] do |f| %>
     <div class="stock_form_btn_box">
+      <%= f.hidden_field :this_page_path, value: action_name %>
       <div class="stock_form_btn_box_inner">
-        <%= f.submit('更新',class: 'button btn-submit stock_submit') %>
+        <%= f.submit('更新',class: 'button btn-submit stock_submit', id: 'stock_new_submit_btn') %>
       </div>
     </div>
     <div class="activity_stock_form_main_content">
-      <div class="activity_index_top_box">
-        <h3>在庫情報を編集</h3>
+      <div class="activity_stock_top_box">
+        <h5><%=link_to "体験編集に戻る", edit_supplier_activity_path(current_supplier, @activity) %> > 在庫を編集</h5>
+        <h5><span>体験名</span><%= @activity.name %></h5>
       </div>
       <div class="stock_form_tab_and_submit">
         <%= render 'month_tab_edit' %>
@@ -61,7 +63,7 @@
                     <%= stock.hidden_field :activity_id, value: @activity.id %>
                     <%= stock.hidden_field :date, :value => @exist_stock_dates[stock.index] %>
                     <div class="stock_input_box">
-                      <%= stock.number_field :stock, max: @activity.maximum_num, class: 'form-control' %>
+                      <%= stock.number_field :stock, min: 0, max: @activity.maximum_num, class: 'form-control', oninput: 'hasInput()' %>
                     </div>
                     <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price %>
                       <div class="season_input_box <%= stock.index %>">
@@ -86,7 +88,7 @@
                     <%= stock.hidden_field :activity_id, value: @activity.id %>
                     <%= stock.hidden_field :date, :value => @exist_stock_dates[stock.index] %>
                     <div class="stock_input_box">
-                      <%= stock.number_field :stock, max: @activity.maximum_num, class: 'form-control' %>
+                      <%= stock.number_field :stock, min: 0, max: @activity.maximum_num, class: 'form-control', oninput: 'hasInput()' %>
                     </div>
                     <%if @activity.activity_courses.count == (course.index + 1) %>
                       <div class="season_input_box <%= stock.index %>">
@@ -116,7 +118,6 @@
           <div class="stock_items">
           <%= f.fields_for :activity_courses do |course| %>
             <div class="course_stock_column course_column">
-              <%# course.fields_for :activity_stocks do |stock| %>
               <% @stocks = [] %>
               <% (@s_Date..@e_Date).each do |stock_date| %>
                 <% @stocks.push(course.object.activity_stocks.build(date: stock_date, stock: 0)) %>
@@ -126,7 +127,7 @@
                   <%= stock.hidden_field :activity_id, value: @activity.id %>
                   <%= stock.hidden_field :date, :value => @dates[stock.index] %>
                   <div class="stock_input_box">
-                    <%= stock.number_field :stock, max: @activity.maximum_num, class: 'form-control' %>
+                    <%= stock.number_field :stock, min: 0, max: @activity.maximum_num, class: 'form-control', oninput: 'hasInput()' %>
                   </div>
                   <% if @activity.activity_courses.count == (course.index + 1) %>
                     <div class="season_input_box <%= stock.index %>">
@@ -172,6 +173,7 @@
 
   function changeAllofColumnStock(obj) {
     if (confirmAllStockChange()) {
+      hasInput();
       const prevInput = obj.parentNode.children[0].value;
       const prevInputId = obj.id;
       const stockColumns = document.querySelectorAll("div.course_stock_column");
@@ -187,6 +189,7 @@
 
   function changeAllofColumnSeason(obj) {
     if (confirmAllSeasonChange()) {
+      hasInput();
       const allSeasonInput = obj.parentNode.children[0].value;
       const inputSelectedIndex = obj.parentNode.children[0].selectedIndex;
       const allHiddenSeasonInputBox = document.querySelectorAll("div.season_input_box");
@@ -217,6 +220,7 @@
 
 
   function changeSeasonPrice(obj) {
+    hasInput();
     const parent = obj.parentNode;
     const inputSelectedIndex = obj.selectedIndex;
     const classNum = parseInt(parent.classList[1]);
@@ -246,5 +250,22 @@
         targetBox.classList.remove("is_high_season");
       }
     }
+  }
+  function hasInput() {
+    const submitBtn = document.getElementById('stock_new_submit_btn');
+    submitBtn.classList.add('need_submit');
+    const normalLinks = document.querySelectorAll(".normal_link");
+    const alertLinks = document.querySelectorAll(".alert_link");
+    for (var i = 0; i < (normalLinks.length); i++) {
+      normalLinks[i].classList.add("hidden");
+    }
+    for (var i = 0; i < (alertLinks.length); i++) {
+      alertLinks[i].classList.remove("hidden");
+    }
+  }
+
+  function alertNeedToSave() {
+    hasInput();
+    alert('変更された箇所があります。保存してから他の月に移動してください');
   }
 </script>

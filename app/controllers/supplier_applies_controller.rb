@@ -18,7 +18,7 @@ class SupplierAppliesController < ApplicationController
   end
 
   def download_supplier_docs
-    download_file_name = "public/download_docs/sample.pdf"
+    download_file_name = "public/download_docs/trimaダウンロード用資料.pdf"
     send_file download_file_name
   end
 

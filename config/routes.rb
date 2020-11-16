@@ -45,6 +45,18 @@ Rails.application.routes.draw do
     :unlocks     => "suppliers/unlocks"
   }
 
+  # devise_scope :admins do
+  #   get "admins/sign_in", :to => "admins/sessions#new"
+  #   get "admins/sign_out", :to => "admins/sessions#destroy"
+  # end
+
+  devise_for :admins, controllers: {
+    :sessions      => 'admins/sessions',
+    :passwords     => 'admins/passwords',
+    :registrations => 'admins/registrations',
+    :unlocks       => "suppliers/unlocks"
+  }
+
   delete "projects/:id/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
 
   resources :users do
@@ -77,6 +89,15 @@ Rails.application.routes.draw do
 
     end
   end
+
+  resources :admins
+  get "supplier_index", to: "admins#supplier_index", as: :supplier_index
+  get "supplier_approved_list", to: "admins#supplier_approved_list", as: :supplier_approved_list
+  get "supplier_waiting_list", to: "admins#supplier_waiting_list", as: :supplier_waiting_list
+  get "supplier_inputing_list", to: "admins#supplier_inputing_list", as: :supplier_inputing_list
+  get "supplier_detail/:supplier_id", to: "admins#supplier_detail", as: :supplier_detail
+  patch "supplier_activity_biz_approve/:activity_business_id", to: "admins#supplier_activity_biz_approve", as: :activity_biz_approve
+
   resources :areas, only: [:index, :show, :edit, :update]
 
 end

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TrimaV00</title>
+    <title>trima | Online Trip Booking and Management</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <%= stylesheet_pack_tag "application", media: "all" %>
     <%= javascript_pack_tag 'application', media: 'all' %>
+    <%= favicon_link_tag('trima_favicon.ico') %>
     <meta charset="utf-8">
   </head>
 
@@ -71,6 +72,16 @@
             <%= yield %>
           </div>
         </div>
+      <% elsif current_admin || controller.controller_name == "admins" %>
+        <%= stylesheet_link_tag 'admins' %>
+        <div class="container user_show container-fluid">
+          <div class="admin_side_menu_container">
+            <%= render 'admins/admin_page_front_sidebar' %>
+          </div>
+          <div class="admin_container">
+            <%= yield %>
+          </div>
+        </div>
 
       <% else %>
         <%= yield %>
@@ -84,6 +95,6 @@
 </html>
 
 <script type="text/javascript">
-  $(".notice" ).fadeOut(2000);
-  $(".alert" ).fadeOut(2000);
+  $(".notice" ).fadeOut(4000);
+  $(".alert" ).fadeOut(4000);
 </script>
