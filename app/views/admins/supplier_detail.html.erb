@@ -160,8 +160,7 @@
           <td class="supplier_detail_table_front">保険証書</td>
           <td class="supplier_detail_table_back">
             <% if @activity_business.has_insurance && !@activity_business.insurance_image.blank? %>
-              <!-- <object data="" type="application/pdf" width="" height=""></object> --><%#= @activity_business.insurance_image %>
-              <%= link_to 'pdfへのリンク', asset_path(@activity_business.insurance_image) %>
+              <%= link_to 'pdfへのリンク', asset_path(@activity_business.insurance_image), target: :_blank %>
             <% else %>
               保険証書なし
             <% end %>
