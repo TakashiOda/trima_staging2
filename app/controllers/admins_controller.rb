@@ -21,7 +21,7 @@ class AdminsController < ApplicationController
   end
 
   def supplier_inputing_list
-    @suppliers = Supplier.joins(:activity_business).where('activity_businesses.status = ?', 'inputing')
+    @suppliers = Supplier.left_joins(:activity_business).where("activity_businesses.id IS NULL").or(Supplier.left_joins(:activity_business).where('activity_businesses.is_approved = ?', false).where('activity_businesses.status = ?', 'inputing'))
   end
 
   def supplier_detail
