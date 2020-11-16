@@ -1,0 +1,129 @@
+<div class="admin_supplier_detail_container">
+  <div class="admin_supplier_detail_activity_biz_info_box">
+    <% if !@activity.nil? %>
+      <table class="supplier_detail_table">
+        <tr>
+          <td class="table_header" colspan="2">アクティビティ情報</td>
+        </tr>
+        <tr>
+          <td class="table_header" colspan="2">基本情報</td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">アクティビティ画像</td>
+          <td class="supplier_detail_table_back">
+              アイコン登録なし
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">アクティビティ名</td>
+          <td class="supplier_detail_table_back">
+            <span class="admin_supplier_detail_biz_name_lang">日本語</span><%=@activity.name%>
+          </td>
+        </tr>
+      </table>
+    <% else %>
+      <table class="supplier_detail_table">
+        <tr>
+          <td class="table_header" colspan="2">契約者情報</td>
+        </tr>
+        <tr>
+          <td class="" colspan="2">事業者情報がありません</td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>
+
+<style lang="scss">
+  .admin_supplier_detail_container {
+    padding: 20px 30px;
+  }
+  .admin_supplier_detail_supplier_info_box {
+    margin-bottom: 40px;
+  }
+  .admin_supplier_detail_activity_biz_info_box {
+    margin-bottom: 20px;
+  }
+  table.supplier_detail_table {
+    width: 100%;
+  }
+  td.table_header {
+    background: #93b6d6;
+    color: #001552;
+    font-weight: bold;
+    padding-left: 20px;
+  }
+  td.supplier_detail_table_front {
+    background: #d6d6d6;
+    width: 20%;
+    text-align: end;
+    padding-right: 20px;
+    font-size: 12px;
+  }
+  td.supplier_detail_table_back {
+    font-size: 14px;
+    padding: 6px 0px 6px 15px;
+  }
+  /* 事業者 */
+  td.supplier_detail_table_back img {
+    width: 60px;
+  }
+  td.supplier_detail_table_back ul {
+    margin: 5px 0;
+  }
+  span.admin_supplier_detail_biz_name_lang {
+    background: #cacaca;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    width: 40px;
+    display: inline-block;
+    text-align: center;
+  }
+  .biz_form_status_toggle_box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  .biz_form_status_toggle_box_title {
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 2px;
+    color: #8a8a8a;
+  }
+  .biz_form_status_toggle_radio_items {
+    width: 100%;
+    display: flex;
+  }
+  .biz_form_status_toggle_radio_items input[type=radio] {
+    display: none;
+  }
+  .biz_form_status_toggle_radio_item label {
+    width: 100%;
+    padding: 3px 0;
+    text-align: center;
+    background: #eaeaea;
+  }
+  .biz_form_status_toggle_radio_items input[type="radio"]:checked + label {
+    background: #23a0ff;
+    color: #ffffff;
+  }
+  .biz_form_status_toggle_radio_item.on,
+  .biz_form_status_toggle_radio_item.off {
+    width: 50%;
+  }
+  .biz_form_status_toggle_radio_item.on label {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+  .biz_form_status_toggle_radio_item.off label {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+  .form_btns {
+    margin: 20px 0px;
+  }
+
+</style>

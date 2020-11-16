@@ -42,6 +42,14 @@ class AdminsController < ApplicationController
     end
   end
 
+  def supplier_activity_index
+    @activities = Activity.all
+  end
+
+  def supplier_activity_detail
+    @activity = Activity.find(params[:activity_id])
+  end
+
   def edit
     @admin = Admin.find(current_admin.id)
   end

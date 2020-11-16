@@ -1,81 +1,142 @@
 <div class="supplier_activity_page_top">
   <div class="activity_index_top_box">
-    <h3>十勝ラフティングアドベンチャー</h3>
-    <%= link_to "体験を追加", new_supplier_activity_path(current_supplier), class: "add_btn" %>
+    <% if !@activity_business.nil? && @activity_business.is_approved %>
+    <%# if !@activity_business.nil? %>
+      <h3><%= @activity_business.name %></h3>
+      <%= link_to "体験を追加", new_supplier_activity_path(current_supplier), class: "add_btn" %>
+    <% end %>
   </div>
-  <div class="activity_index_activity_list_box">
-    <h3>体験一覧</h3>
-    <div class="activity_category_by_status_linkbox">
-      <%=link_to 'すべての体験', supplier_activities_path(current_supplier), class: 'selected' %>
-      <%=link_to '掲載または申請中', supplier_published_activities_path(current_supplier), class: '' %>
-      <%=link_to '下書き', supplier_drafts_activities_path(current_supplier), class: '' %>
-      <%=link_to 'ゴミ箱', supplier_deleted_activities_path(current_supplier), class: '' %>
+  <% if @activity_business.nil? %>
+    <div class="no_info_alert_box">
+      <div class="no_info_alert_box_inner">
+        <div class="no_info_alert_box_inner_text">
+          事業情報がありません。事業情報を入力してください
+        </div>
+        <div class="no_info_alert_box_inner_btn">
+          <%= link_to "事業情報を登録する", new_supplier_activity_business_path(current_supplier) %>
+        </div>
+      </div>
     </div>
-    <ul class="activity_list_items">
-      <% if !@activities.nil? %>
-        <% @activities.each do |activity|%>
-          <%= link_to edit_supplier_activity_path(current_supplier, activity), class: "link" do %>
-            <li class="activity_list_item <%= "no_stock" if !activity.activity_courses.any? || !activity.activity_courses[0].activity_stocks.any? %>">
-              <div class="activity_list_item_front">
-                <div class="activity_list_item_fron_image">
-                  <% if !activity.main_image.blank? %>
-                    <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
-                  <% elsif !activity.second_image.blank? %>
-                    <%= image_tag activity.second_image.to_s, class: 'activity_icon_image' %>
-                  <% elsif !activity.third_image.blank? %>
-                    <%= image_tag activity.third_image.to_s, class: 'activity_icon_image' %>
-                  <% elsif !activity.fourth_image.blank? %>
-                    <%= image_tag activity.fourth_image.to_s, class: 'activity_icon_image' %>
-                  <% else %>
-                    <%= image_tag 'default_images/no_activity_image_canoe.png', class: 'activity_icon_image' %>
-                  <% end %>
-                </div>
-                <div class="activity_list_item_fron_info">
-                  <%= activity.name %><br>
-                  <% if activity.is_all_year_open %>
-                    <div class="activity_index_detail_info">期間：通年のアクティビティ</div>
-                  <% else %>
-                    <div class="activity_index_detail_info">期間：<%= activity.start_date.strftime("%Y年%m月%d日") %>〜<%= activity.end_date.strftime("%Y年%m月%d日") %></div>
-                  <% end %>
-                  <div class="activity_index_detail_info">大人通常料金：<%= activity.normal_adult_price %>円</div>
-                  <% if !activity.activity_courses.any? || !activity.activity_courses[0].activity_stocks.any? %>
-                    <div class="no_stock_alert_box">
-                      <span>在庫が登録されていません</span>
-                    </div>
-                  <% else %>
-                    <% if activity.activity_courses.any? && activity.activity_courses[0].activity_stocks.any? %>
-                      <% @latest_date = activity.activity_courses[0].activity_stocks.order(date: "DESC").limit(1)[0].date %>
-                      <div class="latest_stock_box">
-                        <span class="latest_stock_text">最新の在庫：<%= @latest_date.year %>年<%=@latest_date.month %>月<%=@latest_date.day %>日まで</span>
-                        <% unless (Date.today + 14) < @latest_date %>
-                          <span class="stock_will_be_expire">あと<%= (@latest_date - Date.today).to_i %>日で在庫切れ</span>
-                        <% end %>
-                      </div>
+  <% elsif !@activity_business.is_approved && @activity_business.status == 'inputing' %>
+    <div class="no_info_alert_box">
+      <div class="no_info_alert_box_inner">
+        <div class="no_info_alert_box_inner_text">
+          事業情報の承認申請がされていません。事業情報の承認申請を行ってください
+        </div>
+        <div class="no_info_alert_box_inner_btn">
+          <%= link_to "事業情報を編集する", edit_supplier_activity_business_path(current_supplier, @activity_business) %>
+        </div>
+      </div>
+    </div>
+  <% elsif !@activity_business.is_approved && @activity_business.status == 'send_approve' %>
+    <div class="no_info_alert_box">
+      <div class="no_info_alert_box_inner">
+        <div class="no_info_alert_box_inner_text">
+          現在、事業情報の承認待ちです。数日しても承認されない場合はお問合せください。
+        </div>
+        <div class="no_info_alert_box_inner_btn">
+          <%= link_to "事業情報を編集する", edit_supplier_activity_business_path(current_supplier, @activity_business) %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="activity_index_activity_list_box">
+      <h3>体験一覧</h3>
+      <div class="activity_category_by_status_linkbox">
+        <%=link_to 'すべての体験', supplier_activities_path(current_supplier), class: 'selected' %>
+        <%=link_to '掲載または申請中', supplier_published_activities_path(current_supplier), class: '' %>
+        <%=link_to '下書き', supplier_drafts_activities_path(current_supplier), class: '' %>
+        <%=link_to 'ゴミ箱', supplier_deleted_activities_path(current_supplier), class: '' %>
+      </div>
+      <ul class="activity_list_items">
+        <% if !@activities.nil? %>
+          <% @activities.each do |activity|%>
+            <%= link_to edit_supplier_activity_path(current_supplier, activity), class: "link" do %>
+              <li class="activity_list_item <%= "no_stock" if !activity.activity_courses.any? || !activity.activity_courses[0].activity_stocks.any? %>">
+                <div class="activity_list_item_front">
+                  <div class="activity_list_item_fron_image">
+                    <% if !activity.main_image.blank? %>
+                      <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
+                    <% elsif !activity.second_image.blank? %>
+                      <%= image_tag activity.second_image.to_s, class: 'activity_icon_image' %>
+                    <% elsif !activity.third_image.blank? %>
+                      <%= image_tag activity.third_image.to_s, class: 'activity_icon_image' %>
+                    <% elsif !activity.fourth_image.blank? %>
+                      <%= image_tag activity.fourth_image.to_s, class: 'activity_icon_image' %>
+                    <% else %>
+                      <%= image_tag 'default_images/no_activity_image_canoe.png', class: 'activity_icon_image' %>
                     <% end %>
+                  </div>
+                  <div class="activity_list_item_fron_info">
+                    <%= activity.name %><br>
+                    <% if activity.is_all_year_open %>
+                      <div class="activity_index_detail_info">期間：通年のアクティビティ</div>
+                    <% else %>
+                      <div class="activity_index_detail_info">期間：<%= activity.start_date.strftime("%Y年%m月%d日") %>〜<%= activity.end_date.strftime("%Y年%m月%d日") %></div>
+                    <% end %>
+                    <div class="activity_index_detail_info">大人通常料金：<%= activity.normal_adult_price %>円</div>
+                    <% if !activity.activity_courses.any? || !activity.activity_courses[0].activity_stocks.any? %>
+                      <div class="no_stock_alert_box">
+                        <span>在庫が登録されていません</span>
+                      </div>
+                    <% else %>
+                      <% if activity.activity_courses.any? && activity.activity_courses[0].activity_stocks.any? %>
+                        <% @latest_date = activity.activity_courses[0].activity_stocks.order(date: "DESC").limit(1)[0].date %>
+                        <div class="latest_stock_box">
+                          <span class="latest_stock_text">最新の在庫：<%= @latest_date.year %>年<%=@latest_date.month %>月<%=@latest_date.day %>日まで</span>
+                          <% unless (Date.today + 14) < @latest_date %>
+                            <span class="stock_will_be_expire">あと<%= (@latest_date - Date.today).to_i %>日で在庫切れ</span>
+                          <% end %>
+                        </div>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="activity_list_item_back">
+                  <% if activity.activity_courses.any? && activity.activity_courses.first.activity_stocks.any? %>
+                    <%= link_to "在庫を編集", supplier_activity_edit_stocks_first_month_path(current_supplier, activity), class: "to_stock_btn_on_activity_index edit_link" %>
+                  <% else %>
+                    <%= link_to "在庫を登録", supplier_activity_new_stocks_first_month_path(current_supplier, activity), class: "to_stock_btn_on_activity_index add_link" %>
                   <% end %>
                 </div>
-              </div>
-              <div class="activity_list_item_back">
-                <% if activity.activity_courses.any? && activity.activity_courses.first.activity_stocks.any? %>
-                  <%= link_to "在庫を編集", supplier_activity_edit_stocks_first_month_path(current_supplier, activity), class: "to_stock_btn_on_activity_index edit_link" %>
-                <% else %>
-                  <%= link_to "在庫を登録", supplier_activity_new_stocks_first_month_path(current_supplier, activity), class: "to_stock_btn_on_activity_index add_link" %>
-                <% end %>
-              </div>
-            </li>
+              </li>
+            <% end %>
           <% end %>
+          <%= paginate @activities %>
+        <% else %>
+          <li class="activity_list_item">
+            <span>体験が登録されていません</span>
+          </li>
         <% end %>
-        <%= paginate @activities %>
-      <% else %>
-        <li class="activity_list_item">
-          <span>体験が登録されていません</span>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+      </ul>
+    </div>
+  <% end %>
 </div>
 
 <style lang="scss">
+  .no_info_alert_box {
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px -1px #c1c1c1;
+  }
+  .no_info_alert_box_inner {
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .no_info_alert_box_inner_text {
+    color: gray;
+    margin-bottom: 20px;
+  }
+  .no_info_alert_box_inner_btn a {
+    background: #0068b6;
+    color: #fff;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 14px;
+  }
   li.activity_list_item.no_stock > a.link {
     width: 85%;
   }

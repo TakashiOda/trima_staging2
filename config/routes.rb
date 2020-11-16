@@ -45,11 +45,6 @@ Rails.application.routes.draw do
     :unlocks     => "suppliers/unlocks"
   }
 
-  # devise_scope :admins do
-  #   get "admins/sign_in", :to => "admins/sessions#new"
-  #   get "admins/sign_out", :to => "admins/sessions#destroy"
-  # end
-
   devise_for :admins, controllers: {
     :sessions      => 'admins/sessions',
     :passwords     => 'admins/passwords',
@@ -97,6 +92,8 @@ Rails.application.routes.draw do
   get "supplier_inputing_list", to: "admins#supplier_inputing_list", as: :supplier_inputing_list
   get "supplier_detail/:supplier_id", to: "admins#supplier_detail", as: :supplier_detail
   patch "supplier_activity_biz_approve/:activity_business_id", to: "admins#supplier_activity_biz_approve", as: :activity_biz_approve
+  get "supplier_activity_index", to: "admins#supplier_activity_index", as: :supplier_activity_index
+  get "supplier_activity_detail/:activity_id", to: "admins#supplier_activity_detail", as: :supplier_activity_detail
 
   resources :areas, only: [:index, :show, :edit, :update]
 
