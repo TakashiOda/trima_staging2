@@ -3,9 +3,9 @@
     <h5>体験一覧</h5>
   </div>
   <div class="activity_category_by_status_linkbox">
-    <%=link_to 'すべての体験', supplier_activity_index_path, class: 'selected' %>
+    <%=link_to 'すべての体験', supplier_activity_index_path, class: '' %>
     <%=link_to '承認待ち', supplier_waiting_activity_index_path, class: '' %>
-    <%=link_to '承認済み', supplier_approved_activity_index_path, class: '' %>
+    <%=link_to '承認済み', supplier_approved_activity_index_path, class: 'selected' %>
     <%=link_to '下書き', supplier_draft_activity_index_path, class: '' %>
   </div>
   <div class="admin_contents_list_box">

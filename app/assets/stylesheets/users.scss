@@ -4,7 +4,9 @@ $user-main-dark-color: #215234; //サイドバーに適用・プルシャンブ�
 
 
 header.erb_header {
-  background: $user-main-color !important;
+  // background: $user-main-color !important;
+  background: linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
+  background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
 }
 
 .btn-submit {
@@ -16,7 +18,8 @@ header.erb_header {
 }
 
 .user_show_side {
-  background: $user-main-dark-color !important;
+  background: linear-gradient(0deg, #1a68ca, #08AEEA 90%);
+  background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 90%);
 }
 
 .activity_index_top_box a.add_btn {
@@ -316,8 +319,11 @@ a.member_delete_btn {
 //trip manager sidebar==============================================
 .trip_manage_side {
   width: 20%;
-  background: #215234;
+  // background: #215234;
+  background: linear-gradient(0deg, #1a68ca, #08AEEA 90%);
+  background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 90%);
   padding: 20px 0 30px  15px;
+  min-height: 90vh;
 }
 .trip_manage_side_back_link a {
   /* margin-right: 7px; */

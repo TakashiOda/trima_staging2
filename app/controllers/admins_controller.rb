@@ -9,19 +9,19 @@ class AdminsController < ApplicationController
   end
 
   def supplier_index
-    @suppliers = Supplier.all
+    @suppliers = Supplier.all.page(params[:page]).per(20)
   end
 
   def supplier_approved_list
-    @suppliers = Supplier.joins(:activity_business).where('activity_businesses.is_approved = ?', true)
+    @suppliers = Supplier.joins(:activity_business).where('activity_businesses.is_approved = ?', true).page(params[:page]).per(20)
   end
 
   def supplier_waiting_list
-    @suppliers = Supplier.joins(:activity_business).where('activity_businesses.is_approved = ?', false).where('activity_businesses.status = ?', 'send_approve')
+    @suppliers = Supplier.joins(:activity_business).where('activity_businesses.is_approved = ?', false).where('activity_businesses.status = ?', 'send_approve').page(params[:page]).per(20)
   end
 
   def supplier_inputing_list
-    @suppliers = Supplier.left_joins(:activity_business).where("activity_businesses.id IS NULL").or(Supplier.left_joins(:activity_business).where('activity_businesses.is_approved = ?', false).where('activity_businesses.status = ?', 'inputing'))
+    @suppliers = Supplier.left_joins(:activity_business).where("activity_businesses.id IS NULL").or(Supplier.left_joins(:activity_business).where('activity_businesses.is_approved = ?', false).where('activity_businesses.status = ?', 'inputing')).page(params[:page]).per(20)
   end
 
   def supplier_detail
@@ -43,11 +43,37 @@ class AdminsController < ApplicationController
   end
 
   def supplier_activity_index
-    @activities = Activity.all
+    @activities = Activity.all.page(params[:page]).per(10)
+  end
+
+  def supplier_approved_activity_index
+    @activities = Activity.where(is_approved: true).page(params[:page]).per(20)
+  end
+
+  def supplier_waiting_activity_index
+    @activities = Activity.where(is_approved: false).where(status: 'published').page(params[:page]).per(20)
+  end
+
+  def supplier_draft_activity_index
+    @activities = Activity.where(is_approved: false).where(status: 'draft').page(params[:page]).per(20)
   end
 
   def supplier_activity_detail
     @activity = Activity.find(params[:activity_id])
+    @english_activity_info = ActivityTranslation.find_by(activity_id: params[:activity_id], language_id: 3)
+  end
+
+  def activity_approve
+    binding.pry
+    @activity = Activity.find(params[:activity_id])
+    @activity.is_approved = params[:activity][:is_approved]
+    if @activity.save
+      flash[:notice] = 'アクティビティを承認しました'
+      redirect_to supplier_activity_detail_path(@activity.id)
+    else
+      flash[:alert] = '承認できません'
+      render 'supplier_activity_detail'
+    end
   end
 
   def edit
@@ -63,13 +89,17 @@ class AdminsController < ApplicationController
     end
   end
 
-
   private
     def admin_params
-        params.require(:admin).permit(:name, :email)
+      params.require(:admin).permit(:name, :email)
     end
+
     def activity_biz_params
-        params.require(:activity_business).permit(:is_approved)
+      params.require(:activity_business).permit(:is_approved)
+    end
+
+    def activity_params
+      params.require(:activity).permit(:is_approved)
     end
 
 end

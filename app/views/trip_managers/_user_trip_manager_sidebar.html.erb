@@ -4,12 +4,14 @@
   <% end %>
 </div>
 <div class="trip_manage_side_links">
-  <h3 style="color: #fff;">
-    <%= image_tag "project_icons/#{@project.icon}", class: 'project_icon_on_sidebar' %>
-    <%= @project.name %>
-  </h3>
+  <%= link_to user_project_trip_managers_home_path(current_user, @project) do %>
+    <h3 style="color: #fff;">
+      <%= image_tag "project_icons/#{@project.icon}", class: 'project_icon_on_sidebar' %>
+      <%= @project.name %>
+    </h3>
+  <% end %>
   <ul>
-    <li><i class="fas fa-search"></i><%= link_to "Search", "#" %></li>
+    <li><i class="fas fa-search"></i><%= link_to "Search", user_project_search_home_path(current_user, @project) %></li>
     <li><i class="fas fa-route"></i><%= link_to "My Route", "#" %></li>
     <li><i class="fas fa-heart"></i><%= link_to "Favorite", "#" %></li>
     <li><i class="far fa-bookmark"></i><%= link_to "Booked Items", "#" %></li>
