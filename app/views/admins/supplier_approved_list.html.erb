@@ -6,7 +6,7 @@
     <%=link_to 'すべての事業者', supplier_index_path, class: '' %>
     <%=link_to '承認待ち', supplier_waiting_list_path, class: '' %>
     <%=link_to '承認済み', supplier_approved_list_path, class: 'selected' %>
-    <%=link_to '事業情報作成中', "#", class: '' %>
+    <%=link_to '事業情報作成中', supplier_inputing_list_path, class: '' %>
   </div>
   <div class="admin_contents_list_box">
     <ul class="suppliers_list_items">
@@ -48,7 +48,7 @@
             </li>
           <% end %>
         <% end %>
-        <%#= paginate @suppliers %>
+        <%= paginate @suppliers %>
       <% end %>
     </ul>
   </div>

@@ -1,0 +1,82 @@
+<div class="admin_container_inner">
+  <div class="admin_contents_title_box">
+    <h5>体験一覧</h5>
+  </div>
+  <div class="activity_category_by_status_linkbox">
+    <%=link_to 'すべての体験', supplier_activity_index_path, class: 'selected' %>
+    <%=link_to '承認待ち', supplier_waiting_activity_index_path, class: '' %>
+    <%=link_to '承認済み', supplier_approved_activity_index_path, class: '' %>
+    <%=link_to '下書き', supplier_draft_activity_index_path, class: '' %>
+  </div>
+  <div class="admin_contents_list_box">
+    <ul class="activity_list_items">
+      <% if !@activities.nil? %>
+        <% @activities.each do |activity|%>
+          <%= link_to supplier_activity_detail_path(activity), class: "link" do %>
+            <li class="activity_list_item">
+              <div class="activity_list_item_front">
+                <div class="activity_list_item_fron_image">
+                  <% if !activity.main_image.blank? %>
+                    <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' %>
+                  <% elsif !activity.second_image.blank? %>
+                    <%= image_tag activity.second_image.to_s, class: 'activity_icon_image' %>
+                  <% elsif !activity.third_image.blank? %>
+                    <%= image_tag activity.third_image.to_s, class: 'activity_icon_image' %>
+                  <% elsif !activity.fourth_image.blank? %>
+                    <%= image_tag activity.fourth_image.to_s, class: 'activity_icon_image' %>
+                  <% else %>
+                    <%= image_tag 'default_images/no_activity_image_canoe.png', class: 'activity_icon_image' %>
+                  <% end %>
+                </div>
+                <div class="activity_list_item_fron_info">
+                  <%= activity.name %><br>
+                  <% if activity.is_all_year_open %>
+                    <div class="activity_index_detail_info">期間：通年のアクティビティ</div>
+                  <% else %>
+                    <div class="activity_index_detail_info">期間：<%= activity.start_date.strftime("%Y年%m月%d日") %>〜<%= activity.end_date.strftime("%Y年%m月%d日") %></div>
+                  <% end %>
+                  <div class="activity_index_detail_info">大人通常料金：<%= activity.normal_adult_price %>円</div>
+                </div>
+              </div>
+              <div class="activity_list_item_back">
+                <%= link_to "#{ActivityBusiness.find(activity.activity_business_id).name}", supplier_detail_path(ActivityBusiness.find(activity.activity_business_id).supplier_id), class: "to_stock_btn_on_activity_index edit_link" %>
+              </div>
+            </li>
+          <% end %>
+        <% end %>
+        <%= paginate @activities %>
+      <% else %>
+        <li class="activity_list_item">
+          <span>体験が登録されていません</span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<style lang="scss">
+  li.activity_list_item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    background: #fff;
+    margin-bottom: 6px;
+    padding: 10px 20px 10px 10px;
+    border: none;
+  }
+  .activity_list_item_fron_info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* justify-content: space-between; */
+    width: 100%;
+  }
+  li.activity_list_item a.link {
+    width: 70%;
+  }
+  .activity_list_item_back {
+    width: 30%;
+    height: 100%;
+  }
+</style>

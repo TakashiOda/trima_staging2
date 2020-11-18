@@ -45,11 +45,6 @@ Rails.application.routes.draw do
     :unlocks     => "suppliers/unlocks"
   }
 
-  # devise_scope :admins do
-  #   get "admins/sign_in", :to => "admins/sessions#new"
-  #   get "admins/sign_out", :to => "admins/sessions#destroy"
-  # end
-
   devise_for :admins, controllers: {
     :sessions      => 'admins/sessions',
     :passwords     => 'admins/passwords',
@@ -62,6 +57,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :projects do
       get "project_home", to: "trip_managers#home", as: :trip_managers_home
+      get "project_search_home", to: "trip_managers#search_home", as: :search_home
     end
     get "projects/:id", to: "projects#accept_project", as: :accept_project
     delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
@@ -86,9 +82,10 @@ Rails.application.routes.draw do
       get "stock_edit_next_month", to: "activities#stock_edit_next_month", as: :edit_stocks_next_month
       get "stock_edit_next2_month", to: "activities#stock_edit_next2_month", as: :edit_stocks_next2_month
       get "stock_edit_next3_month", to: "activities#stock_edit_next3_month", as: :edit_stocks_next3_month
-
     end
   end
+
+  get "activity_detail/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
 
   resources :admins
   get "supplier_index", to: "admins#supplier_index", as: :supplier_index
@@ -97,6 +94,12 @@ Rails.application.routes.draw do
   get "supplier_inputing_list", to: "admins#supplier_inputing_list", as: :supplier_inputing_list
   get "supplier_detail/:supplier_id", to: "admins#supplier_detail", as: :supplier_detail
   patch "supplier_activity_biz_approve/:activity_business_id", to: "admins#supplier_activity_biz_approve", as: :activity_biz_approve
+  get "supplier_activity_index", to: "admins#supplier_activity_index", as: :supplier_activity_index
+  get "supplier_approved_activity_index", to: "admins#supplier_approved_activity_index", as: :supplier_approved_activity_index
+  get "supplier_waiting_activity_index", to: "admins#supplier_waiting_activity_index", as: :supplier_waiting_activity_index
+  get "supplier_draft_activity_index", to: "admins#supplier_draft_activity_index", as: :supplier_draft_activity_index
+  get "supplier_activity_detail/:activity_id", to: "admins#supplier_activity_detail", as: :supplier_activity_detail
+  patch "activity_approve/:activity_id", to: "admins#activity_approve", as: :activity_approve
 
   resources :areas, only: [:index, :show, :edit, :update]
 
