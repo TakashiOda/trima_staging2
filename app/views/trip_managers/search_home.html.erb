@@ -9,21 +9,21 @@
       <ul class="activity_list_for_user">
         <% if !@activities.nil? %>
           <% @activities.each do |activity| %>
-            <%= link_to activity_detail_path(activity), class: "link" do %>
-            <li class="activity_list_item">
+            <li class="activity_list_item_on_trip_manager">
               <div class="favorite_icon_box">
                 <i class="far fa-heart"></i>
               </div>
-              <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' if !activity.main_image.blank? %>
-              <div class="activity_info_box">
-                <ul>
-                  <li class="activity_info_text activity_name"><%= activity.name[0,20] %></li>
-                  <li class="activity_info_text basic_info"><span class="activity_price">From ¥<%= activity.normal_adult_price %></span> /person</li>
-                  <li class="activity_info_text basic_info"><%= "@#{Area.find(activity.area_id).local_name}" if !activity.area_id.nil? %></li>
-                </ul>
-              </div>
+              <%= link_to project_activity_detail_path(@project, activity), class: "link" do %>
+                <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' if !activity.main_image.blank? %>
+                <div class="activity_info_box">
+                  <ul>
+                    <li class="activity_info_text activity_name"><%= activity.name[0,20] %></li>
+                    <li class="activity_info_text basic_info"><span class="activity_price">From ¥<%= activity.normal_adult_price %></span> /person</li>
+                    <li class="activity_info_text basic_info"><%= "@#{Area.find(activity.area_id).local_name}" if !activity.area_id.nil? %></li>
+                  </ul>
+                </div>
+              <% end %>
             </li>
-            <% end %>
           <% end %>
         <% else %>
           <div class="">
@@ -72,18 +72,25 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
+  ul.activity_list_for_user li.activity_list_item_on_trip_manager {
+    border: none;
+    width: 23%;
+    margin-right: 2%;
+    margin-bottom: 40px;
+    position: relative;
+  }
   ul.activity_list_for_user a {
     width: 230px;
     margin-bottom: 20px;
   }
-  ul.activity_list_for_user a li.activity_list_item {
+  /* ul.activity_list_for_user a li.activity_list_item {
     width: 90%;
     height: 100%;
     padding: 0;
     border: none;
     box-shadow: 0 0 white;
     position: relative;
-  }
+  } */
   .activity_icon_image {
     width: 100%;
     height: 240px;
@@ -92,7 +99,6 @@
   }
   .activity_info_box {
     width: 95%;
-    height: 100px;
   }
   li.activity_info_text {
     color: #6b6b6b;
@@ -100,7 +106,6 @@
   }
   li.activity_info_text.activity_name {
     font-size: 18px;
-    /* font-weight: bold; */
   }
   span.activity_price {
     font-size: 15px;
@@ -117,6 +122,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 100;
   }
   .favorite_icon_box svg {
     width: 25px !important;

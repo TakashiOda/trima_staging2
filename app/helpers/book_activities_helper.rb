@@ -1,0 +1,2 @@
+module BookActivitiesHelper
+end

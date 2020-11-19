@@ -10,7 +10,6 @@ class AdminsController < ApplicationController
     @waiting_activities_num = Activity.where(is_approved: false).where(status: 'published').size
     @published_activities_num = Activity.where(is_approved: true).where(status: 'published').size
     @current_register_suppliers = Supplier.all.order(confirmed_at: "DESC").limit(5)
-    # @current_register_suppliers = Supplier.order(:confirmed_at, "DESC")
   end
 
   def index

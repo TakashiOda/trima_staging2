@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'book_activities/new'
+  get 'book_activities/edit'
   get "privacy_policy", to: "static_pages#privacy_policy_en", as: :privacy_policy_en
   get "term_of_service", to: "static_pages#term_of_service_en", as: :term_of_service_en
   get "cansel_policy", to: "static_pages#cansel_policy_en", as: :cansel_policy_en
@@ -54,14 +56,27 @@ Rails.application.routes.draw do
 
   delete "projects/:id/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
 
-  resources :users do
-    resources :projects do
-      get "project_home", to: "trip_managers#home", as: :trip_managers_home
-      get "project_search_home", to: "trip_managers#search_home", as: :search_home
-    end
-    get "projects/:id", to: "projects#accept_project", as: :accept_project
-    delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
+  resources :projects do
+    get "project_home", to: "trip_managers#home", as: :trip_managers_home
+    get "project_search_home", to: "trip_managers#search_home", as: :search_home
+    get "activity/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
+    # get "activity/:activity_id/book_activities/new", to: "book_activities#new"
+    post "activities/:activity_id/book_activities", to: "book_activities#create", as: :book_activity_create
+    # resources :activities do
+    #   resources :book_activities
+    # end
   end
+  get "projects/:id", to: "projects#accept_project", as: :accept_project
+  delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
+  # resources :users do
+  #   resources :projects do
+  #     get "project_home", to: "trip_managers#home", as: :trip_managers_home
+  #     get "project_search_home", to: "trip_managers#search_home", as: :search_home
+  #     get "activity/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
+  #   end
+  #   get "projects/:id", to: "projects#accept_project", as: :accept_project
+  #   delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
+  # end
   resources :users, only: [:index, :show, :edit, :update]
 
   resources :suppliers do

@@ -9,9 +9,7 @@ class TripManagersController < ApplicationController
     @inviting_users = ProjectInvite.where(project_id: @project.id, has_account: 1)
   end
 
-
   def search_home
-    # binding.pry
     @project = Project.find(params[:project_id])
     @areas = @project.areas
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
@@ -19,11 +17,17 @@ class TripManagersController < ApplicationController
     @user_projects = UserProject.where(project_id: @project.id)
     @inviting_users = ProjectInvite.where(project_id: @project.id, has_account: 1)
     @activities = Activity.all
-    # @activities = Activity.where(is_approved: true)
   end
 
   def activity_detail
+    @project = Project.find(params[:project_id])
     @activity = Activity.find(params[:activity_id])
+    if @project.cart.nil?
+      @cart = @project.build_cart
+    else
+      @cart = @project.cart
+    end
+    @book_activity = @cart.booked_activities.build(activity_id: @activity.id)
   end
 
   def experience_search

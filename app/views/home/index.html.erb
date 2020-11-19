@@ -8,7 +8,7 @@
       <div class="home_contents__top__down">
         <ul>
           <% if current_user %>
-            <li><%= link_to "旅行プロジェクトをつくる", new_user_project_path(current_user), class: 'home_eyecatch_first_btn' %></li>
+            <li><%= link_to "旅行プロジェクトをつくる", new_project_path, class: 'home_eyecatch_first_btn' %></li>
             <li><%= link_to "使い方を見てみる", "#", class: 'home_eyecatch_second_btn' %></li>
           <% else %>
             <li><%= link_to "trimaについて", "#", class: 'home_eyecatch_first_btn' %></li>
