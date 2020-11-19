@@ -17,10 +17,8 @@
     <% end %>
   </head>
 
-  <body class="erb_body <%= "add_padding_top" unless controller.action_name == "about" %>">
-    <%# unless controller.action_name == "about" %>
-      <%= render 'layouts/header'%>
-    <%# end %>
+  <body class="erb_body">
+    <%= render 'layouts/header'%>
     <% if notice %>
       <p class="notice"><%= notice %></p>
     <% end %>
@@ -28,8 +26,6 @@
       <p class="alert"><%= alert %></p>
     <% end %>
     <div class="body_content">
-      <%= '事業者OGP' if !@this_page_is_for.nil? && @this_page_is_for == 'supplier' %>
-      <%#= '事業者OGP' if controller.controller_name == 'static_pages' && controller.action_name == 'about_for_supplier' %>
       <%#= controller.action_name == 'about_for_supplier' %>
       <% if controller.action_name == "thank_you_for_registration_user" %>
         <%= stylesheet_link_tag 'users' %>
