@@ -10,6 +10,7 @@
     <%= javascript_pack_tag 'application', media: 'all' %>
     <%= favicon_link_tag('trima_favicon.ico') %>
     <meta charset="utf-8">
+    <%= display_meta_tags(default_meta_tags) %>
   </head>
 
   <%# <body class="erb_body <%= "add_padding_top" unless controller.action_name == "about" %>
