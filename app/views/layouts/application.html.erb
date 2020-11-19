@@ -10,10 +10,13 @@
     <%= javascript_pack_tag 'application', media: 'all' %>
     <%= favicon_link_tag('trima_favicon.ico') %>
     <meta charset="utf-8">
-    <%= display_meta_tags(default_meta_tags) %>
+    <% if !@this_page_is_for.nil? && @this_page_is_for == 'supplier' %>
+      <%= display_meta_tags(supplier_meta_tags) %>
+    <% else %>
+      <%= display_meta_tags(default_meta_tags) %>
+    <% end %>
   </head>
 
-  <%# <body class="erb_body <%= "add_padding_top" unless controller.action_name == "about" %>
   <body class="erb_body <%= "add_padding_top" unless controller.action_name == "about" %>">
     <%# unless controller.action_name == "about" %>
       <%= render 'layouts/header'%>
@@ -25,8 +28,9 @@
       <p class="alert"><%= alert %></p>
     <% end %>
     <div class="body_content">
-      <%#= controller.controller_name %>
-      <%#= controller.action_name %>
+      <%= '事業者OGP' if !@this_page_is_for.nil? && @this_page_is_for == 'supplier' %>
+      <%#= '事業者OGP' if controller.controller_name == 'static_pages' && controller.action_name == 'about_for_supplier' %>
+      <%#= controller.action_name == 'about_for_supplier' %>
       <% if controller.action_name == "thank_you_for_registration_user" %>
         <%= stylesheet_link_tag 'users' %>
         <%= yield %>
@@ -96,6 +100,6 @@
 </html>
 
 <script type="text/javascript">
-  $(".notice" ).fadeOut(4000);
-  $(".alert" ).fadeOut(4000);
+  $(".notice" ).fadeOut(5000);
+  $(".alert" ).fadeOut(5000);
 </script>

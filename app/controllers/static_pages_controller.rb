@@ -4,6 +4,7 @@ class StaticPagesController < ApplicationController
   end
 
   def about_for_supplier
+    @this_page_is_for = 'supplier'
   end
 
   def privacy_policy_jp
@@ -16,6 +17,7 @@ class StaticPagesController < ApplicationController
   end
 
   def term_of_service_for_supplier
+    @this_page_is_for = 'supplier'
   end
 
   def term_of_service_en
