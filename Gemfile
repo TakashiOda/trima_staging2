@@ -28,10 +28,7 @@ gem 'cocoon'
 gem "jquery-rails"
 gem 'simple_calendar'
 gem "actionview", ">= 6.0.3.3"
-
-# gem "bootstrap-sass", "~>3.3.6"
-# gem "jquery-ui-rails"
-
+gem 'meta-tags'
 
 group :development, :test do
   gem 'byebug',"11.1.3", platforms: [:mri, :mingw, :x64_mingw]

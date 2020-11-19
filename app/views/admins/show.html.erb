@@ -1,4 +1,116 @@
-<div class="admin_page_container">
-  <h1>Admins#show</h1>
-  <p>Find me in app/views/admins/show.html.erb</p>
+<div class="admin_container_inner">
+  <div class="admin_section show_top">
+    <ul class="show_top_items">
+      <li class="show_top_item">
+        <h5 class="show_top_item_title left_title">事業者数</h5>
+        <div class="show_top_item_top_number_info_box">
+          <table class="show_top_item_top_number_info_table">
+            <tr>
+              <td>事業者アカウント数</td>
+              <td class="admin_top_info_num_td supplier_num">
+                <%=@total_supplier_acount_num %>
+              </td>
+            </tr>
+            <tr>
+              <td>体験事業登録数</td>
+              <td class="admin_top_info_num_td supplier_num">
+                <%= @total_activity_biz_num %>
+              </td>
+            </tr>
+            <tr style="border: none;">
+              <td>承認待ち件数</td>
+              <td class="admin_top_info_num_td supplier_num">
+                <%= @total_waiting_biz_num %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </li>
+      <li class="show_top_item last_item">
+        <h5 class="show_top_item_title right_title">体験数</h5>
+        <div class="show_top_item_top_number_info_box">
+          <table class="show_top_item_top_number_info_table">
+            <tr>
+              <td>作成された体験</td>
+              <td class="admin_top_info_num_td activity_num">
+                <%= @total_activities_num %>
+              </td>
+            </tr>
+            <tr>
+              <td>承認待ちの体験</td>
+              <td class="admin_top_info_num_td activity_num">
+                <%= @waiting_activities_num %>
+              </td>
+            </tr>
+            <tr style="border: none;">
+              <td>掲載済みの体験</td>
+              <td class="admin_top_info_num_td activity_num">
+                <%= @published_activities_num %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="admin_section show_new_supplier_list">
+    <div class="show_new_supplier_list_box">
+      <h5 class="show_top_item_title left_title">最近アカウント作成した事業者</h5>
+      <ul>
+        <li>aaaaaaaaaaaaaaaaa</li>
+        <li>aaaaaaaaaaaaaaaaa</li>
+        <li>aaaaaaaaaaaaaaaaa</li>
+      </ul>
+    </div>
+  </div>
 </div>
+
+
+
+<style lang="scss">
+  .admin_section.show_top ul {
+    display: flex;
+    flex-direction: row;
+    height: 220px;
+    margin: 0;
+  }
+  li.show_top_item {
+    width: 48%;
+    background: #fff;
+    margin-right: 2%;
+    border-radius: 7px;
+    padding: 15px 20px;
+    box-shadow: 0px 0px 6px -2px #d4d4d4;
+  }
+  li.show_top_item.last_item {
+    margin-right: 0px;
+  }
+  h5.show_top_item_title {
+    margin: 0 0 15px;
+    font-size: 15px;
+  }
+  h5.show_top_item_title.left_title { color: #d70405;}
+  h5.show_top_item_title.right_title { color: #ff5f14;}
+  .show_top_item_top_number_info_box {
+    height: 146px;
+    padding-bottom: 20px;
+  }
+  table.show_top_item_top_number_info_table {
+    width: 100%;
+    height: 100%;
+  }
+  td.admin_top_info_num_td {
+    font-size: 25px;
+    text-align: right;
+  }
+  td.admin_top_info_num_td.supplier_num {color: #d70707;}
+  td.admin_top_info_num_td.activity_num {color: #ff5f14;}
+  div.show_new_supplier_list_box {
+    background: #fff;
+    border-radius: 7px;
+    padding: 15px 20px;
+    height: 200px;
+    margin: 20px 0 20px;
+    box-shadow: 0px 0px 6px -2px #d4d4d4;
+  }
+</style>

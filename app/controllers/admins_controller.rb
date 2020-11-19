@@ -3,6 +3,13 @@ class AdminsController < ApplicationController
 
   def show
     @admin = Admin.find(current_admin.id)
+    @total_supplier_acount_num = Supplier.all.size
+    @total_activity_biz_num = ActivityBusiness.all.size
+    @total_waiting_biz_num = ActivityBusiness.where(is_approved: false).where(status: 'send_approve').size
+    @total_activities_num = Activity.all.size
+    @waiting_activities_num = Activity.where(is_approved: false).where(status: 'published').size
+    @published_activities_num = Activity.where(is_approved: true).where(status: 'published').size
+
   end
 
   def index
