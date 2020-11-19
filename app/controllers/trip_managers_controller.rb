@@ -22,12 +22,12 @@ class TripManagersController < ApplicationController
   def activity_detail
     @project = Project.find(params[:project_id])
     @activity = Activity.find(params[:activity_id])
-    if @project.cart.nil?
-      @cart = @project.build_cart
-    else
-      @cart = @project.cart
-    end
-    @book_activity = @cart.booked_activities.build(activity_id: @activity.id)
+    # if @project.cart.nil?
+    #   @cart = @project.build_cart
+    # else
+    #   @cart = @project.cart
+    # end
+    # @book_activity = @cart.booked_activities.build(activity_id: @activity.id)
   end
 
   def experience_search
