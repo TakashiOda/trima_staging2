@@ -1,0 +1,27 @@
+<div class="project_index_container_innner">
+  <div class="">
+    <div class="">
+      <span>買い物かご</span>
+    </div>
+    <div class="">
+      <% if !@booked_activities.nil? %>
+        <ul>
+          <% @booked_activities.each do |booked_activity| %>
+            <li>日付：<%= booked_activity.activity_date %></li>
+            <li>金額：<%= booked_activity.total_price %>円</li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+
+<style>
+  .project_index_container_innner_top {
+      height: 60px;
+      width: 100%;
+  }
+</style>

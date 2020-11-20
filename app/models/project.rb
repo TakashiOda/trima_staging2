@@ -3,7 +3,7 @@ class Project < ApplicationRecord
   # has_one :area
 
 
-  has_one :carts, dependent: :destroy
+  has_one :cart, dependent: :destroy
   has_many :user_projects, dependent: :destroy
   has_many :users, through: :user_projects
   accepts_nested_attributes_for :user_projects, allow_destroy: true

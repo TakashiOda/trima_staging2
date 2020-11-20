@@ -29,11 +29,9 @@ class ProjectsController < ApplicationController
 
   def new
     @user = current_user
-    # @user = User.find(params[:user_id])
     @project = @user.projects.build
     @left_invite_num = 5
     @project.project_areas.build
-    # 3.times { @project.project_areas.build }
   end
 
   def create
@@ -57,7 +55,6 @@ class ProjectsController < ApplicationController
 
   def edit
     @user = current_user
-    # @user = User.find(params[:user_id])
     @project = Project.find(params[:id])
     @members = UserProject.where(project_id: @project.id).where.not(user_id: current_user.id )
     @inviting_members = ProjectInvite.where(project_id: @project.id, has_account: 1)
@@ -65,7 +62,6 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    # binding.pry
     @user = current_user
     @project = Project.find(params[:id])
     if @project.update(project_params)
@@ -73,7 +69,6 @@ class ProjectsController < ApplicationController
       @project.replace_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
       @project.replace_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
       @project.replace_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
-      # redirect_to user_projects_path(@user, @project)
       redirect_to user_project_trip_managers_home_path(@user, @project)
     else
       render 'edit'

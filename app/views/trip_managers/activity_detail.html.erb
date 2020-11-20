@@ -161,16 +161,77 @@
         <div class="activity_detail_basic_info_inner">
           あああああああああああああああああ
         </div>
+
       </section>
     </div>
     <div class="activity_detail_right_sidebar">
       <div class="activity_detail_sidebar_inner">
-        ¥2400
-        <%#= form_for [@book_activity, @project, @activity], url: project_book_activity_create_path do |form| %>
-          <%#= form.label "日付" %>
-          <%#= form.date_field :start_date, min: Date.today ,class: "form-control" %>
-          <%#= form.submit('予約する',class: 'button btn-submit') %>
-        <%# end %>
+        <div class="activity_price_box">
+          <div class="activity_price_box_price">¥<%= @activity.normal_adult_price.to_s(:delimited)%></div>
+          <div class="activity_price_box_text">/おとな一人</div>
+        </div>
+        <%= form_for(@book_activity, url: project_book_activity_create_path) do |form| %>
+          <%#= form.label "開始時間" %>
+          <%#= form.collection_select :activity_start_time, @activity.activity_courses, :id, :display_time, {prompt: "選択してください"}, required: true, class: "form-control"%>
+          <%= form.hidden_field :total_price, value: 0%>
+          <%= form.hidden_field :project_id, value: @project.id %>
+          <%= form.hidden_field :activity_id, value: @activity.id %>
+          <%= form.hidden_field :user_id, value: current_user.id %>
+          <div class="calendar_form_fix_field">
+            <div class="date_field_box" id="date_field_box">
+              <div class="date_field_box_date">
+                <span class="date_field_box_icon"><i class="far fa-calendar-alt"></i></span>
+                <span>2020/11/17</span>
+              </div>
+              <div class="date_field_box_course">
+                <span class="date_field_box_icon"><i class="far fa-clock"></i></span>
+                <span>01:00</span>
+              </div>
+            </div>
+            <%#= form.date_field :activity_date, min: Date.today ,class: "form-control", onclick: "toggleCalender()" %>
+          </div>
+          <div class="calendar_form hidden" id="activity_stock_calendar_form">
+            <%= week_calendar events: @stocks do |date, stocks| %>
+              <div class="calender_date_item_box">
+                <span class="date_num"><%= date.strftime("%m/%d") %></span>
+                <% stocks.each do |stock| %>
+                  <div class="calender_book_info_box">
+                    <div class="calender_book_info_price">
+                      <span class="calender_book_info_price_span">¥
+                      <% if @activity.has_season_price %>
+                        <% if stock.season_price == 'high' %>
+                          <%=@ageprice.high_price %>円
+                        <% elsif stock.season_price == 'low' %>
+                          <%=@ageprice.low_price %>円
+                        <% else %>
+                          <%=@ageprice.normal_price %>円
+                        <% end %>
+                      <% else %>
+                        <%= @activity.normal_adult_price%>円
+                      <% end %>
+                      </span>
+                    </div>
+                    <div class="calender_book_info_stock">
+                      <ul>
+                        <% @courses.each do |course|%>
+                          <li><%= course.display_time %>：<%= course.activity_stocks.find_by(date: date).stock %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <div id="total_price_box">
+            <div>TOTAL</div>
+            <div>
+              <span>¥</span>
+              <span><%= @activity.normal_adult_price%></span>
+            </div>
+            <%= form.submit('予約する',class: 'button btn-submit') %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -279,6 +340,70 @@
     padding: 15px 30px 15px 10px;
     background: aquamarine;
   }
+  /* カレンダー ***********************************/
+  .simple-calendar table {
+    width: 100%;
+  }
+  .simple-calendar table thead {
+    /* background: lightgray; */
+  }
+  .simple-calendar table tbody tr {
+    height: 300px;
+    /* display: flex; */
+    vertical-align: baseline;
+    font-size: 13px;
+  }
+  .simple-calendar table tbody tr td {
+    height: 300px;
+  }
+  .calender_date_item_box {
+    height: 100%;
+  }
+  span.calender_book_info_price_span {
+    font-size: 15px;
+    font-weight: bold;
+    color: #08c8cf;
+    display: block;
+    /* text-align: center; */
+  }
+  form#new_booked_activity {
+    position: relative;
+  }
+  .calendar_form_fix_field {
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    z-index: 200;
+    width: 100%;
+  }
+  .calendar_form_fix_field input {
+    padding: 10px 0;
+    border: solid 3px #464646;
+  }
+  .calendar_form {
+    width: 900px;
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    z-index: 100;
+    padding: 50px 10px 20px 10px;
+    background: #fff;
+    border-radius: 10px;
+    border: solid 3px #464646;
+    box-shadow: 0px 0px 6px -1px #c7c7c7;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .simple-calendar {
+    width: 100%;
+  }
+  div#total_price_box {
+    right: 0;
+    position: absolute;
+    top: 200px;
+    width: 100%;
+  }
   /* サイドバー ***********************************/
   .activity_detail_sidebar_inner {
     padding: 20px 20px;
@@ -287,4 +412,53 @@
     box-shadow: 0px 0px 7px -1px #cccccc;
     border-radius: 10px;
   }
+  .activity_price_box {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: baseline;
+  }
+  .activity_price_box_price {
+    font-size: 25px;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #616161;
+  }
+  .activity_price_box_text {
+    font-size: 15px;
+    color: #656565;
+  }
+  div#date_field_box {
+    display: flex;
+    justify-content: space-between;
+    border: solid 3px #464646;
+    padding: 10px 10px;
+    border-radius: 10px;
+    user-select: none;
+  }
+  div#date_field_box:hover {
+    cursor: pointer;
+  }
 </style>
+
+<script type="text/javascript">
+  document.getElementById('date_field_box').addEventListener('click', function (e) {
+    const calendarFrom = document.getElementById('activity_stock_calendar_form');
+    const isClose = calendarFrom.classList.contains('hidden');
+    if (isClose) {
+      calendarFrom.classList.remove('hidden');
+    } else {
+      calendarFrom.classList.add('hidden');
+    }
+  });
+
+
+  // function toggleCalender() {
+  //   const calendarFrom = document.getElementById('activity_stock_calendar_form');
+  //   const isClose = calendarFrom.classList.contains('hidden');
+  //   if (isClose) {
+  //     calendarFrom.classList.remove('hidden');
+  //   } else {
+  //     calendarFrom.classList.add('hidden');
+  //   }
+  // }
+</script>
