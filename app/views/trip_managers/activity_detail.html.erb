@@ -169,7 +169,7 @@
               <button class="next_button" type="button" name="button" onclick="showNextMonth()">次へ</button>
             </div>
             <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
-            <% if !@courses.nil? && !@this_month_stocks.nil? %>
+            <% if !@courses.nil? && !@this_month_stocks.blank? %>
               <table class="stock_book_table" id="this_month_calender">
                 <tr class="stock_book_table_tr_head">
                   <th class="stock_book_table_th first">00:00</th>
@@ -197,8 +197,20 @@
                 </tr>
                 <% end %>
               </table>
+            <% else %>
+              <table class="stock_book_table" id="this_month_calender">
+                <tr class="stock_book_table_tr_head">
+                  <th class="stock_book_table_th first">00:00</th>
+                  <% @courses.each do |course| %>
+                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                  <% end %>
+                </tr>
+                <tr class="stock_book_table_tr_no_data">
+                  <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                </tr>
+              </table>
             <% end %>
-            <% if !@courses.nil? && !@next_month_stocks.nil? %>
+            <% if !@courses.nil? && !@next_month_stocks.blank? %>
               <table class="stock_book_table hidden" id="next_month_calender">
                 <tr class="stock_book_table_tr_head">
                   <th class="stock_book_table_th first">00:00</th>
@@ -226,8 +238,20 @@
                 </tr>
                 <% end %>
               </table>
+            <% else %>
+              <table class="stock_book_table" id="this_month_calender">
+                <tr class="stock_book_table_tr_head">
+                  <th class="stock_book_table_th first">00:00</th>
+                  <% @courses.each do |course| %>
+                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                  <% end %>
+                </tr>
+                <tr class="stock_book_table_tr_no_data">
+                  <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                </tr>
+              </table>
             <% end %>
-            <% if !@courses.nil? && !@next2_month_stocks.nil? %>
+            <% if !@courses.nil? && !@next2_month_stocks.blank? %>
               <table class="stock_book_table hidden" id="next2_month_calender">
                 <tr class="stock_book_table_tr_head">
                   <th class="stock_book_table_th first">00:00</th>
@@ -255,8 +279,20 @@
                 </tr>
                 <% end %>
               </table>
+            <% else %>
+              <table class="stock_book_table" id="this_month_calender">
+                <tr class="stock_book_table_tr_head">
+                  <th class="stock_book_table_th first">00:00</th>
+                  <% @courses.each do |course| %>
+                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                  <% end %>
+                </tr>
+                <tr class="stock_book_table_tr_no_data">
+                  <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                </tr>
+              </table>
             <% end %>
-            <% if !@courses.nil? && !@next3_month_stocks.nil? %>
+            <% if !@courses.nil? && !@next3_month_stocks.blank? %>
               <table class="stock_book_table hidden" id="next3_month_calender">
                 <tr class="stock_book_table_tr_head">
                   <th class="stock_book_table_th first">00:00</th>
@@ -283,6 +319,18 @@
                   <% end %>
                 </tr>
                 <% end %>
+              </table>
+            <% else %>
+              <table class="stock_book_table" id="this_month_calender">
+                <tr class="stock_book_table_tr_head">
+                  <th class="stock_book_table_th first">00:00</th>
+                  <% @courses.each do |course| %>
+                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                  <% end %>
+                </tr>
+                <tr class="stock_book_table_tr_no_data">
+                  <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                </tr>
               </table>
             <% end %>
 
@@ -508,6 +556,13 @@
     padding: 3px 8px;
     border: none;
     background: #0ea7e6;
+  }
+  tr.stock_book_table_tr_no_data {
+    border: none;
+  }
+  td.stock_book_table_no_date_td {
+    text-align: center;
+    padding-top: 40px;
   }
   .calendar_form_fix_field {
     position: absolute;
