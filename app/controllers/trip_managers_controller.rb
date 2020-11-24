@@ -23,6 +23,7 @@ class TripManagersController < ApplicationController
   def activity_detail
     @project = Project.find(params[:project_id])
     @activity = Activity.find(params[:activity_id])
+    @ageprices = @activity.activity_ageprices
     if @activity.activity_courses.any?
       @courses = @activity.activity_courses
       if @courses[0].activity_stocks.any?
