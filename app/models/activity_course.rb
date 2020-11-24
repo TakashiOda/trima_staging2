@@ -6,5 +6,8 @@ class ActivityCourse < ApplicationRecord
   accepts_nested_attributes_for :activity_stocks, allow_destroy: true
 
   validates :activity_id, uniqueness: { scope: :start_time }
-  
+
+  def display_time
+    start_time.strftime("%H:%M〜")
+  end
 end

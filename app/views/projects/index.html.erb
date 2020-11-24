@@ -2,7 +2,7 @@
   <div class="page_title_box">
     <h3>Your Projects</h3>
     <div class="btn_box">
-      <%= link_to "Create Project", new_user_project_path(current_user) %>
+      <%= link_to "Create Project", new_project_path %>
     </div>
   </div>
   <% if !@waitings.blank? %>
@@ -12,7 +12,7 @@
         <ul>
           <% @waitings.each do |waiting| %>
           <li>
-            <%= link_to user_project_path(current_user, waiting) do %>
+            <%= link_to project_path(waiting) do %>
               <%= image_tag "project_icons/#{waiting.icon}", class: 'project_icon' %>
               <div class="project_title">
                 <span class="project_title_text"><%= waiting.name %></span>
@@ -31,7 +31,7 @@
         <ul>
           <% @owns.each do |own| %>
             <li>
-              <%= link_to user_project_trip_managers_home_path(current_user, own) do %>
+              <%= link_to project_trip_managers_home_path(own) do %>
                 <%= image_tag "project_icons/#{own.icon}", class: 'project_icon' %>
                 <div class="project_title">
                   <span class="project_title_text"><%= own.name %></span>
@@ -48,7 +48,7 @@
         <ul>
           <% @inviteds.each do |invited| %>
           <li>
-            <%= link_to user_project_path(current_user, invited) do %>
+            <%= link_to project_path(invited) do %>
               <%= image_tag "project_icons/#{invited.icon}", class: 'project_icon' %>
               <div class="project_title">
                 <span class="project_title_text"><%= invited.name %></span>

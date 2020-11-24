@@ -2,6 +2,25 @@
   <div class="admin_section show_top">
     <ul class="show_top_items">
       <li class="show_top_item">
+        <h5 class="show_top_item_title left_title">予約数</h5>
+        <div class="show_top_item_top_number_info_box">
+          <table class="show_top_item_top_number_info_table">
+            <tr>
+              <td>予約のみ</td>
+              <td class="admin_top_info_num_td supplier_num">
+                <%='0' %>
+              </td>
+            </tr>
+            <tr style="border: none;">
+              <td>決済完了</td>
+              <td class="admin_top_info_num_td supplier_num">
+                <%='0' %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </li>
+      <li class="show_top_item">
         <h5 class="show_top_item_title left_title">事業者数</h5>
         <div class="show_top_item_top_number_info_box">
           <table class="show_top_item_top_number_info_table">
@@ -56,11 +75,20 @@
   <div class="admin_section show_new_supplier_list">
     <div class="show_new_supplier_list_box">
       <h5 class="show_top_item_title left_title">最近アカウント作成した事業者</h5>
-      <ul>
-        <li>aaaaaaaaaaaaaaaaa</li>
-        <li>aaaaaaaaaaaaaaaaa</li>
-        <li>aaaaaaaaaaaaaaaaa</li>
-      </ul>
+      <% if !@current_register_suppliers.nil? %>
+        <ul class="current_register_suppliers_ul">
+          <% @current_register_suppliers.each do |supplier|%>
+            <li>
+              <div class="current_register_supplier_name">
+                <%=supplier.name if supplier.name%>
+              </div>
+              <div class="current_register_supplier_name">
+                <%= supplier.email %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
   </div>
 </div>
@@ -75,16 +103,14 @@
     margin: 0;
   }
   li.show_top_item {
-    width: 48%;
+    width: 27%;
     background: #fff;
     margin-right: 2%;
     border-radius: 7px;
     padding: 15px 20px;
     box-shadow: 0px 0px 6px -2px #d4d4d4;
   }
-  li.show_top_item.last_item {
-    margin-right: 0px;
-  }
+  li.show_top_item.last_item {margin-right: 0px;}
   h5.show_top_item_title {
     margin: 0 0 15px;
     font-size: 15px;
@@ -113,4 +139,15 @@
     margin: 20px 0 20px;
     box-shadow: 0px 0px 6px -2px #d4d4d4;
   }
-</style>
+  ul.current_register_suppliers_ul {
+    margin: 0px 0 0;
+  }
+  ul.current_register_suppliers_ul li {
+    display: flex;
+    padding: 7px 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .current_register_supplier_name {
+    width: 25%;
+  }
+  </style>

@@ -721,7 +721,7 @@ div#password_input_box {
   height: 100%;
 }
 .user_show_side {
-  width: 20%;
+  width: 17%;
   padding: 20px 10px 30px 20px;
   min-height: 80vh !important;
 }
@@ -789,7 +789,7 @@ div#password_input_box {
 
 .user_show_main_content,
 .supplier_show_main_content {
-  width: 80%;
+  width: 83%;
   background: #eaeaea;
 }
 
@@ -1144,9 +1144,9 @@ span.form_supplement {
   .header_username {
     display: none;
   }
-  .user_show_side {
-    display: none;
-  }
+  // .user_show_side {
+  //   display: none;
+  // }
   .user_show_content,
   .supplier_show_main_content {
     width: 100%;

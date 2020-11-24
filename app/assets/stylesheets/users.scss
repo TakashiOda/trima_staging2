@@ -1,3 +1,6 @@
+// /*
+//  *= require simple_calendar
+//  */
 $user-main-color: #33cc99; //ヘッダーに適用・コバルトブルー
 $user-main-light-color: #23a0ff;; //ラジオやチェックボックスに適用
 $user-main-dark-color: #215234; //サイドバーに適用・プルシャンブルー
@@ -45,7 +48,7 @@ a.org_edit_btn {
 //Project Index========================================
 /*project index************************************/
 .project_index_container {
-  width: 80%;
+  width: 83%;
 }
 .project_index_container_innner {
   padding: 20px 50px 50px 40px;
@@ -318,12 +321,15 @@ a.member_delete_btn {
 
 //trip manager sidebar==============================================
 .trip_manage_side {
-  width: 20%;
-  // background: #215234;
-  background: linear-gradient(0deg, #1a68ca, #08AEEA 90%);
-  background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 90%);
+  width: 17%;
+  background: linear-gradient(0deg, #1a68ca, #0ba8e7 90%);
+  background: -webkit-linear-gradient(0deg, #1a68ca, #0ba8e7 90%);
   padding: 20px 0 30px  15px;
   min-height: 90vh;
+}
+.trip_manage_side_inner {
+    position: sticky;
+    top: 76px;
 }
 .trip_manage_side_back_link a {
   /* margin-right: 7px; */
@@ -349,6 +355,9 @@ a.member_delete_btn {
 .trip_manage_side_links svg {
   color: #fff;
   margin-right: 12px;
+  font-size: 17px;
+  width: 20px !important;
+  height: 20px !important;
 }
 .trip_manage_side_links li a{
   font-size: 17px;

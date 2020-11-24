@@ -2,7 +2,7 @@
   <h3>体験を編集</h3>
 </div>
 <div class="activity_index_activity_list_box">
-  <%= form_for [@user, @project] do |form| %>
+  <%= form_for [@project] do |form| %>
     <%= render 'layouts/error_messages', model: form.object %>
     <div class="user_show_info_items_box">
       <section class="form_section">
