@@ -24,6 +24,7 @@ class TripManagersController < ApplicationController
     @project = Project.find(params[:project_id])
     @activity = Activity.find(params[:activity_id])
     @ageprices = @activity.activity_ageprices
+    @activity_business = ActivityBusiness.find(@activity.activity_business_id)
     if @activity.activity_courses.any?
       @courses = @activity.activity_courses
       if @courses[0].activity_stocks.any?

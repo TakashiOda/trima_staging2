@@ -45,90 +45,40 @@
       </section>
       <section class="activity_detail_basic_info_section">
         <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
+          <div class="activity_detail_basic_info_inner_inner">
+            <div class="activity_detail_basic_info_inner_biz_box">
+              <div class="biz_name">
+                <%= @activity_business.name %>
+              </div>
+              <div class="biz_icon">
+                <%= image_tag @activity_business.profile_image.to_s, class: 'biz_icon' if !@activity_business.profile_image.blank? %>
+              </div>
+            </div>
+            <div class="activity_detail_basic_info_inner_info_box">
+              <ul>
+                <li class="basic_info_item">
+                  <i class="fas fa-star"></i>
+                  <span><%= @activity.activity_minutes %>時間</span>
+                </li>
+                <li class="basic_info_item">
+                  <i class="fas fa-star"></i>
+                  <span>最少<%= @activity.minimum_num %>から最大<%= @activity.maximum_num %>人まで</span>
+                </li>
+                <li class="basic_info_item">
+                  <i class="fas fa-star"></i>
+                  <span>最低年齢<%= @activity.available_age %>歳から</span>
+                </li>
+                <li class="basic_info_item">
+                  <i class="fas fa-star"></i>
+                  <span><%= @activity.is_all_year_open ? '通年の体験' : "#{@activity.start_date.strftime("%Y/%m/%d")}〜#{@activity.end_date.strftime("%Y/%m/%d")}" %></span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
-      <section class="activity_detail_basic_info_section">
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-      </section>
-      <section class="activity_detail_basic_info_section">
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-      </section>
-      <section class="activity_detail_basic_info_section">
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-      </section>
-      <section class="activity_detail_basic_info_section">
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-      </section>
-      <section class="activity_detail_basic_info_section">
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-      </section>
-      <section class="activity_detail_basic_info_section">
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
-          あああああああああああああああああ
-        </div>
-        <div class="activity_detail_basic_info_inner">
+      <section class="activity_detail_basic_info_section02">
+        <div class="activity_detail_basic_info_inner00000">
           あああああああああああああああああ
         </div>
       </section>
@@ -450,8 +400,43 @@
     padding: 15px 0px;
   }
   .activity_detail_basic_info_inner {
-    padding: 15px 30px 15px 10px;
-    background: aquamarine;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px gray;
+    border-radius: 10px;
+  }
+  .activity_detail_basic_info_inner_inner {
+    padding: 20px 20px 10px;
+  }
+  .activity_detail_basic_info_inner_biz_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .biz_icon {
+    width: 70px;
+    height: 70px;
+  }
+  .activity_detail_basic_info_inner_info_box ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  li.basic_info_item {
+    width: 46%;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    padding: 2%;
+  }
+  li.basic_info_item span {
+    font-size: 16px;
+    color: #424242;
+    margin-left: 10px;
+  }
+  li.basic_info_item svg {
+    width: 35px !important;
+    height: 35px;
   }
   /* カレンダー ***********************************/
   form#new_booked_activity {
