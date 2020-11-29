@@ -47,39 +47,92 @@
         <div class="activity_detail_basic_info_inner">
           <div class="activity_detail_basic_info_inner_inner">
             <div class="activity_detail_basic_info_inner_biz_box">
-              <div class="biz_name">
-                <%= @activity_business.name %>
-              </div>
-              <div class="biz_icon">
-                <%= image_tag @activity_business.profile_image.to_s, class: 'biz_icon' if !@activity_business.profile_image.blank? %>
-              </div>
+              <div class="section_title">基本情報</div>
             </div>
             <div class="activity_detail_basic_info_inner_info_box">
               <ul>
                 <li class="basic_info_item">
-                  <i class="fas fa-star"></i>
+                  <i class="far fa-clock"></i>
                   <span><%= @activity.activity_minutes %>時間</span>
                 </li>
                 <li class="basic_info_item">
-                  <i class="fas fa-star"></i>
+                  <i class="fas fa-users"></i>
                   <span>最少<%= @activity.minimum_num %>から最大<%= @activity.maximum_num %>人まで</span>
                 </li>
                 <li class="basic_info_item">
-                  <i class="fas fa-star"></i>
+                  <i class="fas fa-child"></i>
                   <span>最低年齢<%= @activity.available_age %>歳から</span>
                 </li>
                 <li class="basic_info_item">
-                  <i class="fas fa-star"></i>
+                  <i class="far fa-calendar-alt"></i>
                   <span><%= @activity.is_all_year_open ? '通年の体験' : "#{@activity.start_date.strftime("%Y/%m/%d")}〜#{@activity.end_date.strftime("%Y/%m/%d")}" %></span>
+                </li>
+                <li class="basic_info_item">
+                  <i class="fas fa-hand-holding-heart"></i>
+                  <% if @activity_business.has_insurance %>
+                  <div class="insurance_box">
+                    <span>保険に加入</span>
+                  </div>
+                  <% else %>
+                  <div class="no_insurance_box">
+                    <span>保険に未加入</span>
+                  </div>
+                  <% end %>
+                </li>
+                <li class="basic_info_item">
+                  <i class="fas fa-language"></i>
+                  <div><span>日本語</span><span>English</span></div>
                 </li>
               </ul>
             </div>
           </div>
         </div>
+        <div class="activity_detail_basic_info_inner">
+          <div class="activity_detail_basic_info_inner_inner">
+            <div class="activity_detail_basic_info_inner_biz_box">
+              <div class="section_title">ホスト</div>
+            </div>
+            <div class="activity_detail_basic_info_inner_biz_box about_guide">
+              <div class="title_box">
+                <div class="biz_icon_box">
+                  <%= image_tag @activity_business.profile_image.to_s, class: 'biz_icon' if !@activity_business.profile_image.blank? %>
+                </div>
+                <div class="biz_name">
+                  <%= @activity_business.name %>
+                </div>
+              </div>
+              <div class="guides_box">
+                <ul>
+                <% @activity_business.guides.each do |guide| %>
+                  <li class="guide_item">
+                    <%= image_tag guide.avatar.to_s, class: 'guide_avatar' if !guide.avatar.blank? %>
+                    <div class="guide_name"><%=guide.name%></div>
+                  </li>
+                <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
-      <section class="activity_detail_basic_info_section02">
-        <div class="activity_detail_basic_info_inner00000">
-          あああああああああああああああああ
+      <section class="activity_detail_basic_info_section">
+        <div class="activity_detail_profile_info_inner">
+          <p>体験について</p>
+          <p><%= @activity.description %></p>
+        </div>
+        <div class="activity_detail_profile_info_inner">
+          <p>持ち物・補足事項・注意点など</p>
+          <p><%= @activity.notes %></p>
+        </div>
+      </section>
+      <section class="activity_detail_basic_info_section">
+        <div class="activity_detail_profile_info_inner">
+          <p>体験について</p>
+          <p><%= @activity.description %></p>
+        </div>
+        <div class="activity_detail_profile_info_inner">
+          <p>持ち物・補足事項・注意点など</p>
+          <p><%= @activity.notes %></p>
         </div>
       </section>
     </div>
@@ -396,26 +449,39 @@
   }
   /* ベーシックinfo ***********************************/
   section.activity_detail_basic_info_section {
-    width: 98%;
-    padding: 15px 0px;
+    width: 95%;
+    padding: 10px 0px;
   }
   .activity_detail_basic_info_inner {
     display: flex;
     flex-direction: column;
-    border: solid 1px gray;
-    border-radius: 10px;
+    border: solid 1px #e3e3e3;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    box-shadow: 0px 0px 5px -1px lightgrey;
   }
   .activity_detail_basic_info_inner_inner {
-    padding: 20px 20px 10px;
+    padding: 10px 20px 15px;
   }
   .activity_detail_basic_info_inner_biz_box {
     display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+  }
+  .activity_detail_basic_info_inner_biz_box.about_guide {
+    padding: 20px;
+  }
+  .title_box {
+    display: flex;
     align-items: center;
-    justify-content: space-between;
   }
   .biz_icon {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: solid 1px #dadada;
+    box-shadow: 0px 0px 4px -1px lightgrey;
+    margin-right: 13px;
   }
   .activity_detail_basic_info_inner_info_box ul {
     display: flex;
@@ -424,19 +490,49 @@
   }
   li.basic_info_item {
     width: 46%;
-    margin-bottom: 15px;
     display: flex;
     align-items: center;
-    padding: 2%;
+    padding: 0 4% 0 0;
+    margin: 10px 0 15px;
   }
   li.basic_info_item span {
-    font-size: 16px;
+    font-size: 13px;
     color: #424242;
     margin-left: 10px;
   }
   li.basic_info_item svg {
-    width: 35px !important;
-    height: 35px;
+    width: 30px !important;
+    height: 30px;
+    color: #0ea7e6;
+  }
+  .activity_detail_profile_info_inner {
+    margin-bottom: 60px;
+    padding: 0 30px 0 0;
+  }
+  .guides_box ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px 15px 0;
+  }
+  .guides_box ul li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 24%;
+    margin-right: 1%;
+    margin-bottom: 20px;
+  }
+  img.guide_avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .guide_name {
+    text-align: center;
+    font-size: 15px;
+    margin-top: 10px;
+    /* font-weight: bold; */
   }
   /* カレンダー ***********************************/
   form#new_booked_activity {
