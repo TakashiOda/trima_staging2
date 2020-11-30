@@ -23,8 +23,10 @@ class TripManagersController < ApplicationController
   def activity_detail
     @project = Project.find(params[:project_id])
     @activity = Activity.find(params[:activity_id])
-    @ageprices = @activity.activity_ageprices
+    @ageprices = @activity.activity_ageprices.order(age_from: :desc)
     @activity_business = ActivityBusiness.find(@activity.activity_business_id)
+    @holidays = [@activity.monday_open, @activity.tuesday_open, @activity.wednesday_open, @activity.thursday_open,
+                 @activity.friday_open, @activity.saturday_open, @activity.sunday_open]
     if @activity.activity_courses.any?
       @courses = @activity.activity_courses
       if @courses[0].activity_stocks.any?
