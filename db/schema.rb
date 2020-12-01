@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_19_085805) do
+ActiveRecord::Schema.define(version: 2020_12_01_074817) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -305,6 +305,24 @@ ActiveRecord::Schema.define(version: 2020_11_19_085805) do
     t.index ["project_id"], name: "index_project_invites_on_project_id"
   end
 
+  create_table "project_members", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "project_id", null: false
+    t.string "nickname"
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "birth_year"
+    t.integer "birth_month"
+    t.integer "birth_date"
+    t.string "gender"
+    t.string "avatar"
+    t.integer "nationality"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_project_members_on_project_id"
+    t.index ["user_id"], name: "index_project_members_on_user_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.date "start_date"
@@ -461,6 +479,8 @@ ActiveRecord::Schema.define(version: 2020_11_19_085805) do
   add_foreign_key "project_areas", "projects"
   add_foreign_key "project_invites", "projects"
   add_foreign_key "project_invites", "users", column: "inviter_id"
+  add_foreign_key "project_members", "projects"
+  add_foreign_key "project_members", "users"
   add_foreign_key "supplier_profiles", "suppliers"
   add_foreign_key "towns", "areas"
   add_foreign_key "towns", "prefectures"

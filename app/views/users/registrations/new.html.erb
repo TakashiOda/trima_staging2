@@ -5,15 +5,15 @@
     <p>Make easier<br/>to Book everything for trip</p>
   </div>
   <div class="sign_up_in_page_end">
-    <h3>Create a account</h3>
+    <h3>ユーザー登録</h3>
     <%= form_with model: @user, url: user_registration_path(@user), id: 'new_user', class: 'new_user', local: true do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div class="form-group">
-        <%= f.label :email %>
+        <%= f.label :メールアドレス %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
       </div>
       <div class="form-group">
-        <%= f.label :password %>
+        <%= f.label :パスワード %>
         <div id="password_input_box">
           <%= f.password_field :password, autocomplete: "new-password", class: "form-control invisible" ,id: "password-input", required: true %>
           <div id="password_visible_btn"><i class='fas fa-eye'></i></div>
@@ -21,20 +21,35 @@
       </div>
       <div class="form-group agree_check">
         <input type="checkbox" id="agree_checkbox" value="" required>
-        <label for="agree_checkbox">I agree <%= link_to "term of servise", term_of_service_en_path, class: "agree_link" %>&nbsp;&&nbsp;<%= link_to "privacy policy", privacy_policy_en_path, class: "agree_link" %></label>
+        <label for="agree_checkbox"><%= link_to "利用規約", term_of_service_en_path, class: "agree_link" %>と<%= link_to "プライバシーポリシー", privacy_policy_en_path, class: "agree_link" %>に同意します</label>
       </div>
       <div class="form-group user login_button">
-        <%= f.submit "Sign up", class: "button btn-submit" %>
+        <%= f.submit "認証メールを送る", class: "button btn-submit" %>
       </div>
     <% end %>
     <div class="another_way_btn_box">
-      <%= link_to "Sign in", users_sign_in_path %>
+      <%= link_to "ログイン", users_sign_in_path %>
     </div>
     <div class="didnt_recieve_btn_box">
-      <%= link_to "Didn't receive confirmation Email?", new_user_confirmation_path %>
+      <%= link_to "認証メールが届かない方はこちら", new_user_confirmation_path %>
     </div>
   </div>
 </div>
+
+<style lang="scss">
+  /* .form-group input {
+    background: linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00) !important;
+  }
+  #password_input_box {
+    background: #e7f1fe;
+    border: 1px solid gainsboro;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0px 10px 0;
+  } */
+</style>
 
 <script type="text/javascript">
   document.getElementById("password_visible_btn").onclick = function() {

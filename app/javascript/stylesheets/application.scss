@@ -71,11 +71,13 @@ a.disabled{
   position: relative;
   width: 100%;
   // height: 100%;
-  min-height: 80vh;
+  min-height: 500px;
+  // min-height: 85vh;
   margin-top: 56px;
 }
 body.erb_body {
   margin: 0 !important;
+  position: relative;
   // height: 100vh;
 }
 body.erb_body.add_padding_top {
@@ -173,10 +175,11 @@ img.eyecatch_pc_image {
   width: 100%;
   padding: 10px;
   font-size: 16px;
+  border: none;
   border: 1px solid gainsboro;
   border-radius: 8px;
 }
-.form-group input,
+.form-group input[type="text"],
 .form-group textarea {
   border-radius: 10px;
   box-sizing: border-box;
@@ -232,7 +235,7 @@ header.erb_header {
   padding: 0px;
   height: 56px;
   width: 100%;
-  z-index: 93;
+  z-index: 200;
   box-shadow: 0px 4px 5px -5px #00000082;
   position: fixed;
   top: 0;
@@ -324,6 +327,7 @@ a#header_current_supplier_link {
   padding: 20px 0px 15px;
   color: #fff;
   width: 100%;
+  min-height: 270px;
 }
 .footer_contents {
   display: flex;
@@ -650,6 +654,10 @@ form#new_supplier {
 }
 .didnt_recieve_btn_box {
   margin: 25px auto;
+}
+.didnt_recieve_btn_box a {
+    font-size: 14px;
+    color: #289cd5;
 }
 .form-group.agree_check {
   display: flex;

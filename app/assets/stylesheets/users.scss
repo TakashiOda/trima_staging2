@@ -12,12 +12,15 @@ header.erb_header {
   background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
 }
 
-.btn-submit {
-  background: $user-main-color !important;
+// .btn-submit {
+//   background: $user-main-color !important;
+// }
+.form-group input.btn-submit {
+  background: linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00) !important;
 }
 
 .form-group.user.login_button input.button {
-  background: $user-main-color !important;
+  background: $user-main-color;
 }
 
 .user_show_side {

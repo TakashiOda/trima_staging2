@@ -16,7 +16,7 @@
       <li><i class="fas fa-route"></i><%= link_to "旅程", "#" %></li>
       <li><i class="fas fa-heart"></i><%= link_to "お気に入り", "#" %></li>
       <li><i class="far fa-bookmark"></i><%= link_to "予約済みアイテム", "#" %></li>
-      <li><i class="fas fa-users"></i><%= link_to "メンバー管理", "#" %></li>
+      <li><i class="fas fa-users"></i><%= link_to "メンバー管理", project_members_path(@project) %></li>
       <li><i class="fas fa-users"></i><%= link_to "カート", project_cart_path(@project) %></li>
     </ul>
   </div>

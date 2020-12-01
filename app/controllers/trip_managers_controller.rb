@@ -94,9 +94,12 @@ class TripManagersController < ApplicationController
       @cart = @project.cart
       @booked_activities = @cart.booked_activities
     end
-
   end
 
   def experience_search
+  end
+
+  def members_index
+    @project = Project.find(params[:project_id])
   end
 end

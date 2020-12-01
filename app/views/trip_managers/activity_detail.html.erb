@@ -241,217 +241,229 @@
           <div class="activity_price_box_text">/おとな一人</div>
         </div>
         <%= form_for(@book_activity, url: project_book_activity_create_path) do |form| %>
-          <%= form.hidden_field :total_price, value: 0%>
-          <%= form.hidden_field :project_id, value: @project.id %>
-          <%= form.hidden_field :activity_id, value: @activity.id %>
-          <%= form.hidden_field :user_id, value: current_user.id %>
-          <div class="calendar_form_fix_field">
-            <%= form.label 'スケジュール' %>
-            <div class="date_field_box" id="date_field_box">
-              <div class="date_field_box_date">
-                <span class="date_field_box_icon"><i class="far fa-calendar-alt"></i></span>
-                <span id="date_field_box_date_span"><%= Date.today.strftime("%y/%m/%d")%></span>
+          <div class="sidebar_form_inner_top">
+            <%= form.hidden_field :total_price, value: 0%>
+            <%= form.hidden_field :project_id, value: @project.id %>
+            <%= form.hidden_field :activity_id, value: @activity.id %>
+            <%= form.hidden_field :user_id, value: current_user.id %>
+            <div class="calendar_form_fix_field">
+              <%= form.label 'スケジュール' %>
+              <div class="date_field_box" id="date_field_box">
+                <div class="date_field_box_date">
+                  <span class="date_field_box_icon"><i class="far fa-calendar-alt"></i></span>
+                  <span id="date_field_box_date_span"><%= Date.today.strftime("%y/%m/%d")%></span>
+                </div>
+                <div class="date_field_box_course">
+                  <span class="date_field_box_icon"><i class="far fa-clock"></i></span>
+                  <span id="date_field_box_time_span">00:00</span>
+                </div>
               </div>
-              <div class="date_field_box_course">
-                <span class="date_field_box_icon"><i class="far fa-clock"></i></span>
-                <span id="date_field_box_time_span">00:00</span>
-              </div>
+              <%= form.hidden_field :activity_date ,class: "form-control", id: 'activity_date_form' %>
+              <%= form.hidden_field :activity_start_time ,class: "form-control", id: 'activity_time_form' %>
             </div>
-            <%= form.hidden_field :activity_date ,class: "form-control", id: 'activity_date_form' %>
-            <%= form.hidden_field :activity_start_time ,class: "form-control", id: 'activity_time_form' %>
-          </div>
-          <div class="calendar_form hidden" id="activity_stock_calendar_form">
-            <div class="calendar_form_month_link_container">
-              <button class="previous_button" type="button" name="button" onclick="showPreviousMonth()">戻る</button>
-              <div class="calender_month_num_box">
-                <span class="calender_month_num" id="calender_month_num"><%=Date.today.month%></span>
-                <span class="calender_month_unit">月</span>
-                <input type="hidden" id='selected_month' value="this_month" %>
+            <div class="calendar_form hidden" id="activity_stock_calendar_form">
+              <div class="calendar_form_month_link_container">
+                <button class="previous_button" type="button" name="button" onclick="showPreviousMonth()">戻る</button>
+                <div class="calender_month_num_box">
+                  <span class="calender_month_num" id="calender_month_num"><%=Date.today.month%></span>
+                  <span class="calender_month_unit">月</span>
+                  <input type="hidden" id='selected_month' value="this_month" %>
+                </div>
+                <button class="next_button" type="button" name="button" onclick="showNextMonth()">次へ</button>
               </div>
-              <button class="next_button" type="button" name="button" onclick="showNextMonth()">次へ</button>
-            </div>
-            <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
-            <% if !@courses.nil? && !@this_month_stocks.blank? %>
-              <table class="stock_book_table" id="this_month_calender">
-                <tr class="stock_book_table_tr_head">
-                  <th class="stock_book_table_th first">00:00</th>
-                  <% @courses.each do |course| %>
-                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
-                  <% end %>
-                </tr>
-                <% @this_month_stocks.each_with_index do |this_month_stock, indexA|%>
-                <tr class="stock_book_table_tr_data">
-                  <td class="stock_book_table_date_td"><%=this_month_stock.date.strftime("%m/%d(#{wd[this_month_stock.date.wday]})")%></td>
-                  <% @courses.each_with_index do |course, indexB|%>
-                    <td class="stock_book_table_course_stock_td">
-                      <div class="inside_stock_td">
-                        <div class="inside_stock_td_front">
-                          <%= course.activity_stocks.find_by(date: this_month_stock.date).stock %>
+              <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
+              <% if !@courses.nil? && !@this_month_stocks.blank? %>
+                <table class="stock_book_table" id="this_month_calender">
+                  <tr class="stock_book_table_tr_head">
+                    <th class="stock_book_table_th first">00:00</th>
+                    <% @courses.each do |course| %>
+                      <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                    <% end %>
+                  </tr>
+                  <% @this_month_stocks.each_with_index do |this_month_stock, indexA|%>
+                  <tr class="stock_book_table_tr_data">
+                    <td class="stock_book_table_date_td"><%=this_month_stock.date.strftime("%m/%d(#{wd[this_month_stock.date.wday]})")%></td>
+                    <% @courses.each_with_index do |course, indexB|%>
+                      <td class="stock_book_table_course_stock_td">
+                        <div class="inside_stock_td">
+                          <div class="inside_stock_td_front">
+                            <%= course.activity_stocks.find_by(date: this_month_stock.date).stock %>
+                          </div>
+                          <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
+                            <%= hidden_field_tag "stock_#{indexA}", this_month_stock.date %>
+                            <%= hidden_field_tag "course_#{indexB}", course.start_time %>
+                            <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                          </div>
                         </div>
-                        <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
-                          <%= hidden_field_tag "stock_#{indexA}", this_month_stock.date %>
-                          <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                          <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                      </td>
+                    <% end %>
+                  </tr>
+                  <% end %>
+                </table>
+              <% else %>
+                <table class="stock_book_table" id="this_month_calender">
+                  <tr class="stock_book_table_tr_head">
+                    <th class="stock_book_table_th first">00:00</th>
+                    <% @courses.each do |course| %>
+                      <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                    <% end %>
+                  </tr>
+                  <tr class="stock_book_table_tr_no_data">
+                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                  </tr>
+                </table>
+              <% end %>
+              <% if !@courses.nil? && !@next_month_stocks.blank? %>
+                <table class="stock_book_table hidden" id="next_month_calender">
+                  <tr class="stock_book_table_tr_head">
+                    <th class="stock_book_table_th first">00:00</th>
+                    <% @courses.each do |course| %>
+                      <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                    <% end %>
+                  </tr>
+                  <% @next_month_stocks.each_with_index do |next_month_stock, indexA|%>
+                  <tr class="stock_book_table_tr_data">
+                    <td class="stock_book_table_date_td"><%=next_month_stock.date.strftime("%m/%d(#{wd[next_month_stock.date.wday]})")%></td>
+                    <% @courses.each_with_index do |course, indexB|%>
+                      <td class="stock_book_table_course_stock_td">
+                        <div class="inside_stock_td">
+                          <div class="inside_stock_td_front">
+                            <%= course.activity_stocks.find_by(date: next_month_stock.date).stock %>
+                          </div>
+                          <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
+                            <%= hidden_field_tag "stock_#{indexA}", next_month_stock.date %>
+                            <%= hidden_field_tag "course_#{indexB}", course.start_time %>
+                            <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                          </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
+                    <% end %>
+                  </tr>
                   <% end %>
-                </tr>
-                <% end %>
-              </table>
-            <% else %>
-              <table class="stock_book_table" id="this_month_calender">
-                <tr class="stock_book_table_tr_head">
-                  <th class="stock_book_table_th first">00:00</th>
-                  <% @courses.each do |course| %>
-                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
-                  <% end %>
-                </tr>
-                <tr class="stock_book_table_tr_no_data">
-                  <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
-                </tr>
-              </table>
-            <% end %>
-            <% if !@courses.nil? && !@next_month_stocks.blank? %>
-              <table class="stock_book_table hidden" id="next_month_calender">
-                <tr class="stock_book_table_tr_head">
-                  <th class="stock_book_table_th first">00:00</th>
-                  <% @courses.each do |course| %>
-                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
-                  <% end %>
-                </tr>
-                <% @next_month_stocks.each_with_index do |next_month_stock, indexA|%>
-                <tr class="stock_book_table_tr_data">
-                  <td class="stock_book_table_date_td"><%=next_month_stock.date.strftime("%m/%d(#{wd[next_month_stock.date.wday]})")%></td>
-                  <% @courses.each_with_index do |course, indexB|%>
-                    <td class="stock_book_table_course_stock_td">
-                      <div class="inside_stock_td">
-                        <div class="inside_stock_td_front">
-                          <%= course.activity_stocks.find_by(date: next_month_stock.date).stock %>
+                </table>
+              <% else %>
+                <table class="stock_book_table hidden" id="this_month_calender">
+                  <tr class="stock_book_table_tr_head">
+                    <th class="stock_book_table_th first">00:00</th>
+                    <% @courses.each do |course| %>
+                      <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                    <% end %>
+                  </tr>
+                  <tr class="stock_book_table_tr_no_data">
+                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                  </tr>
+                </table>
+              <% end %>
+              <% if !@courses.nil? && !@next2_month_stocks.blank? %>
+                <table class="stock_book_table hidden" id="next2_month_calender">
+                  <tr class="stock_book_table_tr_head">
+                    <th class="stock_book_table_th first">00:00</th>
+                    <% @courses.each do |course| %>
+                      <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                    <% end %>
+                  </tr>
+                  <% @next2_month_stocks.each_with_index do |next2_month_stock, indexA|%>
+                  <tr class="stock_book_table_tr_data">
+                    <td class="stock_book_table_date_td"><%=next2_month_stock.date.strftime("%m/%d(#{wd[next2_month_stock.date.wday]})")%></td>
+                    <% @courses.each_with_index do |course, indexB|%>
+                      <td class="stock_book_table_course_stock_td">
+                        <div class="inside_stock_td">
+                          <div class="inside_stock_td_front">
+                            <%= course.activity_stocks.find_by(date: next2_month_stock.date).stock %>
+                          </div>
+                          <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
+                            <%= hidden_field_tag "stock_#{indexA}", next2_month_stock.date %>
+                            <%= hidden_field_tag "course_#{indexB}", course.start_time %>
+                            <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                          </div>
                         </div>
-                        <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
-                          <%= hidden_field_tag "stock_#{indexA}", next_month_stock.date %>
-                          <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                          <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                      </td>
+                    <% end %>
+                  </tr>
+                  <% end %>
+                </table>
+              <% else %>
+                <table class="stock_book_table hidden" id="this_month_calender">
+                  <tr class="stock_book_table_tr_head">
+                    <th class="stock_book_table_th first">00:00</th>
+                    <% @courses.each do |course| %>
+                      <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                    <% end %>
+                  </tr>
+                  <tr class="stock_book_table_tr_no_data">
+                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                  </tr>
+                </table>
+              <% end %>
+              <% if !@courses.nil? && !@next3_month_stocks.blank? %>
+                <table class="stock_book_table hidden" id="next3_month_calender">
+                  <tr class="stock_book_table_tr_head">
+                    <th class="stock_book_table_th first">00:00</th>
+                    <% @courses.each do |course| %>
+                      <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                    <% end %>
+                  </tr>
+                  <% @next3_month_stocks.each_with_index do |next3_month_stock, indexA|%>
+                  <tr class="stock_book_table_tr_data">
+                    <td class="stock_book_table_date_td"><%=next3_month_stock.date.strftime("%m/%d(#{wd[next3_month_stock.date.wday]})")%></td>
+                    <% @courses.each_with_index do |course, indexB|%>
+                      <td class="stock_book_table_course_stock_td">
+                        <div class="inside_stock_td">
+                          <div class="inside_stock_td_front">
+                            <%= course.activity_stocks.find_by(date: next3_month_stock.date).stock %>
+                          </div>
+                          <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
+                            <%= hidden_field_tag "stock_#{indexA}", next3_month_stock.date %>
+                            <%= hidden_field_tag "course_#{indexB}", course.start_time %>
+                            <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                          </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
+                    <% end %>
+                  </tr>
                   <% end %>
-                </tr>
-                <% end %>
-              </table>
-            <% else %>
-              <table class="stock_book_table" id="this_month_calender">
-                <tr class="stock_book_table_tr_head">
-                  <th class="stock_book_table_th first">00:00</th>
-                  <% @courses.each do |course| %>
-                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
-                  <% end %>
-                </tr>
-                <tr class="stock_book_table_tr_no_data">
-                  <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
-                </tr>
-              </table>
-            <% end %>
-            <% if !@courses.nil? && !@next2_month_stocks.blank? %>
-              <table class="stock_book_table hidden" id="next2_month_calender">
-                <tr class="stock_book_table_tr_head">
-                  <th class="stock_book_table_th first">00:00</th>
-                  <% @courses.each do |course| %>
-                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
-                  <% end %>
-                </tr>
-                <% @next2_month_stocks.each_with_index do |next2_month_stock, indexA|%>
-                <tr class="stock_book_table_tr_data">
-                  <td class="stock_book_table_date_td"><%=next2_month_stock.date.strftime("%m/%d(#{wd[next2_month_stock.date.wday]})")%></td>
-                  <% @courses.each_with_index do |course, indexB|%>
-                    <td class="stock_book_table_course_stock_td">
-                      <div class="inside_stock_td">
-                        <div class="inside_stock_td_front">
-                          <%= course.activity_stocks.find_by(date: next2_month_stock.date).stock %>
-                        </div>
-                        <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
-                          <%= hidden_field_tag "stock_#{indexA}", next2_month_stock.date %>
-                          <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                          <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
-                        </div>
-                      </div>
-                    </td>
-                  <% end %>
-                </tr>
-                <% end %>
-              </table>
-            <% else %>
-              <table class="stock_book_table" id="this_month_calender">
-                <tr class="stock_book_table_tr_head">
-                  <th class="stock_book_table_th first">00:00</th>
-                  <% @courses.each do |course| %>
-                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
-                  <% end %>
-                </tr>
-                <tr class="stock_book_table_tr_no_data">
-                  <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
-                </tr>
-              </table>
-            <% end %>
-            <% if !@courses.nil? && !@next3_month_stocks.blank? %>
-              <table class="stock_book_table hidden" id="next3_month_calender">
-                <tr class="stock_book_table_tr_head">
-                  <th class="stock_book_table_th first">00:00</th>
-                  <% @courses.each do |course| %>
-                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
-                  <% end %>
-                </tr>
-                <% @next3_month_stocks.each_with_index do |next3_month_stock, indexA|%>
-                <tr class="stock_book_table_tr_data">
-                  <td class="stock_book_table_date_td"><%=next3_month_stock.date.strftime("%m/%d(#{wd[next3_month_stock.date.wday]})")%></td>
-                  <% @courses.each_with_index do |course, indexB|%>
-                    <td class="stock_book_table_course_stock_td">
-                      <div class="inside_stock_td">
-                        <div class="inside_stock_td_front">
-                          <%= course.activity_stocks.find_by(date: next3_month_stock.date).stock %>
-                        </div>
-                        <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
-                          <%= hidden_field_tag "stock_#{indexA}", next3_month_stock.date %>
-                          <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                          <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
-                        </div>
-                      </div>
-                    </td>
-                  <% end %>
-                </tr>
-                <% end %>
-              </table>
-            <% else %>
-              <table class="stock_book_table" id="this_month_calender">
-                <tr class="stock_book_table_tr_head">
-                  <th class="stock_book_table_th first">00:00</th>
-                  <% @courses.each do |course| %>
-                    <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
-                  <% end %>
-                </tr>
-                <tr class="stock_book_table_tr_no_data">
-                  <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
-                </tr>
-              </table>
-            <% end %>
+                </table>
+              <% else %>
+                <table class="stock_book_table hidden" id="this_month_calender">
+                  <tr class="stock_book_table_tr_head">
+                    <th class="stock_book_table_th first">00:00</th>
+                    <% @courses.each do |course| %>
+                      <th class="stock_book_table_th"><%=course.start_time.strftime("%H:%M")%></th>
+                    <% end %>
+                  </tr>
+                  <tr class="stock_book_table_tr_no_data">
+                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                  </tr>
+                </table>
+              <% end %>
 
+            </div>
+            <div class="member_form_radio_box">
+              <div class="member_form_radio_item">
+                <input type="radio" name="participant" id="each" checked><label for="each">人数を選択</label>
+              </div>
+              <div class="member_form_radio_item">
+                <input type="radio" name="participant" id="members"><label for="members">メンバーから選択</label>
+              </div>
+            </div>
+            <div class="member_form_radio_box">
+              <div class="member_form_radio_item">
+                <input type="radio" name="participant" id="each" checked><label for="each">人数を選択</label>
+              </div>
+              <div class="member_form_radio_item">
+                <input type="radio" name="participant" id="members"><label for="members">メンバーから選択</label>
+              </div>
+            </div>
           </div>
-          <div class="member_form_radio_box">
-            <div class="member_form_radio_item">
-              <input type="radio" name="participant" id="each" checked><label for="each">人数を選択</label>
+          <div class="sidebar_form_inner_bottom">
+            <div id="total_price_box">
+              <div>TOTAL</div>
+              <div>
+                <span>¥</span>
+                <span><%= @activity.normal_adult_price%></span>
+              </div>
+              <%= form.submit('予約する',class: 'button btn-submit') %>
             </div>
-            <div class="member_form_radio_item">
-              <input type="radio" name="participant" id="members"><label for="members">メンバーから選択</label>
-            </div>
-          </div>
-          <div id="total_price_box">
-            <div>TOTAL</div>
-            <div>
-              <span>¥</span>
-              <span><%= @activity.normal_adult_price%></span>
-            </div>
-            <%= form.submit('予約する',class: 'button btn-submit') %>
           </div>
         <% end %>
       </div>
@@ -462,7 +474,7 @@
 
 <style lang="scss">
   .activity_detail_container {
-    padding: 40px 20px 20px 40px;
+    padding: 30px 20px 20px 30px;
     position: relative;
   }
   .activity_detail_under_image_container {
@@ -470,10 +482,10 @@
     margin-top: 40px;
   }
   .activity_detail_left_contents {
-    width: 70%;
+    width: calc(100% - 350px)
   }
   .activity_detail_right_sidebar {
-    width: 30%;
+    width: 350px;
     height: 100%;
     position: sticky;
     top: 70px;
@@ -689,6 +701,11 @@
   /* カレンダー ***********************************/
   form#new_booked_activity {
     position: relative;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   form#new_booked_activity button:hover {
     cursor: pointer;
@@ -696,6 +713,11 @@
   }
   form#new_booked_activity button:focus {
     outline: 0;
+  }
+  .sidebar_form_inner_bottom {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
   }
   .calendar_form_month_link_container {
     display: flex;
@@ -731,7 +753,7 @@
   .calendar_form {
     width: 900px;
     position: absolute;
-    top: 15px;
+    top: 24px;
     right: 0px;
     z-index: 100;
     padding: 50px 10px 20px 10px;
@@ -809,11 +831,28 @@
     display: block;
     position: absolute;
     top: 80px;
+    width: 100%;
+    padding: 10px 10px;
+  }
+  .member_form_radio_item {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+  }
+  .member_form_radio_item input {
+    width: 25px;
+    height: 25px;
+    margin: 0;
+  }
+  .member_form_radio_item label {
+    margin-left: 8px;
+    font-size: 15px;
+    width: 100%;
   }
   div#total_price_box {
-    right: 0;
+    /* right: 0;
     position: absolute;
-    top: 200px;
+    top: 200px; */
     width: 100%;
   }
 
