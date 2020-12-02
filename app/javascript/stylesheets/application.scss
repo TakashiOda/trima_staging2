@@ -172,7 +172,7 @@ img.eyecatch_pc_image {
   margin-bottom: 18px;
 }
 .form-control {
-  width: 100%;
+  // width: 100%;
   padding: 10px;
   font-size: 16px;
   border: none;
@@ -535,6 +535,15 @@ img.eyecatch_image_home {
     margin: 0 0 10px;
   }
 }
+.home_contents__top__bottom {
+  margin-top: 20px;
+  p {
+    color: #fff;
+    font-size: 25px;
+    margin: 0;
+    font-weight: bold;
+  }
+}
 .home_top_downner {
   display: flex;
   align-items: center;
@@ -550,6 +559,7 @@ img.eyecatch_image_home {
   justify-content: center;
   padding: 30px 11%;
 }
+
 .itembox__inner {
   display: flex;
   flex-direction: column;
@@ -690,7 +700,7 @@ a.home_eyecatch_second_btn:hover {
     margin: 0;
   }
   p {
-    font-size: 35px;
+    font-size: 23px;
     margin: 0;
   }
 }
@@ -756,11 +766,11 @@ a.agree_link {
 
 /* パスワード表示・非表示 */
 div#password_input_box {
-    position: relative;
+  position: relative;
 }
 #password_visible_btn {
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
     width: 25px;
     height: 19px;

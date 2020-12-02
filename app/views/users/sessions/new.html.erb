@@ -1,40 +1,40 @@
 <div class="row sign_up_in_page">
   <div class="col sign_up_in_page_front">
     <h2>trima</h2>
-    <p>is a travel platform</p>
+    <p>旅行が楽しくなるプラットフォーム</p>
   </div>
   <div class="col sign_up_in_page_end">
-    <h3>Sign In</h3>
+    <h3>ユーザーログイン</h3>
     <%= form_with model: @user, url: user_session_path(@user), id: 'new_user', class: 'new_user', local: true do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div class="form-group">
-        <%= f.label :email %>
+        <%= f.label :メールアドレス %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
       </div>
       <div class="form-group">
-        <%= f.label :password %>
-        <div id="password_input_box">
+        <%= f.label :パスワード %>
+        <!-- <div id="password_input_box"> -->
           <%= f.password_field :password, autocomplete: "current-password", class: "form-control invisible" ,id: "password-input", required: true %>
           <div id="password_visible_btn"><i class='fas fa-eye'></i></div>
-        </div>
+        <!-- </div> -->
       </div>
       <% if devise_mapping.rememberable? %>
         <div class="field">
           <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
+          <%= f.label :ログイン状態を保つ %>
         </div>
       <% end %>
 
       <div class="form-group user login_button">
-        <%= f.submit "Sign in", class: "button btn-submit" %>
+        <%= f.submit "ログイン", class: "button btn-submit" %>
       </div>
     <% end %>
     <div class="another_way_btn_box">
-      <%= link_to "Sign up", new_user_registration_path %>
+      <%= link_to "ユーザー登録", new_user_registration_path %>
     </div>
     <div class="didnt_recieve_btn_box">
-      <%= link_to "Forget Password?", new_user_password_path %><br />
-      <%= link_to "Didn't receive unlock instructions?", new_user_unlock_path %><br />
+      <%= link_to "パスワードを忘れた方はコチラ", new_user_password_path %><br />
+      <%= link_to "認証メールが届かない方はコチラ", new_user_unlock_path %><br />
     </div>
   </div>
 </div>
