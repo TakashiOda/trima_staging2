@@ -1,6 +1,36 @@
 class TripManagersController < ApplicationController
   before_action :authenticate_user!, except: [:activity_detail]
 
+  def members_new
+    @project = Project.find(params[:project_id])
+    @member = @project.project_members.build
+  end
+
+  def members_create
+    @project = Project.find(params[:project_id])
+    @member = @project.project_members.create(member_params)
+    if @member.persisted?
+      redirect_to project_members_path(@project)
+    else
+      render 'members_new'
+    end
+  end
+
+  def members_edit
+    @project = Project.find(params[:project_id])
+    @member = ProjectMember.find(params[:id])
+  end
+
+  def members_update
+    @project = Project.find(params[:project_id])
+    @member = @project.project_members.update(member_params)
+    if @member.persisted?
+      redirect_to project_members_path(@project)
+    else
+      render 'member_edit'
+    end
+  end
+
   def home
     @project = Project.find(params[:project_id])
     # @areas = @project.areas
@@ -101,5 +131,12 @@ class TripManagersController < ApplicationController
 
   def members_index
     @project = Project.find(params[:project_id])
+    @members = @project.project_members
   end
+
+  private
+    def member_params
+        params.require(:project_member).permit(:nickname, :first_name, :last_name,
+                                               :gender, :birth_year, :birth_month, :birth_date)
+    end
 end
