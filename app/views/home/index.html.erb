@@ -1,7 +1,7 @@
 <div class="home_contents">
   <div class="home_contents__top">
-
-    <div class="home_contents__top__right">
+    <%#=image_tag 'home_eye_catch01.png', class: 'eyecatch_image_home' %>
+    <div class="home_contents__top__center">
       <div class="home_contents__top__up">
         <p>旅行の計画、下調べ、予約は<br>トリマでぜんぶカンタンに</p>
       </div>
@@ -11,85 +11,46 @@
             <li><%= link_to "旅行プロジェクトをつくる", new_project_path, class: 'home_eyecatch_first_btn' %></li>
             <li><%= link_to "使い方を見てみる", "#", class: 'home_eyecatch_second_btn' %></li>
           <% else %>
-            <li><%= link_to "trimaについて", "#", class: 'home_eyecatch_first_btn' %></li>
+            <li><%= link_to "trimaについて", about_for_supplier_path, class: 'home_eyecatch_first_btn' %></li>
             <li><%= link_to "新規登録", new_user_registration_path, class: 'home_eyecatch_second_btn' %></li>
           <% end %>
         </ul>
       </div>
     </div>
-    <%=image_tag 'home_eye_catch01.png', class: 'eyecatch_image_home' %>
   </div>
   <div class="home_contents__itembox">
     <div class="itembox__inner">
       <div class="itembox__inner__title">
-        <h4>Recommended!</h4>
+        <h4>新着の体験</h4>
       </div>
-      <div class="itembox__inner__items">
-        <ul>
-          <% if !@activities.nil? %>
-            <% @activities.each do |activity|%>
-              <% sup = Supplier.find(ActivityBusiness.find(activity.activity_business_id).supplier_id) %>
-              <%= link_to supplier_activity_path(sup, activity), class: "link" do %>
-                <li class="activity_list_item">
-                  <%= image_tag activity.main_image.to_s, class: 'home_item_image' %>
-                  <div>
-                    <%= activity.name %>
-                    time:<%= activity.activity_minutes %>mins
-                  </div>
-                </li>
-              <% end %>
-            <% end %>
-          <% else %>
-            <li class="activity_list_item">
-              <span>体験が登録されていません</span>
-            </li>
+      <div class="home_new_activity_container">
+        <% if !@activities.nil? %>
+          <% @activities.each do |activity| %>
+            <div class="home_new_activity_right_top_item">
+              <%= image_tag activity.main_image.to_s, class: 'home_item_image' %>
+              <div class="activity_info_box">
+                <div class="activity_name"><%= activity.name[0, 20] %></div>
+                <div class="activity_price">¥<%= activity.normal_adult_price.to_s(:delimited) %></div>
+              </div>
+            </div>
           <% end %>
-        </ul>
+        <% end %>
       </div>
     </div>
   </div>
   <div class="home_contents__itembox">
     <div class="itembox__inner">
       <div class="itembox__inner__title">
-        <h4>Pick Up!</h4>
+        <h4>カテゴリー</h4>
       </div>
-      <div class="itembox__inner__items">
+      <div class="category_item_box">
         <ul>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="home_contents__itembox">
-    <div class="itembox__inner">
-      <div class="itembox__inner__title">
-        <h4>Pick Up!</h4>
-      </div>
-      <div class="itembox__inner__items">
-        <ul>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
+          <% @categories.each do |category| %>
+            <div class="category_item">
+              <%= category.jp_name %>
+            </div>
+          <% end %>
+          <li></li>
         </ul>
       </div>
     </div>
