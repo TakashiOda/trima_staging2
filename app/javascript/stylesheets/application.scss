@@ -170,6 +170,7 @@ img.eyecatch_pc_image {
   flex-direction: column;
   width: 100%;
   margin-bottom: 18px;
+  position: relative;
 }
 .form-control {
   // width: 100%;
@@ -185,6 +186,9 @@ img.eyecatch_pc_image {
   box-sizing: border-box;
   background: #f9f9f9;
   // padding-left: 15px !important;
+}
+.form-group.password input {
+  padding: 10px 40px 10px 10px;
 }
 .form-group input:focus,
 .form-group textarea:focus {
@@ -533,6 +537,7 @@ img.eyecatch_image_home {
   p {
     font-size: 25px;
     margin: 0 0 10px;
+    line-height: 30px;
   }
 }
 .home_contents__top__bottom {
@@ -665,7 +670,7 @@ img.eyecatch_image_home {
   padding: 5px 20px;
   border-radius: 40px;
   height: 25px;
-  width: 160px;
+  // width: 160px;
   color: #fff !important;
   font-weight: bold;
   box-shadow: 0px 3px 5px -3px #606060;
