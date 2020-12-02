@@ -454,6 +454,18 @@
                 <input type="radio" name="participant" id="members"><label for="members">メンバーから選択</label>
               </div>
             </div>
+            <div class="member_select_box">
+              <ul class="sidebar__member_list_ul">
+                <% if !@members.nil? %>
+                  <% @members.each do |member|%>
+                    <li>
+                        <%= image_tag 'default_images/no_avatar_image.png', class: 'member_image' %>
+                        <%= member.nickname %>
+                    </li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </div>
           </div>
           <div class="sidebar_form_inner_bottom">
             <div id="total_price_box">
@@ -849,13 +861,34 @@
     font-size: 15px;
     width: 100%;
   }
+  .member_select_box {
+    position: absolute;
+    top: 160px;
+    width: 100%;
+  }
   div#total_price_box {
     /* right: 0;
     position: absolute;
     top: 200px; */
     width: 100%;
   }
-
+  ul.sidebar__member_list_ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  ul.sidebar__member_list_ul li {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    opacity: 0.5;
+  }
+  img.member_image {
+    width: 42px;
+    border-radius: 50%;
+    margin-right: 7px;
+    opacity: 0.5;
+  }
   /* サイドバー ***********************************/
   .activity_detail_sidebar_inner {
     padding: 20px 20px;

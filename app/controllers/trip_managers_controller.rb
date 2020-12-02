@@ -57,6 +57,7 @@ class TripManagersController < ApplicationController
     @activity_business = ActivityBusiness.find(@activity.activity_business_id)
     @holidays = [@activity.monday_open, @activity.tuesday_open, @activity.wednesday_open, @activity.thursday_open,
                  @activity.friday_open, @activity.saturday_open, @activity.sunday_open]
+    @members = @project.project_members
     if @activity.activity_courses.any?
       @courses = @activity.activity_courses
       if @courses[0].activity_stocks.any?
