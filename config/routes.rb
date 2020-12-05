@@ -69,7 +69,7 @@ Rails.application.routes.draw do
     get "members/new", to: "trip_managers#members_new", as: :new_members
     post "members", to: "trip_managers#members_create"
     get "members/:id/edit", to: "trip_managers#members_edit", as: :edit_members
-    patch "members", to: "trip_managers#members_update"
+    patch "members/:id", to: "trip_managers#members_update", as: :update_member_path
     delete "members/:id", to: "trip_managers#members_delete", as: :delete_members
     # resources :project_members, only: [:index, :new, :edit, :update]
   end

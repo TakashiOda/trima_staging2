@@ -37,7 +37,7 @@
         <div class="form-group">
           <%= form.label "生年月日" %>
           <div class="birth_form_box">
-            <%= form.select :birth_year, options_for_select(1950..2010), { prompt: "year" } %>
+            <%= form.select :birth_year, options_for_select(1950..2020), { prompt: "year" } %>
             <%= form.select :birth_month, options_for_select(1..12), { prompt: "month" } %>
             <%= form.select :birth_date, options_for_select(1..31), { prompt: "day" } %>
           </div>

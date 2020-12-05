@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_074817) do
+ActiveRecord::Schema.define(version: 2020_12_05_014036) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -243,6 +243,13 @@ ActiveRecord::Schema.define(version: 2020_12_01_074817) do
     t.index ["user_id"], name: "index_booked_activities_on_user_id"
   end
 
+  create_table "bookedactivity_members", force: :cascade do |t|
+    t.integer "booked_activity_id", null: false
+    t.integer "project_member_id", null: false
+    t.index ["booked_activity_id"], name: "index_bookedactivity_members_on_booked_activity_id"
+    t.index ["project_member_id"], name: "index_bookedactivity_members_on_project_member_id"
+  end
+
   create_table "carts", force: :cascade do |t|
     t.integer "project_id", null: false
     t.index ["project_id"], name: "index_carts_on_project_id"
@@ -473,6 +480,8 @@ ActiveRecord::Schema.define(version: 2020_12_01_074817) do
   add_foreign_key "areas", "prefectures"
   add_foreign_key "booked_activities", "activities"
   add_foreign_key "booked_activities", "users"
+  add_foreign_key "bookedactivity_members", "booked_activities"
+  add_foreign_key "bookedactivity_members", "project_members"
   add_foreign_key "carts", "projects"
   add_foreign_key "guides", "activity_businesses"
   add_foreign_key "project_areas", "areas"

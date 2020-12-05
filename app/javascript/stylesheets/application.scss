@@ -151,6 +151,9 @@ body.erb_body.add_padding_top {
 .link_to_stockFrom_onActivityForm:hover {
   opacity: 0.6;
 }
+input.disabled {
+  background: #b8b8b8 !important;
+}
 
 //5.複数ページ共通====================================
 .thankyou_email_container {

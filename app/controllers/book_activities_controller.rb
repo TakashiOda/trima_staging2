@@ -29,6 +29,6 @@ class BookActivitiesController < ApplicationController
     def booked_activity_params
       params.require(:booked_activity).permit(:project_id, :cart_id, :activity_id,
                                               :user_id, :total_price, :activity_date,
-                                              :activity_start_time)
+                                              :activity_start_time, { project_member_ids: []})
     end
 end
