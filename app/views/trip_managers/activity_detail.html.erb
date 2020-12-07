@@ -486,6 +486,7 @@
             </div> -->
             <% todayDate = Date.today.strftime("%Y%m%d").to_i %>
             <div class="member_select_box">
+              <%= form.label :参加メンバーを選択 %>
               <div class="member_item">
                 <%= check_box_tag('select_all', value = "select_all", checked = true, options = {onchange: "selectAllMembers(this)", class: "select_all_input", id: 'select_all_input'}) %>
                 <%= label_tag 'select_all', 'メンバー全員', class: "select_all_label"%>
@@ -621,14 +622,6 @@
     width: 95%;
     padding: 10px 0px;
   }
-  /* .activity_detail_basic_info_inner {
-    display: flex;
-    flex-direction: column;
-    border: solid 1px #e3e3e3;
-    border-radius: 7px;
-    margin-bottom: 15px;
-    box-shadow: 0px 0px 5px -1px lightgrey;
-  } */
   .activity_detail_basic_info_inner {
     display: flex;
     flex-direction: column;
@@ -841,12 +834,6 @@
   .stock_book_table_tr_data {
     height: 60px;
   }
-  /* th.stock_book_table_th:nth-child(odd) {
-    background: #e5f7ff;
-  }
-  td.stock_book_table_course_stock_td:nth-child(odd) {
-    background: #e5f7ff;
-  } */
   td.stock_book_table_course_stock_td.high_season {
     background: #ffbbbb;
   }
@@ -913,7 +900,7 @@
   }
   .member_select_box {
     position: absolute;
-    top: 100px;
+    top: 80px;
     width: 100%;
     padding: 10px 0px;
   }

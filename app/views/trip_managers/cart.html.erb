@@ -3,14 +3,68 @@
     <div class="">
       <span>買い物かご</span>
     </div>
-    <div class="">
+    <div class="table_container">
       <% if !@booked_activities.nil? %>
-        <ul>
+        <table>
+          <tr>
+            <th class="cart_table_first_column">予約コンテンツ</th>
+            <th class="cart_table_member_column">参加者</th>
+            <th class="cart_table_time_column">予約日・時間</th>
+            <th class="cart_table_price_column">小計</th>
+            <th class="cart_table_delete_column">削除</th>
+          </tr>
+          <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
           <% @booked_activities.each do |booked_activity| %>
-            <li>日付：<%= booked_activity.activity_date %></li>
-            <li>金額：<%= booked_activity.total_price %>円</li>
+            <tr class="contents_tr">
+              <td class="cart_activity_info_first_td cart_table_first_column">
+                <div class="cart_activity_info_td_front">
+                  <%= image_tag booked_activity.activity.main_image.to_s, class: 'cart_activity_image' if !booked_activity.activity.main_image.blank? %>
+                </div>
+                <div class="cart_activity_info_td_back">
+                  <div class="activity_title">
+                    <%= booked_activity.activity.name[0, 20] %>
+                  </div>
+                  <div class="activity_place">
+                    <%= "#{Area.find(booked_activity.activity.area_id).local_name}エリア / " if booked_activity.activity.area_id %>
+                    <%= Town.find(booked_activity.activity.town_id).jp_name if booked_activity.activity.town_id %>
+                  </div>
+
+                </div>
+              </td>
+              <td class="cart_table_member_column">
+                <ul>
+                  <% booked_activity.project_members.each do |member| %>
+                    <li><%= member.nickname %></li>
+                  <% end %>
+                </ul>
+              </td>
+              <td class="cart_table_time_column">
+                <div class="book_date">
+                  <%= booked_activity.activity_date.strftime("%m/%d(#{wd[booked_activity.activity_date.wday]})") if booked_activity.activity_date%>
+                </div>
+                <div class="book_time">
+                  <%= "#{booked_activity.activity_start_time.strftime("%H:%M")}〜" if booked_activity.activity_start_time%>
+                </div>
+              </td>
+              <td class="cart_table_price_column">¥<%= booked_activity.total_price.to_s(:delimited) %></td>
+              <td class="cart_table_delete_column">
+                <div class="delete_btn_box">
+                  <%= link_to "削除", "#", class: "cart_item_delete_btn" %>
+                </div>
+              </td>
+            </tr>
           <% end %>
-        </ul>
+          <tr class="contents_tr">
+            <td class="total_text_td" style="text-align: right;" colspan="3">消費税</td>
+            <td class="total_td" style="text-align: right;">00000</td>
+            <td class="total_td_blank"></td>
+          </tr>
+          <tr class="contents_tr">
+            <td class="total_text_td" style="text-align: right;" colspan="3">合計</td>
+            <td class="total_td" style="text-align: right;">00000</td>
+            <td class="total_td_blank"></td>
+          </tr>
+        </table>
       <% end %>
     </div>
   </div>
@@ -21,7 +75,84 @@
 
 <style>
   .project_index_container_inner_top {
-      height: 60px;
-      width: 100%;
+    height: 60px;
+    width: 100%;
+  }
+  .table_container {
+    width: 100%;
+    padding: 20px 10px;
+  }
+  .table_container table {
+    width: 100%;
+    margin: 0;
+  }
+  .table_container tr.contents_tr:nth-child(odd) {
+    background: #f6f6f6;
+  }
+  .table_container th {
+    padding: 10px 0px 20px;
+    color: #505050;
+    font-weight: normal;
+  }
+  td.cart_activity_info_first_td {
+    display: flex;
+    width: 100%;
+  }
+  img.cart_activity_image {
+    width: 90px;
+    height: 90px;
+    border-radius: 6px;
+  }
+
+  .table_container td {
+    padding: 10px 10px !important;
+  }
+  .cart_table_first_column {
+    width: 50%;
+  }
+  .cart_table_member_column {
+    width: 13%;
+  }
+  td.cart_table_member_column {
+    color: #6a6a6a;
+  }
+  td.cart_table_member_column ul {
+    margin: 0;
+  }
+  .cart_table_time_column {
+    width: 13%;
+  }
+  td.cart_table_time_column {
+    font-size: 14px;
+    color: #6a6a6a;
+  }
+  .cart_table_price_column {
+    width: 14%;
+  }
+  .cart_table_delete_column {
+    width: 10%;
+    text-align: center;
+  }
+  td.cart_table_price_column {
+    text-align: right;
+  }
+  .cart_activity_info_td_back {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+  }
+  .activity_title {
+    font-size: 15px;
+    color: #2a2a2a;
+  }
+  .activity_place {
+    color: gray;
+    font-size: 14px;
+  }
+  a.cart_item_delete_btn {
+    font-size: 14px;
+    color: #ee7676;
   }
 </style>
