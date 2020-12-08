@@ -128,6 +128,9 @@ class TripManagersController < ApplicationController
       @cart = @project.cart
       @booked_activities = @cart.booked_activities
     end
+    @total_price = @cart.booked_activities.sum(:total_price)
+    @tax = (@total_price * 0.1).to_i
+
   end
 
   def experience_search

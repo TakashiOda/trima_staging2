@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     get "cart", to: "trip_managers#cart", as: :cart
     get "activity/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
     post "activities/:activity_id/book_activities", to: "book_activities#create", as: :book_activity_create
+    delete "activities/:activity_id/book_activities/:id", to: "book_activities#destroy", as: :book_activity_delete
     # project_members
     get "members", to: "trip_managers#members_index", as: :members
     get "members/new", to: "trip_managers#members_new", as: :new_members

@@ -1,4 +1,4 @@
-<div class="project_index_container_inner">
+<div class="project_index_container_cart_inner">
   <div class="">
     <div class="">
       <span>買い物かご</span>
@@ -49,22 +49,45 @@
               <td class="cart_table_price_column">¥<%= booked_activity.total_price.to_s(:delimited) %></td>
               <td class="cart_table_delete_column">
                 <div class="delete_btn_box">
-                  <%= link_to "削除", "#", class: "cart_item_delete_btn" %>
+                  <%#= link_to "削除", "#", class: "cart_item_delete_btn" %>
+                  <%= link_to "削除" ,
+                  project_book_activity_delete_path(@project.id, booked_activity.activity.id, booked_activity.id),
+                  class: "cart_item_delete_btn",
+                  method: :delete, data: { confirm: "本当に削除しますか？" }
+                  %>
                 </div>
               </td>
             </tr>
           <% end %>
-          <tr class="contents_tr">
-            <td class="total_text_td" style="text-align: right;" colspan="3">消費税</td>
-            <td class="total_td" style="text-align: right;">00000</td>
-            <td class="total_td_blank"></td>
-          </tr>
-          <tr class="contents_tr">
-            <td class="total_text_td" style="text-align: right;" colspan="3">合計</td>
-            <td class="total_td" style="text-align: right;">00000</td>
-            <td class="total_td_blank"></td>
-          </tr>
         </table>
+        <div class="cart_side_box">
+          <div class="cart_side_box_inner">
+            <div class="cart_side_title_box">
+              <div class="project_name">
+                <%= @project.name %>
+              </div>
+              <div class="cart_side_title">
+                カート合計
+              </div>
+            </div>
+            <table class="cart_side_price_box">
+              <tr class="tax_box_tr">
+                <th>消費税</th>
+                <td class="cart_side_price">¥<%= @tax.to_s(:delimited)%></td>
+              </tr>
+              <tr class="total_box_tr">
+                <th>小計</th>
+                <td class="cart_side_price">¥<%= @total_price.to_s(:delimited)%></td>
+              </tr>
+              <tr class="total_box_tr">
+                <th class="total">合計</th>
+                <td class="cart_side_price total">¥<%= (@total_price + @tax).to_s(:delimited)%></td>
+              </tr>
+            </table>
+            <%# form_for %>
+            <%= button_to "購入する", "#", class: "purchase_btn_in_cart" %>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
@@ -74,25 +97,39 @@
 
 
 <style>
-  .project_index_container_inner_top {
-    height: 60px;
-    width: 100%;
+  .project_index_container_cart_inner {
+    padding: 20px 0px 50px 40px;
+    height: 100%;
   }
   .table_container {
     width: 100%;
-    padding: 20px 10px;
+    display: flex;
+    padding: 20px 0px;
+    justify-content: space-between;
   }
   .table_container table {
-    width: 100%;
+    width: 68%;
     margin: 0;
+  }
+  .table_container div.cart_side_box {
+    width: 30%;
+    margin: 0;
+  }
+  .cart_side_box_inner {
+    background: #d5d5d5;
+    height: 80vh;
+    position: sticky;
+    top: 58px;
+    padding: 20px;
   }
   .table_container tr.contents_tr:nth-child(odd) {
     background: #f6f6f6;
   }
   .table_container th {
-    padding: 10px 0px 20px;
+    padding: 10px;
     color: #505050;
     font-weight: normal;
+    font-size: 13px;
   }
   td.cart_activity_info_first_td {
     display: flex;
@@ -112,6 +149,7 @@
   }
   .cart_table_member_column {
     width: 13%;
+    text-align: left;
   }
   td.cart_table_member_column {
     color: #6a6a6a;
@@ -119,11 +157,14 @@
   td.cart_table_member_column ul {
     margin: 0;
   }
+  td.cart_table_member_column ul li {
+    font-size: 12px !important;
+  }
   .cart_table_time_column {
     width: 13%;
   }
   td.cart_table_time_column {
-    font-size: 14px;
+    font-size: 12px;
     color: #6a6a6a;
   }
   .cart_table_price_column {
@@ -137,22 +178,49 @@
     text-align: right;
   }
   .cart_activity_info_td_back {
-    width: 100%;
+    /* width: 100%; */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 15px;
+    padding: 15px;
   }
   .activity_title {
-    font-size: 15px;
+    font-size: 13px;
     color: #2a2a2a;
   }
   .activity_place {
     color: gray;
-    font-size: 14px;
+    font-size: 12px;
   }
   a.cart_item_delete_btn {
     font-size: 14px;
     color: #ee7676;
   }
+  .cart_side_title_box {
+    margin-bottom: 20px;
+  }.cart_side_title {
+    font-size: 22px;
+  }
+  table.cart_side_price_box {
+    width: 100% !important;
+  }
+  td.cart_side_price {
+    text-align: right;
+    font-size: 20px;
+  }
+  input.purchase_btn_in_cart {
+    margin: 25px 10px;
+    width: 100%;
+    padding: 10px;
+    background: #0ebbdc;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    color: white;
+  }
+  .total {
+    font-size: 20px !important;
+    font-weight: bold;
+  }
+
 </style>
