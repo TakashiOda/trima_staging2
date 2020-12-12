@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
 
   resources :projects do
+    resources :charges
     get "project_home", to: "trip_managers#home", as: :trip_managers_home
     get "project_search_home", to: "trip_managers#search_home", as: :search_home
     get "cart", to: "trip_managers#cart", as: :cart
