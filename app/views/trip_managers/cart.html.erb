@@ -85,7 +85,21 @@
               </tr>
             </table>
             <%# form_for %>
-            <%= button_to "購入する", "#", class: "purchase_btn_in_cart" %>
+            <%#= button_to "購入する", "#", class: "purchase_btn_in_cart" %>
+            <%= form_tag project_charges_path(@project) do %>
+              <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-amount="<%= @total_price + @tax %>"
+                data-currency="jpy"
+                data-description="クレジット決済"
+                data-name=<%= "カートの中全て予約" %>
+                data-email=<%= "#{current_user.email}" %>
+                data-label="購入する"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto"
+                data-allow-remember-me="false">
+              </script>
+            <% end %>
           </div>
         </div>
       <% end %>
@@ -112,15 +126,16 @@
     margin: 0;
   }
   .table_container div.cart_side_box {
-    width: 30%;
-    margin: 0;
+    width: 29%;
+    margin: 0 auto;
   }
   .cart_side_box_inner {
-    background: #d5d5d5;
+    background: #f0f0f0;
     height: 80vh;
     position: sticky;
     top: 58px;
     padding: 20px;
+    border-radius: 10px;
   }
   .table_container tr.contents_tr:nth-child(odd) {
     background: #f6f6f6;
@@ -223,4 +238,27 @@
     font-weight: bold;
   }
 
+  button.stripe-button-el {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    user-select: none;
+    box-shadow: none;
+    margin-top: 20px;
+    border: none;
+  }
+  button.stripe-button-el:focus {
+    outline: 0;
+    background: #0ebbdc;
+    opacity: 0.6;
+    border: 0;
+  }
+  button.stripe-button-el span {
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    background: #0ebbdc;
+    font-size: 16px;
+    color: #fff;
+  }
 </style>

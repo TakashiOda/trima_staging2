@@ -73,18 +73,8 @@ Rails.application.routes.draw do
     get "members/:id/edit", to: "trip_managers#members_edit", as: :edit_members
     patch "members/:id", to: "trip_managers#members_update", as: :update_member_path
     delete "members/:id", to: "trip_managers#members_delete", as: :delete_members
-    # resources :project_members, only: [:index, :new, :edit, :update]
   end
 
-  # resources :users do
-  #   resources :projects do
-  #     get "project_home", to: "trip_managers#home", as: :trip_managers_home
-  #     get "project_search_home", to: "trip_managers#search_home", as: :search_home
-  #     get "activity/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
-  #   end
-  #   get "projects/:id", to: "projects#accept_project", as: :accept_project
-  #   delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
-  # end
   resources :users, only: [:index, :show, :edit, :update]
 
   resources :suppliers do
