@@ -32,6 +32,11 @@ class ChargesController < ApplicationController
     })
     #rails側の売れたとき処理
     # 1.カート内の全予約のステータスを全て支払い済みにする
+    @cart.booked_activities.each do |booked_activity|
+      booked_activity.is_paid = true
+      booked_activity.purchase_date = Time.zone.now.to_datetime
+      booked_activity.save!
+    end
     # 2.予約詳細情報（purchase モデル？）を作成
     # 3.cartの中身をゼロにする
 
@@ -39,9 +44,9 @@ class ChargesController < ApplicationController
     # if @product.update(sold_flg: true)
     #   redirect_to product_path(params[:id]), notice: "商品を購入しました！"
     # end
-  rescue Stripe::CardError => e
-    flash[:error] = e.message
-    redirect_to new_charge_path
+  # rescue Stripe::CardError => e
+  #   flash[:error] = e.message
+  #   redirect_to new_charge_path
   end
 
 end

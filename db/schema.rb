@@ -230,6 +230,7 @@ ActiveRecord::Schema.define(version: 2020_12_05_014036) do
   end
 
   create_table "booked_activities", force: :cascade do |t|
+    t.string "purchase_number"
     t.integer "project_id"
     t.integer "cart_id"
     t.integer "activity_id", null: false
@@ -237,6 +238,8 @@ ActiveRecord::Schema.define(version: 2020_12_05_014036) do
     t.integer "total_price"
     t.date "activity_date"
     t.time "activity_start_time"
+    t.boolean "is_paid", default: false
+    t.datetime "purchase_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["activity_id"], name: "index_booked_activities_on_activity_id"

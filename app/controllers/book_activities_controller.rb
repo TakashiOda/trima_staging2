@@ -1,18 +1,20 @@
 class BookActivitiesController < ApplicationController
   before_action :authenticate_user!
+  require 'securerandom'
 
   def new
   end
 
   def create
+    purchase_number = SecureRandom.alphanumeric(8)
     @project = Project.find(params[:project_id])
     if @project.cart.nil?
       @cart = @project.build_cart
     else
       @cart = @project.cart
     end
-    @cart = @project.cart
     @booked_activity = @cart.booked_activities.build(booked_activity_params)
+    @booked_activity.purchase_number = SecureRandom.alphanumeric(10)    
     if @booked_activity.save
       redirect_to project_cart_path(@project)
     else

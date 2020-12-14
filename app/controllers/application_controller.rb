@@ -21,6 +21,8 @@ class ApplicationController < ActionController::Base
       supplier_dashboard_path(resource)
     elsif resource_name == :admin
       admin_path(resource)
+    elsif resource_name == :user
+      projects_path(resource)
     else
       root_path
     end

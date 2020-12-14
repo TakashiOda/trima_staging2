@@ -126,11 +126,21 @@ class TripManagersController < ApplicationController
       @cart.save!
     else
       @cart = @project.cart
-      @booked_activities = @cart.booked_activities
+      @booked_activities = @cart.booked_activities.where(is_paid: false)
     end
-    @total_price = @cart.booked_activities.sum(:total_price)
+    @total_price = @booked_activities.sum(:total_price)
     @tax = (@total_price * 0.1).to_i
+  end
 
+  def purchase_list
+    @project = Project.find(params[:project_id])
+    if @project.cart.nil?
+      @cart = @project.build_cart
+      @cart.save!
+    else
+      @cart = @project.cart
+      @booked_activities = @cart.booked_activities.where(is_paid: true)
+    end
   end
 
   def experience_search

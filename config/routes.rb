@@ -53,16 +53,13 @@ Rails.application.routes.draw do
     :unlocks       => "suppliers/unlocks"
   }
 
-  delete "projects/:id/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
-  # get "projects/:id/cart", to: "projects#cart", as: :project_cart
-  get "projects/:id", to: "projects#accept_project", as: :accept_project
-  delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
 
   resources :projects do
     resources :charges
     get "project_home", to: "trip_managers#home", as: :trip_managers_home
     get "project_search_home", to: "trip_managers#search_home", as: :search_home
     get "cart", to: "trip_managers#cart", as: :cart
+    get "purchase_list", to: "trip_managers#purchase_list", as: :purchase_list
     get "activity/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
     post "activities/:activity_id/book_activities", to: "book_activities#create", as: :book_activity_create
     delete "activities/:activity_id/book_activities/:id", to: "book_activities#destroy", as: :book_activity_delete
@@ -74,6 +71,12 @@ Rails.application.routes.draw do
     patch "members/:id", to: "trip_managers#members_update", as: :update_member_path
     delete "members/:id", to: "trip_managers#members_delete", as: :delete_members
   end
+
+  delete "projects/:id/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
+  # get "projects/:id/cart", to: "projects#cart", as: :project_cart
+  get "projects/:id", to: "projects#accept_project", as: :accept_project
+  delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
+
 
   resources :users, only: [:index, :show, :edit, :update]
 

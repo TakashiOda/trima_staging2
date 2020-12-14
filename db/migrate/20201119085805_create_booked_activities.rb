@@ -1,6 +1,7 @@
 class CreateBookedActivities < ActiveRecord::Migration[6.0]
   def change
     create_table :booked_activities do |t|
+      t.string :purchase_number
       t.integer :project_id
       t.integer :cart_id
       t.references :activity, null: false, foreign_key: true
@@ -8,6 +9,8 @@ class CreateBookedActivities < ActiveRecord::Migration[6.0]
       t.integer :total_price
       t.date :activity_date
       t.time :activity_start_time
+      t.boolean :is_paid, default: false
+      t.datetime :purchase_date
       t.timestamps
     end
   end
