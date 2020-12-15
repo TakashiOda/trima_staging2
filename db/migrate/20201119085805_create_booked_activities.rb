@@ -11,6 +11,7 @@ class CreateBookedActivities < ActiveRecord::Migration[6.0]
       t.time :activity_start_time
       t.boolean :is_paid, default: false
       t.datetime :purchase_date
+      t.integer :supplier_id, null: false
       t.timestamps
     end
   end

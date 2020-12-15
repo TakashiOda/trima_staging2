@@ -40,7 +40,6 @@ class TripManagersController < ApplicationController
     @user_projects = UserProject.where(project_id: @project.id)
     # @inviting_users = ProjectInvite.where(project_id: @project.id, has_account: 1)
   end
-
   def search_home
     @project = Project.find(params[:project_id])
     # @areas = @project.areas
@@ -48,12 +47,15 @@ class TripManagersController < ApplicationController
     # @accept_invite = UserProject.find_by(user_id: current_user.id, project_id: @project.id).accept_invite
     @user_projects = UserProject.where(project_id: @project.id)
     # @inviting_users = ProjectInvite.where(project_id: @project.id, has_account: 1)
-    @activities = Activity.all
+    # @activities = Activity.all
+    @activities = Activity.joins(:activity_courses).where("activity_courses.id IS NOT NULL").distinct
+
   end
 
   def activity_detail
     @project = Project.find(params[:project_id])
     @activity = Activity.find(params[:activity_id])
+    @supplier = Supplier.find(@activity.supplier_id)
     @ageprices = @activity.activity_ageprices.order(age_from: :desc)
     @ageprices_json = @ageprices.to_json
     @activity_business = ActivityBusiness.find(@activity.activity_business_id)

@@ -242,6 +242,7 @@
         </div>
         <%= form_for(@book_activity, url: project_book_activity_create_path) do |form| %>
           <div class="sidebar_form_inner_top">
+            <%= form.hidden_field :supplier_id, value: @supplier.id %>
             <%= form.hidden_field :total_price, value: 0%>
             <%= form.hidden_field :project_id, value: @project.id %>
             <%= form.hidden_field :activity_id, value: @activity.id %>

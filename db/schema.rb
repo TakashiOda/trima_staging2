@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2020_12_05_014036) do
   create_table "activities", force: :cascade do |t|
     t.string "name"
     t.integer "activity_business_id", null: false
+    t.integer "supplier_id", null: false
     t.integer "activity_category_id", null: false
     t.text "description"
     t.text "notes"
@@ -240,6 +241,7 @@ ActiveRecord::Schema.define(version: 2020_12_05_014036) do
     t.time "activity_start_time"
     t.boolean "is_paid", default: false
     t.datetime "purchase_date"
+    t.integer "supplier_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["activity_id"], name: "index_booked_activities_on_activity_id"

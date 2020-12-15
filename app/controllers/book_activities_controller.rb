@@ -14,7 +14,7 @@ class BookActivitiesController < ApplicationController
       @cart = @project.cart
     end
     @booked_activity = @cart.booked_activities.build(booked_activity_params)
-    @booked_activity.purchase_number = SecureRandom.alphanumeric(10)    
+    @booked_activity.purchase_number = SecureRandom.alphanumeric(10)
     if @booked_activity.save
       redirect_to project_cart_path(@project)
     else
@@ -44,6 +44,7 @@ class BookActivitiesController < ApplicationController
     def booked_activity_params
       params.require(:booked_activity).permit(:project_id, :cart_id, :activity_id,
                                               :user_id, :total_price, :activity_date,
-                                              :activity_start_time, { project_member_ids: []})
+                                              :activity_start_time, { project_member_ids: []},
+                                              :supplier_id)
     end
 end
