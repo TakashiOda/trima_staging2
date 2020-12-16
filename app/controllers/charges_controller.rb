@@ -1,69 +1,97 @@
 class ChargesController < ApplicationController
 
   def create
-    # cartの合計金額を渡す
-
-
-    # stripeに情報渡す
-  end
-
-  def create
-    # ↓↓↓↓欲している体験が一つでも売り切れになっていたら処理しない
-
-
-
-    # ↑↑↑↑欲している体験が一つでも売り切れになっていたら処理しない
     @project = Project.find(params[:project_id])
     @cart = @project.cart
-    # subtotal_price = @cart.booked_activities.sum(:total_price)
-    # tax = (subtotal_price * 0.1).to_i
-    # total_price = subtotal_price + tax
-
-    # booked_items = []
-    # @cart.booked_activities.each do |item|
-    #   activity_name = Activity.find(item.activity_id).name
-    #   booked_items.push(("Activity: #{activity_name}/Date: #{item.activity_date}/Price: #{item.total_price}").to_s)
-    # end
-    #
-    # customer = Stripe::Customer.create({
-    #   email: params[:stripeEmail],
-    #   source: params[:stripeToken],
-    # })
-    # charge = Stripe::Charge.create({
-    #   customer: customer.id,
-    #   amount: total_price,
-    #   description: "テストです",
-    #   currency: "jpy",
-    # })
-    #rails側の売れたとき処理
-    # 1.カート内の全予約のステータスを全て支払い済みにする
-    # @cart.booked_activities.each do |booked_activity|
-    #   booked_activity.is_paid = true
-    #   booked_activity.purchase_date = Time.zone.now.to_datetime
-    #   booked_activity.save!
-    # end
-    # 在庫を減らす***************************************
-
-
-    # 予約詳細情報（purchase モデル？）を作成 ****************
-
-    # 上記がOKなら以下 **********************************
-    booked_items = []
-    supplier_ids = []
-    @cart.booked_activities.each do |booked_activity|
-      booked_items.push(booked_activity)
-      supplier_ids.push(booked_activity.supplier_id)
+    @booked_activities = @cart.booked_activities.where(is_paid: false)
+    # 欲している体験が一つでも在庫不足しているかチェック
+    bookable_arr = []
+    @booked_activities.each do |booked_activity|
+      if booked_activity.isBookable
+        bookable_arr.push("true")
+      else
+        bookable_arr.push("false")
+      end
     end
-    supplier_ids.uniq
-    SupplierMailer.send_booked_notification(booked_items, supplier_ids).deliver
-    # if 上記がOKなら...
-        # 事業者にメール通知
+    # 在庫不足なら処理しない
+    if !bookable_arr.include?("false")
+      subtotal_price = @cart.booked_activities.sum(:total_price)
+      tax = (subtotal_price * 0.1).to_i
+      total_price = subtotal_price + tax
 
-    #   redirect_to product_path(params[:id]), notice: "商品を購入しました！"
+      # stripe決済****************************
+      customer = Stripe::Customer.create({
+        email: params[:stripeEmail],
+        source: params[:stripeToken],
+      })
+      charge = Stripe::Charge.create({
+        customer: customer.id,
+        amount: total_price,
+        description: "テストです",
+        currency: "jpy",
+      })
+
+      #rails側の売れたとき処理 *******************************
+      @booked_activities.each do |booked_activity|
+        # カート内の予約ステータスを支払い済みにする
+        booked_activity.hasPaid
+        # 在庫を減らす
+        booked_activity.reduceStock
+      end
+
+      supplier_ids = @booked_activities.pluck(:supplier_id)
+      supplier_ids.uniq
+      supplier_ids.each do |supplier_id|
+        supplier = Supplier.find(supplier_id)
+        booked_items = []
+        @booked_activities.each do |booked_activity|
+          if booked_activity.supplier_id = supplier_id
+            booked_items.push(booked_activity)
+          end
+        end
+        SupplierMailer.send_booked_notification(supplier, booked_items).deliver
+      end
+
+      redirect_to project_thank_you_payment_path(@project), notice: "商品を購入しました！"
+    else
+      flash[:alert] = '売り切れになった体験が含まれています'
+      redirect_to project_cart_path(@project)
+    end
+
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+      redirect_to project_cart_path(@project)
+
+    #   # stripe関連でエラーが起こった場合
+    # rescue Stripe::CardError => e
+    # flash[:error] = "#決済(stripe)でエラーが発生しました。{e.message}"
+    # render :new
+    #
+    # # Invalid parameters were supplied to Stripe's API
+    # rescue Stripe::InvalidRequestError => e
+    #   flash.now[:error] = "決済(stripe)でエラーが発生しました（InvalidRequestError）#{e.message}"
+    #   render :new
+    #
+    # # Authentication with Stripe's API failed(maybe you changed API keys recently)
+    # rescue Stripe::AuthenticationError => e
+    #   flash.now[:error] = "決済(stripe)でエラーが発生しました（AuthenticationError）#{e.message}"
+    #   render :new
+    #
+    # # Network communication with Stripe failed
+    # rescue Stripe::APIConnectionError => e
+    #   flash.now[:error] = "決済(stripe)でエラーが発生しました（APIConnectionError）#{e.message}"
+    #   render :new
+    #
+    # # Display a very generic error to the user, and maybe send yourself an email
+    # rescue Stripe::StripeError => e
+    #   flash.now[:error] = "決済(stripe)でエラーが発生しました（StripeError）#{e.message}"
+    #   render :new
+    #
+    # # stripe関連以外でエラーが起こった場合
+    # rescue => e
+    #   flash.now[:error] = "エラーが発生しました#{e.message}"
+    #   render :new
     # end
-  # rescue Stripe::CardError => e
-  #   flash[:error] = e.message
-  #   redirect_to new_charge_path
   end
 
 end

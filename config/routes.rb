@@ -59,8 +59,11 @@ Rails.application.routes.draw do
     get "project_home", to: "trip_managers#home", as: :trip_managers_home
     get "project_search_home", to: "trip_managers#search_home", as: :search_home
     get "cart", to: "trip_managers#cart", as: :cart
+    get "thank_you_payment", to: "trip_managers#thank_you_payment", as: :thank_you_payment
     get "purchase_list", to: "trip_managers#purchase_list", as: :purchase_list
     get "activity/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
+    post "activity/:activity_id/favorite_activity", to: "favorite_activities#create", as: :favorite_activity
+    delete "activity/:activity_id/favorite_activity", to: "favorite_activities#destroy"
     post "activities/:activity_id/book_activities", to: "book_activities#create", as: :book_activity_create
     delete "activities/:activity_id/book_activities/:id", to: "book_activities#destroy", as: :book_activity_delete
     # project_members
@@ -73,7 +76,6 @@ Rails.application.routes.draw do
   end
 
   delete "projects/:id/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
-  # get "projects/:id/cart", to: "projects#cart", as: :project_cart
   get "projects/:id", to: "projects#accept_project", as: :accept_project
   delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
 

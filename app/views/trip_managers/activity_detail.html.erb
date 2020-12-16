@@ -13,6 +13,7 @@
       <li class="activity_detail_image_item last_item">
         <%= image_tag @activity.main_image.to_s, class: 'activity_detail_image right_image' if !@activity.main_image.blank? %>
       </li>
+      <%= render partial: 'activity_favorite', locals: { @activity => @activity, @project => @project } %>
     </ul>
   </section>
   <div class="activity_detail_under_image_container">
@@ -546,6 +547,35 @@
     margin: 0;
     display: flex;
     width: 100%;
+    position: relative;
+  }
+  .faborite_box {
+    position: absolute;
+    bottom: 0;
+    right: 1%;
+    background: #fff;
+    padding: 5px 20px;
+    border-top-left-radius: 10px;
+  }
+  a.favorite-btn.favorite-post span.favorite_text {
+    color: #9b9b9b;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+  a.favorite-btn.favorite-delete span.favorite_text {
+    color: #535353;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+  a.favorite-btn.favorite-post svg {
+    color: #767676;
+    width: 20px;
+    height: 20px;
+  }
+  a.favorite-btn.favorite-delete svg {
+    color: #f07878;
+    width: 20px;
+    height: 20px;
   }
   li.activity_detail_image_item {
     width: 24%;

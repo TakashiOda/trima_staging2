@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_05_014036) do
+ActiveRecord::Schema.define(version: 2020_12_16_061607) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -264,6 +264,14 @@ ActiveRecord::Schema.define(version: 2020_12_05_014036) do
     t.string "name"
   end
 
+  create_table "favorite_activities", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "activity_id", null: false
+    t.integer "project_id"
+    t.index ["activity_id"], name: "index_favorite_activities_on_activity_id"
+    t.index ["user_id"], name: "index_favorite_activities_on_user_id"
+  end
+
   create_table "guides", force: :cascade do |t|
     t.integer "activity_business_id", null: false
     t.string "name"
@@ -488,6 +496,8 @@ ActiveRecord::Schema.define(version: 2020_12_05_014036) do
   add_foreign_key "bookedactivity_members", "booked_activities"
   add_foreign_key "bookedactivity_members", "project_members"
   add_foreign_key "carts", "projects"
+  add_foreign_key "favorite_activities", "activities"
+  add_foreign_key "favorite_activities", "users"
   add_foreign_key "guides", "activity_businesses"
   add_foreign_key "project_areas", "areas"
   add_foreign_key "project_areas", "projects"

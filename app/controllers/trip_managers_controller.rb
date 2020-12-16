@@ -24,7 +24,6 @@ class TripManagersController < ApplicationController
   def members_update
     @project = Project.find(params[:project_id])
     @member = ProjectMember.find(params[:id])
-    # @project.project_members.update(member_params)
     if @member.update(member_params)
       redirect_to project_members_path(@project)
     else
@@ -34,22 +33,14 @@ class TripManagersController < ApplicationController
 
   def home
     @project = Project.find(params[:project_id])
-    # @areas = @project.areas
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
-    # @accept_invite = UserProject.find_by(user_id: current_user.id, project_id: @project.id).accept_invite
     @user_projects = UserProject.where(project_id: @project.id)
-    # @inviting_users = ProjectInvite.where(project_id: @project.id, has_account: 1)
   end
   def search_home
     @project = Project.find(params[:project_id])
-    # @areas = @project.areas
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
-    # @accept_invite = UserProject.find_by(user_id: current_user.id, project_id: @project.id).accept_invite
     @user_projects = UserProject.where(project_id: @project.id)
-    # @inviting_users = ProjectInvite.where(project_id: @project.id, has_account: 1)
-    # @activities = Activity.all
     @activities = Activity.joins(:activity_courses).where("activity_courses.id IS NOT NULL").distinct
-
   end
 
   def activity_detail
@@ -106,8 +97,7 @@ class TripManagersController < ApplicationController
 
       end
     end
-    # @ageprice = @activity.activity_ageprices.order(:age_from).limit(1)[0]
-    # @ageprice = @activity.activity_ageprices.order(age_from: :desc).limit(1)[0]
+
     if @project.cart.nil?
       @cart = @project.build_cart
       @cart.save!
@@ -151,6 +141,10 @@ class TripManagersController < ApplicationController
   def members_index
     @project = Project.find(params[:project_id])
     @members = @project.project_members
+  end
+
+  def thank_you_payment
+    @project = Project.find(params[:project_id])
   end
 
   private

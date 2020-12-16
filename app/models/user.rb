@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :user_projects, dependent: :destroy
   has_many :projects, through: :user_projects, dependent: :destroy
   # accepts_nested_attributes_for :user_projects, allow_destroy: true
+  has_many :favorite_activities, dependent: :destroy
 
   mount_uploader :avatar, AvatarUploader
 

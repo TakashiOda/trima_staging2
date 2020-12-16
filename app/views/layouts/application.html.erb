@@ -18,6 +18,12 @@
   </head>
 
   <body class="erb_body">
+    <div id="loading_box" class="">
+      <div class="loading_inner">
+          <div class="loader"></div>
+        <p class="loading_text">読み込み中...</p>
+      </div>
+    </div>
     <%= render 'layouts/header'%>
     <% if notice %>
       <p class="notice"><%= notice %></p>
@@ -100,4 +106,9 @@
 <script type="text/javascript">
   $(".notice" ).fadeOut(5000);
   $(".alert" ).fadeOut(5000);
+
+  (window.onload = function() {
+    const loadingScreen = document.getElementById('loading_box');
+    loadingScreen.classList.add('hidden');
+  })();
 </script>
