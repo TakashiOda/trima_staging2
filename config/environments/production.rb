@@ -71,8 +71,8 @@ Rails.application.configure do
     :address => ENV['DEV_MAILER_ADDRESS'],
     :port => 587,
     :user_name => ENV['DEV_MAILER_USER_NAME'],
-    :password => ENV['DEV_MAILER_PASSWORD'],
-    :authentication => :plain,
+    :password => ENV['DEV_MAILER_HIGH_SECURITY_PASS'],
+    :authentication => :login,
     :enable_starttls_auto => true
   }
 

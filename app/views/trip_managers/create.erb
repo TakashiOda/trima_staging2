@@ -1,0 +1,1 @@
+$("#favorite_<%= @activity.id %>").html("<%= j(render partial: 'trip_managers/activity_favorite', locals: { @activity => @activity, @project => @project }) %>");

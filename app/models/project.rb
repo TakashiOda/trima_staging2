@@ -2,7 +2,7 @@ class Project < ApplicationRecord
   # belongs_to :country, optional: true
   # has_one :area
 
-  has_many :project_members 
+  has_many :project_members
   has_one :cart, dependent: :destroy
   has_many :user_projects, dependent: :destroy
   has_many :users, through: :user_projects

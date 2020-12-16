@@ -27,7 +27,77 @@ $user-main-color: #2bb560;
 //19.
 //20.
 //=================================================
-
+/* ローディング******************************************* */
+div#loading_box {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100%;
+  background: #636363ad;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  padding-top: 150px;
+}
+.loading_inner {
+  width: 300px;
+  height: 200px;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+}
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+}
+.loader {
+  /* margin: 60px auto; */
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(13,173,175, 0.2);
+  border-right: 1.1em solid rgba(13,173,175, 0.2);
+  border-bottom: 1.1em solid rgba(13,173,175, 0.2);
+  border-left: 1.1em solid #0dadaf;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.loading_text {
+  margin-bottom: 0;
+}
+/* ローディング******************************************* */
 //1.基本タグ=========================================
 ul {
   list-style: none !important;
@@ -151,6 +221,9 @@ body.erb_body.add_padding_top {
 .link_to_stockFrom_onActivityForm:hover {
   opacity: 0.6;
 }
+input.disabled {
+  background: #b8b8b8 !important;
+}
 
 //5.複数ページ共通====================================
 .thankyou_email_container {
@@ -170,9 +243,9 @@ img.eyecatch_pc_image {
   flex-direction: column;
   width: 100%;
   margin-bottom: 18px;
+  position: relative;
 }
 .form-control {
-  // width: 100%;
   padding: 10px;
   font-size: 16px;
   border: none;
@@ -184,7 +257,9 @@ img.eyecatch_pc_image {
   border-radius: 10px;
   box-sizing: border-box;
   background: #f9f9f9;
-  // padding-left: 15px !important;
+}
+.form-group.password input {
+  padding: 10px 40px 10px 10px;
 }
 .form-group input:focus,
 .form-group textarea:focus {
@@ -231,7 +306,6 @@ header.erb_header {
   // z-index: 100;
   background: linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
   background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
-  /* background: transparent; */
   padding: 0px;
   height: 56px;
   width: 100%;
@@ -267,7 +341,6 @@ header.erb_header {
     margin-right: 10px;
     margin-bottom: 0;
     margin-top: 0;
-    // padding-top: 3px;
     a.header_mypage_link {
       display: flex;
       align-items: center;
@@ -294,9 +367,7 @@ header.erb_header {
 }
 img.header_avatar {
   width: 33px;
-  // border: 2px solid #fff;
   border-radius: 50%;
-  /* padding: 2px; */
   background: #e4e4e4;
   margin-top: 3px;
 }
@@ -378,7 +449,6 @@ a#header_current_supplier_link {
   max-width: 700px;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
   padding: 40px 30px 80px;
 }
@@ -406,9 +476,6 @@ h3.static_page_heading_title {
   display: flex;
   width: 160px;
   height: 25px;
-  /* border-radius: 3px;
-  overflow: hidden;
-  border: 1px solid #b6b6b6; */
 }
 .static_page_inner_container .inline-radio input {
   display: none;
@@ -493,7 +560,6 @@ span.static_page_list_num.hidden_num_on_list {
 
 ul.static_page__content_list.list_with_num {
     list-style: decimal !important;
-    /* list-style-position: outside !important; */
 }
 ul.static_page__heading_text_list li {
     margin-left: 20px;
@@ -533,6 +599,7 @@ img.eyecatch_image_home {
   p {
     font-size: 25px;
     margin: 0 0 10px;
+    line-height: 30px;
   }
 }
 .home_contents__top__bottom {
@@ -583,54 +650,6 @@ img.eyecatch_image_home {
     border-radius: 10px;
   }
 }
-// .home_new_activity_left_big_box {
-//   width: 40%;
-//   margin-right: 15px;
-//   img.home_new_activity_left_big_image {
-//     width: 350px;
-//     border-radius: 10px;
-//   }
-//   .big_box_activity_info_box {
-//     padding: 5px;
-//     width: 340px;
-//     border-bottom-left-radius: 10px;
-//     border-bottom-right-radius: 10px;
-//   }
-// }
-
-// .home_new_activity_right_box {
-//   width: 60%;
-//   .activity_info_box {
-//     padding: 5px;
-//     width: 158px;
-//     border-bottom-left-radius: 10px;
-//     border-bottom-right-radius: 10px;
-//   }
-//   span.activity_name {
-//     word-break: break-all;
-//     display: block;
-//   }
-// }
-// .home_new_activity_right_top_box {
-//   margin-bottom: 14px;
-//   display: flex;
-//   width: 100%;
-//   img.home_item_image {
-//     height: 168px;
-//     border-radius: 10px;
-//   }
-// }
-// .home_new_activity_right_top_item {
-//   width: 33%;
-//   padding-right: 10px;
-// }
-// .home_new_activity_right_bottom_box {
-//   display: flex;
-//   img.home_item_image {
-//     height: 168px;
-//     border-radius: 10px;
-//   }
-// }
 
 .category_item_box {
   width: 100%;
@@ -665,10 +684,10 @@ img.eyecatch_image_home {
   padding: 5px 20px;
   border-radius: 40px;
   height: 25px;
-  width: 160px;
   color: #fff !important;
   font-weight: bold;
   box-shadow: 0px 3px 5px -3px #606060;
+  min-width: 200px;
 }
 a.home_eyecatch_first_btn {
   background: linear-gradient(7deg, #0078cd, #37abff 80%);
@@ -1132,8 +1151,6 @@ span.form_supplement {
     color: #fff;
     display: flex;
     animation: SlideIn 0.4s;
-    // transform: translate3d(100vw, 0, 0);
-    // transition: transform .1s cubic-bezier(0, .52, 0, 1);
   }
   @keyframes SlideIn {
     0% {
@@ -1171,7 +1188,6 @@ span.form_supplement {
   }
   div#menu_outside {
     width: 30%;
-    // background: #48484887;
   }
   .menu_inside_up {
     position: relative;
@@ -1240,9 +1256,6 @@ span.form_supplement {
   .header_username {
     display: none;
   }
-  // .user_show_side {
-  //   display: none;
-  // }
   .user_show_content,
   .supplier_show_main_content {
     width: 100%;
@@ -1326,7 +1339,6 @@ table td {
 .form_big_title h3 {
   margin: 0px 0 0px;
   padding: 5px 20px;
-  // width: 180px;
   text-align: center;
   background: #4c4c4c;
   border-radius: 50px;
@@ -1345,7 +1357,6 @@ table td {
   position: sticky;
   top: 65px;
   background: #fff;
-  // height: 180px;
   padding: 20px 15px 30px;
   border-radius: 7px;
   box-shadow: 0px 0px 7px -1px #b7b7b7;

@@ -1,4 +1,5 @@
 <%= form_for [current_supplier, @activity] do |f| %>
+  <%= f.hidden_field :supplier_id, value: current_supplier.id %>
   <div class="form_title">
     <% if controller.action_name == "new" %>
       <h3>体験を登録</h3>

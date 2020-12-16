@@ -15,19 +15,19 @@
           <%= f.label :メールアドレス %>
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true %>
         </div>
-        <div class="form-group">
+        <div class="form-group password">
           <%= f.label :パスワード %>
-          <div id="password_input_box">
-            <%= f.password_field :password, autocomplete: "new-password", class: "form-control invisible" ,id: "password-input", required: true %>
-            <div id="password_visible_btn"><i class='fas fa-eye-slash'></i></div>
-          </div>
+          <!-- <div id="password_input_box"> -->
+          <%= f.password_field :password, autocomplete: "new-password", class: "form-control invisible" ,id: "password-input", required: true %>
+          <div id="password_visible_btn"><i class='fas fa-eye-slash'></i></div>
+          <!-- </div> -->
         </div>
       </div>
       <div class="supplier_signup_input_box">
         <div class="form-group agree_check">
           <input type="checkbox" id="agree_checkbox" value="" required>
           <label for="agree_checkbox">
-            私は事業者向けダウンロード資料の内容を理解し<br>
+            事業者向けダウンロード資料の内容を理解し<br>
             <%= link_to "共通利用規約", term_of_service_for_supplier_path, class: "agree_link" %>、
             <%= link_to "事業者利用規約", term_of_service_for_supplier_path, class: "agree_link" %>、<%= link_to "プライバシーポリシー", privacy_policy_jp_path, target: :_blank, class: "agree_link" %>の<br>
             内容すべてに同意します
@@ -69,6 +69,9 @@
   .supplier_signup_input_box {
     width: 70%;
     margin: 0 auto;
+  }
+  .supplier_signup_input_box input.form-control {
+    background: #f3f3f3;
   }
   .form-group.agree_check {
     background: #eee;

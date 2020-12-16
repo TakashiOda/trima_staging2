@@ -8,6 +8,13 @@ class ProjectsController < ApplicationController
     @waitings = current_user.waiting_projects #Userのモデルメソッド
   end
 
+  def new
+    @user = current_user
+    @project = @user.projects.build
+    @left_invite_num = 5
+    @project.project_areas.build
+  end
+
   def show
     @project = Project.find(params[:id])
     @owner = User.find(UserProject.find_by(project_id: params[:id], control_level: 0).user_id)
@@ -27,13 +34,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def new
-    @user = current_user
-    @project = @user.projects.build
-    @left_invite_num = 5
-    @project.project_areas.build
-  end
-
   def create
     if params[:project][:project_areas_attributes]['0']['area_id'] != ""
       @project = current_user.projects.create(project_params)
@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
         @project.add_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
         @project.add_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
         # @project.add_me_as_admin(current_user)
-        redirect_to user_projects_path(current_user)
+        redirect_to projects_path(current_user)
       else
         render 'new'
       end

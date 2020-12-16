@@ -53,36 +53,33 @@ Rails.application.routes.draw do
     :unlocks       => "suppliers/unlocks"
   }
 
-  delete "projects/:id/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
-  # get "projects/:id/cart", to: "projects#cart", as: :project_cart
-  get "projects/:id", to: "projects#accept_project", as: :accept_project
-  delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
 
   resources :projects do
+    resources :charges
     get "project_home", to: "trip_managers#home", as: :trip_managers_home
     get "project_search_home", to: "trip_managers#search_home", as: :search_home
     get "cart", to: "trip_managers#cart", as: :cart
+    get "thank_you_payment", to: "trip_managers#thank_you_payment", as: :thank_you_payment
+    get "purchase_list", to: "trip_managers#purchase_list", as: :purchase_list
     get "activity/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
+    post "activity/:activity_id/favorite_activity", to: "favorite_activities#create", as: :favorite_activity
+    delete "activity/:activity_id/favorite_activity", to: "favorite_activities#destroy"
     post "activities/:activity_id/book_activities", to: "book_activities#create", as: :book_activity_create
+    delete "activities/:activity_id/book_activities/:id", to: "book_activities#destroy", as: :book_activity_delete
     # project_members
     get "members", to: "trip_managers#members_index", as: :members
     get "members/new", to: "trip_managers#members_new", as: :new_members
     post "members", to: "trip_managers#members_create"
     get "members/:id/edit", to: "trip_managers#members_edit", as: :edit_members
-    patch "members", to: "trip_managers#members_update"
+    patch "members/:id", to: "trip_managers#members_update", as: :update_member_path
     delete "members/:id", to: "trip_managers#members_delete", as: :delete_members
-    # resources :project_members, only: [:index, :new, :edit, :update]
   end
 
-  # resources :users do
-  #   resources :projects do
-  #     get "project_home", to: "trip_managers#home", as: :trip_managers_home
-  #     get "project_search_home", to: "trip_managers#search_home", as: :search_home
-  #     get "activity/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
-  #   end
-  #   get "projects/:id", to: "projects#accept_project", as: :accept_project
-  #   delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
-  # end
+  delete "projects/:id/:invite_id", to: "projects#invitation_delete", as: :project_invitation_delete
+  get "projects/:id", to: "projects#accept_project", as: :accept_project
+  delete "projects/:id/member_delete/:member_id", to: "projects#member_delete", as: :project_member_delete
+
+
   resources :users, only: [:index, :show, :edit, :update]
 
   resources :suppliers do

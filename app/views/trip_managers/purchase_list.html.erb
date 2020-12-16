@@ -1,0 +1,68 @@
+<div class="project_index_container_inner">
+  <div class="project_index_container_inner_title_box">
+    <h4><%= @project.name %>の購入履歴</h4>
+  </div>
+  <div class="project_index_container_inner_member_list">
+    <ul class="project_index_container_inner_member_list_ul">
+      <% if !@booked_activities.nil? %>
+        <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
+        <% @booked_activities.each do |booked_activity|%>
+          <li>
+            <div class="booked_item_front">
+              <div class="booked_item">
+                <span class="booked_item_title">アイテム名</span>
+                <span class="booked_item_content"><%= Activity.find(booked_activity.activity_id).name %></span>
+              </div>
+              <div class="booked_item">
+                <span class="booked_item_title">決済した日</span>
+                <span class="booked_item_content"><%= booked_activity.created_at.strftime("%m/%d(#{wd[booked_activity.created_at.wday]})") %></span>
+              </div>
+              <div class="booked_item">
+                <span class="booked_item_title">合計金額</span>
+                <span class="booked_item_content"><%= booked_activity.total_price %>円</span>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+
+<style lang="scss">
+.project_index_container_inner_title_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+ul.project_index_container_inner_member_list_ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 9px 20px;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0px 1px 6px -4px grey;
+  font-size: 17px;
+}
+ul.project_index_container_inner_member_list_ul .booked_item_front {
+  display: flex;
+  flex-direction: column;
+}
+span.booked_item_title {
+  display: inline-block;
+  width: 60px !important;
+  background: lightgray;
+  padding: 1px 15px;
+  font-size: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-right: 5px;
+}
+span.booked_item_content {
+    font-size: 13px;
+}
+</style>

@@ -1,3 +1,71 @@
-<div class="a">
-  members
+<div class="project_index_container_inner">
+  <div class="project_index_container_inner_title_box">
+    <h4><%= @project.name %>のメンバーリスト</h4>
+    <div class="member_add_btn">
+      <%= link_to project_new_members_path(@project) do %>
+        メンバーを追加
+      <% end %>
+    </div>
+  </div>
+  <div class="project_index_container_inner_member_list">
+    <ul class="project_index_container_inner_member_list_ul">
+      <% if !@members.nil? %>
+        <% @members.each do |member|%>
+          <li>
+            <div class="member_item_front">
+              <%= image_tag 'default_images/no_avatar_image.png', class: 'member_image' %>
+              <%= member.nickname %>
+              <span class="name"><%= member.last_name %> <%= member.first_name %></span>
+            </div>
+            <div class="member_item_end">
+              <%= link_to '編集', project_edit_members_path(@project, member) %>
+            </div>
+
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
 </div>
+
+
+<style lang="scss">
+.project_index_container_inner_title_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.member_add_btn a {
+  padding: 10px 20px;
+  background: #11a6e6;
+  border-radius: 30px;
+  color: #fff;
+  font-weight: bold;
+}
+ul.project_index_container_inner_member_list_ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 9px 20px;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0px 1px 6px -4px grey;
+  font-size: 17px;
+}
+ul.project_index_container_inner_member_list_ul .member_item_front {
+    display: flex;
+    align-items: center;
+}
+ul.project_index_container_inner_member_list_ul li img.member_image {
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+ul.project_index_container_inner_member_list_ul .name {
+  margin-left: 15px;
+  color: gray;
+  font-size: 12px;
+}
+</style>

@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_074817) do
+ActiveRecord::Schema.define(version: 2020_12_16_061607) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
     t.integer "activity_business_id", null: false
+    t.integer "supplier_id", null: false
     t.integer "activity_category_id", null: false
     t.text "description"
     t.text "notes"
@@ -230,6 +231,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_074817) do
   end
 
   create_table "booked_activities", force: :cascade do |t|
+    t.string "purchase_number"
     t.integer "project_id"
     t.integer "cart_id"
     t.integer "activity_id", null: false
@@ -237,10 +239,20 @@ ActiveRecord::Schema.define(version: 2020_12_01_074817) do
     t.integer "total_price"
     t.date "activity_date"
     t.time "activity_start_time"
+    t.boolean "is_paid", default: false
+    t.datetime "purchase_date"
+    t.integer "supplier_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["activity_id"], name: "index_booked_activities_on_activity_id"
     t.index ["user_id"], name: "index_booked_activities_on_user_id"
+  end
+
+  create_table "bookedactivity_members", force: :cascade do |t|
+    t.integer "booked_activity_id", null: false
+    t.integer "project_member_id", null: false
+    t.index ["booked_activity_id"], name: "index_bookedactivity_members_on_booked_activity_id"
+    t.index ["project_member_id"], name: "index_bookedactivity_members_on_project_member_id"
   end
 
   create_table "carts", force: :cascade do |t|
@@ -250,6 +262,14 @@ ActiveRecord::Schema.define(version: 2020_12_01_074817) do
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "favorite_activities", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "activity_id", null: false
+    t.integer "project_id"
+    t.index ["activity_id"], name: "index_favorite_activities_on_activity_id"
+    t.index ["user_id"], name: "index_favorite_activities_on_user_id"
   end
 
   create_table "guides", force: :cascade do |t|
@@ -473,7 +493,11 @@ ActiveRecord::Schema.define(version: 2020_12_01_074817) do
   add_foreign_key "areas", "prefectures"
   add_foreign_key "booked_activities", "activities"
   add_foreign_key "booked_activities", "users"
+  add_foreign_key "bookedactivity_members", "booked_activities"
+  add_foreign_key "bookedactivity_members", "project_members"
   add_foreign_key "carts", "projects"
+  add_foreign_key "favorite_activities", "activities"
+  add_foreign_key "favorite_activities", "users"
   add_foreign_key "guides", "activity_businesses"
   add_foreign_key "project_areas", "areas"
   add_foreign_key "project_areas", "projects"

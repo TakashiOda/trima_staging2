@@ -364,7 +364,7 @@ class ActivitiesController < ApplicationController
 
   private
     def activity_params
-      params.require(:activity).permit(:name, :description, :notes, :activity_business_id,
+      params.require(:activity).permit(:name, :description, :notes, :activity_business_id, :supplier_id,
                                       :activity_category_id, :main_image, :second_image,
                                       :third_image, :fourth_image,
                                       :remove_main_image, :remove_second_image, :remove_third_image, :remove_fourth_image,

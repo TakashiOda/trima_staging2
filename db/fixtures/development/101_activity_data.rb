@@ -7,6 +7,7 @@ csv.each do |data|
     act.name = data[1]
     act.activity_business_id = data[2]
     act.activity_category_id = data[3]
+    act.supplier_id = 1
     act.description = data[4]
     act.main_image = File.open("./db/fixtures/development/activity_images/act_seed_#{data[5]}.jpg")
     act.activity_minutes = data[6]

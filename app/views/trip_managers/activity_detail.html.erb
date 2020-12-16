@@ -13,6 +13,7 @@
       <li class="activity_detail_image_item last_item">
         <%= image_tag @activity.main_image.to_s, class: 'activity_detail_image right_image' if !@activity.main_image.blank? %>
       </li>
+      <%= render partial: 'activity_favorite', locals: { @activity => @activity, @project => @project } %>
     </ul>
   </section>
   <div class="activity_detail_under_image_container">
@@ -242,10 +243,12 @@
         </div>
         <%= form_for(@book_activity, url: project_book_activity_create_path) do |form| %>
           <div class="sidebar_form_inner_top">
+            <%= form.hidden_field :supplier_id, value: @supplier.id %>
             <%= form.hidden_field :total_price, value: 0%>
             <%= form.hidden_field :project_id, value: @project.id %>
             <%= form.hidden_field :activity_id, value: @activity.id %>
             <%= form.hidden_field :user_id, value: current_user.id %>
+            <%= hidden_field_tag "selected_stock_season", "normal" %>
             <div class="calendar_form_fix_field">
               <%= form.label 'スケジュール' %>
               <div class="date_field_box" id="date_field_box">
@@ -284,15 +287,29 @@
                   <tr class="stock_book_table_tr_data">
                     <td class="stock_book_table_date_td"><%=this_month_stock.date.strftime("%m/%d(#{wd[this_month_stock.date.wday]})")%></td>
                     <% @courses.each_with_index do |course, indexB|%>
-                      <td class="stock_book_table_course_stock_td">
+                      <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: this_month_stock.date).stock == 0 %><%= this_month_stock.season_price == "high" ? "high_season" : this_month_stock.season_price == "low" ? "low_season" : "" %>">
                         <div class="inside_stock_td">
+                          <div class="inside_stock_td_front">
+                            <% if this_month_stock.season_price == "high" %>
+                              <span>¥<%= @ageprices[0].high_price.to_s(:delimited)%></span>
+                            <% elsif this_month_stock.season_price == "low" %>
+                              <span>¥<%= @ageprices[0].low_price.to_s(:delimited)%></span>
+                            <% else %>
+                              <span>¥<%= @ageprices[0].normal_price.to_s(:delimited)%></span>
+                            <% end %>
+                          </div>
                           <div class="inside_stock_td_front">
                             <%= course.activity_stocks.find_by(date: this_month_stock.date).stock %>
                           </div>
                           <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                             <%= hidden_field_tag "stock_#{indexA}", this_month_stock.date %>
                             <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                            <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", this_month_stock.season_price %>
+                            <% if course.activity_stocks.find_by(date: this_month_stock.date).stock != 0 %>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <% else %>
+                              <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
+                            <% end %>
                           </div>
                         </div>
                       </td>
@@ -325,7 +342,7 @@
                   <tr class="stock_book_table_tr_data">
                     <td class="stock_book_table_date_td"><%=next_month_stock.date.strftime("%m/%d(#{wd[next_month_stock.date.wday]})")%></td>
                     <% @courses.each_with_index do |course, indexB|%>
-                      <td class="stock_book_table_course_stock_td">
+                      <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next_month_stock.date).stock == 0 %><%= next_month_stock.season_price == "high" ? "high_season" : next_month_stock.season_price == "low" ? "low_season" : "" %>">
                         <div class="inside_stock_td">
                           <div class="inside_stock_td_front">
                             <%= course.activity_stocks.find_by(date: next_month_stock.date).stock %>
@@ -333,7 +350,12 @@
                           <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                             <%= hidden_field_tag "stock_#{indexA}", next_month_stock.date %>
                             <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                            <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next_month_stock.season_price %>
+                            <% if course.activity_stocks.find_by(date: next_month_stock.date).stock != 0 %>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <% else %>
+                              <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
+                            <% end %>
                           </div>
                         </div>
                       </td>
@@ -342,7 +364,7 @@
                   <% end %>
                 </table>
               <% else %>
-                <table class="stock_book_table hidden" id="this_month_calender">
+                <table class="stock_book_table hidden" id="next_month_calender">
                   <tr class="stock_book_table_tr_head">
                     <th class="stock_book_table_th first">00:00</th>
                     <% @courses.each do |course| %>
@@ -366,7 +388,7 @@
                   <tr class="stock_book_table_tr_data">
                     <td class="stock_book_table_date_td"><%=next2_month_stock.date.strftime("%m/%d(#{wd[next2_month_stock.date.wday]})")%></td>
                     <% @courses.each_with_index do |course, indexB|%>
-                      <td class="stock_book_table_course_stock_td">
+                      <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0 %><%= next2_month_stock.season_price == "high" ? "high_season" : next2_month_stock.season_price == "low" ? "low_season" : "" %>">
                         <div class="inside_stock_td">
                           <div class="inside_stock_td_front">
                             <%= course.activity_stocks.find_by(date: next2_month_stock.date).stock %>
@@ -374,7 +396,12 @@
                           <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                             <%= hidden_field_tag "stock_#{indexA}", next2_month_stock.date %>
                             <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                            <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next2_month_stock.season_price %>
+                            <% if course.activity_stocks.find_by(date: next2_month_stock.date).stock != 0 %>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <% else %>
+                              <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
+                            <% end %>
                           </div>
                         </div>
                       </td>
@@ -383,7 +410,7 @@
                   <% end %>
                 </table>
               <% else %>
-                <table class="stock_book_table hidden" id="this_month_calender">
+                <table class="stock_book_table hidden" id="next2_month_calender">
                   <tr class="stock_book_table_tr_head">
                     <th class="stock_book_table_th first">00:00</th>
                     <% @courses.each do |course| %>
@@ -407,7 +434,7 @@
                   <tr class="stock_book_table_tr_data">
                     <td class="stock_book_table_date_td"><%=next3_month_stock.date.strftime("%m/%d(#{wd[next3_month_stock.date.wday]})")%></td>
                     <% @courses.each_with_index do |course, indexB|%>
-                      <td class="stock_book_table_course_stock_td">
+                      <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next3_month_stock.date).stock == 0 %><%= next3_month_stock.season_price == "high" ? "high_season" : next3_month_stock.season_price == "low" ? "low_season" : "" %>">
                         <div class="inside_stock_td">
                           <div class="inside_stock_td_front">
                             <%= course.activity_stocks.find_by(date: next3_month_stock.date).stock %>
@@ -415,7 +442,12 @@
                           <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                             <%= hidden_field_tag "stock_#{indexA}", next3_month_stock.date %>
                             <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                            <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next3_month_stock.season_price %>
+                            <% if course.activity_stocks.find_by(date: next3_month_stock.date).stock != 0 %>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <% else %>
+                              <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
+                            <% end %>
                           </div>
                         </div>
                       </td>
@@ -424,7 +456,7 @@
                   <% end %>
                 </table>
               <% else %>
-                <table class="stock_book_table hidden" id="this_month_calender">
+                <table class="stock_book_table hidden" id="next3_month_calender">
                   <tr class="stock_book_table_tr_head">
                     <th class="stock_book_table_th first">00:00</th>
                     <% @courses.each do |course| %>
@@ -438,7 +470,7 @@
               <% end %>
 
             </div>
-            <div class="member_form_radio_box">
+            <!-- <div class="member_form_radio_box">
               <div class="member_form_radio_item">
                 <input type="radio" name="participant" id="each" checked><label for="each">人数を選択</label>
               </div>
@@ -453,16 +485,36 @@
               <div class="member_form_radio_item">
                 <input type="radio" name="participant" id="members"><label for="members">メンバーから選択</label>
               </div>
+            </div> -->
+            <% todayDate = Date.today.strftime("%Y%m%d").to_i %>
+            <div class="member_select_box">
+              <%= form.label :参加メンバーを選択 %>
+              <div class="member_item">
+                <%= check_box_tag('select_all', value = "select_all", checked = true, options = {onchange: "selectAllMembers(this)", class: "select_all_input", id: 'select_all_input'}) %>
+                <%= label_tag 'select_all', 'メンバー全員', class: "select_all_label"%>
+              </div>
+              <%= form.collection_check_boxes(:project_member_ids, ProjectMember.where(project_id: @project.id), :id, :nickname) do |b| %>
+              <div class="member_item member_select">
+                <%= b.check_box checked: true, onchange: "selectMembers(this)", class: "members_check_box" %>
+                <% birthDate = Date.new(ProjectMember.find(b.value).birth_year, ProjectMember.find(b.value).birth_month, ProjectMember.find(b.value).birth_date).strftime("%Y%m%d").to_i%>
+                <% memberAge = (todayDate - birthDate) / 10000%>
+                <%= hidden_field_tag "memberage_#{b.value}", memberAge %>
+                <%= b.label(:"data-value" => b.value) { b.text } %>
+              </div>
+              <% end %>
             </div>
           </div>
           <div class="sidebar_form_inner_bottom">
+            <%= form.hidden_field :total_price, value: 0, id: "total_price_input" %>
             <div id="total_price_box">
-              <div>TOTAL</div>
-              <div>
-                <span>¥</span>
-                <span><%= @activity.normal_adult_price%></span>
+              <div class="total_price">
+                <div class="total_price_title">TOTAL:</div>
+                <div class="total_price_back">
+                  <span class="total_price_unit">¥</span>
+                  <span class="total_price_num" id="total_price_display">0</span>
+                </div>
               </div>
-              <%= form.submit('予約する',class: 'button btn-submit') %>
+              <%= form.submit('予約する',class: 'button btn-submit disabled', id: 'book_activity_btn', disabled: true) %>
             </div>
           </div>
         <% end %>
@@ -470,7 +522,6 @@
     </div>
   </div>
 </div>
-
 
 <style lang="scss">
   .activity_detail_container {
@@ -496,6 +547,35 @@
     margin: 0;
     display: flex;
     width: 100%;
+    position: relative;
+  }
+  .faborite_box {
+    position: absolute;
+    bottom: 0;
+    right: 1%;
+    background: #fff;
+    padding: 5px 20px;
+    border-top-left-radius: 10px;
+  }
+  a.favorite-btn.favorite-post span.favorite_text {
+    color: #9b9b9b;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+  a.favorite-btn.favorite-delete span.favorite_text {
+    color: #535353;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+  a.favorite-btn.favorite-post svg {
+    color: #767676;
+    width: 20px;
+    height: 20px;
+  }
+  a.favorite-btn.favorite-delete svg {
+    color: #f07878;
+    width: 20px;
+    height: 20px;
   }
   li.activity_detail_image_item {
     width: 24%;
@@ -573,14 +653,6 @@
     width: 95%;
     padding: 10px 0px;
   }
-  /* .activity_detail_basic_info_inner {
-    display: flex;
-    flex-direction: column;
-    border: solid 1px #e3e3e3;
-    border-radius: 7px;
-    margin-bottom: 15px;
-    box-shadow: 0px 0px 5px -1px lightgrey;
-  } */
   .activity_detail_basic_info_inner {
     display: flex;
     flex-direction: column;
@@ -793,12 +865,16 @@
   .stock_book_table_tr_data {
     height: 60px;
   }
-  th.stock_book_table_th:nth-child(odd) {
-    background: #e5f7ff;
+  td.stock_book_table_course_stock_td.high_season {
+    background: #ffbbbb;
   }
-  td.stock_book_table_course_stock_td:nth-child(odd) {
-    background: #e5f7ff;
+  td.stock_book_table_course_stock_td.low_season {
+    background: #c6e7ff;
   }
+  td.stock_book_table_course_stock_td.no_stock {
+    background: lightgray !important;
+}
+
   .inside_stock_td {
     display: flex;
     flex-direction: column;
@@ -812,6 +888,10 @@
     padding: 3px 8px;
     border: none;
     background: #0ea7e6;
+  }
+  .stock_select_btn.disabled {
+    color: #ffffff;
+    background: gray !important;
   }
   tr.stock_book_table_tr_no_data {
     border: none;
@@ -849,13 +929,74 @@
     font-size: 15px;
     width: 100%;
   }
-  div#total_price_box {
-    /* right: 0;
+  .member_select_box {
     position: absolute;
-    top: 200px; */
+    top: 80px;
+    width: 100%;
+    padding: 10px 0px;
+  }
+  .member_item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+  }
+  .member_item.member_select {
+    margin-left: 30px;
+  }
+  input#select_all,
+  .member_item input {
+    width: 25px;
+    height: 25px;
+    margin: 0 7px 0 0;
+  }
+  label.select_all_label,
+  .member_item label {
+    font-size: 18px;
+    color: #c7c7c7;
+  }
+  div#total_price_box {
     width: 100%;
   }
-
+  .total_price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 25px 0;
+    padding: 0 15px;
+  }
+  .total_price_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0ba6e6;
+  }
+  span.total_price_unit {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0ba6e6;
+  }
+  span#total_price_display {
+    font-size: 30px;
+    font-weight: bold;
+    color: #0ba6e6;
+  }
+  /* ul.sidebar__member_list_ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  ul.sidebar__member_list_ul li {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    opacity: 0.5;
+  }
+  img.member_image {
+    width: 42px;
+    border-radius: 50%;
+    margin-right: 7px;
+    opacity: 0.5;
+  } */
   /* サイドバー ***********************************/
   .activity_detail_sidebar_inner {
     padding: 20px 20px;
@@ -991,7 +1132,7 @@
     if (calenderMonth.innerHTML <= 11) {
       calenderMonth.innerHTML = calenderMonthNum + 1;
     } else if (calenderMonth.innerHTML == 12){
-      calenderMonth.innerHTML = 1;
+      calenderMonth.innerHTML = "1";
     }
   }
 
@@ -1015,6 +1156,15 @@
     const timeDisplay = document.getElementById('date_field_box_time_span');
     timeDisplay.innerHTML = bookTime;
 
+    //選ばれた在庫のシーズンを取得
+    const targetSeason = target.children[2].value;
+    //selected_stock_seasonに格納しつつ一度Totalを計算
+    const hiddenSeasonForm = document.getElementById('selected_stock_season');
+    hiddenSeasonForm.value = targetSeason;
+    // TOTALの計算**************************************
+    calTotalPrice();
+    // ************************************************
+
     const dateForm = document.getElementById('activity_date_form');
     const dateFormFomat = `${year}-${month}-${date}`;
     dateForm.value = dateFormFomat;
@@ -1025,5 +1175,134 @@
 
     const calendarFrom = document.getElementById('activity_stock_calendar_form');
     calendarFrom.classList.add('hidden');
+
+    if (isMemberSelected()) {
+      const submitBtn = document.getElementById('book_activity_btn');
+      submitBtn.classList.remove('disabled');
+      submitBtn.disabled = false;
+    }
+  }
+
+  function selectAllMembers(obj) {
+    const isChecked = obj.checked;
+    const checkboxes = document.getElementsByName('booked_activity[project_member_ids][]');
+
+    const submitBtn = document.getElementById('book_activity_btn');
+    if (isChecked) {
+      for (var i = 0; i < checkboxes.length; i++) {
+       checkboxes[i].checked = true;
+      }
+    } else {
+      for (var i = 0; i < checkboxes.length; i++) {
+       checkboxes[i].checked = false;
+      }
+      submitBtn.classList.add('disabled');
+      submitBtn.disabled = true;
+    }
+    if (isChecked && isDateSelected()) {
+      submitBtn.classList.remove('disabled');
+      submitBtn.disabled = false;
+    }
+    calTotalPrice();
+  }
+
+  function selectMembers(obj) {
+    const isChecked = obj.checked;
+    const allCheckBox = document.getElementById('select_all_input');
+    const submitBtn = document.getElementById('book_activity_btn');
+    if (!isChecked) {
+      allCheckBox.checked = false;
+    }
+
+    if (isChecked && isDateSelected()) {
+      submitBtn.classList.remove('disabled');
+      submitBtn.disabled = false;
+    } else if (!isMemberSelected()) {
+      submitBtn.classList.add('disabled');
+      submitBtn.disabled = true;
+    }
+    calTotalPrice();
+  }
+
+  function isDateSelected() {
+    const timeForm = document.getElementById('date_field_box_time_span');
+    const timeValue = timeForm.innerHTML;
+    if (timeValue == '00:00') {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  function isMemberSelected() {
+    const checkboxes = document.querySelectorAll(".members_check_box");
+    const memberCheckedArr = [];
+    for (var i = 0; i < checkboxes.length; i++) {
+      memberCheckedArr.push(checkboxes[i].checked);
+    }
+    const checkArrIsAllSame = memberCheckedArr.every(v => v === memberCheckedArr[0]);
+    if (checkArrIsAllSame && memberCheckedArr[0] == false) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  function getSelectedMemberAges() {
+    // 参加メンバー（チェックが押されたメンバー）の各年齢取得
+    const checkboxes = document.querySelectorAll(".members_check_box");
+    const memberCheckedArr = [];
+    for (var i = 0; i < checkboxes.length; i++) {
+      const memberId = checkboxes[i].value;
+      if (checkboxes[i].checked) {
+        const memberAge = document.getElementById(`memberage_${memberId}`).value;
+        memberCheckedArr.push(parseInt(memberAge));
+      }
+    }
+    return memberCheckedArr;
+  }
+
+  //合計人数を計算してTotal formに格納
+  function calTotalPrice() {
+    // メンバー別の料金をいれる配列
+    const eachPrices = [];
+
+    // シーズン取得
+    const hiddenSeasonForm = document.getElementById('selected_stock_season');
+    const selectedSeason = hiddenSeasonForm.value;
+
+    // 参加メンバー（チェックが押されたメンバー）の各年齢取得
+    const memberAges = getSelectedMemberAges();
+
+    //　シーズンから年齢別の料金取得
+    const ageprices_json = <%= raw @ageprices_json %>;
+
+    // シーズン&料金表からメンバーが当てはまる物を探す
+    for (var i = 0; i < memberAges.length; i++) {
+      for (var ii = 0; ii < ageprices_json.length; ii++) {
+        if (ageprices_json[ii].age_from <= memberAges[i] && memberAges[i] < ageprices_json[ii].age_to) {
+          if (selectedSeason == 'high') {
+            eachPrices.push(ageprices_json[ii].high_price);
+          } else if (selectedSeason == 'low') {
+            eachPrices.push(ageprices_json[ii].low_price);
+          } else {
+            eachPrices.push(ageprices_json[ii].normal_price);
+          }
+        }
+      }
+    }
+
+    const sumArray = array => {
+    let sum = 0;
+    for (let i = 0, len = array.length; i < len; i++) {
+      sum += array[i];
+    }
+      return sum;
+    };
+    const total = sumArray(eachPrices);
+
+    const totalPriceInput = document.getElementById('total_price_input');
+    const totalPriceDisplay = document.getElementById('total_price_display');
+    totalPriceInput.value = total;
+    totalPriceDisplay.innerHTML = total.toLocaleString();
   }
 </script>
