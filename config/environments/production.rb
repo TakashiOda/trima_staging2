@@ -68,12 +68,12 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV['PRODUCTION_HOST'] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => 'smtp.cedars.sakura.ne.jp',
-    :port => 587,
-    :user_name => ENV['DEV_MAILER_USER_NAME'],
-    :password => ENV['DEV_MAILER_PASSWORD'],
-    :authentication => :login
-    # :enable_starttls_auto => true
+    address:        'cedars.sakura.ne.jp',
+    domain:         'cedars.sakura.ne.jp',
+    port:           587,
+    user_name:      ENV['DEV_MAILER_USER_NAME'],
+    password:       ENV['DEV_MAILER_PASSWORD'],
+    authentication: 'login',
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
