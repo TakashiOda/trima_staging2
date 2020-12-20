@@ -68,7 +68,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV['PRODUCTION_HOST'] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => 'smtp.cedars.jp',
+    :address => 'smtp.cedars.sakura.ne.jp',
     :port => 587,
     :user_name => ENV['DEV_MAILER_USER_NAME'],
     :password => ENV['DEV_MAILER_PASSWORD'],
