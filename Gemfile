@@ -14,6 +14,8 @@ gem 'bootsnap', '1.4.6', require: false
 gem 'activeadmin','2.7.0'
 gem 'omniauth'
 gem 'devise','4.7.2'
+gem 'devise-i18n'
+gem 'devise-i18n-views'
 gem 'i18n'
 gem 'rails-i18n'
 gem 'rack-cors'
