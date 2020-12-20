@@ -1,6 +1,6 @@
 class UserInvitationMailer < ApplicationMailer
 
-  default from: 'uu-trima@cedars.jp'
+  default from: 'cedarsdev01@gmail.com'
 
   def user_invitation(email_params, inviter)
     @invited_user_email = email_params
