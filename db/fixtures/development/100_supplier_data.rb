@@ -1,7 +1,7 @@
 
 Supplier.seed(:email) do |sup|
   sup.id = 1
-  sup.email = "takashi.oda@ccc.ne.jp"
+  sup.email = "hatanaka@uu-hokkaido.com"
   sup.password = "password"
   sup.name = "株式会社十勝遊戯社"
   sup.confirmed_at = Time.now.utc

@@ -1,5 +1,5 @@
 class SupplierMailer < ApplicationMailer
-  default from:    "trima予約通知 <takashi.oda@ccc.ne.jp>"
+  default from:    "trima予約通知 <hatanaka@uu-hokkaido.com>"
 
   def send_booked_notification(supplier, booked_items) #メソッドに対して引数を設定
     @supplier = supplier
