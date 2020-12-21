@@ -68,23 +68,13 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV['PRODUCTION_HOST'] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'cedars.sakura.ne.jp',
-    domain: 'cedars.sakura.ne.jp',
-    port:           587,
-    user_name:      ENV['PRO_MAILER_USER4'],
-    password:       ENV['PRO_MAILER_HIGH_SECURITY_PASS4'],
+    address:        ENV['PRO_MAILER_ADDRESS'],
+    domain:        ENV['PRO_MAILER_ADDRESS'],
+    port:           ENV['PRO_MAILER_PORT'],
+    user_name:      ENV['PRO_MAILER_USER_NAME'],
+    password:       ENV['PRO_MAILER_PASSWORD'],
     authentication: 'login',
   }
-  # config.action_mailer.smtp_settings = {
-  #   address: 'smtp.gmail.com',
-  #   domain: 'gmail.com',
-  #   port:           587,
-  #   user_name:      ENV['DEV_MAILER_USER_NAME'],
-  #   password:       ENV['DEV_MAILER_HIGH_SECURITY_PASS'],
-  #   authentication: 'login',
-  #   enable_starttls_auto: true
-  # }
-
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false

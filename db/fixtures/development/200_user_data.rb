@@ -1,7 +1,7 @@
 
 User.seed(:email) do |u|
   u.id = 1
-  u.email = "noreply@cedars.jp"
+  u.email = "takashi.oda@ccc.ne.jp"
   u.password = "password"
   u.first_name = "Takashi"
   u.last_name = "Oda"
