@@ -68,11 +68,11 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV['PRODUCTION_HOST'] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'cedars.sakura.ne.jp',
-    domain:  'cedars.sakura.ne.jp',
+    address: 'smtp.gmail.com',
+    domain: 'ccc.ne.jp',
     port:           587,
-    user_name:      'uu-trima@cedars.jp',
-    password:       'N1Ya*Wvi',
+    user_name:      ENV['PRO_MAILER_USER_NAME'],
+    password:       ENV['PRO_MAILER_HIGH_SECURITY_PASS'],
     authentication: 'login',
     enable_starttls_auto: true
   }
