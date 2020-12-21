@@ -1,8 +1,13 @@
 class UsersController < ApplicationController
 
-  before_action :authenticate_user!, except: [:thank_you_for_registration_user, :index]
+  before_action :authenticate_user!, except: [:thank_you_for_registration_user,
+                                              :after_resend_confirmation_user,
+                                              :index]
 
   def thank_you_for_registration_user
+  end
+
+  def after_resend_confirmation_user
   end
 
   def index

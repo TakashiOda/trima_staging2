@@ -4,6 +4,7 @@
   <span>この度は trima にご登録いただき誠にありがとうございます。</span><br /><br />
   <span>あなたのアカウントはまだ有効化されていません。大変お手数ですが、下記リンクをクリックしてアカウントを有効化し、ログインしていただくようお願い致します。</span><br /><br />
   <%= link_to 'アカウントを有効化する', confirmation_url(@resource, confirmation_token: @token), class: "email_activate_btn" %>
+  <br /><br />
   <div class="email_supplement_box">
     <span>※身に覚えがない場合はこのメールを破棄してください。</span><br />
     <span>※このメールアドレスは送信専用です。返信されてもお返事できませんのでご了承ください。</span><br />

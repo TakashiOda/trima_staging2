@@ -12,10 +12,14 @@
           <li>
             <% if !current_user.avatar.blank? %>
               <%= image_tag current_user.avatar.url, class: 'header_avatar' %>
-            <% else %>
+            <% elsif !current_user.username.nil? %>
               <div class="header_link_icon">
                 <%= current_user.username[0] %>
               </div>
+            <% else %>
+            <div class="header_link_icon">
+              <%= current_user.email[0] %>
+            </div>
             <% end %>
           </li>
 

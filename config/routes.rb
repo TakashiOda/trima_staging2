@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   get 'basic_datas/index', to: 'basic_datas#index', as: :basic_index
   root to: 'home#index'
   get "thank_you_for_registration_user", :to => 'users#thank_you_for_registration_user'
+  get "after_resend_confirmation_user", :to => 'users#after_resend_confirmation_user'
   get "thank_you_for_registration_supplier", :to => 'suppliers#thank_you_for_registration_supplier'
+  get "after_resend_confirmation_supplier", :to => 'suppliers#after_resend_confirmation_supplier'
   get "thank_you_for_apply", :to => 'supplier_applies#thank_you_for_apply'
   get "download_supplier_docs", :to => 'supplier_applies#download_supplier_docs', as: :download_supplier_docs
 

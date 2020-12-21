@@ -2,11 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-
-
   private
   # Overwriting the sign_out redirect path method
   def after_sign_up_path_for(resource)
+    binding.pry
     if resource == :user
       thank_you_for_registration_user_path
     elsif resource == :supplier
