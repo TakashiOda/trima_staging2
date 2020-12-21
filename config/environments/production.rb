@@ -71,7 +71,7 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     domain: 'ccc.ne.jp',
     port:           587,
-    user_name:      ENV['PRO_MAILER_USER_NAME'],
+    user_name:      ENV['PRO_MAILER_USER_NAME2'],
     password:       ENV['PRO_MAILER_HIGH_SECURITY_PASS'],
     authentication: 'login',
     enable_starttls_auto: true
