@@ -39,8 +39,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 5000 }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:        'cedars.sakura.ne.jp',
-    domain:         'cedars.sakura.ne.jp',
+    address: 'smtp.gmail.com',
+    domain: 'ccc.ne.jp',
     port:           587,
     user_name:      ENV['DEV_MAILER_USER_NAME'],
     password:       ENV['DEV_MAILER_PASSWORD'],
