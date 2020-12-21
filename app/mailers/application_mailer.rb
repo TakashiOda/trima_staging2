@@ -1,3 +1,3 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "trima運営チーム <hatanaka@uu-hokkaido.com>"
+  default from: "trima運営チーム <noreply@cedars.jp>"
 end
