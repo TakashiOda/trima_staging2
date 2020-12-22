@@ -1,0 +1,137 @@
+<div class="supplier_activity_page_top">
+  <% if @activity_business.nil? %>
+    <div class="no_info_alert_box">
+      <div class="no_info_alert_box_inner">
+        <div class="no_info_alert_box_inner_text">
+          事業情報がありません。事業情報を入力してください
+        </div>
+        <div class="no_info_alert_box_inner_btn">
+          <%= link_to "事業情報を登録する", new_supplier_activity_business_path(current_supplier) %>
+        </div>
+      </div>
+    </div>
+  <% elsif !@activity_business.is_approved && @activity_business.status == 'inputing' %>
+    <div class="no_info_alert_box">
+      <div class="no_info_alert_box_inner">
+        <div class="no_info_alert_box_inner_text">
+          事業情報の承認申請がされていません。事業情報の承認申請を行ってください
+        </div>
+        <div class="no_info_alert_box_inner_btn">
+          <%= link_to "事業情報を編集する", edit_supplier_activity_business_path(current_supplier, @activity_business) %>
+        </div>
+      </div>
+    </div>
+  <% elsif !@activity_business.is_approved && @activity_business.status == 'send_approve' %>
+    <div class="no_info_alert_box">
+      <div class="no_info_alert_box_inner">
+        <div class="no_info_alert_box_inner_text">
+          現在、事業情報の承認待ちです。数日しても承認されない場合はお問合せください。
+        </div>
+        <div class="no_info_alert_box_inner_btn">
+          <%= link_to "事業情報を編集する", edit_supplier_activity_business_path(current_supplier, @activity_business) %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="activity_index_activity_list_box">
+      <h3>予約一覧</h3>
+      <div class="activity_category_by_status_linkbox">
+        <%=link_to '未提供の予約', "#", class: 'selected' %>
+        <%=link_to '提供済の予約', "#", class: '' %>
+        <%=link_to '全ての予約', "#", class: '' %>
+      </div>
+      <ul class="activity_list_items">
+        <% if !@booked_activities.nil? %>
+          <% @booked_activities.each do |booked_activity|%>
+            <% end_time = booked_activity.activity_start_time + (booked_activity.activity.activity_minutes).minutes %>
+            <li>
+              <div class="bookedItems_front">
+                <div class="bookedItems_front_datetime">
+                  <div class="bookedItems_front_date">
+                    <%=booked_activity.activity_date.strftime("%m/%d(#{@wd[booked_activity.activity_date.wday]})")%>
+                  </div>
+                  <div class="bookedItems_front_time">
+                    <%=booked_activity.activity_start_time.strftime("%H:%M")%>〜<%=end_time.strftime("%H:%M")%>
+                  </div>
+                </div>
+                <div class="bookedItems_front_mainInfo">
+                  <div class="bookedItems_activity_name">
+                    <span class="label">体験名</span><%=booked_activity.activity.name%>
+                  </div>
+                  <div class="bookedItems_activity_name">
+                    <% user = User.find(booked_activity.user_id)%>
+                    <span class="label">予約者</span><%=user.first_name if user.first_name%><%=user.last_name if user.last_name%>
+                  </div>
+                </div>
+              </div>
+              <div class="bookedItems_end">
+                <div class="">
+                  詳細を見る
+                </div>
+              </div>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<style lang="scss">
+  .no_info_alert_box {
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px -1px #c1c1c1;
+  }
+  .no_info_alert_box_inner {
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .no_info_alert_box_inner_text {
+    color: gray;
+    margin-bottom: 20px;
+  }
+  .no_info_alert_box_inner_btn a {
+    background: #0068b6;
+    color: #fff;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 14px;
+  }
+  .activity_category_by_status_linkbox a {
+    width: 30%;
+  }
+  ul.activity_list_items li {
+    background: #fff;
+    box-shadow: 0px 0px 3px 0px lightgrey;
+    border-radius: 8px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+  }
+  .bookedItems_front {
+    display: flex;
+    align-items: center;
+    width: 85%;
+  }
+  .bookedItems_front_datetime {
+    width: 120px;
+  }
+  .bookedItems_front_date {
+    font-size: 19px;
+  }
+  .bookedItems_front_mainInfo div {
+    margin-bottom: 3px;
+  }
+  span.label {
+    background: lightgray;
+    padding: 3px 8px;
+    margin-right: 6px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #646565;
+  }
+</style>

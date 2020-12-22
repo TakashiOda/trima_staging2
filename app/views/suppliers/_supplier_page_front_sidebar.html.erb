@@ -11,8 +11,8 @@
       <span>体験事業</span>
     </li>
   <% end %>
-  <%= link_to "#" do %>
-    <li class="<%= 'selected_menu_item' if controller_name == 'bookings' %>">
+  <%= link_to supplier_bookeditem_index_all_path(current_supplier) do %>
+    <li class="<%= 'selected_menu_item' if controller_name == 'supplier_bookeditems' %>">
       <i class="far fa-bookmark"></i>
       <span>予約一覧</span>
     </li>

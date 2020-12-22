@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'book_activities/new'
-  get 'book_activities/edit'
+  # get 'supplier_bookeditems/index'
+  # get 'book_activities/new'
+  # get 'book_activities/edit'
   get "privacy_policy", to: "static_pages#privacy_policy_en", as: :privacy_policy_en
   get "term_of_service", to: "static_pages#term_of_service_en", as: :term_of_service_en
   get "cansel_policy", to: "static_pages#cansel_policy_en", as: :cansel_policy_en
@@ -91,6 +92,7 @@ Rails.application.routes.draw do
     get "drafts_activities", to: "activities#drafts_activities", as: :drafts_activities
     get "published_activities", to: "activities#published_activities", as: :published_activities
     get "deleted_activities", to: "activities#deleted_activities", as: :deleted_activities
+    get "bookeditems", to: "supplier_bookeditems#index", as: :bookeditem_index_all
     resources :activities do
       post "copy_activity", to: "activities#copy_activity", as: :copy_activity
       put "delete_activity", to: "activities#delete_activity", as: :delete_activity
