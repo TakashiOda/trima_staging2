@@ -1,7 +1,13 @@
-<p>Hello <%= @email %>!</p>
-
+<span>こんにちは <%= @email %>様</span><br />
+<span>trima運営事務局です。</span><br /><br />
 <% if @resource.try(:unconfirmed_email?) %>
-  <p>We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.</p>
+  <p>お客様のアドレスが変更されましたのでお知らせいたします。</p>
+  <p>変更後のアドレス： <%= @resource.unconfirmed_email %></p>
 <% else %>
-  <p>We're contacting you to notify you that your email has been changed to <%= @resource.email %>.</p>
+  <p>お客様のアドレスが変更されましたのでお知らせいたします。</p>
+  <p>変更後のアドレス： <%= @resource.email %></p>
 <% end %>
+<br /><br /><br />
+<span>****************************</span><br />
+<span>trima運営事務局</span>
+<span>運営企業：シーダースコミュニケーションズ株式会社</span>

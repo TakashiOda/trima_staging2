@@ -35,10 +35,10 @@
       <%#= request.path_info %>
       <%#= controller.controller_name %>
       <%#= controller.action_name %>
-      <% if controller.action_name == "thank_you_for_registration_user" %>
+      <% if controller.action_name == "thank_you_for_registration_user" || controller.action_name == "after_resend_confirmation_user" %>
         <%= stylesheet_link_tag 'users' %>
         <%= yield %>
-      <% elsif controller.action_name == "thank_you_for_registration_supplier" || controller.controller_name == 'supplier_applies' || request.path_info == '/suppliers/sign_in' || request.path_info == "/supplier_applies/new" || request.path_info == "/about_trima_for_supplier"%>
+      <% elsif controller.action_name == "thank_you_for_registration_supplier" || controller.action_name == "after_resend_confirmation_supplier" || controller.controller_name == 'supplier_applies' || request.path_info == '/suppliers/sign_in' || request.path_info == "/supplier_applies/new" || request.path_info == "/about_trima_for_supplier"%>
         <%= stylesheet_link_tag 'suppliers' %>
         <%= yield %>
       <% elsif controller.controller_name == "activities" || controller.controller_name == "activity_businesses" || controller.controller_name == "suppliers" %>

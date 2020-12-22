@@ -39,13 +39,20 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 5000 }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:        'cedars.sakura.ne.jp',
-    domain:         'cedars.sakura.ne.jp',
-    port:           587,
-    user_name:      ENV['DEV_MAILER_USER_NAME'],
-    password:       ENV['DEV_MAILER_PASSWORD'],
+    address:        ENV['PRO_MAILER_ADDRESS'],
+    port:           ENV['PRO_MAILER_PORT'],
+    user_name:      ENV['PRO_MAILER_USER_NAME'],
+    password:       ENV['PRO_MAILER_PASSWORD'],
     authentication: 'login',
   }
+  # config.action_mailer.smtp_settings = {
+  #   address: 'smtp.gmail.com',
+  #   domain: 'ccc.ne.jp',
+  #   port:           587,
+  #   user_name:      ENV['DEV_MAILER_USER_NAME'],
+  #   password:       ENV['DEV_MAILER_PASSWORD'],
+  #   authentication: 'login',
+  # }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

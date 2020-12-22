@@ -4,7 +4,7 @@ class ChargesController < ApplicationController
     @project = Project.find(params[:project_id])
     @cart = @project.cart
     @booked_activities = @cart.booked_activities.where(is_paid: false)
-    # 欲している体験が一つでも在庫不足しているかチェック
+
     bookable_arr = []
     @booked_activities.each do |booked_activity|
       if booked_activity.isBookable
@@ -27,7 +27,7 @@ class ChargesController < ApplicationController
       charge = Stripe::Charge.create({
         customer: customer.id,
         amount: total_price,
-        description: "テストです",
+        description: "trima体験予約",
         currency: "jpy",
       })
 
@@ -41,6 +41,7 @@ class ChargesController < ApplicationController
 
       supplier_ids = @booked_activities.pluck(:supplier_id)
       supplier_ids.uniq
+      binding.pry
       supplier_ids.each do |supplier_id|
         supplier = Supplier.find(supplier_id)
         booked_items = []
@@ -52,7 +53,7 @@ class ChargesController < ApplicationController
         SupplierMailer.send_booked_notification(supplier, booked_items).deliver
       end
 
-      redirect_to project_thank_you_payment_path(@project), notice: "商品を購入しました！"
+      redirect_to project_thank_you_payment_path(@project)
     else
       flash[:alert] = '売り切れになった体験が含まれています'
       redirect_to project_cart_path(@project)

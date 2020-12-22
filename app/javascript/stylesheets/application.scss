@@ -227,7 +227,7 @@ input.disabled {
 
 //5.複数ページ共通====================================
 .thankyou_email_container {
-  background: #eaeaea;
+  // background: #eaeaea;
   // height: 100vh;
   padding: 50px;
 }
@@ -244,6 +244,19 @@ img.eyecatch_pc_image {
   width: 100%;
   margin-bottom: 18px;
   position: relative;
+}
+.form-group.password {
+  margin-bottom: 10px;
+}
+.remember_me_field {
+  display: flex;
+  align-items: center;
+}
+input#user_remember_me,
+input#supplier_remember_me {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
 }
 .form-control {
   padding: 10px;

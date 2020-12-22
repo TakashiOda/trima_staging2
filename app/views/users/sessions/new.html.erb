@@ -1,8 +1,4 @@
 <div class="row sign_up_in_page">
-  <div class="col sign_up_in_page_front">
-    <h2>trima</h2>
-    <p>旅行が楽しくなるプラットフォーム</p>
-  </div>
   <div class="col sign_up_in_page_end">
     <h3>ユーザーログイン</h3>
     <%= form_with model: @user, url: user_session_path(@user), id: 'new_user', class: 'new_user', local: true do |f| %>
@@ -17,12 +13,11 @@
           <div id="password_visible_btn"><i class='fas fa-eye'></i></div>
       </div>
       <% if devise_mapping.rememberable? %>
-        <div class="field">
+        <div class="remember_me_field">
           <%= f.check_box :remember_me %>
-          <%= f.label :ログイン状態を保つ %>
+          <%= f.label :remember_me, :ログイン状態を保つ %>
         </div>
       <% end %>
-
       <div class="form-group user login_button">
         <%= f.submit "ログイン", class: "button btn-submit" %>
       </div>
@@ -32,7 +27,7 @@
     </div>
     <div class="didnt_recieve_btn_box">
       <%= link_to "パスワードを忘れた方はコチラ", new_user_password_path %><br />
-      <%= link_to "認証メールが届かない方はコチラ", new_user_unlock_path %><br />
+      <%= link_to "パスワードを複数回間違えた方", new_user_unlock_path %><br />
     </div>
   </div>
 </div>

@@ -4,17 +4,14 @@ $user-main-dark-color: #192f60; //サイドバーに適用・プルシャンブ�
 
 // 事業者の色が関係する部分============================================
 header.erb_header {
-  // background: $user-main-color !important;
   background: linear-gradient(to right, #2193b0, #6dd5ed) !important;
 }
 
 .btn-submit {
-  // background: #80acce;
   background: linear-gradient(to right, #2193b0, #6dd5ed);
 }
 
 .form-group.supplier.login_button input.button {
-  // background: #0068b6;
   background: linear-gradient(to right, #2193b0, #6dd5ed);
 }
 
@@ -28,7 +25,6 @@ header.erb_header {
 
 a.org_edit_btn {
   background: linear-gradient(to right, #2193b0, #6dd5ed);
-  // background: $user-main-color !important;
 }
 
 input.need_submit {
@@ -45,7 +41,7 @@ input.need_submit {
   width: 90vw;
   min-width: 320px;
   max-width: 490px;
-  background: #fff;
+  background: #cff6ff;
   border-radius: 20px;
 }
 .short_messages_box_title {
