@@ -29,10 +29,14 @@
           <%= link_to supplier_path(current_supplier), id: 'header_current_supplier_link' do %>
             <div class="header_to_dashboad_text">ダッシュボード</div>
             <div class="header_link_icon">
-              <% if current_supplier.name[0, 4] == "株式会社" %>
-                <%= current_supplier.name[4] %>
+              <% if !current_supplier.name.nil? %>
+                <% if current_supplier.name[0, 4] == "株式会社" %>
+                  <%= current_supplier.name[4] %>
+                <% else %>
+                  <%= current_supplier.name[0] %>
+                <% end %>
               <% else %>
-                <%= current_supplier.name[0] %>
+                <%= current_supplier.email[0] %>
               <% end %>
             </div>
           <% end %>
