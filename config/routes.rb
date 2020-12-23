@@ -93,6 +93,7 @@ Rails.application.routes.draw do
     get "published_activities", to: "activities#published_activities", as: :published_activities
     get "deleted_activities", to: "activities#deleted_activities", as: :deleted_activities
     get "bookeditems", to: "supplier_bookeditems#index", as: :bookeditem_index_all
+    get "bookeditems/:id", to: "supplier_bookeditems#show", as: :bookeditem
     resources :activities do
       post "copy_activity", to: "activities#copy_activity", as: :copy_activity
       put "delete_activity", to: "activities#delete_activity", as: :delete_activity

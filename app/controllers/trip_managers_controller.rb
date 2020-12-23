@@ -131,7 +131,7 @@ class TripManagersController < ApplicationController
       @cart.save!
     else
       @cart = @project.cart
-      @booked_activities = @cart.booked_activities.where(is_paid: true)
+      @booked_activities = @cart.booked_activities.where(is_paid: true).order(created_at: :desc)
     end
   end
 

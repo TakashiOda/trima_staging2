@@ -41,7 +41,6 @@ class ChargesController < ApplicationController
 
       supplier_ids = @booked_activities.pluck(:supplier_id)
       supplier_ids.uniq
-      binding.pry
       supplier_ids.each do |supplier_id|
         supplier = Supplier.find(supplier_id)
         booked_items = []

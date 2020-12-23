@@ -62,11 +62,17 @@
                     <% user = User.find(booked_activity.user_id)%>
                     <span class="label">予約者</span><%=user.first_name if user.first_name%><%=user.last_name if user.last_name%>
                   </div>
+                  <div class="bookedItems_activity_name">
+                    <span class="label">人数</span><%= "#{booked_activity.project_members.size}人" if booked_activity.project_members%>
+                  </div>
+                  <div class="bookedItems_activity_name">
+                    <span class="label">予約金額</span><%= "¥#{booked_activity.total_price.to_s(:delimited)}" if booked_activity.total_price%>
+                  </div>
                 </div>
               </div>
               <div class="bookedItems_end">
                 <div class="">
-                  詳細を見る
+                  <%=link_to "詳細", supplier_bookeditem_path(current_supplier, booked_activity.id)%>
                 </div>
               </div>
             </li>
