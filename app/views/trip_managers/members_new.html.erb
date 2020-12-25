@@ -13,11 +13,11 @@
         <div class="form-group name_row">
           <div class="name_form_item">
             <%= form.label "名" %>
-            <%= form.text_field :first_name, class: "form-control" %>
+            <%= form.text_field :first_name, class: "form-control", required: true %>
           </div>
           <div class="name_form_item">
             <%= form.label "姓" %>
-            <%= form.text_field :last_name, class: "form-control" %>
+            <%= form.text_field :last_name, class: "form-control", required: true %>
           </div>
         </div>
 
@@ -37,9 +37,9 @@
         <div class="form-group">
           <%= form.label "生年月日" %>
           <div class="birth_form_box">
-            <%= form.select :birth_year, options_for_select(1950..2020), { prompt: "year" } %>
-            <%= form.select :birth_month, options_for_select(1..12), { prompt: "month" } %>
-            <%= form.select :birth_date, options_for_select(1..31), { prompt: "day" } %>
+            <%= form.select :birth_year, options_for_select(1950..2020), { prompt: "年" }, required: true %>
+            <%= form.select :birth_month, options_for_select(1..12), { prompt: "月" }, required: true %>
+            <%= form.select :birth_date, options_for_select(1..31), { prompt: "日" }, required: true %>
           </div>
         </div>
         <div class="form-group">

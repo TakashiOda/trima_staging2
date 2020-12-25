@@ -92,7 +92,9 @@ Rails.application.routes.draw do
     get "drafts_activities", to: "activities#drafts_activities", as: :drafts_activities
     get "published_activities", to: "activities#published_activities", as: :published_activities
     get "deleted_activities", to: "activities#deleted_activities", as: :deleted_activities
-    get "bookeditems", to: "supplier_bookeditems#index", as: :bookeditem_index_all
+    get "bookeditems", to: "supplier_bookeditems#index_future", as: :bookeditem_index_future
+    get "bookeditems_past", to: "supplier_bookeditems#index_past", as: :bookeditem_index_past
+    get "bookeditems_all", to: "supplier_bookeditems#index_all", as: :bookeditem_index_all
     get "bookeditems/:id", to: "supplier_bookeditems#show", as: :bookeditem
     resources :activities do
       post "copy_activity", to: "activities#copy_activity", as: :copy_activity

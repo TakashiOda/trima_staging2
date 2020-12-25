@@ -1,7 +1,7 @@
 /*
+ *= require simple_calendar
  *= require_self
  */
-
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 $user-main-color: #2bb560;
 
@@ -27,6 +27,91 @@ $user-main-color: #2bb560;
 //19.
 //20.
 //=================================================
+.simple-calendar {
+  margin-top: 30px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .calendar-heading {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: #61cce3;
+    a {
+      padding: 0 30px;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+  span.calendar-title {
+    color: #fff;
+    font-size: 22px;
+  }
+  table.table.table-striped { width: 100%;}
+  table.table.table-striped th {
+    background: #62cbe3;
+    color: #fff;
+  }
+  td.day {
+    height: 65px;
+    border: solid 1.0px #61cce3;
+    padding: 5px 10px !important;
+  }
+  .calendar_day_box {
+    height: 65px;
+  }
+  .day {}
+  .wday-0 {}
+  .wday-1 {}
+  .wday-2 {}
+  .wday-3 {}
+  .wday-4 {}
+  .wday-5 {}
+  .wday-6 {}
+
+  .today {background: #fffab9;}
+  .past {
+    background: #fff;
+    color: #a5a5a5;
+  }
+  .future {background: #fff;}
+
+  .start-date {}
+
+  .prev-month {
+    background: #d2d2d2;
+    color: #b1b1b1;
+  }
+  .next-month {
+    background: #d2d2d2;
+    color: #b1b1b1;
+  }
+  .current-month {}
+  .has-events {}
+
+  .day_num {
+    height: 30%;
+  }
+  .day_info_box {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .day_books_num {
+    background: #62c9e3;
+    width: 60%;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    border-radius: 15px;
+  }
+}
 /* ローディング******************************************* */
 div#loading_box {
   position: absolute;
@@ -915,6 +1000,10 @@ div#password_input_box {
   }
 }
 
+.supplier_activity_page_top {
+  padding: 10px 40px 70px;
+}
+
 .user_show_main_content,
 .supplier_show_main_content {
   width: 83%;
@@ -1031,10 +1120,6 @@ img.user_avatar {
   }
 }
 
-.supplier_activity_page_top {
-  padding: 20px 25px;
-  // position: relative;
-}
 .form-group.side_btns_suspend_check {
   flex-direction: row;
 }
@@ -1272,7 +1357,7 @@ span.form_supplement {
   .user_show_content,
   .supplier_show_main_content {
     width: 100%;
-    padding: 30px 0px 50px;
+    padding: 0px;
   }
 }
 
