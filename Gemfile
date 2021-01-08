@@ -31,6 +31,7 @@ gem "jquery-rails"
 gem "actionview", ">= 6.0.3.3"
 gem 'meta-tags'
 gem 'stripe'
+gem "simple_calendar"
 
 group :development, :test do
   gem 'byebug',"11.1.3", platforms: [:mri, :mingw, :x64_mingw]

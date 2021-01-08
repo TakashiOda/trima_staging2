@@ -1,0 +1,2 @@
+module SupplierBookeditemsHelper
+end

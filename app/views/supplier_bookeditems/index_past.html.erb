@@ -1,0 +1,143 @@
+<div class="supplier_activity_page_top">
+  <% if @activity_business.nil? %>
+    <div class="no_info_alert_box">
+      <div class="no_info_alert_box_inner">
+        <div class="no_info_alert_box_inner_text">
+          事業情報がありません。事業情報を入力してください
+        </div>
+        <div class="no_info_alert_box_inner_btn">
+          <%= link_to "事業情報を登録する", new_supplier_activity_business_path(current_supplier) %>
+        </div>
+      </div>
+    </div>
+  <% elsif !@activity_business.is_approved && @activity_business.status == 'inputing' %>
+    <div class="no_info_alert_box">
+      <div class="no_info_alert_box_inner">
+        <div class="no_info_alert_box_inner_text">
+          事業情報の承認申請がされていません。事業情報の承認申請を行ってください
+        </div>
+        <div class="no_info_alert_box_inner_btn">
+          <%= link_to "事業情報を編集する", edit_supplier_activity_business_path(current_supplier, @activity_business) %>
+        </div>
+      </div>
+    </div>
+  <% elsif !@activity_business.is_approved && @activity_business.status == 'send_approve' %>
+    <div class="no_info_alert_box">
+      <div class="no_info_alert_box_inner">
+        <div class="no_info_alert_box_inner_text">
+          現在、事業情報の承認待ちです。数日しても承認されない場合はお問合せください。
+        </div>
+        <div class="no_info_alert_box_inner_btn">
+          <%= link_to "事業情報を編集する", edit_supplier_activity_business_path(current_supplier, @activity_business) %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="activity_index_activity_list_box">
+      <div class="activity_category_by_status_linkbox">
+        <%=link_to '未提供の予約', supplier_bookeditem_index_future_path(current_supplier), class: '' %>
+        <%=link_to '提供済の予約', supplier_bookeditem_index_past_path(current_supplier), class: 'selected' %>
+        <%=link_to '全ての予約', supplier_bookeditem_index_all_path(current_supplier), class: '' %>
+      </div>
+      <h3>予約の詳細一覧</h3>
+      <ul class="activity_list_items">
+        <% if !@booked_activities.blank? %>
+          <% @booked_activities.each do |booked_activity|%>
+            <li>
+              <%= link_to supplier_bookeditem_path(current_supplier, booked_activity.id), class: "link_to_detail" do %>
+                <div class="bookedItems_front">
+                  <div class="bookedItems_front_datetime">
+                    <div class="bookedItems_front_date">
+                      <%=booked_activity.activity_date.strftime("%m/%d(#{@wd[booked_activity.activity_date.wday]})")%>
+                    </div>
+                    <div class="bookedItems_front_time">
+                      <%=booked_activity.activity_start_time.strftime("%H:%M")%>〜<%=booked_activity.activity_end_time.strftime("%H:%M")%>
+                    </div>
+                  </div>
+                  <div class="bookedItems_front_mainInfo">
+                    <div class="bookedItems_activity_name">
+                      <span class="label">体験名</span><%=booked_activity.activity_name%>
+                    </div>
+                    <div class="bookedItems_activity_name">
+                      <span class="label">予約者</span><%=booked_activity.user_name if booked_activity.user_name%>
+                    </div>
+                    <div class="bookedItems_activity_name">
+                      <span class="label">人数</span><%= "#{booked_activity.join_members_num}人" if booked_activity.join_members_num%>
+                    </div>
+                    <div class="bookedItems_activity_name">
+                      <span class="label">予約金額</span><%= "¥#{booked_activity.total_price.to_s(:delimited)}" if booked_activity.total_price%>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        <% else %>
+          <div class="no_book_items_box">
+            <span>提供済みの予約はありません</span>
+          </div>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<style lang="scss">
+  .no_info_alert_box {
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px -1px #c1c1c1;
+  }
+  .no_info_alert_box_inner {
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .no_info_alert_box_inner_text {
+    color: gray;
+    margin-bottom: 20px;
+  }
+  .no_info_alert_box_inner_btn a {
+    background: #0068b6;
+    color: #fff;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 14px;
+  }
+  .activity_category_by_status_linkbox a {
+    width: 30%;
+  }
+  ul.activity_list_items li {
+    background: #fff;
+    box-shadow: 0px 0px 3px 0px lightgrey;
+    border-radius: 8px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .bookedItems_front {
+    display: flex;
+    align-items: center;
+    width: 85%;
+  }
+  .bookedItems_front_datetime {
+    width: 120px;
+  }
+  .bookedItems_front_date {
+    font-size: 19px;
+  }
+  .bookedItems_front_mainInfo div {
+    margin-bottom: 3px;
+  }
+  span.label {
+    background: lightgray;
+    padding: 3px 8px;
+    margin-right: 6px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: #646565;
+  }
+</style>

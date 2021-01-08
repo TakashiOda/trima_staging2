@@ -41,7 +41,7 @@
       <% elsif controller.action_name == "thank_you_for_registration_supplier" || controller.action_name == "after_resend_confirmation_supplier" || controller.controller_name == 'supplier_applies' || request.path_info == '/suppliers/sign_in' || request.path_info == "/supplier_applies/new" || request.path_info == "/about_trima_for_supplier"%>
         <%= stylesheet_link_tag 'suppliers' %>
         <%= yield %>
-      <% elsif controller.controller_name == "activities" || controller.controller_name == "activity_businesses" || controller.controller_name == "suppliers" %>
+      <% elsif controller.controller_name == "activities" || controller.controller_name == "activity_businesses" || controller.controller_name == "suppliers" || controller.controller_name == "supplier_bookeditems"%>
         <%= stylesheet_link_tag 'suppliers' %>
         <div class="container user_show container-fluid row">
           <div class="user_show_side">

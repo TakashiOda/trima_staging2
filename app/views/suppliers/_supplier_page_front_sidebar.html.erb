@@ -1,19 +1,19 @@
 <ul>
   <%= link_to supplier_dashboard_path(current_supplier) do %>
     <li class="<%= 'selected_menu_item' if controller_name == 'suppliers' && action_name == 'dashboard' %>">
-      <i class="far fa-bookmark"></i>
+      <i class="fas fa-home"></i>
       <span>ダッシュボード</span>
     </li>
   <% end %>
   <%= link_to supplier_activities_path(current_supplier.id) do %>
     <li class="<%= 'selected_menu_item' if controller_name == 'activities' %>">
-      <i class="far fa-bookmark"></i>
-      <span>体験事業</span>
+      <i class="fas fa-running"></i>
+      <span>体験一覧</span>
     </li>
   <% end %>
-  <%= link_to "#" do %>
-    <li class="<%= 'selected_menu_item' if controller_name == 'bookings' %>">
-      <i class="far fa-bookmark"></i>
+  <%= link_to supplier_bookeditem_index_future_path(current_supplier) do %>
+    <li class="<%= 'selected_menu_item' if controller_name == 'supplier_bookeditems' %>">
+      <i class="fas fa-calendar-check"></i>
       <span>予約一覧</span>
     </li>
   <% end %>
@@ -21,23 +21,23 @@
     <% if controller_name == 'suppliers' || controller_name == 'activity_businesses' %>
       <% if action_name != 'dashboard' %>
         <li class="selected_menu_item">
-          <i class="fas fa-suitcase"></i>
-          <span>アカウント情報</span>
+          <i class="fas fa-user-alt"></i>
+          <span>アカウント</span>
         </li>
       <% else %>
         <li>
-          <i class="fas fa-suitcase"></i>
-          <span>アカウント情報</span>
+          <i class="fas fa-user-alt"></i>
+          <span>アカウント</span>
         </li>
       <% end %>
     <% else %>
       <li>
-        <i class="fas fa-suitcase"></i>
-        <span>アカウント情報</span>
+        <i class="fas fa-user-alt"></i>
+        <span>アカウント</span>
       </li>
     <% end %>
   <% end %>
-  <li><i class="fas fa-cog"></i><%= link_to "ログアウト", destroy_supplier_session_path %></li>
+  <li><i class="fas fa-sign-out-alt"></i><%= link_to "ログアウト", destroy_supplier_session_path %></li>
 </ul>
 
 <style>

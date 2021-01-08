@@ -1004,8 +1004,8 @@ input.button.btn-submit.stock_submit:hover {
 }
 .stock_input_box input {
   font-size: 19px;
-  width: 80px;
-  height: 35px;
+  width: 62px;
+  height: 16px;
   text-align: right;
   padding-right: 5px;
   margin-right: 5px;
@@ -1059,9 +1059,10 @@ a.month_tab.selected {
   background: #d8d8d8;
 }
 .all_input_container {
-  height: 65px;
+  height: 85px;
   display: flex;
   flex-direction: row;
+  align-items: center;
   width: 100%;
   background: lightgray;
   padding: 3px 0px;
@@ -1200,9 +1201,9 @@ a.month_tab.selected {
   border-bottom: none;
 }
 .all_stock_input button {
-  height: 18px;
+  height: 32px;
   width: 81px;
-  font-size: 10px;
+  font-size: 14px;
   background: #0068b6;
   border: solid 0.5px lightgray;
   border-top-left-radius: 0;
@@ -1221,9 +1222,9 @@ a.month_tab.selected {
   background: #037eda;
 }
 .season_input_box button {
-  height: 18px;
+  height: 32px;
   width: 138px;
-  font-size: 10px;
+  font-size: 14px;
   background: #0068b6;
   border: solid 0.5px lightgray;
   border-top-left-radius: 0;

@@ -248,6 +248,11 @@
             <%= form.hidden_field :project_id, value: @project.id %>
             <%= form.hidden_field :activity_id, value: @activity.id %>
             <%= form.hidden_field :user_id, value: current_user.id %>
+            <% if current_user.first_name && current_user.last_name %>
+              <%= form.hidden_field :user_name, value: "#{current_user.first_name} #{current_user.last_name}"%>
+            <% else %>
+              <%= form.hidden_field :user_name, value: "no name"%>
+            <% end %>
             <%= hidden_field_tag "selected_stock_season", "normal" %>
             <div class="calendar_form_fix_field">
               <%= form.label 'スケジュール' %>
