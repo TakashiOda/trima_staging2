@@ -45,9 +45,9 @@ RSpec.describe SupplierProfile, type: :model do
     end
 
     # manager_name **************************
-    it 'manager_nameが空だとNG' do
+    it 'manager_nameが空でもOK' do
       @supplier_profile.manager_name = ''
-      expect(@supplier_profile.valid?).to eq(false)
+      expect(@supplier_profile).to be_valid
     end
 
     it 'manager_nameが30文字以下だとOK' do
@@ -63,9 +63,9 @@ RSpec.describe SupplierProfile, type: :model do
     end
 
     # manager_name_kana **************************
-    it 'manager_name_kanaが空だとNG' do
+    it 'manager_name_kanaが空でもOK' do
       @supplier_profile.manager_name_kana = ''
-      expect(@supplier_profile.valid?).to eq(false)
+      expect(@supplier_profile).to be_valid
     end
 
     it 'manager_name_kanaが30文字以下だとOK' do
@@ -93,22 +93,6 @@ RSpec.describe SupplierProfile, type: :model do
 
     it 'prefecture_idが1..47の範囲外だとNG' do
       @supplier_profile.prefecture_id = 48
-      expect(@supplier_profile.valid?).to eq(false)
-    end
-
-    # area_id **************************
-    it 'area_idが空だとNG' do
-      @supplier_profile.area_id = nil
-      expect(@supplier_profile.valid?).to eq(false)
-    end
-
-    it 'area_idが1..11の範囲内だとOK' do
-      @supplier_profile.area_id = 11
-      expect(@supplier_profile).to be_valid
-    end
-
-    it 'area_idが1..11の範囲外だとNG' do
-      @supplier_profile.area_id = 12
       expect(@supplier_profile.valid?).to eq(false)
     end
 

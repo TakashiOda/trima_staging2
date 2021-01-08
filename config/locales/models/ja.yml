@@ -1,0 +1,24 @@
+ja:
+  activerecord:
+    supplier: 事業者
+    attributes:
+      supplier:
+        name: 企業名/屋号
+        email: メールアドレス
+        password: パスワード
+    supplier_profile: 事業者情報
+    attributes:
+      supplier_profile:
+        representative_name: 代表者のお名前
+        representative_kana: 代表者カナ
+        manager_name: 担当者お名前
+        manager_name_kana: 担当者カナ
+        prefecture_id: 都道府県
+        area_id: エリア
+        town_id: 市町村名
+        detail_address: 以降の住所
+        building: 建物名・部屋番号
+        post_code: 郵便番号
+        phone: お電話番号
+        contract_plan: 契約プラン
+        is_suspended: 休止中

@@ -275,6 +275,32 @@ body.erb_body.add_padding_top {
   top: 0px;
 }
 
+.form_alert {
+  margin: 0px !important;
+  position: relative;
+  top: 0;
+  right: 0;
+  width: 100%;
+  text-align: initial;
+  font-size: 13px;
+  padding: 0px !important;
+  z-index: 90;
+  ul {
+    margin: 0;
+    width: 100%;
+    padding: 10px 20px !important;
+    background: #ff9191;
+    li {
+      color: white;
+    }
+  }
+}
+
+.field_with_errors input {
+  width: 100%;
+  background: #ffdddd !important;
+}
+
 //4.共通パーツ=======================================
 .button {
   width: 100%;
