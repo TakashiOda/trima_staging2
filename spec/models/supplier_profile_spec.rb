@@ -15,12 +15,14 @@ RSpec.describe SupplierProfile, type: :model do
     end
 
     it 'representative_nameが30文字以下だとOK' do
-      @supplier_profile.representative_name = 'aaaaabbbbbcccccaaaaabbbbbccccc'
+      st = (0...30).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.representative_name = st
       expect(@supplier_profile).to be_valid
     end
 
     it 'representative_nameが31文字以上だとNG' do
-      @supplier_profile.representative_name = 'aaaaabbbbbcccccaaaaabbbbbcccccw'
+      st = (0...31).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.representative_name = st
       expect(@supplier_profile.valid?).to eq(false)
     end
 
@@ -31,15 +33,15 @@ RSpec.describe SupplierProfile, type: :model do
     end
 
     it 'representative_kanaが30文字以下だとOK' do
-      @supplier_profile.representative_kana = 'aaaaabbbbbcccccaaaaabbbbbccccc'
+      st = (0...30).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.representative_kana = st
       expect(@supplier_profile).to be_valid
     end
 
     it 'representative_kanaが31文字以上だとNG' do
-      @supplier_profile.representative_kana = 'aaaaabbbbbcccccaaaaabbbbbcccccw'
+      st = (0...31).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.representative_kana = st
       expect(@supplier_profile.valid?).to eq(false)
-      # @supplier_profile.valid?
-      # expect(@supplier_profile.errors[:representative_kana]).to include("最大30文字まで")
     end
 
     # manager_name **************************
@@ -49,12 +51,14 @@ RSpec.describe SupplierProfile, type: :model do
     end
 
     it 'manager_nameが30文字以下だとOK' do
-      @supplier_profile.manager_name = 'aaaaabbbbbcccccaaaaabbbbbccccc'
+      st = (0...30).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.manager_name = st
       expect(@supplier_profile).to be_valid
     end
 
     it 'manager_nameが31文字以上だとNG' do
-      @supplier_profile.manager_name = 'aaaaabbbbbcccccaaaaabbbbbcccccw'
+      st = (0...31).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.manager_name = st
       expect(@supplier_profile.valid?).to eq(false)
     end
 
@@ -65,12 +69,14 @@ RSpec.describe SupplierProfile, type: :model do
     end
 
     it 'manager_name_kanaが30文字以下だとOK' do
-      @supplier_profile.manager_name_kana = 'aaaaabbbbbcccccaaaaabbbbbccccc'
+      st = (0...30).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.manager_name_kana = st
       expect(@supplier_profile).to be_valid
     end
 
     it 'manager_name_kanaが31文字以上だとNG' do
-      @supplier_profile.manager_name_kana = 'aaaaabbbbbcccccaaaaabbbbbcccccw'
+      st = (0...31).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.manager_name_kana = st
       expect(@supplier_profile.valid?).to eq(false)
     end
 
@@ -129,12 +135,14 @@ RSpec.describe SupplierProfile, type: :model do
     end
 
     it 'detail_addressが100文字以下だとOK' do
-      @supplier_profile.detail_address = 'aaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccddddd'
+      st = (0...100).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.detail_address = st
       expect(@supplier_profile).to be_valid
     end
 
     it 'detail_addressが101文字以上だとNG' do
-      @supplier_profile.detail_address = 'aaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddw'
+      st = (0...101).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.detail_address = st
       expect(@supplier_profile.valid?).to eq(false)
     end
 
@@ -145,12 +153,14 @@ RSpec.describe SupplierProfile, type: :model do
     end
 
     it 'buildingが100文字以下だとOK' do
-      @supplier_profile.building = 'aaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccddddd'
+      st = (0...100).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.building = st
       expect(@supplier_profile).to be_valid
     end
 
     it 'buildingが101文字以上だとNG' do
-      @supplier_profile.building = 'aaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddaaaaabbbbbcccccdddddw'
+      st = (0...101).map{ (65 + rand(26)).chr }.join
+      @supplier_profile.building = st
       expect(@supplier_profile.valid?).to eq(false)
     end
 
