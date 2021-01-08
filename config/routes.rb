@@ -87,7 +87,8 @@ Rails.application.routes.draw do
 
   resources :suppliers do
     resources :supplier_profiles
-    resources :activity_businesses
+    resources :activity_businesses, only: [:index, :new, :create, :edit, :destroy]
+    put '/activity_businesses/:id/edit', to: 'activity_businesses#update', as: 'update_activity_business'
     get "dashboard", to: "suppliers#dashboard", as: :dashboard
     get "drafts_activities", to: "activities#drafts_activities", as: :drafts_activities
     get "published_activities", to: "activities#published_activities", as: :published_activities

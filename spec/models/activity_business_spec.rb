@@ -23,14 +23,14 @@ RSpec.describe ActivityBusiness, type: :model do
       @activity_business.name = 'a'
       expect(@activity_business.valid?).to eq(false)
     end
-    it 'nameが50文字以下だとOK' do
-      st = (0...50).map{ (65 + rand(26)).chr }.join
+    it 'nameが40文字以下だとOK' do
+      st = (0...40).map{ (65 + rand(26)).chr }.join
       @activity_business.name = st
       expect(@activity_business).to be_valid
     end
 
-    it 'nameが51文字以上だとNG' do
-      st = (0...51).map{ (65 + rand(26)).chr }.join
+    it 'nameが41文字以上だとNG' do
+      st = (0...41).map{ (65 + rand(26)).chr }.join
       @activity_business.name = st
       expect(@activity_business.valid?).to eq(false)
     end
@@ -51,14 +51,14 @@ RSpec.describe ActivityBusiness, type: :model do
       expect(@activity_business.valid?).to eq(false)
     end
 
-    it 'en_nameが50文字以下だとOK' do
-      st = (0...50).map{ (65 + rand(26)).chr }.join
+    it 'en_nameが40文字以下だとOK' do
+      st = (0...40).map{ (65 + rand(26)).chr }.join
       @activity_business.en_name = st
       expect(@activity_business).to be_valid
     end
 
-    it 'en_nameが51文字以上だとNG' do
-      st = (0...51).map{ (65 + rand(26)).chr }.join
+    it 'en_nameが41文字以上だとNG' do
+      st = (0...41).map{ (65 + rand(26)).chr }.join
       @activity_business.en_name = st
       expect(@activity_business.valid?).to eq(false)
     end
@@ -79,14 +79,14 @@ RSpec.describe ActivityBusiness, type: :model do
       expect(@activity_business.valid?).to eq(false)
     end
 
-    it 'cn_nameが50文字以下だとOK' do
-      st = (0...50).map{ (65 + rand(26)).chr }.join
+    it 'cn_nameが40文字以下だとOK' do
+      st = (0...40).map{ (65 + rand(26)).chr }.join
       @activity_business.cn_name = st
       expect(@activity_business).to be_valid
     end
 
-    it 'cn_nameが51文字以上だとNG' do
-      st = (0...51).map{ (65 + rand(26)).chr }.join
+    it 'cn_nameが41文字以上だとNG' do
+      st = (0...41).map{ (65 + rand(26)).chr }.join
       @activity_business.cn_name = st
       expect(@activity_business.valid?).to eq(false)
     end
@@ -107,14 +107,14 @@ RSpec.describe ActivityBusiness, type: :model do
       expect(@activity_business.valid?).to eq(false)
     end
 
-    it 'tw_nameが50文字以下だとOK' do
-      st = (0...50).map{ (65 + rand(26)).chr }.join
+    it 'tw_nameが40文字以下だとOK' do
+      st = (0...40).map{ (65 + rand(26)).chr }.join
       @activity_business.tw_name = st
       expect(@activity_business).to be_valid
     end
 
-    it 'tw_nameが51文字以上だとNG' do
-      st = (0...51).map{ (65 + rand(26)).chr }.join
+    it 'tw_nameが41文字以上だとNG' do
+      st = (0...41).map{ (65 + rand(26)).chr }.join
       @activity_business.tw_name = st
       expect(@activity_business.valid?).to eq(false)
     end

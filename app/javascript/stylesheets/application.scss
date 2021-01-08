@@ -255,7 +255,7 @@ body.erb_body.add_padding_top {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: absolute;
   top: 0px;
 }
 .alert {
@@ -271,7 +271,7 @@ body.erb_body.add_padding_top {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: absolute;
   top: 0px;
 }
 
@@ -287,7 +287,6 @@ body.erb_body.add_padding_top {
   z-index: 90;
   ul {
     margin: 0;
-    width: 100%;
     padding: 10px 20px !important;
     background: #ff9191;
     li {
