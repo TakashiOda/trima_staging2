@@ -10,8 +10,8 @@ FactoryBot.define do
     en_profile_text         {'this is profile'}
     cn_profile_text         {nil}
     tw_profile_text         {nil}
-    apply_suuplier_address  {true}
-    apply_suuplier_phone    {true}
+    apply_suuplier_address  {false}
+    apply_suuplier_phone    {false}
     post_code               {'001-0002'}
     prefecture_id           {1}
     area_id                 {1}

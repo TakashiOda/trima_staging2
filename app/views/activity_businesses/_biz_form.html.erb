@@ -2,8 +2,8 @@
   <div class="form_title">
     <h3>体験事業の情報を編集</h3>
   </div>
+  <%= render 'layouts/error_messages', model: form.object %>
   <div class="user_show_content_down">
-    <%= render 'layouts/error_messages', model: form.object %>
     <div class="user_show_info_items_box">
       <section class="form_section">
         <div class="form_big_title">
@@ -233,11 +233,49 @@
               <div class="col-half">
                 <%= form.label "都道府県" %>
                 <%# form.collection_select :prefecture_id, Prefecture.all, :id, :local_name,{prompt: "都道府県を選択"}, required: true, class: "form-control" %>
-                <%= form.select :prefecture_id, {'北海道': 2}, { include_blank: false}, { class: 'form-control' } %>
+                <%= form.select :prefecture_id, {'北海道': 1}, { include_blank: false}, { class: 'form-control' } %>
               </div>
               <div class="col-half">
+                <%= form.label "エリア" %>
+                <%= form.collection_select :area_id, Area.all, :id, :local_name, {:selected => 1}, class: "form-control", onChange: 'hasChangeArea(this)' %>
+              </div>
+              <div class="col-half town_box">
+                <%= form.hidden_field :town_id, value: 1, id: 'hidden_town_field' %>
                 <%= form.label "市区町村" %>
-                <%= form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasInput()' %>
+                <div id="area_1" class="town_select">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 1), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_2" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 2), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_3" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 3), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_4" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 4), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_5" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 5), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_6" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 6), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_7" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 7), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_8" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 8), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_9" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 9), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_10" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 10), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+                <div id="area_11" class="town_select hidden">
+                  <%= collection_select :town_name, :name, Town.where(area_id: 11), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+                </div>
+
               </div>
             </div>
             <div class="form-group">
@@ -354,7 +392,6 @@
     margin-bottom: 5px;
   }
   input#insurance_image_form {
-    /* height: 40px; */
     display: flex;
     border-radius: 0;
     background: #fff;
@@ -369,9 +406,6 @@
     border-radius: 5px;
     width: 90%;
   }
-  /* .form-group input{
-    background: lightgray !important;
-  } */
   .biz_form_status_toggle_box {
     display: flex;
     align-items: center;
@@ -414,6 +448,10 @@
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
   }
+  .col-half.town_box {
+    display: flex;
+    align-items: center;
+  }
 </style>
 
 <script type="text/javascript">
@@ -431,7 +469,6 @@
     const theDayBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_the_day_before");
     const threeDaysBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_three_days_before");
     const aWeekBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_a_week_before");
-    // console.log(theDayBeforeRadio.checked);
     if (theDayBeforeRadio.checked) {
       showExplanationWithValue('the_day_before');
     } else if (threeDaysBeforeRadio.checked) {
@@ -626,6 +663,24 @@
   function showInsuranceUploader(obj) {
     const uploadBox = document.getElementById("insurance_uploader_box");
     uploadBox.classList.remove('hidden');
+  }
+
+  function hasChangeArea(obj) {
+    const townSelectors = document.querySelectorAll("div.town_select");
+    for (var i = 0; i < townSelectors.length; i++) {
+      const townSelectItem = townSelectors[i];
+      townSelectItem.classList.add('hidden');
+    }
+
+    const selectedAreaNum = obj.value;
+    const targetId = `area_${selectedAreaNum}`;
+    const targetTownSelectBox = document.getElementById(`${targetId}`);
+    targetTownSelectBox.classList.remove('hidden');
+  }
+
+  function hasSelectTown(obj) {
+    const targetTownSelectBox = document.getElementById('hidden_town_field');
+    targetTownSelectBox.value = obj.value;
   }
 
   </script>

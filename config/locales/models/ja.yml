@@ -22,3 +22,31 @@ ja:
         phone: お電話番号
         contract_plan: 契約プラン
         is_suspended: 休止中
+    activity_business: 体験事業情報
+    attributes:
+      activity_business:
+        supplier: 事業者ID
+        profile_image: 体験事業のアイコン画像
+        name: 体験事業名（日本語）
+        en_name: 体験事業名（英語）
+        cn_name: 体験事業名（簡体字）
+        tw_name: 体験事業名（繁体字）
+        profile_text: 体験事業名（日本語）
+        en_profile_text: 体験事業名（英語）
+        cn_profile_text: 体験事業名（簡体字）
+        tw_profile_text: 体験事業名（繁体字）
+        apply_suuplier_address: 事業者情報の住所適用欄
+        apply_suuplier_phone: 事業者情報の電話番号適用欄
+        prefecture_id: 都道府県
+        area_id: エリア
+        town_id: 市町村名
+        detail_address: 以降の住所
+        building: 建物名・部屋番号
+        post_code: 郵便番号
+        phone: お電話番号
+        no_charge_cansel_before: 休止中
+        has_insurance: 休止中
+        guide_certification: 休止中
+        insurance_image: 休止中
+        status: 休止中
+        is_approved: 休止中

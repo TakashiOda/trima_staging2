@@ -17,4 +17,5 @@ class SupplierProfile < ApplicationRecord
   validates :phone, presence: true, format: { with: PHONE_NUMBER_REGEX, message: "はハイフンなしの半角数字10桁、または11桁のみ" }
   validates :contract_plan, presence: true, inclusion: { in: [0, 1, 2] }
   validates :is_suspended, inclusion: { in: [true, false] }
+
 end

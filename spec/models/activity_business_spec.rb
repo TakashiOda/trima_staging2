@@ -269,10 +269,17 @@ RSpec.describe ActivityBusiness, type: :model do
       expect(@activity_business).to be_valid
     end
 
-    # it 'post_codeが空だとNG' do
-    #   @activity_business.post_code = ''
-    #   expect(@activity_business.valid?).to eq(false)
-    # end
+    it 'apply_suuplier_address:falseの場合はpost_codeが空だとNG' do
+      @activity_business.apply_suuplier_address = false
+      @activity_business.post_code = ''
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    it 'apply_suuplier_address:trueの場合はpost_codeが空でもOK' do
+      @activity_business.apply_suuplier_address = true
+      @activity_business.post_code = ''
+      expect(@activity_business).to be_valid
+    end
 
     it 'post_codeが形式外だとNG その1　ハイフンなし' do
       @activity_business.post_code = '0001111'
@@ -327,7 +334,14 @@ RSpec.describe ActivityBusiness, type: :model do
 
 
     # prefecture_id **************************
-    it 'prefecture_idが空でもOK' do
+    it 'apply_suuplier_address:falseの場合はprefecture_idが空だとNG' do
+      @activity_business.apply_suuplier_address = false
+      @activity_business.prefecture_id = nil
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    it 'apply_suuplier_address:trueの場合はprefecture_idが空でもOK' do
+      @activity_business.apply_suuplier_address = true
       @activity_business.prefecture_id = nil
       expect(@activity_business).to be_valid
     end
@@ -343,7 +357,14 @@ RSpec.describe ActivityBusiness, type: :model do
     end
 
     # area_id **************************
-    it 'area_idが空でもOK' do
+    it 'apply_suuplier_address:falseの場合はarea_idが空だとNG' do
+      @activity_business.apply_suuplier_address = false
+      @activity_business.area_id = nil
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    it 'apply_suuplier_address:trueの場合はarea_idが空でもOK' do
+      @activity_business.apply_suuplier_address = true
       @activity_business.area_id = nil
       expect(@activity_business).to be_valid
     end
@@ -359,7 +380,14 @@ RSpec.describe ActivityBusiness, type: :model do
     end
 
     # town_id **************************
-    it 'town_idが空でもOK' do
+    it 'apply_suuplier_address:falseの場合はtown_idが空だとNG' do
+      @activity_business.apply_suuplier_address = false
+      @activity_business.town_id = nil
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    it 'apply_suuplier_address:trueの場合はtown_idが空でもOK' do
+      @activity_business.apply_suuplier_address = true
       @activity_business.town_id = nil
       expect(@activity_business).to be_valid
     end
@@ -375,7 +403,14 @@ RSpec.describe ActivityBusiness, type: :model do
     end
 
     # detail_address **************************
-    it 'detail_addressが空でもOK' do
+    it 'apply_suuplier_address:falseの場合はdetail_addressが空だとNG' do
+      @activity_business.apply_suuplier_address = false
+      @activity_business.detail_address = ''
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    it 'apply_suuplier_address:trueの場合はdetail_addressが空でもOK' do
+      @activity_business.apply_suuplier_address = true
       @activity_business.detail_address = ''
       expect(@activity_business).to be_valid
     end

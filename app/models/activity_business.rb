@@ -26,21 +26,31 @@ class ActivityBusiness < ApplicationRecord
   validates :apply_suuplier_address, inclusion: { in: [true, false] }
   validates :apply_suuplier_phone, inclusion: { in: [true, false] }
 
-  validates :prefecture_id, inclusion: { in: 1..47 }, allow_blank: true
-  validates :area_id, inclusion: { in: 1..11 }, allow_blank: true
-  validates :town_id, inclusion: { in: 1..179 }, allow_blank: true
+  validates :prefecture_id, inclusion: { in: 1..47 }, if: :not_apply_suuplier_address?
+  validates :area_id, inclusion: { in: 1..11 }, if: :not_apply_suuplier_address?
+  validates :town_id, inclusion: { in: 1..179 }, if: :not_apply_suuplier_address?
 
   POSTCODE_REGEX = /\A\d{3}[-]\d{4}\z/
   PHONE_NUMBER_REGEX = /\A\d{10,11}\z/
-  validates :post_code, format: { with: POSTCODE_REGEX, message: "ハイフンあり半角数字のみ" }, allow_blank: true
-  validates :phone, format: { with: PHONE_NUMBER_REGEX, message: "ハイフンなし半角数字10桁または11桁のみ" }, allow_blank: true
+  validates :post_code, presence: true, format: { with: POSTCODE_REGEX, message: "ハイフンあり半角数字のみ" }, if: :not_apply_suuplier_address?
+  validates :phone, presence: true, format: { with: PHONE_NUMBER_REGEX, message: "ハイフンなし半角数字10桁または11桁のみ" }, if: :not_apply_suuplier_phone?
 
-  validates :detail_address, length: { maximum: 100, too_long: "最大%{count}文字まで" }, allow_blank: true
-  validates :building, length: { maximum: 100, too_long: "最大%{count}文字まで" }, allow_blank: true
+  validates :detail_address, presence: true, length: { maximum: 100, too_long: "最大%{count}文字まで" }, if: :not_apply_suuplier_address?
+  validates :building, presence: true, length: { maximum: 100, too_long: "最大%{count}文字まで" }, allow_blank: true
   validates :no_charge_cansel_before, inclusion: { in: %w(the_day_before three_days_before a_week_before) }
   validates :status, inclusion: { in: %w(inputing send_approve) }
   validates :guide_certification, length: { maximum: 100, too_long: "最大%{count}文字まで" }, allow_blank: true
   validates :has_insurance, inclusion: { in: [true, false] }
   validates :is_approved, inclusion: { in: [true, false] }
+
+  private
+
+  def not_apply_suuplier_address?
+    apply_suuplier_address == false
+  end
+
+  def not_apply_suuplier_phone?
+    apply_suuplier_phone == false
+  end
 
 end
