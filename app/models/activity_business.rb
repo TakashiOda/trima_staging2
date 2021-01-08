@@ -26,10 +26,10 @@ class ActivityBusiness < ApplicationRecord
   validates :apply_suuplier_address, inclusion: { in: [true, false] }
   validates :apply_suuplier_phone, inclusion: { in: [true, false] }
 
-  VALID_POSTCODE_REGEX = /\A\d{3}[-]\d{4}\z/
-  validates :email, format: { with: VALID_POSTCODE_REGEX, message: "ハイフンあり半角数字のみ" }
-  validates :post_code, inclusion: { in: [true, false] }, allow_blank: true
-  validates :phone, inclusion: { in: [true, false] }, allow_blank: true
+  POSTCODE_REGEX = /\A\d{3}[-]\d{4}\z/
+  PHONE_NUMBER_REGEX = /\A\d{10,11}\z/
+  validates :post_code, format: { with: POSTCODE_REGEX, message: "ハイフンあり半角数字のみ" }, allow_blank: true
+  validates :phone, format: { with: PHONE_NUMBER_REGEX, message: "ハイフンなし半角数字10桁または11桁のみ" }, allow_blank: true
 
   validates :detail_address, length: { maximum: 100, too_long: "最大%{count}文字まで" }, allow_blank: true
   validates :building, length: { maximum: 100, too_long: "最大%{count}文字まで" }, allow_blank: true
