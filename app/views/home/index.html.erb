@@ -33,7 +33,7 @@
               <%= image_tag activity.main_image.to_s, class: 'home_item_image' %>
               <div class="activity_info_box">
                 <div class="activity_name"><%= activity.name[0, 20] %></div>
-                <div class="activity_price">¥<%= activity.normal_adult_price.to_s(:delimited) %></div>
+                <div class="activity_price">¥<%= activity.normal_adult_price %></div>
               </div>
             </div>
           <% end %>

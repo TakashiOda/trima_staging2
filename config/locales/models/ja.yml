@@ -1,14 +1,20 @@
 ja:
   activerecord:
-    supplier: 事業者
+    models:
+      supplier: 事業者
+      supplier_profile: 事業者プロフィール
+      activity_business: アクティビティ事業情報
+      activity: アクティビティ
+      activity_language: 対応可能言語
+      guide: ガイド情報
     attributes:
       supplier:
-        name: 企業名/屋号
-        email: メールアドレス
-        password: パスワード
-    supplier_profile: 事業者情報
-    attributes:
+        id: "事業者ID"
+        name: "事業者名"
+        email: "メールアドレス"
+        password: "パスワード"
       supplier_profile:
+        id: 事業者プロフィールID
         representative_name: 代表者のお名前
         representative_kana: 代表者カナ
         manager_name: 担当者お名前
@@ -22,19 +28,18 @@ ja:
         phone: お電話番号
         contract_plan: 契約プラン
         is_suspended: 休止中
-    activity_business: 体験事業情報
-    attributes:
       activity_business:
+        id: ID
         supplier: 事業者ID
-        profile_image: 体験事業のアイコン画像
-        name: 体験事業名（日本語）
-        en_name: 体験事業名（英語）
-        cn_name: 体験事業名（簡体字）
-        tw_name: 体験事業名（繁体字）
-        profile_text: 体験事業名（日本語）
-        en_profile_text: 体験事業名（英語）
-        cn_profile_text: 体験事業名（簡体字）
-        tw_profile_text: 体験事業名（繁体字）
+        profile_image: アクティビティ事業のアイコン画像
+        name: アクティビティ事業名（日本語）
+        en_name: アクティビティ事業名（英語）
+        cn_name: アクティビティ事業名（簡体字）
+        tw_name: アクティビティ事業名（繁体字）
+        profile_text: アクティビティ事業名（日本語）
+        en_profile_text: アクティビティ事業名（英語）
+        cn_profile_text: アクティビティ事業名（簡体字）
+        tw_profile_text: アクティビティ事業名（繁体字）
         apply_suuplier_address: 事業者情報の住所適用欄
         apply_suuplier_phone: 事業者情報の電話番号適用欄
         prefecture_id: 都道府県
@@ -50,5 +55,64 @@ ja:
         insurance_image: 休止中
         status: 休止中
         is_approved: 休止中
+        guides: ガイド情報
         activity_languages: 対応可能言語
-        guides: ガイド
+      activity:
+        id: ID
+        name: アクティビティ名
+        activity_business_id: アクティビティ事業ID
+        supplier_id: 事業者ID
+        activity_category_id: カテゴリーID
+        description: アクティビティ紹介文
+        notes: アクティビティ補足説明欄
+        main_image: アクティビティ画像1
+        second_image: アクティビティ画像2
+        third_image: アクティビティ画像3
+        fourth_image: アクティビティ画像4
+        activity_minutes: アクティビティ実施分数
+        prefecture_id: 都道府県ID
+        area_id: エリアID
+        town_id: 市町村ID
+        detail_address: 以降の住所
+        building: 建物名部屋番号
+        longitude: 緯度
+        latitude:　経度
+        meeting_spot1_japanese_address: 集合場所の名前（日本語）
+        meeting_spot1_japanese_description: 集合場所の説明（日本語）
+        meeting_spot1_longitude: 集合場所の緯度
+        meeting_spot1_latitude: 集合場所の経度
+        maximum_num: 最大参加可能人数
+        minimum_num: 最小催行人数
+        available_age: 最低参加可能年齢
+        january: おすすめシーズン1月
+        febrary: おすすめシーズン2月
+        march: おすすめシーズン3月
+        april: おすすめシーズン4月
+        may: おすすめシーズン5月
+        june: おすすめシーズン6月
+        july: おすすめシーズン7月
+        august: おすすめシーズン8月
+        september: おすすめシーズン9月
+        october: おすすめシーズン10月
+        november: おすすめシーズン11月
+        december: おすすめシーズン12月
+        is_all_year_open: 通年アクティビティのチェック
+        start_date: シーズン開始日
+        end_date: シーズン終了日
+        normal_adult_price: 通常大人料金
+        has_season_price: シーズン料金の有無
+        monday_open: 月曜営業
+        tuesday_open: 火曜営業
+        wednesday_open: 水曜営業
+        thursday_open: 木曜営業
+        friday_open: 金曜営業
+        saturday_open: 土曜営業
+        sunday_open: 日曜営業
+        rain_or_shine: 雨天決行を適用
+        status: 登録ステータス
+        is_approved: 承認済フラグ
+        stop_now: 一時停止フラグ
+        created_at: 作成日時
+        updated_at: 更新日時
+        activity_courses: コース時間
+        activity_ageprices: 年齢別料金

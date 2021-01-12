@@ -475,6 +475,16 @@
       showExplanationWithValue('a_week_before');
     }
 
+    const guideItems = document.querySelectorAll("div.nested-fields");
+    for (var i = 0; i < guideItems.length; i++) {
+      const guidePrevElement = guideItems[i].children[0].children[0].children[0];
+      guidePrevElement.id = 'guide_image_prev'+i;
+      const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
+      guidePresentElement.id = 'guide_present_image'+i;
+      const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
+      guideImageInput.id = i;
+    }
+
   })();
 
   function hasInput() {

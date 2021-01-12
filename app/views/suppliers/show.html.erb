@@ -37,6 +37,7 @@
                 <%= current_supplier.activity_business.profile_text if current_supplier.activity_business.profile_text %>
               </td>
             </tr>
+            <% if !@activity_business.apply_suuplier_address %>
             <tr>
               <td class="td_front">都道府県・エリア</td>
               <td class="td_end">
@@ -44,6 +45,7 @@
                 <%= Area.find(current_supplier.activity_business.area_id).local_name if current_supplier.activity_business.area_id %>
               </td>
             </tr>
+            <% end %>
             <tr>
               <td class="td_front">登録ガイド</td>
               <td class="td_end">
