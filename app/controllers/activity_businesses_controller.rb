@@ -2,8 +2,8 @@ class ActivityBusinessesController < ApplicationController
   def index
   end
 
-  def show
-  end
+  # def show
+  # end
 
   def new
     @supplier = current_supplier
@@ -29,12 +29,21 @@ class ActivityBusinessesController < ApplicationController
   def update
     @supplier = current_supplier
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
-    if @activity_business.update(activity_biz_params)
+    if @activity_business.update_attributes(activity_biz_params)
+      @activity_business.save
+      if params[:activity_business][:apply_suuplier_address] == 'true'
+        @activity_business.post_code = nil
+        @activity_business.prefecture_id = nil
+        @activity_business.area_id = nil
+        @activity_business.town_id = nil
+        @activity_business.detail_address = nil
+        @activity_business.building = nil
+        @activity_business.save!
+      end
       flash[:notice] = '体験事業の情報を更新しました'
       redirect_to supplier_path(@supplier)
     else
-      flash[:alert] = '情報がおかしいです'
-      render 'edit'
+      render :edit
     end
   end
 

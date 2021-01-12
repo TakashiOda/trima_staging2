@@ -12,7 +12,8 @@ SupplierProfile.seed(:supplier_id) do |org|
   org.supplier_id = 1
   org.manager_name = "斎藤和義"
   org.prefecture_id = 2
-  org.town_id = 97
+  org.area_id = 1
+  org.town_id = 1
   org.detail_address = "字屈足基線２４０"
   org.post_code = "081-0154"
   org.phone = "08044262491"

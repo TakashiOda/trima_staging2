@@ -15,7 +15,6 @@ class CreateActivityBusinesses < ActiveRecord::Migration[6.0]
       t.boolean :apply_suuplier_phone, default: true
       t.string :post_code
       t.integer :prefecture_id
-      t.integer :area_id
       t.integer :town_id
       t.string :detail_address
       t.string :building

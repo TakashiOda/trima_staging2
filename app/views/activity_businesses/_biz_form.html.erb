@@ -1,9 +1,9 @@
-<%= form_for [@supplier, @activity_business] do |form| %>
+<%= form_for [@supplier, @activity_business], url: supplier_update_activity_business_path, method: :put do |form| %>
   <div class="form_title">
     <h3>体験事業の情報を編集</h3>
   </div>
+  <%= render 'layouts/error_messages', model: form.object %>
   <div class="user_show_content_down">
-    <%= render 'layouts/error_messages', model: form.object %>
     <div class="user_show_info_items_box">
       <section class="form_section">
         <div class="form_big_title">
@@ -45,41 +45,41 @@
             <div id="japanese_tab_content">
               <div class="form-group">
                 <%= form.label "企業名または屋号" %>
-                <%= form.text_field :name, minlength: 3, maxlength: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
+                <%= form.text_field :name, minlength: 2, required: true, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（日本語・残り</span><span id="biz_japanese_description_count">200</span><span>字）</span></label>
-                <%= form.text_area :profile_text, rows: 7, minlength: 20, maxlength: 200, required: true, class: "form-control", oninput: 'countBizDescriptionJP(this)' %>
+                <label><span>企業・事業の紹介文（日本語・残り</span><span id="biz_japanese_description_count">300</span><span>字）</span></label>
+                <%= form.text_area :profile_text, rows: 7, minlength: 5, maxlength: 300, required: true, class: "form-control", oninput: 'countBizDescriptionJP(this)' %>
               </div>
             </div>
             <div class="hidden" id="english_tab_content">
               <div class="form-group">
                 <%= form.label "体験事業名・屋号（英語）" %>
-                <%= form.text_field :en_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
+                <%= form.text_field :en_name, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（英語・残り</span><span id="biz_english_description_count">200</span><span>字）</span></label>
-                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'countBizDescriptionEN(this)' %>
+                <label><span>企業・事業の紹介文（英語・残り</span><span id="biz_english_description_count">300</span><span>字）</span></label>
+                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionEN(this)' %>
               </div>
             </div>
             <div class="hidden" id="chinese_tab_content">
               <div class="form-group">
                 <%= form.label "体験事業名・屋号（中国語・簡体字）" %>
-                <%= form.text_field :cn_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
+                <%= form.text_field :cn_name, minlength: 2, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（中国語・簡体字・残り</span><span id="biz_chinese_description_count">200</span><span>字）</span></label>
-                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'countBizDescriptionCN(this)' %>
+                <label><span>企業・事業の紹介文（中国語・簡体字・残り</span><span id="biz_chinese_description_count">300</span><span>字）</span></label>
+                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionCN(this)' %>
               </div>
             </div>
             <div class="hidden" id="taiwanese_tab_content">
               <div class="form-group">
                 <%= form.label "体験事業名・屋号（中国語・繁体字）" %>
-                <%= form.text_field :tw_name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
+                <%= form.text_field :tw_name, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（中国語・繁体字・残り</span><span id="biz_taiwanese_description_count">200</span><span>字）</span></label>
-                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 200, class: "form-control", oninput: 'countBizDescriptionTW(this)' %>
+                <label><span>企業・事業の紹介文（中国語・繁体字・残り</span><span id="biz_taiwanese_description_count">300</span><span>字）</span></label>
+                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionTW(this)' %>
               </div>
             </div>
           </div>
@@ -226,22 +226,56 @@
         <div id="address_box" class="<%= "hidden" if @activity_business.apply_suuplier_address %>">
           <div class="form-group">
             <div class="form-group">
-              <%= form.label "郵便番号" %>
+              <%= form.label "郵便番号（ハイフンあり・半角）" %>
               <%= form.text_field :post_code, class: "form-control", oninput: 'hasInput()' %>
             </div>
-            <div class="row">
-              <div class="col-half">
-                <%= form.label "都道府県" %>
-                <%# form.collection_select :prefecture_id, Prefecture.all, :id, :local_name,{prompt: "都道府県を選択"}, required: true, class: "form-control" %>
-                <%= form.select :prefecture_id, {'北海道': 2}, { include_blank: false}, { class: 'form-control' } %>
+            <div class="form-group">
+              <%= form.label "都道府県" %>
+              <%= form.select :prefecture_id, {'北海道': 1}, { include_blank: false}, { class: 'form-control' } %>
+            </div>
+            <div class="form-group">
+              <%= form.label "エリア" %>
+              <%= form.collection_select :area_id, Area.all, :id, :local_name, {:selected => 1}, class: "form-control", onChange: 'hasChangeArea(this)' %>
+            </div>
+            <div class="form-group town_box">
+              <%= form.hidden_field :town_id, value: nil, id: 'hidden_town_field' %>
+              <%= form.label "市区町村" %>
+              <div id="area_1" class="town_select">
+                <%= collection_select :town_name, :name, Town.where(area_id: 1), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
               </div>
-              <div class="col-half">
-                <%= form.label "市区町村" %>
-                <%= form.collection_select :town_id, Town.all, :id, :jp_name,{prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasInput()' %>
+              <div id="area_2" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 2), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_3" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 3), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_4" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 4), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_5" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 5), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_6" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 6), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_7" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 7), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_8" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 8), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_9" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 9), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_10" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 10), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_11" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 11), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
               </div>
             </div>
             <div class="form-group">
-              <%= form.label "住所" %>
+              <%= form.label "以降の住所" %>
               <%= form.text_field :detail_address, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
             </div>
             <div class="form-group">
@@ -354,7 +388,6 @@
     margin-bottom: 5px;
   }
   input#insurance_image_form {
-    /* height: 40px; */
     display: flex;
     border-radius: 0;
     background: #fff;
@@ -369,9 +402,6 @@
     border-radius: 5px;
     width: 90%;
   }
-  /* .form-group input{
-    background: lightgray !important;
-  } */
   .biz_form_status_toggle_box {
     display: flex;
     align-items: center;
@@ -414,6 +444,12 @@
     border-top-right-radius: 7px;
     border-bottom-right-radius: 7px;
   }
+  .town_box {
+    display: flex;
+  }
+  div.town_select select {
+    width: 100%;
+  }
 </style>
 
 <script type="text/javascript">
@@ -423,15 +459,14 @@
     const enDescription = document.getElementById('activity_business_en_profile_text');
     const cnDescription = document.getElementById('activity_business_cn_profile_text');
     const twDescription = document.getElementById('activity_business_tw_profile_text');
-    changeCountAndColor(description, 'biz_japanese_description_count', 200)
-    changeCountAndColor(enDescription, 'biz_english_description_count', 200)
-    changeCountAndColor(cnDescription, 'biz_chinese_description_count', 200)
-    changeCountAndColor(twDescription, 'biz_taiwanese_description_count', 200)
+    changeCountAndColor(description, 'biz_japanese_description_count', 300)
+    changeCountAndColor(enDescription, 'biz_english_description_count', 300)
+    changeCountAndColor(cnDescription, 'biz_chinese_description_count', 300)
+    changeCountAndColor(twDescription, 'biz_taiwanese_description_count', 300)
 
     const theDayBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_the_day_before");
     const threeDaysBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_three_days_before");
     const aWeekBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_a_week_before");
-    // console.log(theDayBeforeRadio.checked);
     if (theDayBeforeRadio.checked) {
       showExplanationWithValue('the_day_before');
     } else if (threeDaysBeforeRadio.checked) {
@@ -449,19 +484,19 @@
 
   function countBizDescriptionJP(obj) {
     hasInput();
-    changeCountAndColor(obj, 'biz_japanese_description_count', 200);
+    changeCountAndColor(obj, 'biz_japanese_description_count', 300);
   }
   function countBizDescriptionEN(obj) {
     hasInput();
-    changeCountAndColor(obj, 'biz_english_description_count', 200);
+    changeCountAndColor(obj, 'biz_english_description_count', 300);
   }
   function countBizDescriptionCN(obj) {
     hasInput();
-    changeCountAndColor(obj, 'biz_chinese_description_count', 200);
+    changeCountAndColor(obj, 'biz_chinese_description_count', 300);
   }
   function countBizDescriptionTW(obj) {
     hasInput();
-    changeCountAndColor(obj, 'biz_taiwanese_description_count', 200);
+    changeCountAndColor(obj, 'biz_taiwanese_description_count', 300);
   }
 
   // textを変更するtarget idと数字を入れると、数字を超えたときにtargetのtextと色を変えてくれる
@@ -626,6 +661,24 @@
   function showInsuranceUploader(obj) {
     const uploadBox = document.getElementById("insurance_uploader_box");
     uploadBox.classList.remove('hidden');
+  }
+
+  function hasChangeArea(obj) {
+    const townSelectors = document.querySelectorAll("div.town_select");
+    for (var i = 0; i < townSelectors.length; i++) {
+      const townSelectItem = townSelectors[i];
+      townSelectItem.classList.add('hidden');
+    }
+
+    const selectedAreaNum = obj.value;
+    const targetId = `area_${selectedAreaNum}`;
+    const targetTownSelectBox = document.getElementById(`${targetId}`);
+    targetTownSelectBox.classList.remove('hidden');
+  }
+
+  function hasSelectTown(obj) {
+    const targetTownSelectBox = document.getElementById('hidden_town_field');
+    targetTownSelectBox.value = obj.value;
   }
 
   </script>
