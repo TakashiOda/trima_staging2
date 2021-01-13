@@ -13,7 +13,7 @@
           <div class="form-group user_edit_image_box">
             <div class="user_edit_image_box_inside">
               <img id="user_image_prev" src="#" class="hidden" />
-              <% if current_supplier && @activity_business.profile_image? %>
+              <% if current_supplier && @activity_business.profile_image %>
                 <%= image_tag @activity_business.profile_image.to_s, class: 'user_present_image', id: 'user_present_image' %>
               <% else %>
                 <%= image_tag 'default_images/no_avatar_for_biz.png', class: 'user_present_image', id: 'user_present_image' %>
@@ -44,41 +44,53 @@
           <div class="tab-content-items">
             <div id="japanese_tab_content">
               <div class="form-group">
-                <%= form.label "企業名または屋号" %>
+                <%= form.label :name %>
                 <%= form.text_field :name, minlength: 2, required: true, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（日本語・残り</span><span id="biz_japanese_description_count">300</span><span>字）</span></label>
+                <div class="limited_textbox_label_box">
+                  <%= form.label :profile_text %>
+                  <label><span>残り<span id="biz_japanese_description_count">300</span>字</span></label>
+                </div>
                 <%= form.text_area :profile_text, rows: 7, minlength: 5, maxlength: 300, required: true, class: "form-control", oninput: 'countBizDescriptionJP(this)' %>
               </div>
             </div>
             <div class="hidden" id="english_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（英語）" %>
+                <%= form.label :en_name %>
                 <%= form.text_field :en_name, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（英語・残り</span><span id="biz_english_description_count">300</span><span>字）</span></label>
+                <div class="limited_textbox_label_box">
+                  <%= form.label :en_profile_text %>
+                  <label><span>残り<span id="biz_english_description_count">300</span>字</span></label>
+                </div>
                 <%= form.text_area :en_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionEN(this)' %>
               </div>
             </div>
             <div class="hidden" id="chinese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・簡体字）" %>
+                <%= form.label :cn_name %>
                 <%= form.text_field :cn_name, minlength: 2, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（中国語・簡体字・残り</span><span id="biz_chinese_description_count">300</span><span>字）</span></label>
+                <div class="limited_textbox_label_box">
+                  <%= form.label :cn_profile_text %>
+                  <label><span>残り<span id="biz_chinese_description_count">300</span>字</span></label>
+                </div>
                 <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionCN(this)' %>
               </div>
             </div>
             <div class="hidden" id="taiwanese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・繁体字）" %>
+                <%= form.label :tw_name %>
                 <%= form.text_field :tw_name, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（中国語・繁体字・残り</span><span id="biz_taiwanese_description_count">300</span><span>字）</span></label>
+                <div class="limited_textbox_label_box">
+                  <%= form.label :tw_profile_text %>
+                  <label><span>残り<span id="biz_taiwanese_description_count">300</span>字</span></label>
+                </div>
                 <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionTW(this)' %>
               </div>
             </div>

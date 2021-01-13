@@ -1,22 +1,16 @@
 <%= stylesheet_link_tag 'suppliers' %>
 <div class="sign_up_in_page">
-  <!-- <div class="sign_up_in_page_front">
-    <h2>trima</h2>
-    <h4>旅行・観光事業者のためのall in oneツール</h4>
-    <p>お店や施設の情報発信をひとまとめに</p>
-    <p>予約管理が簡単に</p>
-  </div> -->
   <div class="sign_up_in_page_end">
     <h3>事業者アカウントを作成する</h3>
     <%= form_with model: @supplier, url: supplier_registration_path(@supplier), id: 'new_supplier', class: 'new_user', local: true do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div class="supplier_signup_input_box">
         <div class="form-group">
-          <%= f.label :メールアドレス %>
+          <%= f.label :email %>
           <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true %>
         </div>
         <div class="form-group password">
-          <%= f.label :パスワード %>
+          <%= f.label :password %>
           <%= f.password_field :password, autocomplete: "new-password", class: "form-control invisible" ,id: "password-input", required: true %>
           <div id="password_visible_btn"><i class='fas fa-eye-slash'></i></div>
         </div>
@@ -41,9 +35,7 @@
       <li><span>すでにアカウントをお持ちの方は<%= link_to "事業者ログイン", suppliers_sign_in_path %></span></li>
       <li><span>認証メールが届かない方は<%= link_to "コチラ", new_supplier_confirmation_path %></span></li>
     </div>
-    <!-- <div class="didnt_recieve_btn_box">
-      <%= link_to "認証メールが届かない方はこちら", new_supplier_confirmation_path %>
-    </div> -->
+    <%= link_to "認証メールが届かない方はこちら", new_supplier_confirmation_path %>
   </div>
 </div>
 

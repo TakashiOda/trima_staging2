@@ -2,7 +2,8 @@
   <div class="guide_item_left_box">
     <div class="guide_image_box_inside">
       <img id="guide_image_prev" src="#" class="hidden " />
-      <% if @activity_business.guides.any? && f.index.to_s =~ /^[0-9]+$/ %>
+      <%# if @activity_business.guides.any? && f.index.to_s =~ /^[0-9]+$/ %>
+      <% if @activity_business.guides.any? && f.index.to_s =~ /^[0-9]+$/ && @activity_business.guides.offset(f.index).first %>
         <%= image_tag @activity_business.guides.offset(f.index).first.avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
       <% else %>
         <%= image_tag 'default_images/no_avatar_image.png', class: 'guide_present_image', id: 'guide_present_image' %>
@@ -17,32 +18,29 @@
   <div class="guide_item_right_box">
     <div class="guide_item_right_box_left">
       <div class="guide_input_box">
-        <%= f.label "ガイド名" %>
-        <%= f.text_field :name, class: "form-control", oninput: 'hasInput()' %>
-        <%#= f.text_field :name, class: "form-control", minlength: 2, maxlength: 40, required: true, oninput: 'hasInput()' %>
+        <%= f.label t('activerecord.attributes.activity_business/guides.name') %>
+        <%= f.text_field :name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
       </div>
       <div class="guide_input_box">
-        <%= f.label "担当アクティビティ" %>
-        <%= f.text_field :roll, maxlength: 30, class: "form-control", oninput: 'hasInput()' %>
+        <%= f.label t('activerecord.attributes.activity_business/guides.roll') %>
+        <%= f.text_field :roll, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
       </div>
       <div class="guide_input_box profile">
-        <%= f.label "プロフィール（200字以内）" %>
-        <label><span>プロフィール（残り</span><span class="biz_guide_description_count">200</span><span>字）</span></label>
-        <%= f.text_area :introduction, class: "form-control", oninput: 'countGuideProfile(this)' %>
-        <%#= f.text_area :introduction, maxlength: 200, class: "form-control", oninput: 'countGuideProfile(this)' %>
+        <%= f.label t('activerecord.attributes.activity_business/guides.introduction') %>
+        <%= f.text_area :introduction, maxlength: 200, class: "form-control", oninput: 'countGuideProfile(this)' %>
       </div>
       <div class="guide_input_box guide_language_check_boxes">
         <li>
           <%= f.check_box :speak_japanese,:as => :boolean, oninput: 'hasInput()'%>
-          <%= f.label :speak_japanese, :日本語 %>
+          <%= f.label t('activerecord.attributes.activity_business/guides.speak_japanese') %>
         </li>
         <li>
           <%= f.check_box :speak_english,:as => :boolean, oninput: 'hasInput()'%>
-          <%= f.label :speak_english, :英語 %>
+          <%= f.label t('activerecord.attributes.activity_business/guides.speak_english') %>
         </li>
         <li>
           <%= f.check_box :speak_chinese,:as => :boolean, oninput: 'hasInput()'%>
-          <%= f.label :speak_chinese, :中国語 %>
+          <%= f.label t('activerecord.attributes.activity_business/guides.speak_chinese') %>
         </li>
       </div>
 

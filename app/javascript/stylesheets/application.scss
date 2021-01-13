@@ -225,22 +225,17 @@ a.disabled{
 .body_content {
   position: relative;
   width: 100%;
-  // height: 100%;
   min-height: 500px;
-  // min-height: 85vh;
   margin-top: 56px;
 }
 body.erb_body {
   margin: 0 !important;
   position: relative;
-  // height: 100vh;
 }
 body.erb_body.add_padding_top {
   padding-top: 0px;
   position: relative;
-  // height: 100vh;
 }
-
 
 .notice {
   background: #05c77399;
@@ -320,10 +315,10 @@ body.erb_body.add_padding_top {
 }
 
 .btn-cansel {
-    background: #eaeaea !important;
-    margin-bottom: 10px;
-    color: #797979;
-    font-size: 12px;
+  background: #eaeaea !important;
+  margin-bottom: 10px;
+  color: #797979;
+  font-size: 12px;
 }
 
 .btn-submit:hover,
@@ -337,8 +332,6 @@ input.disabled {
 
 //5.複数ページ共通====================================
 .thankyou_email_container {
-  // background: #eaeaea;
-  // height: 100vh;
   padding: 50px;
 }
 
@@ -403,30 +396,26 @@ form label {
   color: #8a8a8a;
   font-weight: bold;
 }
+.limited_textbox_label_box {
+  display: flex;
+  justify-content: space-between;
+  span {
+    font-size: 12px;
+    color: #8a8a8a;
+    font-weight: bold;
+  }
+}
 .form_btns {
   margin: 50px 0;
 }
 // form関連====================終わり====================
-
 .child_position_center {
   display: flex;
   justify-content: center;
 }
 
-
-
 //7.header========================================
 header.erb_header {
-  // background: $user-main-color !important;
-  // background: linear-gradient(45deg, #08AEEA, #2AF598);
-  // background: linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 80%, #0cb567);
-  // background: linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
-  // background: -moz-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
-  // background: -webkit-linear-gradient(45deg,#1a68ca,#08AEEA 20%,#2AF598 85%, #a9ff00);
-  // padding: 0px;
-  // height: 60px;
-  // width: 100%;
-  // z-index: 100;
   background: linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
   background: -webkit-linear-gradient(0deg, #1a68ca, #08AEEA 20%, #2AF598 85%, #a9ff00);
   padding: 0px;

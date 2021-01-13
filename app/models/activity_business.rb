@@ -45,6 +45,7 @@ class ActivityBusiness < ApplicationRecord
 
   validate :require_any_languages
   validate :require_any_guides
+  validates :guides, associated: true
 
   private
 
