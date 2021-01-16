@@ -1,6 +1,6 @@
 class Activity < ApplicationRecord
   belongs_to :activity_business
-  belongs_to :activity_category
+  # belongs_to :activity_category
   has_many :activity_courses, dependent: :destroy
   accepts_nested_attributes_for :activity_courses, allow_destroy: true
   has_many :activity_ageprices, dependent: :destroy
@@ -45,8 +45,9 @@ class Activity < ApplicationRecord
                :less_than_or_equal_to => 480,
                :message => '体験時間の分数は20~480分の範囲で指定してください'
              }
-  validate :area_cant_be_blank
-  validate :town_cant_be_blank
+
+  validates :area_id, inclusion: { in: 1..11, message: "が選択されていません" }
+  validates :town_id, inclusion: { in: 1..179, message: "が選択されていません" }
 
   validates  :meeting_spot1_japanese_address, length: { maximum: 80, too_long: "集合場所の住所は最大 %{count} 字までです" }
   validates  :meeting_spot1_japanese_description, length: { maximum: 200, too_long: "集合場所の詳細説明は最大 %{count} 字までです" }

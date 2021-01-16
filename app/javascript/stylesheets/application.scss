@@ -213,9 +213,6 @@ a.disabled{
   display: flex;
   justify-content: space-between;
 }
-.col-half {
-  width: 48%;
-}
 
 .hidden {
   display: none !important;
@@ -407,6 +404,15 @@ form label {
 }
 .form_btns {
   margin: 50px 0;
+}
+span.must_input {
+  background: #ff9d9d;
+  font-size: 13px;
+  color: #fff;
+  font-weight: bold;
+  padding: 3px 10px;
+  margin-left: 10px;
+  border-radius: 20px;
 }
 // form関連====================終わり====================
 .child_position_center {
@@ -1469,7 +1475,7 @@ table td {
   position: sticky;
   top: 65px;
   background: #fff;
-  padding: 20px 15px 30px;
+  padding: 20px 15px 20px;
   border-radius: 7px;
   box-shadow: 0px 0px 7px -1px #b7b7b7;
 }

@@ -7,6 +7,7 @@ ja:
       activity: アクティビティ
       activity_language: 対応可能言語
       guide:  ガイド情報
+      activity_translation: アクティビティ翻訳情報
     attributes:
       supplier:
         id: 事業者ID
@@ -70,21 +71,21 @@ ja:
         name: アクティビティ名
         activity_business_id: アクティビティ事業ID
         supplier_id:  事業者ID
-        activity_category_id: カテゴリーID
-        description:  アクティビティ紹介文
-        notes:  アクティビティ補足説明欄
+        activity_category_id: アクティビティのカテゴリー
+        description:  アクティビティ紹介文（日本語）
+        notes:  注意事項・持ち物・装備など（日本語）
         main_image: アクティビティ画像1
         second_image: アクティビティ画像2
         third_image:  アクティビティ画像3
         fourth_image: アクティビティ画像4
-        activity_minutes: アクティビティ実施分数
-        prefecture_id:  都道府県ID
-        area_id:  エリアID
-        town_id:  市町村ID
+        activity_minutes: アクティビティ所要時間
+        prefecture_id:  都道府県
+        area_id:  実施するエリア
+        town_id:  実施する市町村
         detail_address: 以降の住所
         building: 建物名部屋番号
-        longitude:  緯度
-        latitude: 経度
+        longitude:  経度
+        latitude: 緯度
         meeting_spot1_japanese_address: 集合場所の名前（日本語）
         meeting_spot1_japanese_description: 集合場所の説明（日本語）
         meeting_spot1_longitude:  集合場所の緯度
@@ -105,8 +106,8 @@ ja:
         november: おすすめシーズン11月
         december: おすすめシーズン12月
         is_all_year_open: 通年アクティビティのチェック
-        start_date: シーズン開始日
-        end_date: シーズン終了日
+        start_date: 期間開始日
+        end_date: 期間終了日
         normal_adult_price: 通常大人料金
         has_season_price: シーズン料金の有無
         monday_open:  月曜営業
@@ -124,3 +125,9 @@ ja:
         updated_at: 更新日時
         activity_courses: コース時間
         activity_ageprices: 年齢別料金
+      activity_translation:
+        id: 翻訳アクティビティID
+        activity_id:  アクティビティID
+        name: アクティビティ名
+        profile_text: アクティビティ紹介文
+        notes: 注意事項・持ち物・装備など
