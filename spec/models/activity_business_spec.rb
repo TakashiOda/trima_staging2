@@ -5,9 +5,16 @@ RSpec.describe ActivityBusiness, type: :model do
   before do
     @supplier = build(:supplier)
     @activity_business = build(:activity_business, supplier: @supplier)
+
   end
 
   describe '#create' do
+    # profile_image **************************
+    # it 'profile_imageが空だとNG' do
+    #   @activity_business.profile_image = nil
+    #   expect(@activity_business.valid?).to eq(false)
+    # end
+
     # name **************************
     it 'nameが空だとNG' do
       @activity_business.name = ''
@@ -623,33 +630,33 @@ RSpec.describe ActivityBusiness, type: :model do
     end
 
     # 対応可能言語**************************
-    it '対応可能言語 言語IDが空だとNG' do
-      @activity_language = @activity_business.activity_languages[0]
-      @activity_language.language_id = nil
-      expect(@activity_business.valid?).to eq(false)
-    end
-
-    it '対応可能言語 言語IDが0だとNG' do
-      @activity_language = @activity_business.activity_languages[0]
-      @activity_language.language_id = 0
-      expect(@activity_business.valid?).to eq(false)
-    end
-    it '対応可能言語 言語IDが29だとNG' do
-      @activity_language = @activity_business.activity_languages[0]
-      @activity_language.language_id = 29
-      expect(@activity_business.valid?).to eq(false)
-    end
-    it '対応可能言語 言語IDが1だとOK' do
-      @activity_language = @activity_business.activity_languages[0]
-      @activity_language.language_id = 1
-      expect(@activity_business).to be_valid
-    end
-
-    it '対応可能言語 言語IDが28だとOK' do
-      @activity_language = @activity_business.activity_languages[0]
-      @activity_language.language_id = 28
-      expect(@activity_business).to be_valid
-    end
+    # it '対応可能言語 言語IDが空だとNG' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = nil
+    #   expect(@activity_business.valid?).to eq(false)
+    # end
+    #
+    # it '対応可能言語 言語IDが0だとNG' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = 0
+    #   expect(@activity_business.valid?).to eq(false)
+    # end
+    # it '対応可能言語 言語IDが29だとNG' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = 29
+    #   expect(@activity_business.valid?).to eq(false)
+    # end
+    # it '対応可能言語 言語IDが1だとOK' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = 1
+    #   expect(@activity_business).to be_valid
+    # end
+    #
+    # it '対応可能言語 言語IDが28だとOK' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = 28
+    #   expect(@activity_business).to be_valid
+    # end
 
   end
 end

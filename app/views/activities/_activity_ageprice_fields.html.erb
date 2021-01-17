@@ -14,27 +14,27 @@
         <span class="ageprice_unit">歳</span>
       </div>
       <div class="ageprice_row normal_price">
-        <%= f.number_field :normal_price, min: 0, max: 100000, step: 10,class: "form-control time_input", required: true, oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
+        <%= f.number_field :normal_price, min: 0, max: 100000, step: 10,class: "form-control time_input", oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
       </div>
       <div class="ageprice_row season_price">
         <% if @activity.has_season_price %>
           <div class="season_price_inner">
-          <%= f.number_field :low_price, min: 0, max: 100000, step: 10, class: "form-control time_input", required: true, oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
+          <%= f.number_field :low_price, min: 0, max: 100000, step: 10, class: "form-control time_input", oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
           </div>
         <% else %>
           <div class="season_price_inner hidden">
-          <%= f.number_field :low_price, min: 0, max: 100000, step: 10, class: "form-control time_input", required: true, oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
+          <%= f.number_field :low_price, min: 0, max: 100000, step: 10, class: "form-control time_input", oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
           </div>
         <% end %>
       </div>
       <div class="ageprice_row season_price">
         <% if @activity.has_season_price %>
           <div class="season_price_inner">
-          <%= f.number_field :high_price, min: 0, max: 100000, step: 10, class: "form-control time_input", required: true, oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
+          <%= f.number_field :high_price, min: 0, max: 100000, step: 10, class: "form-control time_input", oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
           </div>
         <% else %>
           <div class="season_price_inner hidden">
-          <%= f.number_field :high_price, min: 0, max: 100000, step: 10, class: "form-control time_input", required: true, oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
+          <%= f.number_field :high_price, min: 0, max: 100000, step: 10, class: "form-control time_input", oninput: 'hasInput()' %><span class="ageprice_unit">円</span>
           </div>
         <% end %>
       </div>

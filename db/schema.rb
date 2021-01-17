@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
     t.integer "language_id"
     t.index ["activity_business_id", "language_id"], name: "activity_languages_unique_index", unique: true
     t.index ["activity_business_id"], name: "index_activity_languages_on_activity_business_id"
+    t.index ["language_id"], name: "index_activity_languages_on_language_id"
   end
 
   create_table "activity_stocks", force: :cascade do |t|
@@ -488,6 +489,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
   add_foreign_key "activity_businesses", "suppliers"
   add_foreign_key "activity_courses", "activities"
   add_foreign_key "activity_languages", "activity_businesses"
+  add_foreign_key "activity_languages", "languages"
   add_foreign_key "activity_stocks", "activity_courses"
   add_foreign_key "activity_translations", "activities"
   add_foreign_key "areas", "prefectures"

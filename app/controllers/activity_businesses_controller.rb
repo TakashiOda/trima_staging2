@@ -24,11 +24,12 @@ class ActivityBusinessesController < ApplicationController
   def edit
     @supplier = current_supplier
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
+    # @activity_business.insurance_image.cache! unless @activity_business.insurance_image.blank?
   end
 
   def update
     # binding.pry
-    # params[:activity_business][:guides_attributes]["0"][:avatar].blank?
+    # params[:activity_business][:profile_image]
     @supplier = current_supplier
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity_business.update_attributes(activity_biz_params)
@@ -70,7 +71,7 @@ class ActivityBusinessesController < ApplicationController
                                                   :detail_address, :building, :apply_suuplier_address,
                                                   :apply_suuplier_phone, :post_code, :has_insurance,
                                                   :guide_certification, :phone, :no_charge_cansel_before,
-                                                  :insurance_image,
+                                                  :insurance_image, :insurance_image_cache,
                                                   guides_attributes: [:id, :activity_business_id, :name,
                                                   :avatar, :avatar_cache, :introduction, :roll, :speak_japanese,
                                                   :speak_english, :speak_chinese, :other_language, :stop_now,

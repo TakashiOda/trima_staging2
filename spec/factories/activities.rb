@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :activity do
-    activity_business                  {nil}
+    activity_business_id               {1}
     supplier_id                        {1}
     activity_category_id               {1}
     name                               {'十勝川ラフティング'}
@@ -52,5 +52,11 @@ FactoryBot.define do
     status                             {'draft'}
     is_approved                        {false}
     stop_now                           {false}
+    activity_courses {
+      [FactoryBot.build(:activity_course, activity: nil)]
+    }
+    activity_ageprices {
+      [FactoryBot.build(:activity_ageprice, activity: nil)]
+    }
   end
 end

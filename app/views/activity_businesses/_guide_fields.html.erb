@@ -2,7 +2,6 @@
   <div class="guide_item_left_box">
     <div class="guide_image_box_inside">
       <img id="guide_image_prev" src="#" class="hidden " />
-      <%# if @activity_business.guides.any? && f.index.to_s =~ /^[0-9]+$/ %>
       <% if @activity_business.guides.any? && f.index.to_s =~ /^[0-9]+$/ && @activity_business.guides.offset(f.index).first %>
         <%= image_tag @activity_business.guides.offset(f.index).first.avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
       <% else %>
@@ -11,7 +10,7 @@
       <% end %>
       <div class="user_edit_image_upload_btn_box">
         <%= f.file_field :avatar, id: 'guide_image_input', class: 'guide_image_upload_btn',onchange: 'selectFile(this)', oninput: 'hasInput()' %>
-        <span onclick="guide_image_input_btn(this)"><i class="fas fa-camera"></i></span>
+        <span onclick="guide_image_input_btn(this)" class="avatar_input_icon"><i class="fas fa-camera"></i></span>
       </div>
     </div>
   </div>
@@ -27,7 +26,7 @@
       </div>
       <div class="guide_input_box profile">
         <%= f.label t('activerecord.attributes.activity_business/guides.introduction') %>
-        <%= f.text_area :introduction, maxlength: 200, class: "form-control", oninput: 'countGuideProfile(this)' %>
+        <%= f.text_area :introduction, maxlength: 200, class: "form-control" %>
       </div>
       <div class="guide_input_box guide_language_check_boxes">
         <li>
@@ -58,13 +57,20 @@
 <script>
   function guide_image_input_btn(obj) {
     const guideSelectElement = obj.parentNode.children[0];
-    guideSelectElement.click();
+    if (guideSelectElement.classList.contains('field_with_errors')) {
+      const inputBtn = guideSelectElement.children[0];
+      inputBtn.click();
+    } else {
+      guideSelectElement.click();
+    }
   }
 
   function selectFile(obj) {
     const selfId = obj.id
+    console.log(selfId);
     const guideImageFile = obj.files[0];
     const blobUrl = window.URL.createObjectURL(guideImageFile);
+    // console.log(blobUrl);
     const post_img = document.getElementById(`guide_image_prev${selfId}`);
     post_img.src = blobUrl;
     post_img.classList.toggle("hidden");

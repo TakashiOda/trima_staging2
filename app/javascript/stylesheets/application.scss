@@ -414,6 +414,9 @@ span.must_input {
   margin-left: 10px;
   border-radius: 20px;
 }
+.avatar_input_icon svg:hover {
+  cursor: pointer;
+}
 // form関連====================終わり====================
 .child_position_center {
   display: flex;

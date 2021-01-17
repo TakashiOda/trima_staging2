@@ -31,6 +31,5 @@ FactoryBot.define do
     activity_languages {
       [FactoryBot.build(:activity_language, activity_business: nil)]
     }
-
   end
 end

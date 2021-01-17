@@ -62,12 +62,14 @@ class ActivitiesController < ApplicationController
     if @activity.activity_translations.find_by(language_id: 3).nil?
       @activity.activity_translations.build
     end
+    if @activity.town_id
+      @town = @activity.town_id
+    else
+      @town = nil
+    end
   end
 
   def update
-    # puts params[:activity][:this_page_path]
-    # binding.pry
-    # params[:activity][:this_page_path]
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
       @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price

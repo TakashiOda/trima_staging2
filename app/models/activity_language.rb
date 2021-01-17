@@ -1,5 +1,6 @@
 class ActivityLanguage < ApplicationRecord
   belongs_to :activity_business
+  belongs_to :language
 
   validates :language_id, presence: true,
             :numericality => {

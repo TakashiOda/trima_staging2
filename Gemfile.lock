@@ -110,6 +110,9 @@ GEM
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
     ffi (1.13.1)
+    file_validators (3.0.0)
+      activemodel (>= 3.2)
+      mime-types (>= 1.0)
     fog-aws (3.6.7)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
@@ -349,6 +352,7 @@ DEPENDENCIES
   devise-i18n
   dotenv-rails
   factory_bot_rails
+  file_validators
   fog-aws
   foreman
   jbuilder (= 2.10.0)

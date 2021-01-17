@@ -25,6 +25,10 @@ class InsuranceImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg png pdf)
   end
 
+  def size_range
+    0..2.megabytes
+  end
+
   # 保存するファイルの命名規則
   def filename
     if original_filename

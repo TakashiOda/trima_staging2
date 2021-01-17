@@ -17,10 +17,10 @@ class Activity < ApplicationRecord
   mount_uploader :fourth_image, MainImageUploader
 
   #バリデーション*********************************************************
-  validates  :name, presence: true, length: { maximum: 40, too_long: "体験名は最大 %{count} 字までです" }
-  validates  :description, presence: true, length: { maximum: 200, too_long: "体験紹介文は最大 %{count} 字までです" }
-  validates  :notes, length: { maximum: 500, too_long: "注意事項は最大 %{count} 字までです" }
-  validates  :activity_category_id, presence: true
+  validates  :name, presence: true, length: { maximum: 40, too_long: "体験名は最大40字までです" }
+  validates  :description, presence: true, length: { maximum: 200, too_long: "体験紹介文は最大200字までです" }
+  validates  :notes, length: { maximum: 500, too_long: "注意事項は最大500字までです" }
+  validates  :activity_category_id, presence: true, inclusion: { in: 1..32, message: "が選択されていません" }
   validates  :available_age, presence: true,
              :numericality => {
                :greater_than_or_equal_to => 0,
@@ -69,8 +69,11 @@ class Activity < ApplicationRecord
   validate :require_at_least_one_course
   validate :require_upto_ten
   validate :course_gap_less_than_activity_time
+  validates :activity_courses, associated: true
   # 料金関連
   validate :require_any_ageprice
+  validate :must_have_high_price_if_has_season_price
+  validate :must_have_low_price_if_has_season_price
 
   def area_cant_be_blank
     if self.area_id.nil?
@@ -98,21 +101,50 @@ class Activity < ApplicationRecord
 
   #コースの間隔が体験時間より小さくなることは許容しない
   def course_gap_less_than_activity_time
-    if activity_courses.size > 1
+    if activity_courses.size >= 2
       start_times = []
       activity_courses.each do |course|
-        start_times.push(course.start_time)
+        fixDateTime = course.start_time.change(year: 2020, month: 1, day: 1)
+        start_times.push(fixDateTime)
       end
-      sort_times = start_times.sort
-      times_count = sort_times.count - 1
+      sort_times = start_times.sort.reverse
       too_short_time_errors = []
-      times_count.times do |i|
-        if ((sort_times[i+1] - sort_times[i])/60) < self.activity_minutes
+      (sort_times.count - 1).times do |i|
+        gapMins = (sort_times[i] - sort_times[i+1]) / 60
+        if gapMins < activity_minutes
           too_short_time_errors.push('error')
         end
       end
       if too_short_time_errors.include?('error')
-        errors.add(:コース時間, "の間隔は体験時間より大きくしてください") if too_short_time_errors.include?('error')
+        errors.add(:activity_courses, "の間隔は体験時間より大きくしてください")
+      end
+    end
+  end
+
+  def must_have_low_price_if_has_season_price
+    if self.activity_ageprices.size > 0 && self.has_season_price
+      low_price_blank_errors = []
+      self.activity_ageprices.each do |ageprice|
+        if ageprice.low_price == nil || ageprice.low_price == ''
+          low_price_blank_errors.push('error')
+        end
+      end
+      if low_price_blank_errors.include?('error')
+        errors.add(:activity_ageprices, "のローシーズン料金が未入力です")
+      end
+    end
+  end
+
+  def must_have_high_price_if_has_season_price
+    if self.activity_ageprices.size > 0 && self.has_season_price
+      high_price_blank_errors = []
+      self.activity_ageprices.each do |ageprice|
+        if ageprice.high_price == nil || ageprice.high_price == ''
+          high_price_blank_errors.push('error')
+        end
+      end
+      if high_price_blank_errors.include?('error')
+        errors.add(:activity_ageprices, "のハイシーズン料金が未入力です")
       end
     end
   end
@@ -120,22 +152,22 @@ class Activity < ApplicationRecord
 
   # コース時間は最低１つ必要
   def require_at_least_one_course
-    errors.add(:コース時間, "を1つ以上作成して下さい") if activity_courses.blank?
+    errors.add(:activity_courses, "を1つ以上作成して下さい") if self.activity_courses.blank?
   end
 
   # コース時間は5個まで
   def require_upto_ten
-    errors.add(:コース時間, "は5以下にして下さい") if self.activity_courses.size >= 6
+    errors.add(:activity_courses, "は5以下にして下さい") if self.activity_courses.size >= 6
   end
 
   # 料金は最低１つ必要
   def require_any_ageprice
-    errors.add(:料金, "を1つ以上作成して下さい") if activity_ageprices.blank?
+    errors.add(:activity_ageprices, "を1つ以上作成して下さい") if activity_ageprices.blank?
   end
 
   # 料金は3個まで
   def require_upto_ten
-    errors.add(:料金, "は3以下にして下さい") if self.activity_ageprices.size >= 4
+    errors.add(:activity_ageprices, "は3以下にして下さい") if self.activity_ageprices.size >= 4
   end
 
 end

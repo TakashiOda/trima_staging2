@@ -23,9 +23,9 @@ class MainImageUploader < CarrierWave::Uploader::Base
      %w(jpg jpeg gif png)
   end
 
-  # def scale(width, height)
-  #   # do something
-  # end
+  def size_range
+    0..2.megabytes
+  end
 
 
   # Override the filename of the uploaded files:

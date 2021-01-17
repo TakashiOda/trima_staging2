@@ -125,9 +125,23 @@ ja:
         updated_at: 更新日時
         activity_courses: コース時間
         activity_ageprices: 年齢別料金
+      activity/activity_courses:
+        activity_id: コース時間情報
+        start_time: 体験の開始時間
+      activity/activity_ageprices:
+        activity_id: 年齢別料金情報
+        age_from: 年齢別料金の年齢下限
+        age_to: 年齢別料金の年齢上限
+        normal_price: 通常料金
+        high_price: ハイシーズン料金
+        low_price:  ローシーズン料金
       activity_translation:
         id: 翻訳アクティビティID
         activity_id:  アクティビティID
         name: アクティビティ名
         profile_text: アクティビティ紹介文
         notes: 注意事項・持ち物・装備など
+  errors:
+    messages:
+      extension_whitelist_error: "のファイル形式はJPGまたはPNGのみ"
+      max_size_error: "のファイルサイズは2MB以下にしてください"

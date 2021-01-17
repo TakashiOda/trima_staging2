@@ -117,10 +117,10 @@
           <div class="label_with_must">
             <%= f.label :area_id %><span class="must_input">必須</span>
           </div>
-          <%= f.collection_select :area_id, Area.all, :id, :local_name, {prompt: "選択してください"}, class: "form-control", onChange: 'hasChangeArea(this)' %>
+          <%= f.collection_select :area_id, Area.all, :id, :local_name, {prompt: "選択してください"}, class: "form-control", id: 'area_input', onChange: 'hasChangeArea(this)' %>
         </div>
         <div class="form-group">
-          <%= f.hidden_field :town_id, value: nil, id: 'hidden_town_field' %>
+          <%= f.hidden_field :town_id, id: 'hidden_town_field' %>
           <div class="label_with_must">
             <%= f.label :town_id %><span class="must_input">必須</span>
           </div>
@@ -566,6 +566,34 @@
     changeCountAndColor(engDescription, 'activity_english_description_count', 200);
     changeCountAndColor(engNotes, 'activity_english_notes_count', 500);
     changeCountAndColor(meetingDescription, 'meeting_spot1_japanese_description_count', 200);
+
+    // 初期でエリアに応じて市町村セレクタを分岐表示
+    const areaInput = document.getElementById('area_input');
+    if (areaInput.value !== '') {
+      const townSelectors = document.querySelectorAll("div.town_select");
+      for (var i = 0; i < townSelectors.length; i++) {
+        const townSelectItem = townSelectors[i];
+        townSelectItem.classList.add('hidden');
+      }
+      const targetId = `area_${areaInput.value}`;
+      const targetTownSelectBox = document.getElementById(`${targetId}`);
+      targetTownSelectBox.classList.remove('hidden');
+    }
+
+    // 初期で市町村セレクタを選択する
+    const townInput = document.getElementById('hidden_town_field');
+    if (townInput.value !== '') {
+      const targetId = `area_${areaInput.value}`;
+      const targetTownSelectBox = document.getElementById(`${targetId}`);
+      const select =targetTownSelectBox.children[0];
+      const options = select.options;
+      for (var i = 0; i < options.length; i++) {
+        if (options[i].value == townInput.value) {
+          options[i].selected = true;
+        }
+      }
+    }
+
   })();
 
   function hasInput() {

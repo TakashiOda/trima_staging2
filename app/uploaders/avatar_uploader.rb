@@ -25,10 +25,14 @@ class AvatarUploader < CarrierWave::Uploader::Base
      %w(jpg jpeg gif png)
   end
 
+  def size_range
+    0..2.megabytes
+  end
+
   # 保存するファイルの命名規則
   def filename
     if original_filename
-      "#{original_filename}.jpg"
+      "#{original_filename}"
     else
      "avatar_#{model.class.to_s.underscore}_#{model.id}.jpg"
     end

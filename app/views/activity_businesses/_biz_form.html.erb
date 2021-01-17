@@ -203,7 +203,20 @@
         </div>
         <div class="form-group hidden" id="insurance_uploader_box">
           <%= form.label "加入保険の証書アップロード" %>
-          <%= form.file_field :insurance_image, id: 'insurance_image_form', oninput: 'hasInput()' %>
+          <%# if @activity_business.insurance_image %>
+            <%# if @activity_business.insurance_image.url[-3, 3] == 'pdf' || @activity_business.insurance_image.url[-3, 3] == 'PDF' %>
+              <!-- <object data="" type="application/pdf" class="insurance_type_pdf"></object> -->
+              <%#=@activity_business.insurance_image.url%>
+            <%# else %>
+              <%#= image_tag(@activity_business.insurance_image.url, class: 'insurance_type_image') %>
+            <%# end %>
+          <%# end %>
+          <%= form.file_field :insurance_image, id: 'insurance_image_form', oninput: 'hasInput()', class: "hidden", onChange: 'changeFile(this)' %>
+          <%= form.hidden_field :insurance_image_cache %>
+          <div class="insurance_image_input_box">
+            <button type="button" name="button" onclick="insurance_image_input_btn()">ファイルを選択</button>
+            <span id="insurance_file_name"><%= @activity_business.insurance_image.identifier %></span>
+          </div>
         </div>
         <div class="explanation_about_cansel">
           <div id="explanation_about_the_day_before" class="">
@@ -462,6 +475,13 @@
   div.town_select select {
     width: 100%;
   }
+  .insurance_type_image {
+    width: 100%;
+  }
+  .insurance_type_pdf {
+    width: 200px;
+    height: 290px;
+  }
 </style>
 
 <script type="text/javascript">
@@ -495,6 +515,13 @@
       guidePresentElement.id = 'guide_present_image'+i;
       const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
       guideImageInput.id = i;
+    }
+
+    const insuranceCheck = document.getElementById("activity_business_has_insurance_true");
+    const checkVal = insuranceCheck.checked;
+    if (checkVal) {
+      const insuranceInput = document.getElementById("insurance_uploader_box");
+      insuranceInput.classList.remove('hidden');
     }
 
   })();
@@ -587,9 +614,35 @@
     }
   }
 
-  const selectElement = document.querySelector('#post_image');
+  const selectElement = document.getElementById('post_image');
   function image_input_btn() {
     selectElement.click();
+  }
+
+  function insurance_image_input_btn() {
+    const insuranceInput = document.getElementById('insurance_image_form');
+    insuranceInput.click();
+  }
+
+  function changeFile(fileInput) {
+    const file = fileInput.files[0];
+    const fileName = file.name;
+    const ext = getExt(fileName);
+    const extArr = ['pdf', 'PDF', 'jpg', 'jpeg','JPG','JPEG', 'PNG', 'png']
+    const isContain = extArr.indexOf(ext);
+    console.log(isContain);
+    if (isContain == -1) {
+      alert('ファイル形式が正しくありません',
+            'jpg、png、pdfのいずれかの形式のファイルを選んでください');
+    } else {
+      const display = document.getElementById('insurance_file_name');
+      display.innerHTML = fileName;
+    }
+  }
+  function getExt(filename) {
+  	var pos = filename.lastIndexOf('.');
+  	if (pos === -1) return '';
+  	return filename.slice(pos + 1);
   }
 
   document.getElementById('post_image').addEventListener('change', function (e) {
