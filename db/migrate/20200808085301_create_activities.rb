@@ -4,14 +4,14 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.string :name
       t.references :activity_business, null: false, foreign_key: true
       t.integer :supplier_id, null: false
-      t.integer :activity_category_id, null: false, foreign_key: true
+      t.integer :activity_category_id, default: 1
       t.text    :description
       t.text    :notes
       t.string  :main_image
       t.string  :second_image
       t.string  :third_image
       t.string  :fourth_image
-      t.integer :activity_minutes
+      t.integer :activity_minutes, default: 60
 
       # 住所情報
       t.integer :prefecture_id
@@ -67,7 +67,6 @@ class CreateActivities < ActiveRecord::Migration[6.0]
 
       #その他設定
       t.boolean :rain_or_shine, default: false #false=>雨天中止 true=>雨天決行
-      t.boolean :advertise_activate, default: false #0 => approved, 1 =>not yet
       t.string :status, default: 'draft' #draft, published, deleted
       t.boolean :is_approved, default: false #0 => approved, 1 =>not yet
       t.boolean :stop_now, default: false
@@ -91,7 +90,6 @@ class CreateActivities < ActiveRecord::Migration[6.0]
     add_index :activities, :october
     add_index :activities, :november
     add_index :activities, :december
-    add_index :activities, :advertise_activate
     add_index :activities, :is_approved
     add_index :activities, :stop_now
     add_index :activities, :is_all_year_open

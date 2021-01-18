@@ -2,7 +2,7 @@
   <div class="guide_item_left_box">
     <div class="guide_image_box_inside">
       <img id="guide_image_prev" src="#" class="hidden " />
-      <% if @activity_business.guides.any? && f.index.to_s =~ /^[0-9]+$/ %>
+      <% if @activity_business.guides.any? && f.index.to_s =~ /^[0-9]+$/ && @activity_business.guides.offset(f.index).first %>
         <%= image_tag @activity_business.guides.offset(f.index).first.avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
       <% else %>
         <%= image_tag 'default_images/no_avatar_image.png', class: 'guide_present_image', id: 'guide_present_image' %>
@@ -10,37 +10,36 @@
       <% end %>
       <div class="user_edit_image_upload_btn_box">
         <%= f.file_field :avatar, id: 'guide_image_input', class: 'guide_image_upload_btn',onchange: 'selectFile(this)', oninput: 'hasInput()' %>
-        <span onclick="guide_image_input_btn(this)"><i class="fas fa-camera"></i></span>
+        <span onclick="guide_image_input_btn(this)" class="avatar_input_icon"><i class="fas fa-camera"></i></span>
       </div>
     </div>
   </div>
   <div class="guide_item_right_box">
     <div class="guide_item_right_box_left">
       <div class="guide_input_box">
-        <%= f.label "ガイド名" %>
-        <%= f.text_field :name, class: "form-control", minlength: 3, maxlength: 30, required: true, oninput: 'hasInput()' %>
+        <%= f.label t('activerecord.attributes.activity_business/guides.name') %>
+        <%= f.text_field :name, maxlength: 40, class: "form-control", oninput: 'hasInput()' %>
       </div>
       <div class="guide_input_box">
-        <%= f.label "担当アクティビティ" %>
-        <%= f.text_field :roll, maxlength: 30, class: "form-control", oninput: 'hasInput()' %>
+        <%= f.label t('activerecord.attributes.activity_business/guides.roll') %>
+        <%= f.text_field :roll, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
       </div>
       <div class="guide_input_box profile">
-        <%= f.label "プロフィール（200字以内）" %>
-        <label><span>プロフィール（残り</span><span class="biz_guide_description_count">200</span><span>字）</span></label>
-        <%= f.text_area :introduction, maxlength: 200, class: "form-control", oninput: 'countGuideProfile(this)' %>
+        <%= f.label t('activerecord.attributes.activity_business/guides.introduction') %>
+        <%= f.text_area :introduction, maxlength: 200, class: "form-control" %>
       </div>
       <div class="guide_input_box guide_language_check_boxes">
         <li>
           <%= f.check_box :speak_japanese,:as => :boolean, oninput: 'hasInput()'%>
-          <%= f.label :speak_japanese, :日本語 %>
+          <%= f.label t('activerecord.attributes.activity_business/guides.speak_japanese') %>
         </li>
         <li>
           <%= f.check_box :speak_english,:as => :boolean, oninput: 'hasInput()'%>
-          <%= f.label :speak_english, :英語 %>
+          <%= f.label t('activerecord.attributes.activity_business/guides.speak_english') %>
         </li>
         <li>
           <%= f.check_box :speak_chinese,:as => :boolean, oninput: 'hasInput()'%>
-          <%= f.label :speak_chinese, :中国語 %>
+          <%= f.label t('activerecord.attributes.activity_business/guides.speak_chinese') %>
         </li>
       </div>
 
@@ -56,29 +55,22 @@
 </div>
 
 <script>
-
-  window.onload = function () {
-    const guideItems = document.querySelectorAll("div.nested-fields");
-    for (var i = 0; i < guideItems.length; i++) {
-      const guidePrevElement = guideItems[i].children[0].children[0].children[0];
-      guidePrevElement.id = 'guide_image_prev'+i;
-      // console.log(guide_prev.id);
-      const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
-      guidePresentElement.id = 'guide_present_image'+i;
-      const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
-      guideImageInput.id = i;
-    }
-  };
-
   function guide_image_input_btn(obj) {
     const guideSelectElement = obj.parentNode.children[0];
-    guideSelectElement.click();
+    if (guideSelectElement.classList.contains('field_with_errors')) {
+      const inputBtn = guideSelectElement.children[0];
+      inputBtn.click();
+    } else {
+      guideSelectElement.click();
+    }
   }
 
   function selectFile(obj) {
     const selfId = obj.id
+    console.log(selfId);
     const guideImageFile = obj.files[0];
     const blobUrl = window.URL.createObjectURL(guideImageFile);
+    // console.log(blobUrl);
     const post_img = document.getElementById(`guide_image_prev${selfId}`);
     post_img.src = blobUrl;
     post_img.classList.toggle("hidden");

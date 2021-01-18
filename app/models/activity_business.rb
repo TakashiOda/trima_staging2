@@ -41,12 +41,19 @@ class ActivityBusiness < ApplicationRecord
   validates :status, inclusion: { in: %w(inputing send_approve) }
   validates :guide_certification, length: { maximum: 100, message: "は最大100文字まで" }, allow_blank: true
   validates :has_insurance, inclusion: { in: [true, false] }
+  validates :insurance_image, presence: true, if: :has_insurance?
   validates :is_approved, inclusion: { in: [true, false] }
 
   validate :require_any_languages
   validate :require_any_guides
+  validates :guides, associated: true
+  validates :activity_languages, associated: true
 
   private
+
+  def has_insurance?
+    has_insurance == true
+  end
 
   def not_apply_suuplier_address?
     apply_suuplier_address == false

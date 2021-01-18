@@ -8,7 +8,7 @@ class SupplierProfile < ApplicationRecord
   validates :manager_name, presence: true, length: { maximum: 30, message: "最大30文字まで" }, allow_blank: true
   validates :manager_name_kana, presence: true, length: { maximum: 30, message: "最大30文字まで" }, allow_blank: true
   validates :prefecture_id, inclusion: { in: 1..47 }
-  validates :town_id, inclusion: { in: 1..179 }
+  validates :town_id, inclusion: { in: 1..179, message: "が選択されていません" }
   validates :detail_address, presence: true, length: { maximum: 100, message: "最大100文字まで" }
   validates :building, presence: true, length: { maximum: 100, message: "最大100文字まで" }, allow_blank: true
   POSTCODE_REGEX = /\A\d{3}[-]\d{4}\z/

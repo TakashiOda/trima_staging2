@@ -5,9 +5,16 @@ RSpec.describe ActivityBusiness, type: :model do
   before do
     @supplier = build(:supplier)
     @activity_business = build(:activity_business, supplier: @supplier)
+
   end
 
   describe '#create' do
+    # profile_image **************************
+    # it 'profile_imageが空だとNG' do
+    #   @activity_business.profile_image = nil
+    #   expect(@activity_business.valid?).to eq(false)
+    # end
+
     # name **************************
     it 'nameが空だとNG' do
       @activity_business.name = ''
@@ -23,6 +30,7 @@ RSpec.describe ActivityBusiness, type: :model do
       @activity_business.name = 'a'
       expect(@activity_business.valid?).to eq(false)
     end
+
     it 'nameが40文字以下だとOK' do
       st = (0...40).map{ (65 + rand(26)).chr }.join
       @activity_business.name = st
@@ -281,53 +289,69 @@ RSpec.describe ActivityBusiness, type: :model do
       expect(@activity_business).to be_valid
     end
 
-    it 'post_codeが形式外だとNG その1　ハイフンなし' do
+    it 'apply_suuplier_address:falseの場合はpost_codeが空だとNG' do
+      @activity_business.apply_suuplier_address = false
+      @activity_business.post_code = ''
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    it '（apply_suuplier_addressがfalseの場合）post_codeが形式外だとNG その1　ハイフンなし' do
+      @activity_business.apply_suuplier_address = false
       @activity_business.post_code = '0001111'
       expect(@activity_business.valid?).to eq(false)
     end
 
-    it 'post_codeが形式外だとNG その2　ハイフン位置が正しくない' do
+    it '（apply_suuplier_addressがfalseの場合）post_codeが形式外だとNG その2　ハイフン位置が正しくない' do
+      @activity_business.apply_suuplier_address = false
       @activity_business.post_code = '0-001111'
       expect(@activity_business.valid?).to eq(false)
     end
 
-    it 'post_codeが形式外だとNG その3　半角数字ではない' do
+    it '（apply_suuplier_addressがfalseの場合）post_codeが形式外だとNG その3　半角数字ではない' do
+      @activity_business.apply_suuplier_address = false
       @activity_business.post_code = '001-000１'
       expect(@activity_business.valid?).to eq(false)
     end
 
     # phone **************************
     it 'phoneが形式通りだとOK 10桁' do
+      @activity_business.apply_suuplier_phone = false
       @activity_business.phone = '0001112222'
       expect(@activity_business).to be_valid
     end
 
     it 'phoneが形式通りだとOK 11桁' do
+      @activity_business.apply_suuplier_phone = false
       @activity_business.phone = '00011112222'
       expect(@activity_business).to be_valid
     end
 
-    # it 'phoneが空だとNG' do
-    #   @activity_business.phone = ''
-    #   expect(@activity_business.valid?).to eq(false)
-    # end
+    it 'phoneが空だとNG' do
+      @activity_business.apply_suuplier_phone = false
+      @activity_business.phone = ''
+      expect(@activity_business.valid?).to eq(false)
+    end
 
     it 'phoneが形式外だとNG その1　ハイフンあり' do
+      @activity_business.apply_suuplier_phone = false
       @activity_business.phone = '000-1111-2222'
       expect(@activity_business.valid?).to eq(false)
     end
 
     it 'phoneが形式外だとNG その2　半角ではない' do
+      @activity_business.apply_suuplier_phone = false
       @activity_business.phone = '００１０００２０００３'
       expect(@activity_business.valid?).to eq(false)
     end
 
     it 'phoneが形式外だとNG その3　9桁' do
+      @activity_business.apply_suuplier_phone = false
       @activity_business.phone = '000111222'
       expect(@activity_business.valid?).to eq(false)
     end
 
     it 'phoneが形式外だとNG その4　12桁' do
+      @activity_business.apply_suuplier_phone = false
       @activity_business.phone = '000011112222'
       expect(@activity_business.valid?).to eq(false)
     end
@@ -352,6 +376,7 @@ RSpec.describe ActivityBusiness, type: :model do
     end
 
     it 'prefecture_idが1..47の範囲外だとNG' do
+      @activity_business.apply_suuplier_address = false
       @activity_business.prefecture_id = 48
       expect(@activity_business.valid?).to eq(false)
     end
@@ -370,11 +395,13 @@ RSpec.describe ActivityBusiness, type: :model do
     end
 
     it 'area_idが1..11の範囲内だとOK' do
+      @activity_business.apply_suuplier_address = false
       @activity_business.area_id = 11
       expect(@activity_business).to be_valid
     end
 
     it 'area_idが1..11の範囲外だとNG' do
+      @activity_business.apply_suuplier_address = false
       @activity_business.area_id = 12
       expect(@activity_business.valid?).to eq(false)
     end
@@ -393,11 +420,13 @@ RSpec.describe ActivityBusiness, type: :model do
     end
 
     it 'town_idが1..179の範囲内だとOK' do
+      @activity_business.apply_suuplier_address = false
       @activity_business.town_id = 179
       expect(@activity_business).to be_valid
     end
 
     it 'town_idが1..179の範囲外だとNG' do
+      @activity_business.apply_suuplier_address = false
       @activity_business.town_id = 180
       expect(@activity_business.valid?).to eq(false)
     end
@@ -416,12 +445,14 @@ RSpec.describe ActivityBusiness, type: :model do
     end
 
     it 'detail_addressが100文字以下だとOK' do
+      @activity_business.apply_suuplier_address = false
       st = (0...100).map{ (65 + rand(26)).chr }.join
       @activity_business.detail_address = st
       expect(@activity_business).to be_valid
     end
 
     it 'detail_addressが101文字以上だとNG' do
+      @activity_business.apply_suuplier_address = false
       st = (0...101).map{ (65 + rand(26)).chr }.join
       @activity_business.detail_address = st
       expect(@activity_business.valid?).to eq(false)
@@ -429,17 +460,20 @@ RSpec.describe ActivityBusiness, type: :model do
 
     # building **************************
     it 'buildingが空でもOK' do
+      @activity_business.apply_suuplier_address = false
       @activity_business.building = ''
       expect(@activity_business).to be_valid
     end
 
     it 'buildingが100文字以下だとOK' do
+      @activity_business.apply_suuplier_address = false
       st = (0...100).map{ (65 + rand(26)).chr }.join
       @activity_business.building = st
       expect(@activity_business).to be_valid
     end
 
     it 'buildingが101文字以上だとNG' do
+      @activity_business.apply_suuplier_address = false
       st = (0...101).map{ (65 + rand(26)).chr }.join
       @activity_business.building = st
       expect(@activity_business.valid?).to eq(false)
@@ -543,6 +577,86 @@ RSpec.describe ActivityBusiness, type: :model do
       @activity_business.is_approved = false
       expect(@activity_business).to be_valid
     end
+
+    # Guide name**************************
+    it 'ガイド名が空だとNG' do
+      @guide = @activity_business.guides[0]
+      @guide.name = ''
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    it 'ガイド名が40文字以下だとOK' do
+      @guide = @activity_business.guides[0]
+      st = (0...40).map{ (65 + rand(26)).chr }.join
+      @guide.name = st
+      expect(@activity_business).to be_valid
+    end
+
+    it 'ガイド名が41文字以上だとNG' do
+      @guide = @activity_business.guides[0]
+      st = (0...41).map{ (65 + rand(26)).chr }.join
+      @guide.name = st
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    # Guide roll**************************
+    it 'ガイド担当が100文字以下だとOK' do
+      @guide = @activity_business.guides[0]
+      st = (0...100).map{ (65 + rand(26)).chr }.join
+      @guide.roll = st
+      expect(@activity_business).to be_valid
+    end
+
+    it 'ガイド担当が101文字以上だとNG' do
+      @guide = @activity_business.guides[0]
+      st = (0...101).map{ (65 + rand(26)).chr }.join
+      @guide.roll = st
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    # Guide introduction**************************
+    it 'ガイド紹介文が200文字以下だとOK' do
+      @guide = @activity_business.guides[0]
+      st = (0...200).map{ (65 + rand(26)).chr }.join
+      @guide.introduction = st
+      expect(@activity_business).to be_valid
+    end
+
+    it 'ガイド紹介文が201文字以上だとNG' do
+      @guide = @activity_business.guides[0]
+      st = (0...201).map{ (65 + rand(26)).chr }.join
+      @guide.introduction = st
+      expect(@activity_business.valid?).to eq(false)
+    end
+
+    # 対応可能言語**************************
+    # it '対応可能言語 言語IDが空だとNG' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = nil
+    #   expect(@activity_business.valid?).to eq(false)
+    # end
+    #
+    # it '対応可能言語 言語IDが0だとNG' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = 0
+    #   expect(@activity_business.valid?).to eq(false)
+    # end
+    # it '対応可能言語 言語IDが29だとNG' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = 29
+    #   expect(@activity_business.valid?).to eq(false)
+    # end
+    # it '対応可能言語 言語IDが1だとOK' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = 1
+    #   expect(@activity_business).to be_valid
+    # end
+    #
+    # it '対応可能言語 言語IDが28だとOK' do
+    #   @activity_language = @activity_business.activity_languages[0]
+    #   @activity_language.language_id = 28
+    #   expect(@activity_business).to be_valid
+    # end
 
   end
 end

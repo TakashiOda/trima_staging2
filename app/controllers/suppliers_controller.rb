@@ -36,7 +36,6 @@ class SuppliersController < ApplicationController
       flash[:notice] = '事業者情報を更新しました'
       redirect_to supplier_path(@supplier)
     else
-      flash[:alert] = '事業者情報がおかしいです'
       render 'edit'
     end
   end

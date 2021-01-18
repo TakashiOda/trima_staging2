@@ -13,7 +13,7 @@
           <div class="form-group user_edit_image_box">
             <div class="user_edit_image_box_inside">
               <img id="user_image_prev" src="#" class="hidden" />
-              <% if current_supplier && @activity_business.profile_image? %>
+              <% if !@activity_business.profile_image.blank? %>
                 <%= image_tag @activity_business.profile_image.to_s, class: 'user_present_image', id: 'user_present_image' %>
               <% else %>
                 <%= image_tag 'default_images/no_avatar_for_biz.png', class: 'user_present_image', id: 'user_present_image' %>
@@ -44,41 +44,53 @@
           <div class="tab-content-items">
             <div id="japanese_tab_content">
               <div class="form-group">
-                <%= form.label "企業名または屋号" %>
+                <%= form.label :name %>
                 <%= form.text_field :name, minlength: 2, required: true, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（日本語・残り</span><span id="biz_japanese_description_count">300</span><span>字）</span></label>
+                <div class="limited_textbox_label_box">
+                  <%= form.label :profile_text %>
+                  <label><span>残り<span id="biz_japanese_description_count">300</span>字</span></label>
+                </div>
                 <%= form.text_area :profile_text, rows: 7, minlength: 5, maxlength: 300, required: true, class: "form-control", oninput: 'countBizDescriptionJP(this)' %>
               </div>
             </div>
             <div class="hidden" id="english_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（英語）" %>
+                <%= form.label :en_name %>
                 <%= form.text_field :en_name, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（英語・残り</span><span id="biz_english_description_count">300</span><span>字）</span></label>
+                <div class="limited_textbox_label_box">
+                  <%= form.label :en_profile_text %>
+                  <label><span>残り<span id="biz_english_description_count">300</span>字</span></label>
+                </div>
                 <%= form.text_area :en_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionEN(this)' %>
               </div>
             </div>
             <div class="hidden" id="chinese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・簡体字）" %>
+                <%= form.label :cn_name %>
                 <%= form.text_field :cn_name, minlength: 2, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（中国語・簡体字・残り</span><span id="biz_chinese_description_count">300</span><span>字）</span></label>
+                <div class="limited_textbox_label_box">
+                  <%= form.label :cn_profile_text %>
+                  <label><span>残り<span id="biz_chinese_description_count">300</span>字</span></label>
+                </div>
                 <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionCN(this)' %>
               </div>
             </div>
             <div class="hidden" id="taiwanese_tab_content">
               <div class="form-group">
-                <%= form.label "体験事業名・屋号（中国語・繁体字）" %>
+                <%= form.label :tw_name %>
                 <%= form.text_field :tw_name, class: "form-control", oninput: 'hasInput()' %>
               </div>
               <div class="form-group">
-                <label><span>企業・事業の紹介文（中国語・繁体字・残り</span><span id="biz_taiwanese_description_count">300</span><span>字）</span></label>
+                <div class="limited_textbox_label_box">
+                  <%= form.label :tw_profile_text %>
+                  <label><span>残り<span id="biz_taiwanese_description_count">300</span>字</span></label>
+                </div>
                 <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionTW(this)' %>
               </div>
             </div>
@@ -191,7 +203,20 @@
         </div>
         <div class="form-group hidden" id="insurance_uploader_box">
           <%= form.label "加入保険の証書アップロード" %>
-          <%= form.file_field :insurance_image, id: 'insurance_image_form', oninput: 'hasInput()' %>
+          <%# if @activity_business.insurance_image %>
+            <%# if @activity_business.insurance_image.url[-3, 3] == 'pdf' || @activity_business.insurance_image.url[-3, 3] == 'PDF' %>
+              <!-- <object data="" type="application/pdf" class="insurance_type_pdf"></object> -->
+              <%#=@activity_business.insurance_image.url%>
+            <%# else %>
+              <%#= image_tag(@activity_business.insurance_image.url, class: 'insurance_type_image') %>
+            <%# end %>
+          <%# end %>
+          <%= form.file_field :insurance_image, id: 'insurance_image_form', oninput: 'hasInput()', class: "hidden", onChange: 'changeFile(this)' %>
+          <%= form.hidden_field :insurance_image_cache %>
+          <div class="insurance_image_input_box">
+            <button type="button" name="button" onclick="insurance_image_input_btn()">ファイルを選択</button>
+            <span id="insurance_file_name"><%= @activity_business.insurance_image.identifier %></span>
+          </div>
         </div>
         <div class="explanation_about_cansel">
           <div id="explanation_about_the_day_before" class="">
@@ -235,10 +260,10 @@
             </div>
             <div class="form-group">
               <%= form.label "エリア" %>
-              <%= form.collection_select :area_id, Area.all, :id, :local_name, {:selected => 1}, class: "form-control", onChange: 'hasChangeArea(this)' %>
+              <%= form.collection_select :area_id, Area.all, :id, :local_name, {}, class: "form-control", id: 'area_input', onChange: 'hasChangeArea(this)' %>
             </div>
             <div class="form-group town_box">
-              <%= form.hidden_field :town_id, value: nil, id: 'hidden_town_field' %>
+              <%= form.hidden_field :town_id, id: 'hidden_town_field' %>
               <%= form.label "市区町村" %>
               <div id="area_1" class="town_select">
                 <%= collection_select :town_name, :name, Town.where(area_id: 1), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
@@ -450,6 +475,13 @@
   div.town_select select {
     width: 100%;
   }
+  .insurance_type_image {
+    width: 100%;
+  }
+  .insurance_type_pdf {
+    width: 200px;
+    height: 290px;
+  }
 </style>
 
 <script type="text/javascript">
@@ -473,6 +505,50 @@
       showExplanationWithValue('three_days_before');
     } else {
       showExplanationWithValue('a_week_before');
+    }
+
+    const guideItems = document.querySelectorAll("div.nested-fields");
+    for (var i = 0; i < guideItems.length; i++) {
+      const guidePrevElement = guideItems[i].children[0].children[0].children[0];
+      guidePrevElement.id = 'guide_image_prev'+i;
+      const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
+      guidePresentElement.id = 'guide_present_image'+i;
+      const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
+      guideImageInput.id = i;
+    }
+
+    const insuranceCheck = document.getElementById("activity_business_has_insurance_true");
+    const checkVal = insuranceCheck.checked;
+    if (checkVal) {
+      const insuranceInput = document.getElementById("insurance_uploader_box");
+      insuranceInput.classList.remove('hidden');
+    }
+
+    // 初期でエリアに応じて市町村セレクタを分岐表示
+    const areaInput = document.getElementById('area_input');
+    if (areaInput.value !== '') {
+      const townSelectors = document.querySelectorAll("div.town_select");
+      for (var i = 0; i < townSelectors.length; i++) {
+        const townSelectItem = townSelectors[i];
+        townSelectItem.classList.add('hidden');
+      }
+      const targetId = `area_${areaInput.value}`;
+      const targetTownSelectBox = document.getElementById(`${targetId}`);
+      targetTownSelectBox.classList.remove('hidden');
+    }
+
+    // 初期で市町村セレクタを選択する
+    const townInput = document.getElementById('hidden_town_field');
+    if (townInput.value !== '') {
+      const targetId = `area_${areaInput.value}`;
+      const targetTownSelectBox = document.getElementById(`${targetId}`);
+      const select =targetTownSelectBox.children[0];
+      const options = select.options;
+      for (var i = 0; i < options.length; i++) {
+        if (options[i].value == townInput.value) {
+          options[i].selected = true;
+        }
+      }
     }
 
   })();
@@ -565,9 +641,35 @@
     }
   }
 
-  const selectElement = document.querySelector('#post_image');
+  const selectElement = document.getElementById('post_image');
   function image_input_btn() {
     selectElement.click();
+  }
+
+  function insurance_image_input_btn() {
+    const insuranceInput = document.getElementById('insurance_image_form');
+    insuranceInput.click();
+  }
+
+  function changeFile(fileInput) {
+    const file = fileInput.files[0];
+    const fileName = file.name;
+    const ext = getExt(fileName);
+    const extArr = ['pdf', 'PDF', 'jpg', 'jpeg','JPG','JPEG', 'PNG', 'png']
+    const isContain = extArr.indexOf(ext);
+    console.log(isContain);
+    if (isContain == -1) {
+      alert('ファイル形式が正しくありません',
+            'jpg、png、pdfのいずれかの形式のファイルを選んでください');
+    } else {
+      const display = document.getElementById('insurance_file_name');
+      display.innerHTML = fileName;
+    }
+  }
+  function getExt(filename) {
+  	var pos = filename.lastIndexOf('.');
+  	if (pos === -1) return '';
+  	return filename.slice(pos + 1);
   }
 
   document.getElementById('post_image').addEventListener('change', function (e) {
