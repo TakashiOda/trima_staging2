@@ -1,40 +1,214 @@
-<div class="user_show_content_up">
-  <div class="user_show_content_up__up">
-    <div class="user_show_avatar_box">
-      <div class="user_show_avatar_box_inside">
-        <% if @user.avatar.present? %>
-          <%= image_tag current_user.avatar.url, class: "user_avatar" %>
-        <% else %>
-          <%= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="user_show_btn_box">
-      <div>
-        <% if @user == current_user %>
-          <%= link_to edit_user_path(current_user) do %>
-            <!-- <i class="far fa-edit"></i> -->
-            <span>Edit</span>
+<div class="user_show_inner_content">
+  <h1>ユーザー情報</h1>
+  <div class="user_show_content">
+    <%= form_for(@user) do |form| %>
+    <ul class="user_show_content_ul">
+      <li>
+        <label class="data_title">
+          <%= t("label.user.name") %>
+          <button type="button" class="edit_btn hide" onclick="toggleNameForm(this)">編集</button>
+        </label>
+        <div class="data_line" id="name_display">
+          <%= @user.first_name %>&nbsp;<%= @user.last_name %>
+        </div>
+        <div class="data_line hidden" id="name_form">
+          <div class="name_items">
+            <div class="name_item">
+              <%= form.label :first_name %>
+              <%= form.text_field :first_name, class: "form-control" %>
+            </div>
+            <div class="name_item">
+              <%= form.label :last_name %>
+              <%= form.text_field :last_name, class: "form-control" %>
+            </div>
+          </div>
+          <div class="submit_btn">
+            <%= form.submit(t("label.form.save"),class: 'button btn-submit') %>
+          </div>
+        </div>
+      </li>
+      <li>
+        <label class="data_title">
+          <%= t("label.user.avatar") %>
+        </label>
+        <div class="data_line">
+          <% if @user.avatar.present? %>
+            <%= image_tag current_user.avatar.url, class: "user_avatar" %>
+          <% else %>
+            <%= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
           <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="user_show_up_right_box">
-    <div class="user_show_name_box">
-      <div class="user_names">
-        <div class="user_show_nickname">
-          <span><%= @user.username ? @user.username : "No nickname" %></span>
         </div>
-      </div>
-      <% if @user.country_id %>
-        <div class="user_show_country">
-          <div><i class="fas fa-map-marker-alt"></i><%= @user.country_id ? @user_country : "No Nationality" %></div>
+      </li>
+      <li>
+        <label class="data_title">
+          <%= t("label.user.gender") %>
+        </label>
+        <div class="data_line">
+          <%= @user.gender == 'male' ?
+          t("label.user.male") :
+          @user.gender == 'female' ?
+          t("label.user.female") :
+          t("label.user.none")
+          %>
         </div>
-      <% end %>
-      <div class="user_show_profile">
-        <div><%= @user.profile_text ? @user.profile_text : "No Profile" %></div>
-      </div>
-    </div>
+      </li>
+      <li>
+        <label class="data_title">
+          <%= t("label.user.birthday") %>
+        </label>
+        <div class="data_line">
+          <% if @user.birth_year && @user.birth_month && @user.birth_day %>
+            <%= @user.birth_year %><%= t("label.user.birth_year_unit") %>
+            <%= @user.birth_month %><%= t("label.user.birth_month_unit") %>
+            <%= @user.birth_day %><%= t("label.user.birth_date_unit") %>
+          <% else %>
+            登録なし
+          <% end %>
+        </div>
+      </li>
+      <li>
+        <label class="data_title">
+          <%= t("label.user.email") %>
+        </label>
+        <div class="data_line">
+          <%= @user.email ? @user.email : '登録なし'%>
+        </div>
+      </li>
+      <li>
+        <label class="data_title">
+          <%= t("label.user.phone") %>
+        </label>
+        <div class="data_line">
+          <%= @user.phone ? @user.phone : '登録なし'%>
+        </div>
+      </li>
+      <li>
+        <label class="data_title">
+          <%= t("label.user.language") %>
+        </label>
+        <div class="data_line">
+          <% if @user.language_id %>
+            <%= Language.find(@user.language_id).name %>
+          <% else %>
+            登録なし
+          <% end %>
+        </div>
+      </li>
+      <li>
+        <label class="data_title">
+          <%= t("label.user.nationality") %>
+        </label>
+        <div class="data_line">
+          <% if @user.country_id %>
+            <%= Country.find(@user.country_id).name %>
+          <% else %>
+            登録なし
+          <% end %>
+        </div>
+      </li>
+      <li>
+        <label class="data_title">
+          <%= t("label.user.address") %>
+        </label>
+        <div class="data_line">
+          <% if @user.post_code && @user.prefecture && @user.town  && @user.detail_address %>
+            <%= @user.post_code %>
+          <% else %>
+            登録なし
+          <% end %>
+        </div>
+      </li>
+      <li>
+        <label class="data_title">
+          <%= t("label.user.emergency_info") %>
+        </label>
+        <div class="data_line">
+          <% if @user.emergency_person_name && @user.emergency_person_relation && @user.emergency_person_email  && @user.emergency_person_country_code && @user.emergency_person_phone %>
+            <%= @user.emergency_person_name %>,&nbsp;<%= @user.emergency_person_relation %>, <br>
+            <%= @user.emergency_person_email %>,&nbsp;<%= @user.emergency_person_country_code %>,&nbsp;<%= @user.emergency_person_phone %>
+          <% else %>
+            登録なし
+          <% end %>
+        </div>
+      </li>
+    </ul>
+    <% end %>
   </div>
 </div>
+
+<style lang="scss">
+  .user_show_inner_content {
+    padding: 20px 50px 50px 40px;
+  }
+  ul.user_show_content_ul li {
+    padding-top: 24px;
+    border-bottom: solid 1px #cacaca;
+  }
+  label.data_title {
+    margin: 0px !important;
+    overflow-wrap: break-word !important;
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.375em !important;
+    color: rgb(72, 72, 72) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .data_line {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    overflow-wrap: break-word !important;
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.375em !important;
+    color: rgb(72, 72, 72) !important;
+  }
+  button.edit_btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: #0bb4e3;
+  }
+  button.edit_btn:focus {
+    outline: none;
+  }
+  button.edit_btn:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .name_items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0px;
+  }
+  .name_item {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+  }
+</style>
+
+<script>
+  function toggleNameForm(obj) {
+    const isHide = obj.classList.contains('hide');
+    console.log(isHide);
+    const nameDisplay = document.getElementById('name_display');
+    const nameForm = document.getElementById('name_form');
+    if (isHide) {
+      obj.innerHTML = 'キャンセル';
+      obj.classList.remove('hide');
+      nameDisplay.classList.add('hidden');
+      nameForm.classList.remove('hidden');
+    } else {
+      obj.innerHTML = '編集';
+      obj.classList.add('hide');
+      nameDisplay.classList.remove('hidden');
+      nameForm.classList.add('hidden');
+    }
+  }
+</script>

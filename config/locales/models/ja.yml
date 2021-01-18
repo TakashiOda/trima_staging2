@@ -170,7 +170,62 @@ ja:
         name: アクティビティ名
         profile_text: アクティビティ紹介文
         notes: 注意事項・持ち物・装備など
+      user:
+        email:  メールアドレス
+        encrypted_password: パスワード
+        reset_password_token: パスワードリセットトークン
+        reset_password_sent_at: パスワードリセットトークン送信日時
+        confirmation_token: アカウント認証トークン
+        confirmed_at: アカウント認証日時
+        confirmation_sent_at: アカウント認証送信日時
+        first_name: お名前（名）
+        last_name: お名前（姓）
+        username: ニックネーム
+        country_id: 国籍
+        language_id:  言語
+        birth_year: 生年月日の年
+        birth_month:  生年月日の月
+        birth_day:  生年月日の日付
+        gender: 性別
+        avatar: プロフィール画像
+        phone:  電話番号
+        post_code:  郵便番号
+        prefecture: 都道府県
+        town: 市区町村
+        detail_address:  以降の住所
+        building: 建物名・部屋番号（任意）
+        emergency_person_name:  緊急連絡先・氏名
+        emergency_person_relation:  緊急連絡先・本人との関係
+        emergency_person_email: 緊急連絡先・メールアドレス
+        emergency_person_country_code:  緊急連絡先・国番号
+        emergency_person_phone: 緊急連絡先・電話番号
   errors:
     messages:
       extension_whitelist_error: "のファイル形式はJPGまたはPNGのみ"
       max_size_error: "のファイルサイズは2MB以下にしてください"
+  label:
+    user:
+      name: 氏名
+      avatar: プロフィール画像
+      gender: 性別
+      male: 男性
+      female: 女性
+      none: 登録なし
+      birthday: 生年月日
+      birth_year_unit:  年
+      birth_month_unit: 月
+      birth_date_unit: 日
+      email:  メールアドレス
+      phone:  電話番号
+      nationality:  国籍
+      language: 言語
+      address:  住所
+      post_code:  郵便番号
+      prefecture: 都道府県
+      town: 市区町村
+      detail_address:  以降の住所
+      building: 建物名・部屋番号（任意）
+      emergency_info: 緊急連絡先
+    form:
+      save: 保存
+      update: 更新
