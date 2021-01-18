@@ -1,7 +1,13 @@
 ja:
   activerecord:
     models:
+      country: 国
+      prefecture: 都道府県
+      area: エリア
+      town: 市区町村
+      language: 言語
       supplier: 事業者
+      supplier_apply: 事業者申請
       supplier_profile: 事業者プロフィール
       activity_business:  アクティビティ事業情報
       guide:  ガイド情報
@@ -11,7 +17,18 @@ ja:
       activity_ageprice: アクティビティコース時間
       activity_translation: アクティビティ翻訳情報
       activity_stock: 在庫情報
+      activity_category: アクティビティのカテゴリー
+      admin:  管理者
       user: ユーザー
+      project:  旅行プロジェクト
+      user_project: 参加している旅行プロジェクト
+      project_area: 旅行プロジェクトの地域情報
+      project_invite: 旅行プロジェクトへの招待
+      project_member: 旅行プロジェクトのメンバー
+      cart: カート
+      favorite_activity:  お気に入りしたアクティビティ
+      booked_activity: アクティビティ予約情報
+      booked_activity_member: 予約メンバー
     attributes:
       supplier:
         id: 事業者ID

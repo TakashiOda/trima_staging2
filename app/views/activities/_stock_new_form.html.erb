@@ -115,9 +115,11 @@
 <script type="text/javascript">
   function compareNumWithMaximum(obj){
     const maximumNum = document.getElementById('maximum_num');
-    if (obj.value > maximumNum.value) {
+    const maxVal = parseInt(maximumNum.value);
+    const presentVal = parseInt(obj.value);
+    if (presentVal > maxVal) {
       alert('在庫の一括設定の上限はアクティビティ情報ページで設定した「最大参加可能人数」を超えて設定することはできません');
-      obj.value -= 1;
+      obj.value = maximumNum.value;
     } else {
       hasInput();
     }
@@ -125,7 +127,9 @@
 
   function inputAllStockSetNum(obj){
     const maximumNum = document.getElementById('maximum_num');
-    if (obj.value > maximumNum.value) {
+    const maxVal = parseInt(maximumNum.value);
+    const presentVal = parseInt(obj.value);
+    if (presentVal > maxVal) {
       alert('在庫の一括設定の上限はアクティビティ情報ページで設定した「最大参加可能人数」を超えて設定することはできません');
       obj.value = maximumNum.value;
     }
