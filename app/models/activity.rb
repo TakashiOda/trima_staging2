@@ -1,25 +1,26 @@
 class Activity < ApplicationRecord
+  # relations ****************************************************
   belongs_to :activity_business
-  # belongs_to :activity_category
   has_many :activity_courses, dependent: :destroy
   accepts_nested_attributes_for :activity_courses, allow_destroy: true
+
   has_many :activity_ageprices, dependent: :destroy
   accepts_nested_attributes_for :activity_ageprices, allow_destroy: true
+
   has_many :activity_translations, dependent: :destroy
   accepts_nested_attributes_for :activity_translations, allow_destroy: true
-
   has_many :favorite_activities, dependent: :destroy
 
-  # 画像アップローダー****************************************************
+  # 画像アップローダー ****************************************************
   mount_uploader :main_image, MainImageUploader
   mount_uploader :second_image, MainImageUploader
   mount_uploader :third_image, MainImageUploader
   mount_uploader :fourth_image, MainImageUploader
 
-  #バリデーション*********************************************************
-  validates  :name, presence: true, length: { maximum: 40, too_long: "体験名は最大40字までです" }
-  validates  :description, presence: true, length: { maximum: 200, too_long: "体験紹介文は最大200字までです" }
-  validates  :notes, length: { maximum: 500, too_long: "注意事項は最大500字までです" }
+  # バリデーション *********************************************************
+  validates  :name, presence: true, length: { maximum: 40, message: "体験名は最大40字までです" }
+  validates  :description, presence: true, length: { maximum: 200, message: "体験紹介文は最大200字までです" }
+  validates  :notes, length: { maximum: 500, message: "注意事項は最大500字までです" }
   validates  :activity_category_id, presence: true, inclusion: { in: 1..32, message: "が選択されていません" }
   validates  :available_age, presence: true,
              :numericality => {
@@ -49,8 +50,8 @@ class Activity < ApplicationRecord
   validates :area_id, inclusion: { in: 1..11, message: "が選択されていません" }
   validates :town_id, inclusion: { in: 1..179, message: "が選択されていません" }
 
-  validates  :meeting_spot1_japanese_address, length: { maximum: 80, too_long: "集合場所の住所は最大 %{count} 字までです" }
-  validates  :meeting_spot1_japanese_description, length: { maximum: 200, too_long: "集合場所の詳細説明は最大 %{count} 字までです" }
+  validates  :meeting_spot1_japanese_address, length: { maximum: 80, message: "集合場所の住所は最大 %{count} 字までです" }
+  validates  :meeting_spot1_japanese_description, length: { maximum: 200, message: "集合場所の詳細説明は最大 %{count} 字までです" }
   validates :latitude , allow_blank: true,
             numericality: {
               greater_than_or_equal_to:  -90,
@@ -74,6 +75,8 @@ class Activity < ApplicationRecord
   validate :require_any_ageprice
   validate :must_have_high_price_if_has_season_price
   validate :must_have_low_price_if_has_season_price
+  # 翻訳関連
+  # validates :activity_translations, associated: true
 
   def area_cant_be_blank
     if self.area_id.nil?
@@ -148,7 +151,6 @@ class Activity < ApplicationRecord
       end
     end
   end
-
 
   # コース時間は最低１つ必要
   def require_at_least_one_course

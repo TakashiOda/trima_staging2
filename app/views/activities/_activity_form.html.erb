@@ -466,8 +466,8 @@
         </div>
         <div class="link_to_stockFrom_onActivityForm">
           <!-- activity editの場合のみ在庫ボタン表示 -->
-          <% if action_name != 'new' %>
-            <% if @activity.activity_courses.any? && @activity.activity_courses[0].activity_stocks.any? %>
+          <% if action_name == 'edit' %>
+            <% if @activity.id && @activity.activity_courses.any? && @activity.activity_courses[0].activity_stocks.any? %>
               <% this_activity_stock_latest_date = @activity.activity_courses[0].activity_stocks.order(date: "DESC").limit(1)[0].date %>
               <% if this_activity_stock_latest_date > Date.today %>
                 <%= link_to supplier_activity_edit_stocks_first_month_path(current_supplier, @activity), class: 'button btn-link' do %>
@@ -475,13 +475,13 @@
                   <span>在庫を編集する</span>
                 <% end %>
               <% else %>
-                <%= link_to supplier_activity_new_stocks_first_month_path(current_supplier.id, @activity.id), class: 'button btn-link' do %>
+                <%= link_to supplier_activity_new_stocks_first_month_path(current_supplier.id, @activity), class: 'button btn-link' do %>
                   <span><i class="fas fa-cubes"></i></span>
                   <span>在庫を登録する</span>
                 <% end %>
               <% end %>
             <% else %>
-              <%= link_to supplier_activity_new_stocks_first_month_path(current_supplier.id, @activity.id), class: 'button btn-link' do %>
+              <%= link_to supplier_activity_new_stocks_first_month_path(current_supplier.id, @activity), class: 'button btn-link' do %>
                 <span><i class="fas fa-cubes"></i></span>
                 <span>在庫を登録する</span>
               <% end %>

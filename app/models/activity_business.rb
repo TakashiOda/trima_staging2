@@ -15,7 +15,6 @@ class ActivityBusiness < ApplicationRecord
   mount_uploader :insurance_image, InsuranceImageUploader
 
   # validation ***********************************************
-  # validates :profile_image, presence: true
   validates :name, presence: true, length: { in: 2..40, message: "は2文字以上40文字以下" }
   validates :en_name, length: { in: 2..40, message: "は2文字以上40文字以下" }, allow_blank: true
   validates :cn_name, length: { in: 2..40, message: "は2文字以上40文字以下" }, allow_blank: true

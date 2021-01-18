@@ -35,11 +35,12 @@
             </div>
           </div>
         </div>
+        <%= hidden_field_tag 'maximum_num', @activity.maximum_num %>
         <div class="all_input_stock">
           <% @activity.activity_courses.each_with_index do |ac_course, i| %>
             <div class="all_stock_input_box">
               <div class="all_stock_input">
-                <%= number_field_tag :all_stock, value = @activity.maximum_num, options = { min: 0, max: 10, class: 'form-control' }%>
+                <%= number_field_tag :all_stock, value = @activity.maximum_num, options = { min: 0, class: 'form-control', id: "all_stock_input_#{i}", onInput: 'inputAllStockSetNum(this)' }%>
                 <button type="button" onclick="changeAllofColumnStock(this)" class="form-control" id="<%=i%>">反映</button>
               </div>
               <% if @activity.activity_courses.count == i+1 && @activity.has_season_price %>
@@ -72,7 +73,7 @@
                 <%= stock.hidden_field :date, :value => @dates[stock.index] %>
                 <% if @days_of_open.include?(@dates[stock.index].wday) %>
                   <div class="stock_input_box">
-                    <%= stock.number_field :stock, min: 0, max: @activity.maximum_num, class: 'form-control', oninput: 'hasInput()' %>
+                    <%= stock.number_field :stock, min: 0, class: 'form-control', onInput: 'compareNumWithMaximum(this)' %>
                   </div>
                   <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price %>
                     <div class="season_input_box <%= stock.index %>">
@@ -112,6 +113,24 @@
 
 
 <script type="text/javascript">
+  function compareNumWithMaximum(obj){
+    const maximumNum = document.getElementById('maximum_num');
+    if (obj.value > maximumNum.value) {
+      alert('在庫の一括設定の上限はアクティビティ情報ページで設定した「最大参加可能人数」を超えて設定することはできません');
+      obj.value -= 1;
+    } else {
+      hasInput();
+    }
+  }
+
+  function inputAllStockSetNum(obj){
+    const maximumNum = document.getElementById('maximum_num');
+    if (obj.value > maximumNum.value) {
+      alert('在庫の一括設定の上限はアクティビティ情報ページで設定した「最大参加可能人数」を超えて設定することはできません');
+      obj.value = maximumNum.value;
+    }
+  }
+
   function confirmAllStockChange(){
   	if(window.confirm('コースの全在庫を設定します。よろしいですか？')){
   		return true;

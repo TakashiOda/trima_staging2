@@ -4,14 +4,14 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.string :name
       t.references :activity_business, null: false, foreign_key: true
       t.integer :supplier_id, null: false
-      t.integer :activity_category_id
+      t.integer :activity_category_id, default: 1
       t.text    :description
       t.text    :notes
       t.string  :main_image
       t.string  :second_image
       t.string  :third_image
       t.string  :fourth_image
-      t.integer :activity_minutes
+      t.integer :activity_minutes, default: 60
 
       # 住所情報
       t.integer :prefecture_id

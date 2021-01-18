@@ -13,7 +13,7 @@
           <div class="form-group user_edit_image_box">
             <div class="user_edit_image_box_inside">
               <img id="user_image_prev" src="#" class="hidden" />
-              <% if current_supplier && @activity_business.profile_image %>
+              <% if !@activity_business.profile_image.blank? %>
                 <%= image_tag @activity_business.profile_image.to_s, class: 'user_present_image', id: 'user_present_image' %>
               <% else %>
                 <%= image_tag 'default_images/no_avatar_for_biz.png', class: 'user_present_image', id: 'user_present_image' %>

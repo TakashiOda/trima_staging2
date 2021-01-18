@@ -16,14 +16,14 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
     t.string "name"
     t.integer "activity_business_id", null: false
     t.integer "supplier_id", null: false
-    t.integer "activity_category_id"
+    t.integer "activity_category_id", default: 1
     t.text "description"
     t.text "notes"
     t.string "main_image"
     t.string "second_image"
     t.string "third_image"
     t.string "fourth_image"
-    t.integer "activity_minutes"
+    t.integer "activity_minutes", default: 60
     t.integer "prefecture_id"
     t.integer "area_id"
     t.integer "town_id"
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
 
   create_table "activity_languages", force: :cascade do |t|
     t.integer "activity_business_id", null: false
-    t.integer "language_id"
+    t.integer "language_id", null: false
     t.index ["activity_business_id", "language_id"], name: "activity_languages_unique_index", unique: true
     t.index ["activity_business_id"], name: "index_activity_languages_on_activity_business_id"
     t.index ["language_id"], name: "index_activity_languages_on_language_id"

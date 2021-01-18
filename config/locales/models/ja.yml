@@ -4,10 +4,14 @@ ja:
       supplier: 事業者
       supplier_profile: 事業者プロフィール
       activity_business:  アクティビティ事業情報
-      activity: アクティビティ
-      activity_language: 対応可能言語
       guide:  ガイド情報
+      activity_language: 対応可能言語
+      activity: アクティビティ
+      activity_course: アクティビティコース時間
+      activity_ageprice: アクティビティコース時間
       activity_translation: アクティビティ翻訳情報
+      activity_stock: 在庫情報
+      user: ユーザー
     attributes:
       supplier:
         id: 事業者ID
@@ -125,9 +129,18 @@ ja:
         updated_at: 更新日時
         activity_courses: コース時間
         activity_ageprices: 年齢別料金
+        activity_translations: アクティビティ翻訳情報
       activity/activity_courses:
         activity_id: コース時間情報
         start_time: 体験の開始時間
+        activity_stocks: 在庫情報
+        activity_course/activity_stocks:
+          activity_course_id: コース情報
+          activity_id:  アクティビティID
+          date: 在庫の日付
+          stock:  在庫数
+          book_amount:  現在の予約数
+          season_price: シーズン料金設定
       activity/activity_ageprices:
         activity_id: 年齢別料金情報
         age_from: 年齢別料金の年齢下限
@@ -135,9 +148,8 @@ ja:
         normal_price: 通常料金
         high_price: ハイシーズン料金
         low_price:  ローシーズン料金
-      activity_translation:
-        id: 翻訳アクティビティID
-        activity_id:  アクティビティID
+      activity/activity_translations:
+        activity_id:  翻訳情報
         name: アクティビティ名
         profile_text: アクティビティ紹介文
         notes: 注意事項・持ち物・装備など
