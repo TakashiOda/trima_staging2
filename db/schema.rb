@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_061607) do
+ActiveRecord::Schema.define(version: 2021_01_19_085225) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -263,6 +263,12 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
   end
 
   create_table "countries", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "country_codes", force: :cascade do |t|
+    t.string "code"
+    t.string "name_with_num"
     t.string "name"
   end
 

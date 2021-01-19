@@ -178,9 +178,8 @@ ja:
         confirmation_token: アカウント認証トークン
         confirmed_at: アカウント認証日時
         confirmation_sent_at: アカウント認証送信日時
-        first_name: お名前（名）
-        last_name: お名前（姓）
-        username: ニックネーム
+        first_name: 名前（名）
+        last_name: 名前（姓）
         country_id: 国籍
         language_id:  言語
         birth_year: 生年月日の年
@@ -203,7 +202,22 @@ ja:
     messages:
       extension_whitelist_error: "のファイル形式はJPGまたはPNGのみ"
       max_size_error: "のファイルサイズは2MB以下にしてください"
+      too_long: 'は%{count}文字以内で入力してください'
+      invalid_format: "の形式が正しくありません"
   label:
+    month:
+      jan:  1月
+      feb:  2月
+      mar:  3月
+      apr:  4月
+      may:  5月
+      jun:  6月
+      jul:  7月
+      aug:  8月
+      sep:  9月
+      oct:  10月
+      nov:  11月
+      dec:  12月
     user:
       name: 氏名
       avatar: プロフィール画像
@@ -215,10 +229,15 @@ ja:
       birth_year_unit:  年
       birth_month_unit: 月
       birth_date_unit: 日
+      birth_year_blank:  年
+      birth_month_blank:  月
+      birth_date_blank:  日
       email:  メールアドレス
       phone:  電話番号
       nationality:  国籍
       language: 言語
+      select_language:  言語を選んでください
+      select_nationality:  国籍を選んでください
       address:  住所
       post_code:  郵便番号
       prefecture: 都道府県

@@ -2,11 +2,14 @@
   <h1>ユーザー情報</h1>
   <div class="user_show_content">
     <%= form_for(@user) do |form| %>
+    <%= render 'layouts/error_messages', model: form.object %>
     <ul class="user_show_content_ul">
       <li>
         <label class="data_title">
-          <%= t("label.user.name") %>
-          <button type="button" class="edit_btn hide" onclick="toggleNameForm(this)">編集</button>
+          <div class="data_title_text">
+            <%= t("label.user.name") %>
+          </div>
+          <div class="edit_btn hide" onclick="toggleTargetForm(this)" id="name">編集</div>
         </label>
         <div class="data_line" id="name_display">
           <%= @user.first_name %>&nbsp;<%= @user.last_name %>
@@ -23,27 +26,53 @@
             </div>
           </div>
           <div class="submit_btn">
-            <%= form.submit(t("label.form.save"),class: 'button btn-submit') %>
+            <%= form.submit(t("label.form.save"),class: 'btn_submit_user_show') %>
           </div>
         </div>
       </li>
       <li>
         <label class="data_title">
-          <%= t("label.user.avatar") %>
+          <div class="data_title_text">
+            <%= t("label.user.avatar") %>
+          </div>
+          <div class="edit_btn hide" onclick="toggleTargetForm(this)" id="avatar">編集</div>
         </label>
-        <div class="data_line">
+        <div class="data_line" id="avatar_display">
           <% if @user.avatar.present? %>
             <%= image_tag current_user.avatar.url, class: "user_avatar" %>
           <% else %>
             <%= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
           <% end %>
         </div>
+        <div class="data_line hidden" id="avatar_form">
+          <div class="form-group user_edit_image_box">
+            <div class="user_edit_image_box_inside">
+              <img id="user_image_prev" src="#" class="hidden" />
+              <% if current_user.persisted? && current_user.avatar? %>
+                <%= image_tag current_user.avatar.to_s, class: 'user_present_image', id: 'user_present_image' %>
+              <% else %>
+                <%= image_tag 'default_images/no_avatar_image.png', class: 'user_present_image', id: 'user_present_image' %>
+                <%= form.hidden_field :avatar_cache %>
+              <% end %>
+            </div>
+            <div id="user_edit_image_upload_btn_box">
+              <%= form.file_field :avatar, id: 'post_image' %>
+              <span id="user_edit_image_upload_btn" onclick="image_input_btn()"><i class="fas fa-camera"></i></span>
+            </div>
+          </div>
+          <div class="submit_btn">
+            <%= form.submit(t("label.form.save"),class: 'btn_submit_user_show') %>
+          </div>
+        </div>
       </li>
       <li>
         <label class="data_title">
-          <%= t("label.user.gender") %>
+          <div class="data_title_text">
+            <%= t("label.user.gender") %>
+          </div>
+          <div class="edit_btn hide" onclick="toggleTargetForm(this)" id="gender">編集</div>
         </label>
-        <div class="data_line">
+        <div class="data_line" id="gender_display">
           <%= @user.gender == 'male' ?
           t("label.user.male") :
           @user.gender == 'female' ?
@@ -51,12 +80,30 @@
           t("label.user.none")
           %>
         </div>
+        <div class="data_line hidden" id="gender_form">
+          <div class="gender_input_items">
+            <div class="radio_item">
+              <%= form.radio_button :gender, :male %>
+              <%= form.label :gender, t("label.user.male"), {value: :male, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item">
+              <%= form.radio_button :gender, :female %>
+              <%= form.label :gender, t("label.user.female"), {value: :female, style: "display: inline-block;"} %>
+            </div>
+          </div>
+          <div class="submit_btn">
+            <%= form.submit(t("label.form.save"),class: 'btn_submit_user_show') %>
+          </div>
+        </div>
       </li>
       <li>
         <label class="data_title">
-          <%= t("label.user.birthday") %>
+          <div class="data_title_text">
+            <%= t("label.user.birthday") %>
+          </div>
+          <div class="edit_btn hide"  onclick="toggleTargetForm(this)" id="birthday">編集</div>
         </label>
-        <div class="data_line">
+        <div class="data_line" id="birthday_display">
           <% if @user.birth_year && @user.birth_month && @user.birth_day %>
             <%= @user.birth_year %><%= t("label.user.birth_year_unit") %>
             <%= @user.birth_month %><%= t("label.user.birth_month_unit") %>
@@ -65,57 +112,134 @@
             登録なし
           <% end %>
         </div>
+        <div class="data_line hidden" id="birthday_form">
+          <div class="birth_day_input_items">
+            <%= form.select :birth_month, [[t("label.month.jan"), 1], [t("label.month.feb"), 2], [t("label.month.mar"), 3], [t("label.month.apr"), 4], [t("label.month.may"), 5], [t("label.month.jun"), 6], [t("label.month.jul"), 7], [t("label.month.aug"), 8], [t("label.month.sep"), 9], [t("label.month.oct"), 10], [t("label.month.nov"), 11], [t("label.month.dec"), 12]], { include_blank: t("label.user.birth_month_blank") }, { id: "user_id", class: "form-control" } %>
+            <%= form.select :birth_day, options_for_select((1..31), :selected => form.object.birth_day), { include_blank: t("label.user.birth_date_blank") } ,{ class: "form-control" }%>
+            <%= form.select :birth_year, options_for_select((1950..2010), :selected => form.object.birth_year), { include_blank: t("label.user.birth_year_blank") } ,{ class: "form-control" }%>
+          </div>
+          <div class="submit_btn">
+            <%= form.submit(t("label.form.save"),class: 'btn_submit_user_show') %>
+          </div>
+        </div>
       </li>
       <li>
         <label class="data_title">
-          <%= t("label.user.email") %>
+          <div class="data_title_text">
+            <%= t("label.user.email") %>
+          </div>
+          <div class="edit_btn hide"  onclick="toggleTargetForm(this)" id="email">編集</div>
         </label>
-        <div class="data_line">
+        <div class="data_line" id="email_display">
           <%= @user.email ? @user.email : '登録なし'%>
         </div>
-      </li>
-      <li>
-        <label class="data_title">
-          <%= t("label.user.phone") %>
-        </label>
-        <div class="data_line">
-          <%= @user.phone ? @user.phone : '登録なし'%>
+        <div class="data_line hidden" id="email_form">
+          <%= form.text_field :email, class: "form-control wide_form" %>
+          <div class="submit_btn">
+            <%= form.submit(t("label.form.save"),class: 'btn_submit_user_show') %>
+          </div>
         </div>
       </li>
       <li>
         <label class="data_title">
-          <%= t("label.user.language") %>
+          <div class="data_title_text">
+            <%= t("label.user.phone") %>
+          </div>
+          <div class="edit_btn hide"  onclick="toggleTargetForm(this)" id="phone">編集</div>
         </label>
-        <div class="data_line">
+        <div class="data_line" id="phone_display">
+          <%= @user.phone ? @user.phone : '登録なし'%>
+        </div>
+        <div class="data_line hidden" id="phone_form">
+          <%= form.text_field :phone, class: "form-control wide_form" %>
+          <div class="submit_btn">
+            <%= form.submit(t("label.form.save"),class: 'btn_submit_user_show') %>
+          </div>
+        </div>
+      </li>
+      <li>
+        <label class="data_title">
+          <div class="data_title_text">
+            <%= t("label.user.language") %>
+          </div>
+          <div class="edit_btn hide"  onclick="toggleTargetForm(this)" id="language">編集</div>
+        </label>
+        <div class="data_line" id="language_display">
           <% if @user.language_id %>
             <%= Language.find(@user.language_id).name %>
           <% else %>
             登録なし
           <% end %>
         </div>
+        <div class="data_line hidden" id="language_form">
+          <%= form.collection_select :language_id, Language.where(id: [3,28]), :id, :name,{ prompt: t("label.user.select_language") }, class: "form-control" %>
+          <div class="submit_btn">
+            <%= form.submit(t("label.form.save"),class: 'btn_submit_user_show') %>
+          </div>
+        </div>
       </li>
       <li>
         <label class="data_title">
-          <%= t("label.user.nationality") %>
+          <div class="data_title_text">
+            <%= t("label.user.nationality") %>
+          </div>
+          <div class="edit_btn hide" onclick="toggleTargetForm(this)" id="nationality" >編集</div>
         </label>
-        <div class="data_line">
+        <div class="data_line" id="nationality_display">
           <% if @user.country_id %>
             <%= Country.find(@user.country_id).name %>
           <% else %>
             登録なし
           <% end %>
         </div>
+        <div class="data_line hidden" id="nationality_form">
+          <%= form.collection_select :country_id, Country.all, :id, :name,{prompt: t("label.user.select_nationality")}, class: "form-control" %>
+          <div class="submit_btn">
+            <%= form.submit(t("label.form.save"),class: 'btn_submit_user_show') %>
+          </div>
+        </div>
       </li>
       <li>
         <label class="data_title">
-          <%= t("label.user.address") %>
+          <div class="data_title_text">
+            <%= t("label.user.address") %>
+          </div>
+          <div class="edit_btn hide"  onclick="toggleTargetForm(this)" id="address">編集</div>
         </label>
-        <div class="data_line">
+        <div class="data_line" id="address_display">
           <% if @user.post_code && @user.prefecture && @user.town  && @user.detail_address %>
-            <%= @user.post_code %>
+            <%= @user.post_code %>,<%= @user.detail_address %>,
+            <%= @user.town %><%= @user.prefecture %>
           <% else %>
             登録なし
           <% end %>
+        </div>
+        <div class="data_line hidden" id="address_form">
+          <div class="address_items">
+            <div class="address_item">
+              <%= form.label :post_code %>
+              <%= form.text_field :post_code, class: "form-control" %>
+            </div>
+            <div class="address_item">
+              <%= form.label :prefecture %>
+              <%= form.text_field :prefecture, class: "form-control" %>
+            </div>
+            <div class="address_item">
+              <%= form.label :town %>
+              <%= form.text_field :town, class: "form-control" %>
+            </div>
+            <div class="address_item">
+              <%= form.label :detail_address %>
+              <%= form.text_field :detail_address, class: "form-control" %>
+            </div>
+            <div class="address_item">
+              <%= form.label :building %>
+              <%= form.text_field :building, class: "form-control" %>
+            </div>
+          </div>
+          <div class="submit_btn">
+            <%= form.submit(t("label.form.save"),class: 'btn_submit_user_show') %>
+          </div>
         </div>
       </li>
       <li>
@@ -146,15 +270,24 @@
   }
   label.data_title {
     margin: 0px !important;
-    overflow-wrap: break-word !important;
-    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    line-height: 1.375em !important;
-    color: rgb(72, 72, 72) !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  .data_title_text {
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: rgb(72, 72, 72) !important;
+  }
+  .edit_btn {
+    width: fit-content;
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: #0bb4e3;
+    text-align: right;
   }
   .data_line {
     margin-top: 8px;
@@ -166,19 +299,26 @@
     line-height: 1.375em !important;
     color: rgb(72, 72, 72) !important;
   }
-  button.edit_btn {
-    background: none;
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    color: #0bb4e3;
-  }
-  button.edit_btn:focus {
+  .edit_btn:focus {
     outline: none;
   }
-  button.edit_btn:hover {
+  .edit_btn:hover {
     cursor: pointer;
     text-decoration: underline;
+  }
+  .btn_submit_user_show {
+    width: 150px;
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    box-sizing: border-box;
+    height: 45px;
+    background: #09b6e1;
+    color: #fff;
+    margin-top: 20px;
   }
   .name_items {
     display: flex;
@@ -191,24 +331,64 @@
     flex-direction: column;
     width: 45%;
   }
+  .gender_input_items {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+  }
+  .birth_day_input_items {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .data_line .wide_form {
+    width: 100%;
+  }
+  .address_item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
 </style>
 
 <script>
-  function toggleNameForm(obj) {
+  function toggleTargetForm(obj) {
+    const targetName = obj.id;
     const isHide = obj.classList.contains('hide');
-    console.log(isHide);
-    const nameDisplay = document.getElementById('name_display');
-    const nameForm = document.getElementById('name_form');
+    const targetDisplay = document.getElementById(`${targetName}_display`);
+    const targetForm = document.getElementById(`${targetName}_form`);
     if (isHide) {
       obj.innerHTML = 'キャンセル';
       obj.classList.remove('hide');
-      nameDisplay.classList.add('hidden');
-      nameForm.classList.remove('hidden');
+      targetDisplay.classList.add('hidden');
+      targetForm.classList.remove('hidden');
     } else {
       obj.innerHTML = '編集';
       obj.classList.add('hide');
-      nameDisplay.classList.remove('hidden');
-      nameForm.classList.add('hidden');
+      targetDisplay.classList.remove('hidden');
+      targetForm.classList.add('hidden');
     }
   }
+
+  function image_input_btn() {
+    const selectElement = document.querySelector('#post_image');
+    selectElement.click();
+  }
+
+  document.getElementById('post_image').addEventListener('change', function (e) {
+    // 1枚だけ表示する
+    const file = e.target.files[0];
+    // ファイルのブラウザ上でのURLを取得する
+    const blobUrl = window.URL.createObjectURL(file);
+    // img要素に表示
+    const post_img = document.getElementById('user_image_prev');
+    post_img.src = blobUrl;
+    post_img.classList.toggle("hidden");
+    const before_img = document.getElementById('user_present_image');
+    before_img.classList.toggle("hidden");
+    // before_img.classList.remove("user_present_image");
+  });
 </script>
