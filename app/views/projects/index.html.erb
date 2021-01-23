@@ -1,32 +1,32 @@
 <div class="project_index_container_inner">
   <div class="page_title_box">
-    <h3>Your Projects</h3>
+    <h1><%= t("label.project_show.trip_project") %></h1>
     <div class="btn_box">
-      <%= link_to "Create Project", new_project_path %>
+      <%= link_to t("label.project_show.create_project"), new_project_path %>
     </div>
   </div>
-  <% if !@waitings.blank? %>
-    <div class="page_list_item_box">
+  <%# if !@waitings.blank? %>
+    <!-- <div class="page_list_item_box">
       <div class="title_box"><span>Waiting Accept!!</span></div>
       <div class="item_box">
         <ul>
-          <% @waitings.each do |waiting| %>
+          <%# @waitings.each do |waiting| %>
           <li>
-            <%= link_to project_path(waiting) do %>
-              <%= image_tag "project_icons/#{waiting.icon}", class: 'project_icon' %>
+            <%#= link_to project_path(waiting) do %>
+              <%#= image_tag "project_icons/#{waiting.icon}", class: 'project_icon' %>
               <div class="project_title">
-                <span class="project_title_text"><%= waiting.name %></span>
+                <span class="project_title_text"><%#= waiting.name %></span>
               </div>
-            <% end %>
+            <%# end %>
           </li>
-          <% end %>
+          <%# end %>
         </ul>
       </div>
-    </div>
-  <% end %>
+    </div> -->
+  <%# end %>
   <div class="page_list_box">
     <div class="page_list_item_box">
-      <div class="title_box"><span>Own Projects</span></div>
+      <!-- <div class="title_box"><span>Own Projects</span></div> -->
       <div class="item_box">
         <ul>
           <% @owns.each do |own| %>
@@ -42,22 +42,22 @@
         </ul>
       </div>
     </div>
-    <div class="page_list_item_box">
+    <!-- <div class="page_list_item_box">
       <div class="title_box"><span>Invited Projects</span></div>
       <div class="item_box">
         <ul>
-          <% @inviteds.each do |invited| %>
+          <%# @inviteds.each do |invited| %>
           <li>
-            <%= link_to project_path(invited) do %>
-              <%= image_tag "project_icons/#{invited.icon}", class: 'project_icon' %>
+            <%#= link_to project_path(invited) do %>
+              <%#= image_tag "project_icons/#{invited.icon}", class: 'project_icon' %>
               <div class="project_title">
-                <span class="project_title_text"><%= invited.name %></span>
+                <span class="project_title_text"><%#= invited.name %></span>
               </div>
-            <% end %>
+            <%# end %>
           </li>
-          <% end %>
+          <%# end %>
         </ul>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

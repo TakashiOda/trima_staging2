@@ -13,9 +13,9 @@ class Project < ApplicationRecord
   has_many :areas, through: :project_areas
   accepts_nested_attributes_for :project_areas, allow_destroy: true
 
-  validates :name, presence: true,  length: { maximum: 20, too_long: "Maximum %{count} characters" }
-  validates :start_place,  length: { maximum: 20, too_long: "Maximum %{count} characters" }, allow_nil: true
-  validates :end_place,  length: { maximum: 20, too_long: "Maximum %{count} characters" }, allow_nil: true
+  validates :name, presence: true,  length: { maximum: 30 }
+  validates :start_place,  length: { maximum: 20 }, allow_nil: true
+  validates :end_place,  length: { maximum: 20  }, allow_nil: true
 
   def send_invite_email(email_params, inviter)
    UserInvitationMailer.user_invitation(email_params, inviter).deliver_now

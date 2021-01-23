@@ -35,20 +35,15 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    if params[:project][:project_areas_attributes]['0']['area_id'] != ""
-      @project = current_user.projects.create(project_params)
-      if @project.persisted?
-        @project.add_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
-        @project.add_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
-        @project.add_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
-        @project.add_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
-        # @project.add_me_as_admin(current_user)
-        redirect_to projects_path(current_user)
-      else
-        render 'new'
-      end
+    @project = current_user.projects.create(project_params)
+    if @project.persisted?
+      @project.add_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
+      @project.add_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
+      @project.add_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
+      @project.add_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
+      # @project.add_me_as_admin(current_user)
+      redirect_to projects_path
     else
-      flash[:alert] = 'Select At least one area'
       render 'new'
     end
   end

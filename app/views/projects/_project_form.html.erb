@@ -1,16 +1,22 @@
-<div class="activity_index_top_box">
-  <h3>体験を編集</h3>
+<div class="project_new_top_box">
+  <h2>
+    <% if action_name == 'new' %>
+      <%= t("label.project_new.page_title") %>
+    <% else %>
+      <%= t("label.project_edit.page_title") %>
+    <% end %>
+  </h2>
 </div>
 <div class="activity_index_activity_list_box">
-  <%= form_for [@project] do |form| %>
-    <%= render 'layouts/error_messages', model: form.object %>
-    <div class="user_show_info_items_box">
+  <%= form_for @project do |form| %>
+    <div class="project_form_inner">
+      <%= render 'layouts/error_messages', model: form.object %>
       <section class="form_section">
         <div class="form_big_title">
           <h3>Trip Project</h3>
           <div class="form_big_title_questionIcon baseInfo">
             <i class="far fa-question-circle"></i>
-            <p class="fukidashi fukidashi_baseInfo">Project Name must be within 20 characters</p>
+            <p class="fukidashi fukidashi_baseInfo"><%= t("label.project_helps.name_limit") %></p>
           </div>
         </div>
         <div class="form-group">

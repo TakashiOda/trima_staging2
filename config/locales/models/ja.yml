@@ -198,6 +198,17 @@ ja:
         emergency_person_email: 緊急連絡先・メールアドレス
         emergency_person_country_code:  緊急連絡先・国番号
         emergency_person_phone: 緊急連絡先・電話番号
+      project:
+        name: 旅行プロジェクト名
+        start_date: 旅行開始日
+        end_date: 旅行終了日
+        start_place:  旅行出発地
+        end_place:  旅行終着地
+        icon: プロジェクトアイコン
+        project_areas:  旅行エリア
+      project/project_areas:
+        project_id: プロジェクト
+        area_id:  エリア
   errors:
     messages:
       extension_whitelist_error: "のファイル形式はJPGまたはPNGのみ"
@@ -248,3 +259,12 @@ ja:
     form:
       save: 保存
       update: 更新
+    project_show:
+      trip_project: 旅行プロジェクト
+      create_project: プロジェクトを作成
+    project_new:
+      page_title: プロジェクトを作成
+    project_edit:
+      page_title: プロジェクトを編集
+    project_helps:
+      name_limit: プロジェクト名は30字以内で入力してください
