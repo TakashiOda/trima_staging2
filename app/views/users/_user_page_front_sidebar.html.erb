@@ -1,9 +1,9 @@
 <ul>
-  <li><i class="fas fa-suitcase"></i><%= link_to "プロジェクト", projects_path %></li>
-  <li><i class="far fa-bookmark"></i><%= link_to "購入済み", "#" %></li>
-  <li><i class="fas fa-heart"></i><%= link_to "お気に入り", "#" %></li>
-  <li><i class="fas fa-user"></i><%= link_to "アカウント", edit_user_path(current_user)%></li>
-  <li><i class="fas fa-cog"></i><%= link_to "ログアウト", destroy_user_session_path %></li>
+  <li><i class="fas fa-suitcase"></i><%= link_to t("label.sidebar.user_sidebar.project"), projects_path %></li>
+  <li><i class="far fa-bookmark"></i><%= link_to t("label.sidebar.user_sidebar.purchase"), "#" %></li>
+  <li><i class="fas fa-heart"></i><%= link_to t("label.sidebar.user_sidebar.favorite"), "#" %></li>
+  <li><i class="fas fa-user"></i><%= link_to t("label.sidebar.user_sidebar.account"), edit_user_path(current_user)%></li>
+  <li><i class="fas fa-cog"></i><%= link_to t("label.sidebar.user_sidebar.logout"), destroy_user_session_path %></li>
 </ul>
 <style>
   svg {

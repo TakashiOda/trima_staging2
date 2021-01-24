@@ -1,6 +1,6 @@
 <div class="project_index_container_inner">
   <div class="page_title_box">
-    <h1><%= t("label.project_show.trip_project") %></h1>
+    <h2><%= t("label.project_show.trip_project") %></h2>
     <div class="btn_box">
       <%= link_to t("label.project_show.create_project"), new_project_path %>
     </div>
@@ -26,38 +26,94 @@
   <%# end %>
   <div class="page_list_box">
     <div class="page_list_item_box">
-      <!-- <div class="title_box"><span>Own Projects</span></div> -->
       <div class="item_box">
         <ul>
           <% @owns.each do |own| %>
             <li>
-              <%= link_to project_trip_managers_home_path(own) do %>
+              <%= link_to project_trip_managers_home_path(own), class: 'project_link' do %>
                 <%= image_tag "project_icons/#{own.icon}", class: 'project_icon' %>
                 <div class="project_title">
                   <span class="project_title_text"><%= own.name %></span>
+                  <% if own.start_date %>
+                    <div class="date_item">
+                      <span class="project_date_label"><%= t("label.project_show.start_date") %>:</span>
+                      <span class="project_date_text">
+                        <%= own.start_date.strftime("%Y") %>
+                        <%= t("label.project_show.year_unit") %>
+                        <%= own.start_date.strftime("%m") %>
+                        <%= t("label.project_show.month_unit") %>
+                        <%= own.start_date.strftime("%d") %>
+                        <%= t("label.project_show.day_unit") %>
+                      </span>
+                    </div>
+                  <% end %>
+                  <% if own.end_date %>
+                    <div class="date_item">
+                      <span class="project_date_label"><%= t("label.project_show.end_date") %>:</span>
+                      <span class="project_date_text">
+                        <%= own.end_date.strftime("%Y") %>
+                        <%= t("label.project_show.year_unit") %>
+                        <%= own.end_date.strftime("%m") %>
+                        <%= t("label.project_show.month_unit") %>
+                        <%= own.end_date.strftime("%d") %>
+                        <%= t("label.project_show.day_unit") %>
+                      </span>
+                    </div>
+                  <% end %>
                 </div>
               <% end %>
+              <div class="setting_link" onclick="showLinks(this)">
+                <div class="setting_btn">
+                  <span class="setting_btn_dot"></span>
+                  <span class="setting_btn_dot"></span>
+                  <span class="setting_btn_dot"></span>
+                </div>
+              </div>
+              <div class="setting_links_box hidden">
+                <ul class="setting_links_ul">
+                  <li class="setting_link_item edit">
+                    <%= link_to edit_project_path(own), class: 'edit_project_btn' do %>
+                      <i class="far fa-edit"></i>
+                      <span class="setting_link_item_text">
+                        <%= t("label.project_show.edit_btn_label") %>
+                      </span>
+                    <% end %>
+                  </li>
+                  <li class="setting_link_item delete">
+                    <%= link_to project_path(own), method: :delete, class: 'edit_project_btn', data: { confirm: "本当に削除してもよろしいですか？" } do %>
+                      <i class="far fa-trash-alt"></i>
+                      <span class="setting_link_item_text">
+                        <%= t("label.project_show.delete_btn_label") %>
+                      </span>
+                    <% end %>
+                  </li>
+                </ul>
+              </div>
             </li>
           <% end %>
         </ul>
       </div>
     </div>
-    <!-- <div class="page_list_item_box">
-      <div class="title_box"><span>Invited Projects</span></div>
-      <div class="item_box">
-        <ul>
-          <%# @inviteds.each do |invited| %>
-          <li>
-            <%#= link_to project_path(invited) do %>
-              <%#= image_tag "project_icons/#{invited.icon}", class: 'project_icon' %>
-              <div class="project_title">
-                <span class="project_title_text"><%#= invited.name %></span>
-              </div>
-            <%# end %>
-          </li>
-          <%# end %>
-        </ul>
-      </div>
-    </div> -->
   </div>
 </div>
+
+<script type="text/javascript">
+  function showLinks(obj) {
+    const linkBox = obj.nextElementSibling;
+    const isHidden = linkBox.classList.contains('hidden');
+    if (isHidden) {
+      linkBox.classList.remove('hidden');
+    } else {
+      linkBox.classList.add('hidden');
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    if(!e.target.closest('.setting_link')) {
+      const settingLinkBoxes = document.querySelectorAll("div.setting_links_box");
+      for (var i = 0; i < settingLinkBoxes.length; i++) {
+        settingLinkBoxes[i].classList.add('hidden');
+      }
+    }
+  })
+</script>

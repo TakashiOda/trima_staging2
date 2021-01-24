@@ -229,6 +229,28 @@ ja:
       oct:  10月
       nov:  11月
       dec:  12月
+    page_title:
+      user_account: ユーザー情報
+      project_favorite: お気に入りリスト
+    page_control:
+      back: 戻る
+    btn_control:
+      edit: 編集
+      delete: 削除
+    sidebar:
+      user_sidebar:
+        project:  プロジェクト
+        purchase: 購入済みアイテム
+        favorite: お気に入り
+        account:  アカウント
+        logout: ログアウト
+      trip_manager_sidebar:
+        home:  ホーム
+        favorite: お気に入り
+        cart:  カート
+        purchase: 購入履歴
+        search: 検索
+        members: メンバー管理
     user:
       name: 氏名
       avatar: プロフィール画像
@@ -262,8 +284,19 @@ ja:
     project_show:
       trip_project: 旅行プロジェクト
       create_project: プロジェクトを作成
+      start_date: 開始日
+      end_date: 終了日
+      year_unit:  年
+      month_unit: 月
+      day_unit: 日
+      edit_btn_label: 編集
+      delete_btn_label: 削除
     project_new:
       page_title: プロジェクトを作成
+      share_member: シェアするメンバーのアドレスを入力
+      member_title: メンバー
+      create_btn_label: 作成
+      edit_btn_label: 編集
     project_edit:
       page_title: プロジェクトを編集
     project_helps:

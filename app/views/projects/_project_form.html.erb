@@ -12,19 +12,12 @@
     <div class="project_form_inner">
       <%= render 'layouts/error_messages', model: form.object %>
       <section class="form_section">
-        <div class="form_big_title">
-          <h3>Trip Project</h3>
-          <div class="form_big_title_questionIcon baseInfo">
-            <i class="far fa-question-circle"></i>
-            <p class="fukidashi fukidashi_baseInfo"><%= t("label.project_helps.name_limit") %></p>
-          </div>
-        </div>
         <div class="form-group">
-          <%= form.label "Project Name" %>
+          <%= form.label :name %>
           <%= form.text_field :name, required: true, class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= form.label "Project Icon" %>
+          <%= form.label :icon %>
           <div class="project_icon_radio_box">
               <% project_icon_list = [
               'project_icon-01','project_icon-02','project_icon-03','project_icon-04','project_icon-05',
@@ -36,87 +29,44 @@
               <% end %>
           </div>
         </div>
-      </section>
-      <section class="form_section">
-        <div class="form_big_title">
-          <h3>About Place</h3>
-          <div class="form_big_title_questionIcon placeInfo">
-            <i class="far fa-question-circle"></i>
-            <p class="fukidashi fukidashi_placeInfo">吹き出しが表示されます吹き出しが表示されます吹き出しが表示されます吹き出しが表示されます吹き出しが表示されます</p>
-          </div>
-        </div>
-        <%= form.fields_for :project_areas do |area| %>
-          <div class="field">
-            <%= render 'project_areas_fields', f: area %>
-          </div>
-        <%- end %>
-        <div class="links">
-          <%= link_to_add_association "Add Area", form, :project_areas, partial: 'project_areas_fields' %>
-        </div>
-        <!-- <div class="form-group">
-          <div class="row">
-            <div class="date_pick_box">
-              <%#= form.label "Start Place" %>
-              <%#= form.text_field :start_place, class: "form-control" %>
-            </div>
-            <div class="date_pick_box">
-              <%#= form.label "End Place" %>
-              <%#= form.text_field :end_place, class: "form-control" %>
-            </div>
-          </div>
-        </div> -->
-      </section>
-      <section class="form_section">
-        <div class="form_big_title">
-          <h3>About Schedule</h3>
-          <div class="form_big_title_questionIcon scheduleInfo">
-            <i class="far fa-question-circle"></i>
-            <p class="fukidashi fukidashi_scheduleInfo">吹き出しが表示されます吹き出しが表示されます吹き出しが表示されます吹き出しが表示されます吹き出しが表示されます</p>
-          </div>
+        <div class="form-group">
+          <%= form.label :start_date %>
+          <%= form.date_field :start_date, use_month_numbers: true, class: "form-control" %>
         </div>
         <div class="form-group">
-          <div class="row">
-            <div class="date_pick_box">
-              <%= form.label "Start Date" %>
-              <%= form.date_field :start_date, use_month_numbers: true, class: "form-control" %>
-            </div>
-            <div class="date_pick_box">
-              <%= form.label "End Date" %>
-              <%= form.date_field :start_date, use_month_numbers: true, class: "form-control" %>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="form_section">
-        <div class="form_big_title">
-          <h3>Invite Friends</h3>
-          <div class="form_big_title_questionIcon inviteFriends">
-            <i class="far fa-question-circle"></i>
-            <p class="fukidashi fukidashi_inviteFriends">A Project can shared with 4 members</p>
-          </div>
+          <%= form.label :end_date %>
+          <%= form.date_field :end_date, use_month_numbers: true, class: "form-control" %>
         </div>
         <div class="form-group invite_member_box">
-          <div class="form_inner_form_title">Share with trip member</div>
-          <div class="form_inner_form_box">
+          <!-- <div class="form_inner_form_title"> -->
+          <%= form.label t("label.project_new.share_member") %>
+          <!-- </div> -->
+          <ul class="form_inner_form_box">
             <% if @members %>
               <% @members.each do |member| %>
-              <span>Member</span>
-              <input type="textbox" value="<%= User.find(member.user_id).email %>" name="invite_emails[member]" class="form-control">
+              <li>
+                <span><%= t("label.project_new.member_title") %></span>
+                <input type="textbox" value="<%= User.find(member.user_id).email %>" name="invite_emails[member]" class="form-control member_email_input">
+              </li>
               <% end %>
             <% end %>
             <% if @inviting_members %>
               <% @inviting_members.each do |inviting_member| %>
-              <span>Member</span>
-              <input type="textbox" value="<%= inviting_member.invited_email %>" name="invite_emails[member]" class="form-control">
+              <li>
+                <span><%= t("label.project_new.member_title") %></span>
+                <input type="textbox" value="<%= inviting_member.invited_email %>" name="invite_emails[member]" class="form-control member_email_input">
+              </li>
               <% end %>
             <% end %>
             <% if @left_invite_num %>
               <% @left_invite_num.times do %>
-                <span>Member</span>
-                <input type="textbox" name="invite_emails[member]" class="form-control">
+              <li>
+                <span><%= t("label.project_new.member_title") %></span>
+                <input type="textbox" name="invite_emails[member]" class="form-control member_email_input">
+              </li>
               <% end %>
             <% end %>
-          </div>
+          </ul>
         </div>
       </section>
     </div>
@@ -124,9 +74,9 @@
       <div id="form_btns">
         <div class="submit_btn_box">
           <% if action_name == "new" %>
-            <%= form.submit('Create Projct',class: 'button btn-submit') %>
+            <%= form.submit(t("label.project_new.create_btn_label"),class: 'button btn-submit') %>
           <% else %>
-            <%= form.submit('Create Projct',class: 'button btn-submit') %>
+            <%= form.submit(t("label.project_new.edit_btn_label"),class: 'button btn-submit') %>
           <% end %>
         </div>
       </div>

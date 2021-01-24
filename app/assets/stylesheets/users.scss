@@ -54,7 +54,7 @@ a.org_edit_btn {
   width: 83%;
 }
 .project_index_container_inner {
-  padding: 20px 30px 50px 30px;
+  padding: 0px 30px 50px 30px;
   height: 100%;
 }
 .page_title_box {
@@ -85,20 +85,18 @@ a.org_edit_btn {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding-top: 30px;
+  // padding-top: 30px;
 }
 
 /*project new************************************/
 section.form_section {
-  background: #fff;
-  padding: 20px 30px;
+  padding: 0px 15px;
   margin-bottom: 20px;
   border-radius: 7px;
-  box-shadow: 0px 0px 7px -1px #b7b7b7;
 }
 .project_new_top_box {
   display: flex;
-  padding: 0px 15px;
+  padding: 0px 30px;
 }
 .project_new_top_box h3 {
   margin-bottom: 0;
@@ -178,10 +176,6 @@ section.form_section {
   padding: 10px 15px;
 }
 
-
-.date_pick_box {
-  width: 48%;
-}
 .page_title_padding {
   margin-bottom: 55px;
   margin-top: 0;
@@ -203,10 +197,12 @@ section.form_section {
 .invite_member_box input:nth-child(1) {
   margin-bottom: 15px;
 }
-.form_inner_form_box {
-  padding: 5px 14px 25px;
+ul.form_inner_form_box {
+    margin: 0;
 }
-
+input.form-control.member_email_input {
+    width: 100%;
+}
 .form_inner_form_title {
   padding: 10px 14px 0;
   color: gray;
@@ -247,41 +243,22 @@ a.member_delete_btn {
   font-size: 12px;
   color: #fff;
   font-weight: bold;
-  /* margin-right: 0px; */
 }
-
-// .item_box li {
-//   width: 120px;
-//   height: 120px;
-//   border: none;
-//   padding: 0px;
-//   display: flex;
-//   justify-content: center;
-//   margin: 6px;
-//   border-radius: 5px;
-//   box-shadow: 1px 1px 5px -1px grey;
-// }
 .item_box li {
   width: 100%;
   height: 90px;
   border: none;
   padding: 0;
   display: flex;
+  justify-content: space-between;
   margin: 6px 0;
   border-radius: 10px;
   background: #fff;
   box-shadow: 1px 1px 5px -1px grey;
-  // width: 120px;
-  // height: 120px;
-  // border: solid 1px lightgray;
-  // padding: 20px;
-  // display: flex;
-  // justify-content: center;
-  // margin: 6px;
-  // border-radius: 5px;
+  position: relative;
 }
-.item_box li a {
-  width: 100%;
+.item_box li a.project_link {
+  width: 90%;
   height: 78px;
   padding: 6px;
   display: flex
@@ -293,8 +270,8 @@ a.member_delete_btn {
 }
 .project_title {
   width: 100%;
-  height: 100%;
-  padding: 0 15px;
+  height: 73px;
+  padding: 5px 15px 0px;
   display: flex;
   flex-direction: column;
 }
@@ -303,8 +280,91 @@ span.project_title_text {
   font-size: 25px;
   line-height: 26px;
   font-weight: bold;
+  margin-bottom: 5px;
 }
-
+.date_item {
+  margin-bottom: 3px;
+  color: gray;
+}
+.item_box li .setting_link {
+  width: 25px;
+  height: 30px;
+  padding: 6px;
+  display: flex;
+  justify-content: flex-end;
+}
+.setting_btn {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+span.setting_btn_dot {
+  width: 8px;
+  height: 8px;
+  background: #afafaf;
+  border-radius: 40px;
+  margin-bottom: 2px;
+}
+.setting_links_box {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  width: 150px;
+  z-index: 10;
+}
+.setting_links_box ul.setting_links_ul {
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 0px;
+  border: solid 1px #ececec;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px -5px #969696;
+  user-select: none;
+}
+.setting_links_box ul.setting_links_ul li {
+  height: 40px;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+a.edit_project_btn {
+  width: 85%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+}
+a.edit_project_btn:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+li.setting_link_item.edit a {
+  color: gray;
+}
+li.setting_link_item.delete a {
+  color: #ff7a7a;
+}
+li.setting_link_item.edit svg {
+    width: 17px;
+    height: 17px;
+    color: gray;
+}
+li.setting_link_item.delete svg {
+    width: 17px;
+    height: 17px;
+    color: #ff7a7a;
+}
+li.setting_link_item.edit {
+    border-bottom: solid 1px #d8d8d8;
+    border-radius: unset;
+}
 //Project Form==============================================
 .project_icon_radio_box {
   display: flex;
@@ -445,3 +505,7 @@ li.trip_manager_side_area_item {
   color: #fff;
 }
 //trip manager sidebar======================終わり========================
+//inside trip manager======================終わり========================
+.project_inside_container_inner {
+  padding: 20px;
+}

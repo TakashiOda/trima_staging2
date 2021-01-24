@@ -9,7 +9,9 @@
           <div class="data_title_text">
             <%= t("label.user.name") %>
           </div>
-          <div class="edit_btn hide" onclick="toggleTargetForm(this)" id="name">編集</div>
+          <div class="edit_btn hide" onclick="toggleTargetForm(this)" id="name">
+            <%= t("label.btn_control.edit") %>
+          </div>
         </label>
         <div class="data_line" id="name_display">
           <%= @user.first_name %>&nbsp;<%= @user.last_name %>

@@ -134,6 +134,10 @@ class TripManagersController < ApplicationController
       @booked_activities = @cart.booked_activities.where(is_paid: true).order(created_at: :desc)
     end
   end
+  def favorite_list
+    @project = Project.find(params[:project_id])
+    @favorites = FavoriteActivity.where(project_id: @project.id)
+  end
 
   def experience_search
   end

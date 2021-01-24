@@ -1,5 +1,5 @@
 <div class="user_show_inner_content">
-  <h1>ユーザー情報</h1>
+  <h2><%= t("label.page_title.user_account") %></h2>
   <div class="user_show_content">
     <%= form_for(@user) do |form| %>
     <%= render 'layouts/error_messages', model: form.object %>
