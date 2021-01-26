@@ -95,8 +95,7 @@ ActiveRecord::Schema.define(version: 2021_01_19_085225) do
 
   create_table "activity_ageprices", force: :cascade do |t|
     t.integer "activity_id", null: false
-    t.integer "age_from", default: 0, null: false
-    t.integer "age_to", default: 100, null: false
+    t.integer "age_type", default: 0, null: false
     t.integer "normal_price", default: 1000, null: false
     t.integer "high_price", default: 1000, null: false
     t.integer "low_price", default: 1000, null: false

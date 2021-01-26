@@ -247,8 +247,12 @@
             <%= form.hidden_field :total_price, value: 0%>
             <%= form.hidden_field :project_id, value: @project.id %>
             <%= form.hidden_field :activity_id, value: @activity.id %>
-            <%= form.hidden_field :user_id, value: current_user.id %>
-            <% if current_user.first_name && current_user.last_name %>
+            <%= form.hidden_field :maximum_num, value: @activity.maximum_num %>
+            <%= form.hidden_field :total_participants, value: 1 %>
+            <% if current_user %>
+              <%= form.hidden_field :user_id, value: current_user.id %>
+            <% end %>
+            <% if current_user && current_user.first_name && current_user.last_name %>
               <%= form.hidden_field :user_name, value: "#{current_user.first_name} #{current_user.last_name}"%>
             <% else %>
               <%= form.hidden_field :user_name, value: "no name"%>
@@ -259,7 +263,7 @@
               <div class="date_field_box" id="date_field_box">
                 <div class="date_field_box_date">
                   <span class="date_field_box_icon"><i class="far fa-calendar-alt"></i></span>
-                  <span id="date_field_box_date_span"><%= Date.today.strftime("%y/%m/%d")%></span>
+                  <span id="date_field_box_date_span">日時を選択してください</span>
                 </div>
                 <div class="date_field_box_course">
                   <span class="date_field_box_icon"><i class="far fa-clock"></i></span>
@@ -310,8 +314,9 @@
                             <%= hidden_field_tag "stock_#{indexA}", this_month_stock.date %>
                             <%= hidden_field_tag "course_#{indexB}", course.start_time %>
                             <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", this_month_stock.season_price %>
-                            <% if course.activity_stocks.find_by(date: this_month_stock.date).stock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <% thisMonthStock = course.activity_stocks.find_by(date: this_month_stock.date).stock %>
+                            <% if thisMonthStock != 0 %>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= thisMonthStock %>)" type="button" name="button" class="stock_select_btn">選択</button>
                             <% else %>
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
                             <% end %>
@@ -356,8 +361,9 @@
                             <%= hidden_field_tag "stock_#{indexA}", next_month_stock.date %>
                             <%= hidden_field_tag "course_#{indexB}", course.start_time %>
                             <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next_month_stock.season_price %>
-                            <% if course.activity_stocks.find_by(date: next_month_stock.date).stock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <% nextMonthStock = course.activity_stocks.find_by(date: next_month_stock.date).stock %>
+                            <% if nextMonthStock != 0 %>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= nextMonthStock %>)" type="button" name="button" class="stock_select_btn">選択</button>
                             <% else %>
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
                             <% end %>
@@ -402,8 +408,9 @@
                             <%= hidden_field_tag "stock_#{indexA}", next2_month_stock.date %>
                             <%= hidden_field_tag "course_#{indexB}", course.start_time %>
                             <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next2_month_stock.season_price %>
-                            <% if course.activity_stocks.find_by(date: next2_month_stock.date).stock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <% next2MonthStock = course.activity_stocks.find_by(date: next2_month_stock.date).stock %>
+                            <% if next2MonthStock != 0 %>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next2MonthStock %>)" type="button" name="button" class="stock_select_btn">選択</button>
                             <% else %>
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
                             <% end %>
@@ -448,8 +455,9 @@
                             <%= hidden_field_tag "stock_#{indexA}", next3_month_stock.date %>
                             <%= hidden_field_tag "course_#{indexB}", course.start_time %>
                             <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next3_month_stock.season_price %>
-                            <% if course.activity_stocks.find_by(date: next3_month_stock.date).stock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this)" type="button" name="button" class="stock_select_btn">選択</button>
+                            <% next3MonthStock = course.activity_stocks.find_by(date: next3_month_stock.date).stock %>
+                            <% if next3MonthStock != 0 %>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next3MonthStock %>)" type="button" name="button" class="stock_select_btn">選択</button>
                             <% else %>
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
                             <% end %>
@@ -475,6 +483,55 @@
               <% end %>
 
             </div>
+            <div class="member_select_box">
+              <%= form.label :参加人数を入力 %>
+              <div class="participant_input_box">
+                <div class="participant_input_item">
+                  <div class="participant_type">
+                    おとな(中学生以上)
+                  </div>
+                  <div class="input_btns">
+                    <button type="button" class="participant_input_btn" onclick="decreaseParticipant('adult')">-</button>
+                    <div class="num_display_box">
+                      <span class="participant_number" id="adult_num">1</span>
+                      <span class="participant_unit">名</span>
+                    </div>
+                    <button type="button" class="participant_input_btn" onclick="increaseParticipant('adult')">+</button>
+                  </div>
+                </div>
+                <div class="participant_input_item">
+                  <div class="participant_type">
+                    小学生
+                  </div>
+                  <div class="input_btns">
+                    <button type="button" class="participant_input_btn" onclick="decreaseParticipant('middle')">-</button>
+                    <div class="num_display_box">
+                      <span class="participant_number" id="middle_age_num">0</span>
+                      <span class="participant_unit">名</span>
+                    </div>
+                    <button type="button" class="participant_input_btn" onclick="increaseParticipant('middle')">+</button>
+                  </div>
+                </div>
+                <div class="participant_input_item">
+                  <div class="participant_type">
+                    小学生未満
+                  </div>
+                  <div class="input_btns">
+                    <button type="button" class="participant_input_btn" onclick="decreaseParticipant('small')">-</button>
+                    <div class="num_display_box">
+                      <span class="participant_number" id="small_age_num">0</span>
+                      <span class="participant_unit">名</span>
+                    </div>
+                    <button type="button" class="participant_input_btn" onclick="increaseParticipant('small')">+</button>
+                  </div>
+                </div>
+                <div class="participant_alert">
+                  <div id="maximum_alert" class="hidden">
+                    この日時の最大予約人数は<span id="maximum_alert_num"><%=@activity.maximum_num%></span>人です
+                  </div>
+                </div>
+              </div>
+            </div>
             <!-- <div class="member_form_radio_box">
               <div class="member_form_radio_item">
                 <input type="radio" name="participant" id="each" checked><label for="each">人数を選択</label>
@@ -491,23 +548,23 @@
                 <input type="radio" name="participant" id="members"><label for="members">メンバーから選択</label>
               </div>
             </div> -->
-            <% todayDate = Date.today.strftime("%Y%m%d").to_i %>
-            <div class="member_select_box">
-              <%= form.label :参加メンバーを選択 %>
-              <div class="member_item">
-                <%= check_box_tag('select_all', value = "select_all", checked = true, options = {onchange: "selectAllMembers(this)", class: "select_all_input", id: 'select_all_input'}) %>
-                <%= label_tag 'select_all', 'メンバー全員', class: "select_all_label"%>
-              </div>
-              <%= form.collection_check_boxes(:project_member_ids, ProjectMember.where(project_id: @project.id), :id, :nickname) do |b| %>
-              <div class="member_item member_select">
-                <%= b.check_box checked: true, onchange: "selectMembers(this)", class: "members_check_box" %>
-                <% birthDate = Date.new(ProjectMember.find(b.value).birth_year, ProjectMember.find(b.value).birth_month, ProjectMember.find(b.value).birth_date).strftime("%Y%m%d").to_i%>
-                <% memberAge = (todayDate - birthDate) / 10000%>
-                <%= hidden_field_tag "memberage_#{b.value}", memberAge %>
-                <%= b.label(:"data-value" => b.value) { b.text } %>
-              </div>
-              <% end %>
-            </div>
+            <%# todayDate = Date.today.strftime("%Y%m%d").to_i %>
+            <!-- <div class="member_select_box"> -->
+              <%#= form.label :参加メンバーを選択 %>
+              <!-- <div class="member_item"> -->
+                <%#= check_box_tag('select_all', value = "select_all", checked = true, options = {onchange: "selectAllMembers(this)", class: "select_all_input", id: 'select_all_input'}) %>
+                <%#= label_tag 'select_all', 'メンバー全員', class: "select_all_label"%>
+              <!-- </div> -->
+              <%#= form.collection_check_boxes(:project_member_ids, ProjectMember.where(project_id: @project.id), :id, :nickname) do |b| %>
+              <!-- <div class="member_item member_select"> -->
+                <%#= b.check_box checked: true, onchange: "selectMembers(this)", class: "members_check_box" %>
+                <%# birthDate = Date.new(ProjectMember.find(b.value).birth_year, ProjectMember.find(b.value).birth_month, ProjectMember.find(b.value).birth_date).strftime("%Y%m%d").to_i%>
+                <%# memberAge = (todayDate - birthDate) / 10000%>
+                <%#= hidden_field_tag "memberage_#{b.value}", memberAge %>
+                <%#= b.label(:"data-value" => b.value) { b.text } %>
+              <!-- </div> -->
+              <%# end %>
+            <!-- </div> -->
           </div>
           <div class="sidebar_form_inner_bottom">
             <%= form.hidden_field :total_price, value: 0, id: "total_price_input" %>
@@ -519,7 +576,11 @@
                   <span class="total_price_num" id="total_price_display">0</span>
                 </div>
               </div>
-              <%= form.submit('予約する',class: 'button btn-submit disabled', id: 'book_activity_btn', disabled: true) %>
+              <% if current_user %>
+                <%= form.submit('予約する',class: 'button btn-submit disabled', id: 'book_activity_btn', disabled: true) %>
+              <% else %>
+                <%=link_to '予約する', users_sign_in_path(alert: "need_sign_in"), class: 'button btn-submit'%>
+              <% end %>
             </div>
           </div>
         <% end %>
@@ -1036,6 +1097,56 @@
   div#date_field_box:hover {
     cursor: pointer;
   }
+  .input_btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  button.participant_input_btn {
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+    background: #464646;
+    font-size: 37px;
+    color: #fff;
+  }
+  .num_display_box {
+    padding: 0 15px 0 25px;
+    width: 65px;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+  }
+  span.participant_number {
+    font-size: 37px;
+    font-weight: bold;
+    color: #464646;
+  }
+  span.participant_unit {
+    font-size: 20px;
+  }
+  .participant_alert {
+    width: 100%;
+    margin-top: 10px;
+    padding: 0 10px;
+    /* text-align: revert; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  div#maximum_alert {
+    width: 100%;
+    text-align: center;
+    background: #ffa7a7;
+    padding: 10px 5px;
+    border-radius: 8px;
+    color: #ff0000;
+    font-weight: bold;
+  }
+  span#maximum_alert_num {
+    font-size: 23px;
+  }
 </style>
 
 <script type="text/javascript">
@@ -1141,7 +1252,7 @@
     }
   }
 
-  function selectStock(value) {
+  function selectStock(value, maximumStock) {
     const target = value.parentNode;
     const targetDate = target.children[0].value;
     const activityDate = new Date(targetDate);
@@ -1186,6 +1297,11 @@
       submitBtn.classList.remove('disabled');
       submitBtn.disabled = false;
     }
+
+    const hiddenMaxnum = document.getElementById('booked_activity_maximum_num');
+    hiddenMaxnum.value = maximumStock;
+    const maxnumAlertNum = document.getElementById('maximum_alert_num');
+    maxnumAlertNum.innerHTML = maximumStock;
   }
 
   function selectAllMembers(obj) {
@@ -1309,5 +1425,75 @@
     const totalPriceDisplay = document.getElementById('total_price_display');
     totalPriceInput.value = total;
     totalPriceDisplay.innerHTML = total.toLocaleString();
+  }
+  function decreaseParticipant(obj) {
+    const maximumNum = document.getElementById('booked_activity_maximum_num');
+    const maxVal = parseInt(maximumNum.value);
+    const totalTarget = document.getElementById('booked_activity_total_participants');
+    const totalVal = parseInt(totalTarget.value);
+    const maxAlert = document.getElementById('maximum_alert');
+    if (obj == 'adult') {
+      const adultNumTarget = document.getElementById('adult_num');
+      const adultNum = parseInt(adultNumTarget.innerHTML);
+      if (adultNum > 0 && totalVal > 0) {
+        adultNumTarget.innerHTML = adultNum - 1;
+        totalTarget.value = totalVal - 1;
+      }
+    } else if (obj == 'middle'){
+      const middleNumTarget = document.getElementById('middle_age_num');
+      const middleNum = parseInt(middleNumTarget.innerHTML);
+      if (middleNum > 0 && totalVal > 0) {
+        middleNumTarget.innerHTML = middleNum - 1;
+        totalTarget.value = totalVal - 1;
+      }
+    } else if (obj == 'small'){
+      const smallNumTarget = document.getElementById('small_age_num');
+      const smallNum = parseInt(smallNumTarget.innerHTML);
+      if (smallNum > 0 && totalVal > 0) {
+        smallNumTarget.innerHTML = smallNum - 1;
+        totalTarget.value = totalVal - 1;
+      }
+    }
+    if (totalVal <= maxVal) {
+      maxAlert.classList.add('hidden');
+    }
+  }
+  function increaseParticipant(obj) {
+    const maximumNum = document.getElementById('booked_activity_maximum_num');
+    const totalTarget = document.getElementById('booked_activity_total_participants');
+    const maxAlert = document.getElementById('maximum_alert');
+    const totalVal = parseInt(totalTarget.value);
+    if (obj == 'adult') {
+      const adultNumTarget = document.getElementById('adult_num');
+      const adultNum = parseInt(adultNumTarget.innerHTML);
+      if (totalVal < maximumNum.value) {
+        adultNumTarget.innerHTML = adultNum + 1;
+        totalTarget.value = totalVal + 1;
+        maxAlert.classList.add('hidden');
+      } else {
+        maxAlert.classList.remove('hidden');
+      }
+    } else if (obj == 'middle'){
+      const middleNumTarget = document.getElementById('middle_age_num');
+      const middleNum = parseInt(middleNumTarget.innerHTML);
+      if (totalVal < maximumNum.value) {
+        middleNumTarget.innerHTML = middleNum + 1;
+        totalTarget.value = totalVal + 1;
+        maxAlert.classList.add('hidden');
+      } else {
+        maxAlert.classList.remove('hidden');
+      }
+    } else if (obj == 'small'){
+      const smallNumTarget = document.getElementById('small_age_num');
+      const smallNum = parseInt(smallNumTarget.innerHTML);
+      if (totalVal < maximumNum.value) {
+        smallNumTarget.innerHTML = smallNum + 1;
+        totalTarget.value = totalVal + 1;
+        maxAlert.classList.add('hidden');
+      }
+      else {
+       maxAlert.classList.remove('hidden');
+     }
+    }
   }
 </script>

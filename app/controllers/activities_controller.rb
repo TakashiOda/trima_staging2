@@ -39,7 +39,7 @@ class ActivitiesController < ApplicationController
   def new
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build
-    @activity.activity_ageprices.build
+    3.times { @activity.activity_ageprices.build }
     @activity.activity_translations.build
   end
 

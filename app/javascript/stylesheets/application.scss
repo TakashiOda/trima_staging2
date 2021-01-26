@@ -331,6 +331,10 @@ input.disabled {
 .thankyou_email_container {
   padding: 50px;
 }
+h3.trip_manager_page_title {
+    margin: 0;
+    padding: 0;
+}
 
 // lp
 img.eyecatch_pc_image {
@@ -519,7 +523,6 @@ a#header_current_supplier_link {
   padding: 20px 0px 15px;
   color: #fff;
   width: 100%;
-  min-height: 270px;
 }
 .footer_contents {
   display: flex;

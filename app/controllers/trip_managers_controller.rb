@@ -45,6 +45,7 @@ class TripManagersController < ApplicationController
 
   def activity_detail
     @project = Project.find(params[:project_id])
+    @current_user = current_user
     @activity = Activity.find(params[:activity_id])
     @supplier = Supplier.find(@activity.supplier_id)
     @ageprices = @activity.activity_ageprices.order(age_from: :desc)

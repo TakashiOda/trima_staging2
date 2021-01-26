@@ -11,7 +11,11 @@
           <% @activities.each do |activity| %>
             <li class="activity_list_item_on_trip_manager">
               <div class="favorite_icon_box">
-                <i class="far fa-heart"></i>
+                <% if !FavoriteActivity.exists?(user_id: current_user.id, activity_id: activity.id, project_id: @project.id)%>
+                  <i class="far fa-heart"></i>
+                <% else %>
+                  <i class="fas fa-heart" style="color:#f07878;"></i>
+                <% end %>
               </div>
               <%= link_to project_activity_detail_path(@project, activity), class: "link" do %>
                 <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' if !activity.main_image.blank? %>
@@ -19,7 +23,7 @@
                   <ul>
                     <li class="activity_info_text activity_name"><%= activity.name[0,20] %></li>
                     <li class="activity_info_text basic_info"><span class="activity_price">From ¥<%= activity.normal_adult_price %></span> /person</li>
-                    <li class="activity_info_text basic_info"><%= "@#{Area.find(activity.area_id).local_name}" if !activity.area_id.nil? %></li>
+                    <li class="activity_info_text basic_info"><%= "#{Area.find(activity.area_id).local_name}" if !activity.area_id.nil? %></li>
                   </ul>
                 </div>
               <% end %>

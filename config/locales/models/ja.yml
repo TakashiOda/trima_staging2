@@ -231,12 +231,28 @@ ja:
       dec:  12月
     page_title:
       user_account: ユーザー情報
-      project_favorite: お気に入りリスト
+      project_favorite: のお気に入りリスト
+      cart: のカート
+      purchase_list: の購入履歴
+      project_members: のメンバーリスト
     page_control:
       back: 戻る
     btn_control:
       edit: 編集
       delete: 削除
+    header:
+      mypage: マイページ
+      about:  trimaについて
+      for_supplier: 事業者の方
+      sign_in:  ログイン
+      sign_up:  新規登録
+    footer:
+      user_menu: ユーザーメニュー
+      term:  利用規約
+      privacy_policy: プライバシーポリシー
+      supplier_menu:  事業者メニュー
+      management:  運営者
+      company_name:  シーダースコミュニケーションズ株式会社
     sidebar:
       user_sidebar:
         project:  プロジェクト
@@ -281,6 +297,18 @@ ja:
     form:
       save: 保存
       update: 更新
+    user_auth:
+      sign_in_title: ユーザーログイン
+      sign_in: ログイン
+      sign_up: ユーザー登録
+      send_verification: 認証メールを送る
+      forgot_password: パスワードを忘れた方はコチラ
+      fail_password: パスワードを複数回間違えた方
+      dont_recieve_verification: 認証メールが届かない方はこちら
+      term: 利用規約
+      privacy_policy: プライバシーポリシー
+      and: と
+      agree: に同意します
     project_show:
       trip_project: 旅行プロジェクト
       create_project: プロジェクトを作成
@@ -301,3 +329,15 @@ ja:
       page_title: プロジェクトを編集
     project_helps:
       name_limit: プロジェクト名は30字以内で入力してください
+    project_members:
+      add_member: メンバーを追加
+    cart:
+      book_item:  予約コンテンツ
+      participants: 参加者
+      book_date_time: 予約日時
+      total_before_tax:  小計
+      delete: 削除
+      cart_total_title: カートの金額合計
+      tax: 消費税
+      cart_total: 総合計
+      no_book_in_the_cart: 現在カートに予約商品はありません

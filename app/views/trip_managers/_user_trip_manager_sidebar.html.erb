@@ -12,6 +12,7 @@
       </h3>
     <% end %>
     <ul class="trip_manage_side_menu_link_ul">
+      <li><i class="fas fa-home"></i><%= link_to t("label.sidebar.trip_manager_sidebar.home"), project_trip_managers_home_path(@project) %></li>
       <li><i class="fas fa-search"></i><%= link_to t("label.sidebar.trip_manager_sidebar.search"), project_search_home_path(@project) %></li>
       <li><i class="far fa-heart"></i><%= link_to t("label.sidebar.trip_manager_sidebar.favorite"), project_favorite_list_path(@project) %></li>
       <li><i class="fas fa-shopping-cart"></i><%= link_to t("label.sidebar.trip_manager_sidebar.cart"), project_cart_path(@project) %></li>
