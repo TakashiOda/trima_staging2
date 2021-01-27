@@ -138,17 +138,27 @@
                   <tr>
                     <th>年齢</th>
                     <th>通常料金</th>
-                    <th>ローシーズン料金</th>
                     <th>ハイシーズン料金</th>
+                    <th>ローシーズン料金</th>
                   </tr>
-                  <% @ageprices.each_with_index do |price, index| %>
                   <tr>
-                      <td><%= price.age_from %><%= index == 0 ? "歳以上" : "" %><%= "〜#{price.age_to}歳" if index != 0 %></td>
-                      <td>¥<%= price.normal_price.to_s(:delimited) %></td>
-                      <td>¥<%= price.low_price.to_s(:delimited) %></td>
-                      <td>¥<%= price.high_price.to_s(:delimited) %></td>
+                      <td>大人（中学生以上）</td>
+                      <td>¥<%= @activity.normal_adult_price.to_s(:delimited) %></td>
+                      <td>¥<%= @activity.high_adult_price.to_s(:delimited) %></td>
+                      <td>¥<%= @activity.low_adult_price.to_s(:delimited) %></td>
                   </tr>
-                  <% end %>
+                  <tr>
+                      <td>小学生</td>
+                      <td>¥<%= @activity.normal_middle_price.to_s(:delimited) %></td>
+                      <td>¥<%= @activity.high_middle_price.to_s(:delimited) %></td>
+                      <td>¥<%= @activity.low_middle_price.to_s(:delimited) %></td>
+                  </tr>
+                  <tr>
+                      <td>未就学児</td>
+                      <td>¥<%= @activity.normal_kids_price.to_s(:delimited) %></td>
+                      <td>¥<%= @activity.high_kids_price.to_s(:delimited) %></td>
+                      <td>¥<%= @activity.low_kids_price.to_s(:delimited) %></td>
+                  </tr>
                 </table>
               </div>
             </div>
@@ -257,7 +267,18 @@
             <% else %>
               <%= form.hidden_field :user_name, value: "no name"%>
             <% end %>
+            <%= form.hidden_field :course_id, value: nil %>
+            <%= form.hidden_field :stock_id, value: nil %>
             <%= hidden_field_tag "selected_stock_season", "normal" %>
+            <%= hidden_field_tag "normal_adult_price", @activity.normal_adult_price %>
+            <%= hidden_field_tag "high_adult_price", @activity.high_adult_price %>
+            <%= hidden_field_tag "low_adult_price", @activity.low_adult_price %>
+            <%= hidden_field_tag "normal_middle_price", @activity.normal_middle_price %>
+            <%= hidden_field_tag "high_middle_price", @activity.high_middle_price %>
+            <%= hidden_field_tag "low_middle_price", @activity.low_middle_price %>
+            <%= hidden_field_tag "normal_kids_price", @activity.normal_kids_price %>
+            <%= hidden_field_tag "high_kids_price", @activity.high_kids_price %>
+            <%= hidden_field_tag "low_kids_price", @activity.low_kids_price %>
             <div class="calendar_form_fix_field">
               <%= form.label 'スケジュール' %>
               <div class="date_field_box" id="date_field_box">
@@ -300,11 +321,11 @@
                         <div class="inside_stock_td">
                           <div class="inside_stock_td_front">
                             <% if this_month_stock.season_price == "high" %>
-                              <span>¥<%= @ageprices[0].high_price.to_s(:delimited)%></span>
+                              <span>¥<%= @activity.high_adult_price.to_s(:delimited)%></span>
                             <% elsif this_month_stock.season_price == "low" %>
-                              <span>¥<%= @ageprices[0].low_price.to_s(:delimited)%></span>
+                              <span>¥<%= @activity.low_adult_price.to_s(:delimited)%></span>
                             <% else %>
-                              <span>¥<%= @ageprices[0].normal_price.to_s(:delimited)%></span>
+                              <span>¥<%= @activity.normal_adult_price.to_s(:delimited)%></span>
                             <% end %>
                           </div>
                           <div class="inside_stock_td_front">
@@ -316,7 +337,7 @@
                             <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", this_month_stock.season_price %>
                             <% thisMonthStock = course.activity_stocks.find_by(date: this_month_stock.date).stock %>
                             <% if thisMonthStock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= thisMonthStock %>)" type="button" name="button" class="stock_select_btn">選択</button>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= thisMonthStock %>, <%= course.id %>, <%= this_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
                             <% else %>
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
                             <% end %>
@@ -363,7 +384,7 @@
                             <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next_month_stock.season_price %>
                             <% nextMonthStock = course.activity_stocks.find_by(date: next_month_stock.date).stock %>
                             <% if nextMonthStock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= nextMonthStock %>)" type="button" name="button" class="stock_select_btn">選択</button>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= nextMonthStock %>, <%= course.id %>, <%= next_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
                             <% else %>
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
                             <% end %>
@@ -410,7 +431,7 @@
                             <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next2_month_stock.season_price %>
                             <% next2MonthStock = course.activity_stocks.find_by(date: next2_month_stock.date).stock %>
                             <% if next2MonthStock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next2MonthStock %>)" type="button" name="button" class="stock_select_btn">選択</button>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next2MonthStock %>, <%= course.id %>, <%= next2_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
                             <% else %>
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
                             <% end %>
@@ -457,7 +478,7 @@
                             <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next3_month_stock.season_price %>
                             <% next3MonthStock = course.activity_stocks.find_by(date: next3_month_stock.date).stock %>
                             <% if next3MonthStock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next3MonthStock %>)" type="button" name="button" class="stock_select_btn">選択</button>
+                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next3MonthStock %>, <%= course.id %>, <%= next3_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
                             <% else %>
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
                             <% end %>
@@ -517,12 +538,12 @@
                     小学生未満
                   </div>
                   <div class="input_btns">
-                    <button type="button" class="participant_input_btn" onclick="decreaseParticipant('small')">-</button>
+                    <button type="button" class="participant_input_btn" onclick="decreaseParticipant('kids')">-</button>
                     <div class="num_display_box">
-                      <span class="participant_number" id="small_age_num">0</span>
+                      <span class="participant_number" id="kids_age_num">0</span>
                       <span class="participant_unit">名</span>
                     </div>
-                    <button type="button" class="participant_input_btn" onclick="increaseParticipant('small')">+</button>
+                    <button type="button" class="participant_input_btn" onclick="increaseParticipant('kids')">+</button>
                   </div>
                 </div>
                 <div class="participant_alert">
@@ -1252,7 +1273,7 @@
     }
   }
 
-  function selectStock(value, maximumStock) {
+  function selectStock(value, maximumStock, courseId, stockId) {
     const target = value.parentNode;
     const targetDate = target.children[0].value;
     const activityDate = new Date(targetDate);
@@ -1292,7 +1313,7 @@
     const calendarFrom = document.getElementById('activity_stock_calendar_form');
     calendarFrom.classList.add('hidden');
 
-    if (isMemberSelected()) {
+    if (isAnyParticipant()) {
       const submitBtn = document.getElementById('book_activity_btn');
       submitBtn.classList.remove('disabled');
       submitBtn.disabled = false;
@@ -1302,48 +1323,53 @@
     hiddenMaxnum.value = maximumStock;
     const maxnumAlertNum = document.getElementById('maximum_alert_num');
     maxnumAlertNum.innerHTML = maximumStock;
+
+    const courseIdInput = document.getElementById('booked_activity_course_id');
+    courseIdInput.value = courseId;
+    const stockIdInput = document.getElementById('booked_activity_stock_id');
+    stockIdInput.value = stockId;
   }
 
-  function selectAllMembers(obj) {
-    const isChecked = obj.checked;
-    const checkboxes = document.getElementsByName('booked_activity[project_member_ids][]');
+  // function selectAllMembers(obj) {
+  //   const isChecked = obj.checked;
+  //   const checkboxes = document.getElementsByName('booked_activity[project_member_ids][]');
+  //
+  //   const submitBtn = document.getElementById('book_activity_btn');
+  //   if (isChecked) {
+  //     for (var i = 0; i < checkboxes.length; i++) {
+  //      checkboxes[i].checked = true;
+  //     }
+  //   } else {
+  //     for (var i = 0; i < checkboxes.length; i++) {
+  //      checkboxes[i].checked = false;
+  //     }
+  //     submitBtn.classList.add('disabled');
+  //     submitBtn.disabled = true;
+  //   }
+  //   if (isChecked && isDateSelected()) {
+  //     submitBtn.classList.remove('disabled');
+  //     submitBtn.disabled = false;
+  //   }
+  //   calTotalPrice();
+  // }
 
-    const submitBtn = document.getElementById('book_activity_btn');
-    if (isChecked) {
-      for (var i = 0; i < checkboxes.length; i++) {
-       checkboxes[i].checked = true;
-      }
-    } else {
-      for (var i = 0; i < checkboxes.length; i++) {
-       checkboxes[i].checked = false;
-      }
-      submitBtn.classList.add('disabled');
-      submitBtn.disabled = true;
-    }
-    if (isChecked && isDateSelected()) {
-      submitBtn.classList.remove('disabled');
-      submitBtn.disabled = false;
-    }
-    calTotalPrice();
-  }
-
-  function selectMembers(obj) {
-    const isChecked = obj.checked;
-    const allCheckBox = document.getElementById('select_all_input');
-    const submitBtn = document.getElementById('book_activity_btn');
-    if (!isChecked) {
-      allCheckBox.checked = false;
-    }
-
-    if (isChecked && isDateSelected()) {
-      submitBtn.classList.remove('disabled');
-      submitBtn.disabled = false;
-    } else if (!isMemberSelected()) {
-      submitBtn.classList.add('disabled');
-      submitBtn.disabled = true;
-    }
-    calTotalPrice();
-  }
+  // function selectMembers(obj) {
+  //   const isChecked = obj.checked;
+  //   const allCheckBox = document.getElementById('select_all_input');
+  //   const submitBtn = document.getElementById('book_activity_btn');
+  //   if (!isChecked) {
+  //     allCheckBox.checked = false;
+  //   }
+  //
+  //   if (isChecked && isDateSelected()) {
+  //     submitBtn.classList.remove('disabled');
+  //     submitBtn.disabled = false;
+  //   } else if (!isMemberSelected()) {
+  //     submitBtn.classList.add('disabled');
+  //     submitBtn.disabled = true;
+  //   }
+  //   calTotalPrice();
+  // }
 
   function isDateSelected() {
     const timeForm = document.getElementById('date_field_box_time_span');
@@ -1354,84 +1380,138 @@
       return true;
     }
   }
-  function isMemberSelected() {
-    const checkboxes = document.querySelectorAll(".members_check_box");
-    const memberCheckedArr = [];
-    for (var i = 0; i < checkboxes.length; i++) {
-      memberCheckedArr.push(checkboxes[i].checked);
-    }
-    const checkArrIsAllSame = memberCheckedArr.every(v => v === memberCheckedArr[0]);
-    if (checkArrIsAllSame && memberCheckedArr[0] == false) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+  // function isMemberSelected() {
+  //   const checkboxes = document.querySelectorAll(".members_check_box");
+  //   const memberCheckedArr = [];
+  //   for (var i = 0; i < checkboxes.length; i++) {
+  //     memberCheckedArr.push(checkboxes[i].checked);
+  //   }
+  //   const checkArrIsAllSame = memberCheckedArr.every(v => v === memberCheckedArr[0]);
+  //   if (checkArrIsAllSame && memberCheckedArr[0] == false) {
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
 
-  function getSelectedMemberAges() {
-    // 参加メンバー（チェックが押されたメンバー）の各年齢取得
-    const checkboxes = document.querySelectorAll(".members_check_box");
-    const memberCheckedArr = [];
-    for (var i = 0; i < checkboxes.length; i++) {
-      const memberId = checkboxes[i].value;
-      if (checkboxes[i].checked) {
-        const memberAge = document.getElementById(`memberage_${memberId}`).value;
-        memberCheckedArr.push(parseInt(memberAge));
-      }
+  // function getSelectedMemberAges() {
+  //   // 参加メンバー（チェックが押されたメンバー）の各年齢取得
+  //   const checkboxes = document.querySelectorAll(".members_check_box");
+  //   const memberCheckedArr = [];
+  //   for (var i = 0; i < checkboxes.length; i++) {
+  //     const memberId = checkboxes[i].value;
+  //     if (checkboxes[i].checked) {
+  //       const memberAge = document.getElementById(`memberage_${memberId}`).value;
+  //       memberCheckedArr.push(parseInt(memberAge));
+  //     }
+  //   }
+  //   return memberCheckedArr;
+  // }
+  function isAnyParticipant() {
+    // 参加人数取得
+    const adultNumString = document.getElementById('adult_num');
+    const adultNum = parseInt(adultNumString.innerHTML);
+    const middleNumString = document.getElementById('middle_age_num');
+    const middleNum = parseInt(middleNumString.innerHTML);
+    const kidsNumString = document.getElementById('kids_age_num');
+    const kidsNum = parseInt(kidsNumString.innerHTML);
+    const total = adultNum + middleNum + kidsNum;
+    if (total > 0) {
+      return true;
+    } else {
+      return false;
     }
-    return memberCheckedArr;
   }
 
   //合計人数を計算してTotal formに格納
   function calTotalPrice() {
-    // メンバー別の料金をいれる配列
-    const eachPrices = [];
-
     // シーズン取得
     const hiddenSeasonForm = document.getElementById('selected_stock_season');
     const selectedSeason = hiddenSeasonForm.value;
 
-    // 参加メンバー（チェックが押されたメンバー）の各年齢取得
-    const memberAges = getSelectedMemberAges();
+    // 参加人数取得
+    const adultNumString = document.getElementById('adult_num');
+    const adultNum = parseInt(adultNumString.innerHTML);
+    const middleNumString = document.getElementById('middle_age_num');
+    const middleNum = parseInt(middleNumString.innerHTML);
+    const kidsNumString = document.getElementById('kids_age_num');
+    const kidsNum = parseInt(kidsNumString.innerHTML);
 
-    //　シーズンから年齢別の料金取得
-    const ageprices_json = <%= raw @ageprices_json %>;
-
-    // シーズン&料金表からメンバーが当てはまる物を探す
-    for (var i = 0; i < memberAges.length; i++) {
-      for (var ii = 0; ii < ageprices_json.length; ii++) {
-        if (ageprices_json[ii].age_from <= memberAges[i] && memberAges[i] < ageprices_json[ii].age_to) {
-          if (selectedSeason == 'high') {
-            eachPrices.push(ageprices_json[ii].high_price);
-          } else if (selectedSeason == 'low') {
-            eachPrices.push(ageprices_json[ii].low_price);
-          } else {
-            eachPrices.push(ageprices_json[ii].normal_price);
-          }
-        }
-      }
+    // シーズンに基づく金額取得
+    let adultPrice = 0;
+    let middlePrice = 0;
+    let kidsPrice = 0;
+    if (selectedSeason == "normal") {
+      adultPrice = document.getElementById('normal_adult_price').value;
+      middlePrice = document.getElementById('normal_middle_price').value;
+      kidsPrice = document.getElementById('normal_kids_price').value;
+    } else if (selectedSeason == "high") {
+      adultPrice = document.getElementById('high_adult_price').value;
+      middlePrice = document.getElementById('high_middle_price').value;
+      kidsPrice = document.getElementById('high_kids_price').value;
+    } else {
+      adultPrice = document.getElementById('low_adult_price').value;
+      middlePrice = document.getElementById('low_middle_price').value;
+      kidsPrice = document.getElementById('low_kids_price').value;
     }
 
-    const sumArray = array => {
-    let sum = 0;
-    for (let i = 0, len = array.length; i < len; i++) {
-      sum += array[i];
-    }
-      return sum;
-    };
-    const total = sumArray(eachPrices);
-
+    // 合計を計算
+    const total = (adultNum * adultPrice) + (middleNum * middlePrice) + (kidsNum * kidsPrice);
     const totalPriceInput = document.getElementById('total_price_input');
     const totalPriceDisplay = document.getElementById('total_price_display');
     totalPriceInput.value = total;
     totalPriceDisplay.innerHTML = total.toLocaleString();
+
+    // // メンバー別の料金をいれる配列
+    // const eachPrices = [];
+    //
+    // // シーズン取得
+    // const hiddenSeasonForm = document.getElementById('selected_stock_season');
+    // const selectedSeason = hiddenSeasonForm.value;
+
+    // 参加メンバー（チェックが押されたメンバー）の各年齢取得
+    // const memberAges = getSelectedMemberAges();
+    //
+    // //　シーズンから年齢別の料金取得
+    // const ageprices_json = <%#= raw @ageprices_json %>;
+    //
+    // // シーズン&料金表からメンバーが当てはまる物を探す
+    // for (var i = 0; i < memberAges.length; i++) {
+    //   for (var ii = 0; ii < ageprices_json.length; ii++) {
+    //     if (ageprices_json[ii].age_from <= memberAges[i] && memberAges[i] < ageprices_json[ii].age_to) {
+    //       if (selectedSeason == 'high') {
+    //         eachPrices.push(ageprices_json[ii].high_price);
+    //       } else if (selectedSeason == 'low') {
+    //         eachPrices.push(ageprices_json[ii].low_price);
+    //       } else {
+    //         eachPrices.push(ageprices_json[ii].normal_price);
+    //       }
+    //     }
+    //   }
+    // }
+
+    // const sumArray = array => {
+    // let sum = 0;
+    // for (let i = 0, len = array.length; i < len; i++) {
+    //   sum += array[i];
+    // }
+    //   return sum;
+    // };
+    // const total = sumArray(eachPrices);
+    //
+    // const totalPriceInput = document.getElementById('total_price_input');
+    // const totalPriceDisplay = document.getElementById('total_price_display');
+    // totalPriceInput.value = total;
+    // totalPriceDisplay.innerHTML = total.toLocaleString();
   }
+
   function decreaseParticipant(obj) {
     const maximumNum = document.getElementById('booked_activity_maximum_num');
     const maxVal = parseInt(maximumNum.value);
     const totalTarget = document.getElementById('booked_activity_total_participants');
     const totalVal = parseInt(totalTarget.value);
     const maxAlert = document.getElementById('maximum_alert');
+
     if (obj == 'adult') {
       const adultNumTarget = document.getElementById('adult_num');
       const adultNum = parseInt(adultNumTarget.innerHTML);
@@ -1446,18 +1526,30 @@
         middleNumTarget.innerHTML = middleNum - 1;
         totalTarget.value = totalVal - 1;
       }
-    } else if (obj == 'small'){
-      const smallNumTarget = document.getElementById('small_age_num');
-      const smallNum = parseInt(smallNumTarget.innerHTML);
-      if (smallNum > 0 && totalVal > 0) {
-        smallNumTarget.innerHTML = smallNum - 1;
+    } else if (obj == 'kids'){
+      const kidsNumTarget = document.getElementById('kids_age_num');
+      const kidsNum = parseInt(kidsNumTarget.innerHTML);
+      if (kidsNum > 0 && totalVal > 0) {
+        kidsNumTarget.innerHTML = kidsNum - 1;
         totalTarget.value = totalVal - 1;
       }
     }
     if (totalVal <= maxVal) {
       maxAlert.classList.add('hidden');
+      // const totalInput = document.getElementById('booked_activity_total_participants');
+      // totalInput.value = totalVal;
+    }
+    calTotalPrice();
+    const submitBtn = document.getElementById('book_activity_btn');
+    if (isDateSelected() && isAnyParticipant()) {
+      submitBtn.classList.remove('disabled');
+      submitBtn.disabled = false;
+    } else {
+      submitBtn.classList.add('disabled');
+      submitBtn.disabled = true;
     }
   }
+
   function increaseParticipant(obj) {
     const maximumNum = document.getElementById('booked_activity_maximum_num');
     const totalTarget = document.getElementById('booked_activity_total_participants');
@@ -1483,17 +1575,30 @@
       } else {
         maxAlert.classList.remove('hidden');
       }
-    } else if (obj == 'small'){
-      const smallNumTarget = document.getElementById('small_age_num');
-      const smallNum = parseInt(smallNumTarget.innerHTML);
+    } else if (obj == 'kids'){
+      const kidsNumTarget = document.getElementById('kids_age_num');
+      const kidsNum = parseInt(kidsNumTarget.innerHTML);
       if (totalVal < maximumNum.value) {
-        smallNumTarget.innerHTML = smallNum + 1;
+        kidsNumTarget.innerHTML = kidsNum + 1;
         totalTarget.value = totalVal + 1;
         maxAlert.classList.add('hidden');
       }
       else {
        maxAlert.classList.remove('hidden');
      }
+    }
+    // if (totalVal <= maximumNum.value) {
+    //   const totalInput = document.getElementById('booked_activity_total_participants');
+    //   totalInput.value = totalVal;
+    // }
+    calTotalPrice();
+    const submitBtn = document.getElementById('book_activity_btn');
+    if (isDateSelected() && isAnyParticipant()) {
+      submitBtn.classList.remove('disabled');
+      submitBtn.disabled = false;
+    } else {
+      submitBtn.classList.add('disabled');
+      submitBtn.disabled = true;
     }
   }
 </script>

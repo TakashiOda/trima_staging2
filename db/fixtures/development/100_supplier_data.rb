@@ -27,4 +27,6 @@ ActivityBusiness.seed(:id) do |biz|
   biz.prefecture_id = 2
   biz.area_id = 5
   biz.guide_certification = "1"
+  biz.status = "send_approve"
+  biz.is_approved = true
 end

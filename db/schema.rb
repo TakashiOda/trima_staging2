@@ -53,8 +53,16 @@ ActiveRecord::Schema.define(version: 2021_01_19_085225) do
     t.boolean "is_all_year_open", default: true
     t.date "start_date"
     t.date "end_date"
-    t.integer "normal_adult_price"
     t.boolean "has_season_price", default: false
+    t.integer "normal_adult_price"
+    t.integer "high_adult_price"
+    t.integer "low_adult_price"
+    t.integer "normal_middle_price"
+    t.integer "high_middle_price"
+    t.integer "low_middle_price"
+    t.integer "normal_kids_price"
+    t.integer "high_kids_price"
+    t.integer "low_kids_price"
     t.boolean "monday_open", default: true
     t.boolean "tuesday_open", default: true
     t.boolean "wednesday_open", default: true
@@ -233,9 +241,11 @@ ActiveRecord::Schema.define(version: 2021_01_19_085225) do
     t.integer "cart_id"
     t.integer "activity_id", null: false
     t.string "activity_name"
+    t.integer "course_id", null: false
+    t.integer "stock_id", null: false
     t.integer "user_id", null: false
     t.string "user_name"
-    t.integer "join_members_num"
+    t.integer "total_participants"
     t.integer "total_price"
     t.date "activity_date"
     t.time "activity_start_time"

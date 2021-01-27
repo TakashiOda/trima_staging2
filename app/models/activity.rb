@@ -72,9 +72,9 @@ class Activity < ApplicationRecord
   validate :course_gap_less_than_activity_time
   validates :activity_courses, associated: true
   # 料金関連
-  validate :require_any_ageprice
-  validate :must_have_high_price_if_has_season_price
-  validate :must_have_low_price_if_has_season_price
+  # validate :require_any_ageprice
+  # validate :must_have_high_price_if_has_season_price
+  # validate :must_have_low_price_if_has_season_price
   # 翻訳関連
   # validates :activity_translations, associated: true
 
@@ -124,33 +124,33 @@ class Activity < ApplicationRecord
     end
   end
 
-  def must_have_low_price_if_has_season_price
-    if self.activity_ageprices.size > 0 && self.has_season_price
-      low_price_blank_errors = []
-      self.activity_ageprices.each do |ageprice|
-        if ageprice.low_price == nil || ageprice.low_price == ''
-          low_price_blank_errors.push('error')
-        end
-      end
-      if low_price_blank_errors.include?('error')
-        errors.add(:activity_ageprices, "のローシーズン料金が未入力です")
-      end
-    end
-  end
-
-  def must_have_high_price_if_has_season_price
-    if self.activity_ageprices.size > 0 && self.has_season_price
-      high_price_blank_errors = []
-      self.activity_ageprices.each do |ageprice|
-        if ageprice.high_price == nil || ageprice.high_price == ''
-          high_price_blank_errors.push('error')
-        end
-      end
-      if high_price_blank_errors.include?('error')
-        errors.add(:activity_ageprices, "のハイシーズン料金が未入力です")
-      end
-    end
-  end
+  # def must_have_low_price_if_has_season_price
+  #   if self.activity_ageprices.size > 0 && self.has_season_price
+  #     low_price_blank_errors = []
+  #     self.activity_ageprices.each do |ageprice|
+  #       if ageprice.low_price == nil || ageprice.low_price == ''
+  #         low_price_blank_errors.push('error')
+  #       end
+  #     end
+  #     if low_price_blank_errors.include?('error')
+  #       errors.add(:activity_ageprices, "のローシーズン料金が未入力です")
+  #     end
+  #   end
+  # end
+  #
+  # def must_have_high_price_if_has_season_price
+  #   if self.activity_ageprices.size > 0 && self.has_season_price
+  #     high_price_blank_errors = []
+  #     self.activity_ageprices.each do |ageprice|
+  #       if ageprice.high_price == nil || ageprice.high_price == ''
+  #         high_price_blank_errors.push('error')
+  #       end
+  #     end
+  #     if high_price_blank_errors.include?('error')
+  #       errors.add(:activity_ageprices, "のハイシーズン料金が未入力です")
+  #     end
+  #   end
+  # end
 
   # コース時間は最低１つ必要
   def require_at_least_one_course
@@ -163,13 +163,13 @@ class Activity < ApplicationRecord
   end
 
   # 料金は最低１つ必要
-  def require_any_ageprice
-    errors.add(:activity_ageprices, "を1つ以上作成して下さい") if activity_ageprices.blank?
-  end
-
-  # 料金は3個まで
-  def require_upto_ten
-    errors.add(:activity_ageprices, "は3以下にして下さい") if self.activity_ageprices.size >= 4
-  end
+  # def require_any_ageprice
+  #   errors.add(:activity_ageprices, "を1つ以上作成して下さい") if activity_ageprices.blank?
+  # end
+  #
+  # # 料金は3個まで
+  # def require_upto_ten
+  #   errors.add(:activity_ageprices, "は3以下にして下さい") if self.activity_ageprices.size >= 4
+  # end
 
 end
