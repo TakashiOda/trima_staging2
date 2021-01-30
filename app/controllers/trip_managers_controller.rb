@@ -35,12 +35,15 @@ class TripManagersController < ApplicationController
     @project = Project.find(params[:project_id])
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
     @user_projects = UserProject.where(project_id: @project.id)
+    @favorites = FavoriteActivity.where(project_id: @project.id)
+    @booked = @project.cart.booked_activities
   end
   def search_home
     @project = Project.find(params[:project_id])
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
     @user_projects = UserProject.where(project_id: @project.id)
     @activities = Activity.joins(:activity_courses).where("activity_courses.id IS NOT NULL").distinct
+
   end
 
   def activity_detail

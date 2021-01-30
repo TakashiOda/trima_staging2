@@ -2,54 +2,129 @@
   <div class="project_index_container_inner_title_box">
     <h3 class="trip_manager_page_title"><%= @project.name %><%= t("label.page_title.project_favorite")%></h3>
   </div>
-  <div class="project_index_container_inner_member_list">
-    <ul class="project_index_container_inner_member_list_ul">
-      <% if !@favorites.nil? %>
-        <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
-        <% @favorites.each do |favorite|%>
-          <li>
-            <%= Activity.find(favorite.activity_id).name %>
-          </li>
+  <div class="">
+      <ul class="activity_list_for_user">
+        <% if !@favorites.nil? %>
+          <% @favorites.each do |favorite| %>
+            <li class="activity_list_item_on_trip_manager">
+              <div class="favorite_icon_box">
+                  <i class="fas fa-heart" style="color:#f07878;"></i>
+              </div>
+              <% activity = Activity.find(favorite.activity_id) %>
+              <%= link_to project_activity_detail_path(@project, activity), class: "link" do %>
+                <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' if !activity.main_image.blank? %>
+                <div class="activity_info_box">
+                  <ul>
+                    <li class="activity_info_text activity_name"><%= activity.name[0,20] %></li>
+                    <li class="activity_info_text basic_info"><span class="activity_price">From ¥<%= activity.normal_adult_price %></span> /person</li>
+                    <li class="activity_info_text basic_info"><%= "#{Area.find(activity.area_id).local_name}" if !activity.area_id.nil? %></li>
+                  </ul>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        <% else %>
+          <div class="">
+            Sorry, We don't have any activities now...
+          </div>
         <% end %>
-      <% end %>
-    </ul>
+      </ul>
   </div>
 </div>
 
 
-<style lang="scss">
-.project_index_container_inner_title_box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-ul.project_index_container_inner_member_list_ul li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  padding: 9px 20px;
-  border: 1px solid lightgray;
-  border-radius: 6px;
-  background: #fff;
-  box-shadow: 0px 1px 6px -4px grey;
-  font-size: 17px;
-}
-ul.project_index_container_inner_member_list_ul .booked_item_front {
-  display: flex;
-  flex-direction: column;
-}
-span.booked_item_title {
-  display: inline-block;
-  width: 60px !important;
-  background: lightgray;
-  padding: 1px 15px;
-  font-size: 10px;
-  border-radius: 5px;
-  text-align: center;
-  margin-right: 5px;
-}
-span.booked_item_content {
-    font-size: 13px;
-}
+
+
+<style>
+  .project_index_container_inner_top {
+      height: 60px;
+      width: 100%;
+  }
+  .project_index_container_inner_top_searchBox {
+    width: 70%;
+    height: 40px;
+    border: solid 1px lightgray;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .project_index_container_inner_top_searchBox input {
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    outline: none;
+    padding: 5px 15px;
+    font-size: 16px;
+    background: none;
+  }
+  .project_index_container_inner_top_searchBox svg {
+    margin-right: 15px;
+    color: gray;
+    width: 25px !important;
+    height: 25px;
+  }
+  ul.activity_list_for_user {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  ul.activity_list_for_user li.activity_list_item_on_trip_manager {
+    border: none;
+    width: 23%;
+    margin-right: 2%;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  ul.activity_list_for_user a {
+    width: 230px;
+    margin-bottom: 20px;
+  }
+  /* ul.activity_list_for_user a li.activity_list_item {
+    width: 90%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    box-shadow: 0 0 white;
+    position: relative;
+  } */
+  .activity_icon_image {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .activity_info_box {
+    width: 95%;
+  }
+  li.activity_info_text {
+    color: #6b6b6b;
+    word-break: break-all;
+  }
+  li.activity_info_text.activity_name {
+    font-size: 18px;
+  }
+  span.activity_price {
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 5px;
+    color: #4e4e4e;
+  }
+  .favorite_icon_box {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+  }
+  .favorite_icon_box svg {
+    width: 25px !important;
+    height: 25px;
+    color: #fff;
+  }
 </style>

@@ -329,7 +329,11 @@
                             <% end %>
                           </div>
                           <div class="inside_stock_td_front">
-                            <%= course.activity_stocks.find_by(date: this_month_stock.date).stock %>
+                            <% if course.activity_stocks.find_by(date: this_month_stock.date).stock == 0%>
+                              <span style="color:red;">SOLD OUT</span>
+                            <% else %>
+                              <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: this_month_stock.date).stock %><span style="font-size: 12px;">名</span>
+                            <% end %>
                           </div>
                           <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                             <%= hidden_field_tag "stock_#{indexA}", this_month_stock.date %>
@@ -376,7 +380,11 @@
                       <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next_month_stock.date).stock == 0 %><%= next_month_stock.season_price == "high" ? "high_season" : next_month_stock.season_price == "low" ? "low_season" : "" %>">
                         <div class="inside_stock_td">
                           <div class="inside_stock_td_front">
-                            <%= course.activity_stocks.find_by(date: next_month_stock.date).stock %>
+                            <% if course.activity_stocks.find_by(date: next_month_stock.date).stock == 0%>
+                              <span style="color:red;">SOLD OUT</span>
+                            <% else %>
+                              <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: next_month_stock.date).stock %><span style="font-size: 12px;">名</span>
+                            <% end %>
                           </div>
                           <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                             <%= hidden_field_tag "stock_#{indexA}", next_month_stock.date %>
@@ -423,7 +431,11 @@
                       <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0 %><%= next2_month_stock.season_price == "high" ? "high_season" : next2_month_stock.season_price == "low" ? "low_season" : "" %>">
                         <div class="inside_stock_td">
                           <div class="inside_stock_td_front">
-                            <%= course.activity_stocks.find_by(date: next2_month_stock.date).stock %>
+                            <% if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0%>
+                              <span style="color:red;">SOLD OUT</span>
+                            <% else %>
+                              <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: next2_month_stock.date).stock %><span style="font-size: 12px;">名</span>
+                            <% end %>
                           </div>
                           <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                             <%= hidden_field_tag "stock_#{indexA}", next2_month_stock.date %>
@@ -470,7 +482,11 @@
                       <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next3_month_stock.date).stock == 0 %><%= next3_month_stock.season_price == "high" ? "high_season" : next3_month_stock.season_price == "low" ? "low_season" : "" %>">
                         <div class="inside_stock_td">
                           <div class="inside_stock_td_front">
-                            <%= course.activity_stocks.find_by(date: next3_month_stock.date).stock %>
+                            <% if course.activity_stocks.find_by(date: next3_month_stock.date).stock == 0%>
+                              <span style="color:red;">SOLD OUT</span>
+                            <% else %>
+                              <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: next3_month_stock.date).stock %><span style="font-size: 12px;">名</span>
+                            <% end %>
                           </div>
                           <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                             <%= hidden_field_tag "stock_#{indexA}", next3_month_stock.date %>
@@ -1601,4 +1617,15 @@
       submitBtn.disabled = true;
     }
   }
+
+  // document.addEventListener('click', (e) => {
+  //   if(!e.target.closest('#date_field_box')) {
+  //     const calendarFrom = document.getElementById('activity_stock_calendar_form');
+  //     calendarFrom.classList.add('hidden');
+  //     // const isClose = calendarFrom.classList.contains('hidden');
+  //     // if (!isClose) {date_field_box
+  //     //   calendarFrom.classList.add('hidden');
+  //     // }
+  //   }
+  // })
 </script>

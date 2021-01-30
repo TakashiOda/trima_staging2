@@ -34,32 +34,36 @@
                 <%= image_tag "project_icons/#{own.icon}", class: 'project_icon' %>
                 <div class="project_title">
                   <span class="project_title_text"><%= own.name %></span>
-                  <% if own.start_date %>
-                    <div class="date_item">
-                      <span class="project_date_label"><%= t("label.project_show.start_date") %>:</span>
-                      <span class="project_date_text">
+                  <div class="date_item">
+                    <span class="project_date_label"><%= t("label.project_show.start_date") %>:</span>
+                    <span class="project_date_text">
+                      <% if own.start_date %>
                         <%= own.start_date.strftime("%Y") %>
                         <%= t("label.project_show.year_unit") %>
                         <%= own.start_date.strftime("%m") %>
                         <%= t("label.project_show.month_unit") %>
                         <%= own.start_date.strftime("%d") %>
                         <%= t("label.project_show.day_unit") %>
-                      </span>
-                    </div>
-                  <% end %>
-                  <% if own.end_date %>
-                    <div class="date_item">
-                      <span class="project_date_label"><%= t("label.project_show.end_date") %>:</span>
-                      <span class="project_date_text">
+                      <% else %>
+                        開始日設定なし
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="date_item">
+                    <span class="project_date_label"><%= t("label.project_show.end_date") %>:</span>
+                    <span class="project_date_text">
+                      <% if own.end_date %>
                         <%= own.end_date.strftime("%Y") %>
                         <%= t("label.project_show.year_unit") %>
                         <%= own.end_date.strftime("%m") %>
                         <%= t("label.project_show.month_unit") %>
                         <%= own.end_date.strftime("%d") %>
                         <%= t("label.project_show.day_unit") %>
-                      </span>
-                    </div>
-                  <% end %>
+                      <% else %>
+                        終了日設定なし
+                      <% end %>
+                    </span>
+                  </div>
                 </div>
               <% end %>
               <div class="setting_link" onclick="showLinks(this)">
