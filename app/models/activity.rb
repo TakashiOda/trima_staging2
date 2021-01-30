@@ -11,6 +11,8 @@ class Activity < ApplicationRecord
   accepts_nested_attributes_for :activity_translations, allow_destroy: true
   has_many :favorite_activities, dependent: :destroy
 
+  has_many :booked_activities
+
   # 画像アップローダー ****************************************************
   mount_uploader :main_image, MainImageUploader
   mount_uploader :second_image, MainImageUploader

@@ -62,7 +62,7 @@
                       <span class="label">予約者</span><%=booked_activity.user_name if booked_activity.user_name%>
                     </div>
                     <div class="bookedItems_activity_name">
-                      <span class="label">人数</span><%= "#{booked_activity.join_members_num}人" if booked_activity.join_members_num%>
+                      <span class="label">人数</span><%= "#{booked_activity.total_participants}人" if booked_activity.total_participants%>
                     </div>
                     <div class="bookedItems_activity_name">
                       <span class="label">予約金額</span><%= "¥#{booked_activity.total_price.to_s(:delimited)}" if booked_activity.total_price%>

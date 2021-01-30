@@ -15,6 +15,15 @@ class SuppliersController < ApplicationController
     @supplier = current_supplier
     @supplier_profile = @supplier.supplier_profile
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier)
+    @activities = @activity_business.activities
+    @booked = []
+    @activities.each do |activity|
+      if activity.booked_activities.size > 0
+        activity.booked_activities.each do |book|
+          @booked.push(book)
+        end
+      end
+    end
   end
 
   def show
