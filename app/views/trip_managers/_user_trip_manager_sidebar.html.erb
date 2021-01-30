@@ -1,7 +1,7 @@
 <div class="trip_manage_side_inner">
   <div class="trip_manage_side_back_link">
     <%=link_to projects_path do %>
-      <span class="back_nav_text"><i class="fas fa-angle-left"></i>戻る</span>
+      <span class="back_nav_text"><i class="fas fa-angle-left"></i><%= t("label.page_control.back")%></span>
     <% end %>
   </div>
   <div class="trip_manage_side_links">
@@ -12,52 +12,14 @@
       </h3>
     <% end %>
     <ul class="trip_manage_side_menu_link_ul">
-      <li><i class="fas fa-search"></i><%= link_to "検索", project_search_home_path(@project) %></li>
-      <li><i class="far fa-bookmark"></i><%= link_to "購入済みアイテム", project_purchase_list_path(@project) %></li>
-      <li><i class="fas fa-users"></i><%= link_to "メンバー管理", project_members_path(@project) %></li>
-      <li><i class="fas fa-users"></i><%= link_to "カート", project_cart_path(@project) %></li>
+      <li><i class="fas fa-home"></i><%= link_to t("label.sidebar.trip_manager_sidebar.home"), project_trip_managers_home_path(@project) %></li>
+      <li><i class="fas fa-search"></i><%= link_to t("label.sidebar.trip_manager_sidebar.search"), project_search_home_path(@project) %></li>
+      <li><i class="far fa-heart"></i><%= link_to t("label.sidebar.trip_manager_sidebar.favorite"), project_favorite_list_path(@project) %></li>
+      <li><i class="fas fa-shopping-cart"></i><%= link_to t("label.sidebar.trip_manager_sidebar.cart"), project_cart_path(@project) %></li>
+      <li><i class="far fa-bookmark"></i><%= link_to t("label.sidebar.trip_manager_sidebar.purchase"), project_purchase_list_path(@project) %></li>
+      <li><i class="fas fa-users"></i><%= link_to t("label.sidebar.trip_manager_sidebar.members"), project_members_path(@project) %></li>
     </ul>
   </div>
-
-  <% unless controller.controller_name == "projects" && controller.action_name == "edit" %>
-    <div class="trip_project_profile_box">
-      <div class="trip_project_profile_box_title">
-        <div class="trip_project_profile_box_title_text">Trip Profile</div>
-        <% if @owner == current_user %>
-      <div class="trip_profile_edit_btn_box">
-        <%= link_to "Edit", edit_project_path(@project) %>
-      </div>
-        <% end %>
-      </div>
-      <ul>
-        <% if !@project.areas.nil? %>
-          <% @project.areas.each do |area| %>
-            <li class="trip_manager_side_area_item">
-              <%= area.en_name %>
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
-      <div class="trip_profile_schedule_item">
-        <span class="trip_profile_schedule_item_title"><i class="far fa-calendar-alt"></i>From</span>
-        <span><%= @project.start_date ? @project.start_date : "no date" %></span>
-      </div>
-      <div class="trip_profile_schedule_item">
-        <span class="trip_profile_schedule_item_title"><i class="far fa-calendar-alt"></i>To</span>
-        <span><%= @project.start_date ? @project.start_date : "no date" %></span>
-      </div>
-      <ul>
-        <% if !@user_projects.nil? %>
-          <% @user_projects.each do |user_project| %>
-            <% user = User.find(user_project.user_id) %>
-            <li>
-              <%= user.email%>
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
 </div>
 
 <style lang="scss">

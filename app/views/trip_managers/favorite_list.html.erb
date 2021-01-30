@@ -1,22 +1,16 @@
 <div class="project_inside_container_inner">
-  <div class="project_index_container_inner_top">
-    <div class="project_index_container_inner_top_searchBox">
-      <input type="text" placeholder="keyword"/>
-      <i class="fas fa-search"></i>
-    </div>
+  <div class="project_index_container_inner_title_box">
+    <h3 class="trip_manager_page_title"><%= @project.name %><%= t("label.page_title.project_favorite")%></h3>
   </div>
   <div class="">
       <ul class="activity_list_for_user">
-        <% if !@activities.nil? %>
-          <% @activities.each do |activity| %>
+        <% if !@favorites.nil? %>
+          <% @favorites.each do |favorite| %>
             <li class="activity_list_item_on_trip_manager">
               <div class="favorite_icon_box">
-                <% if !FavoriteActivity.exists?(user_id: current_user.id, activity_id: activity.id, project_id: @project.id)%>
-                  <i class="far fa-heart"></i>
-                <% else %>
                   <i class="fas fa-heart" style="color:#f07878;"></i>
-                <% end %>
               </div>
+              <% activity = Activity.find(favorite.activity_id) %>
               <%= link_to project_activity_detail_path(@project, activity), class: "link" do %>
                 <%= image_tag activity.main_image.to_s, class: 'activity_icon_image' if !activity.main_image.blank? %>
                 <div class="activity_info_box">

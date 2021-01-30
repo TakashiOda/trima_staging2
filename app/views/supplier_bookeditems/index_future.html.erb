@@ -45,10 +45,10 @@
           <div class="calendar_day_box">
             <div class="day_num"><%= date.day %></div>
             <div class="day_info_box">
-              <% @member_nums = []%>
-              <% booked_activities.each do |book_item|%>
-                <% @member_nums.push(book_item.join_members_num) %>
-              <% end %>
+              <%# @member_nums = []%>
+              <%# booked_activities.each do |book_item|%>
+                <%# @member_nums.push(book_item.join_members_num) %>
+              <%# end %>
               <div class="day_books_num">
                 <%= "#{booked_activities.size}件" if booked_activities.size > 0 %>
               </div>
@@ -79,7 +79,7 @@
                       <span class="label">予約者</span><%=booked_activity.user_name if booked_activity.user_name%>
                     </div>
                     <div class="bookedItems_activity_name">
-                      <span class="label">人数</span><%= "#{booked_activity.join_members_num}人" if booked_activity.join_members_num%>
+                      <span class="label">人数</span><%= "#{booked_activity.total_participants}人" if booked_activity.total_participants%>
                     </div>
                     <div class="bookedItems_activity_name">
                       <% gain_price = (booked_activity.total_price - (booked_activity.total_price * 0.15)).to_i %>

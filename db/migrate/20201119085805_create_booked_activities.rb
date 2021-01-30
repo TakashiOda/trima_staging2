@@ -6,9 +6,11 @@ class CreateBookedActivities < ActiveRecord::Migration[6.0]
       t.integer    :cart_id
       t.references :activity, null: false, foreign_key: true
       t.string     :activity_name
+      t.integer    :course_id, null: false
+      t.integer    :stock_id, null: false
       t.references :user, null: false, foreign_key: true
       t.string     :user_name
-      t.integer    :join_members_num
+      t.integer    :total_participants
       t.integer    :total_price
       t.date       :activity_date
       t.time       :activity_start_time

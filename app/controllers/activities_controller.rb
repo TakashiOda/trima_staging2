@@ -39,7 +39,6 @@ class ActivitiesController < ApplicationController
   def new
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build
-    @activity.activity_ageprices.build
     @activity.activity_translations.build
   end
 
@@ -47,8 +46,6 @@ class ActivitiesController < ApplicationController
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build(activity_params)
     if @activity.save
-      @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
-      @activity.save!
       flash[:notice] = '体験情報が作成されました'
       redirect_to supplier_activities_path(current_supplier)
     else
@@ -72,7 +69,6 @@ class ActivitiesController < ApplicationController
   def update
     @activity = Activity.find(params[:id])
     if @activity.update(activity_params)
-      @activity.normal_adult_price = @activity.activity_ageprices[0].normal_price
         if params[:save_status] == '下書き保存'
           @activity.status = 'draft'
         else
@@ -374,8 +370,10 @@ class ActivitiesController < ApplicationController
                                       :detail_address, :longitude, :latitude,
                                       :meeting_spot1_japanese_address, :meeting_spot1_japanese_description,
                                       :meeting_spot1_longitude, :meeting_spot1_latitude,
-                                      :activity_minutes,
-                                      :normal_adult_price, :has_season_price,
+                                      :activity_minutes, :has_season_price,
+                                      :normal_adult_price, :high_adult_price, :low_adult_price,
+                                      :normal_middle_price, :high_middle_price, :low_middle_price,
+                                      :normal_kids_price, :high_kids_price, :low_kids_price,
                                       :maximum_num, :minimum_num, :available_age,  :is_all_year_open,
                                       :start_date, :end_date,
                                       :monday_open, :tuesday_open, :wednesday_open, :thursday_open,

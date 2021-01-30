@@ -222,7 +222,7 @@ a.disabled{
 .body_content {
   position: relative;
   width: 100%;
-  min-height: 500px;
+  // min-height: 400px;
   margin-top: 56px;
 }
 body.erb_body {
@@ -330,6 +330,10 @@ input.disabled {
 //5.複数ページ共通====================================
 .thankyou_email_container {
   padding: 50px;
+}
+h3.trip_manager_page_title {
+    margin: 0;
+    padding: 0;
 }
 
 // lp
@@ -519,7 +523,6 @@ a#header_current_supplier_link {
   padding: 20px 0px 15px;
   color: #fff;
   width: 100%;
-  min-height: 270px;
 }
 .footer_contents {
   display: flex;
@@ -1031,6 +1034,7 @@ div#password_input_box {
 .supplier_show_main_content {
   width: 83%;
   background: #eaeaea;
+  padding: 20px 0;
 }
 
 .user_show_side ul li {
@@ -1224,8 +1228,8 @@ span#user_edit_image_upload_btn {
   vertical-align: middle;
 }
 .birth_day_input_items .form-control {
-  width: 30%;
-  max-width: 100px;
+  width: 33%;
+  // max-width: 100px;
 }
 span.form_supplement {
   font-size: 10px;

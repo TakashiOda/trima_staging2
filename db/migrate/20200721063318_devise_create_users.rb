@@ -36,17 +36,24 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.0]
       t.string   :first_name
       t.string   :last_name
       t.string   :username
-      t.text     :profile_text
-      t.integer  :country_id
       t.integer  :language_id
+      t.integer  :country_id
+      t.string   :post_code
+      t.string   :prefecture
+      t.string   :town
+      t.string   :detail_address
+      t.string   :building
       t.integer  :birth_year
       t.integer  :birth_month
       t.integer  :birth_day
       t.string   :gender
       t.string   :avatar
       t.string   :phone
-      t.string   :uid
-      t.string   :provider
+      t.string   :emergency_person_name
+      t.string   :emergency_person_relation
+      t.string   :emergency_person_email
+      t.string   :emergency_person_country_code
+      t.string   :emergency_person_phone
 
       t.timestamps null: false
     end

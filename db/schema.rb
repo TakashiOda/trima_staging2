@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_16_061607) do
+ActiveRecord::Schema.define(version: 2021_01_19_085225) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -53,8 +53,16 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
     t.boolean "is_all_year_open", default: true
     t.date "start_date"
     t.date "end_date"
-    t.integer "normal_adult_price"
     t.boolean "has_season_price", default: false
+    t.integer "normal_adult_price"
+    t.integer "high_adult_price"
+    t.integer "low_adult_price"
+    t.integer "normal_middle_price"
+    t.integer "high_middle_price"
+    t.integer "low_middle_price"
+    t.integer "normal_kids_price"
+    t.integer "high_kids_price"
+    t.integer "low_kids_price"
     t.boolean "monday_open", default: true
     t.boolean "tuesday_open", default: true
     t.boolean "wednesday_open", default: true
@@ -95,8 +103,7 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
 
   create_table "activity_ageprices", force: :cascade do |t|
     t.integer "activity_id", null: false
-    t.integer "age_from", default: 0, null: false
-    t.integer "age_to", default: 100, null: false
+    t.integer "age_type", default: 0, null: false
     t.integer "normal_price", default: 1000, null: false
     t.integer "high_price", default: 1000, null: false
     t.integer "low_price", default: 1000, null: false
@@ -234,9 +241,11 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
     t.integer "cart_id"
     t.integer "activity_id", null: false
     t.string "activity_name"
+    t.integer "course_id", null: false
+    t.integer "stock_id", null: false
     t.integer "user_id", null: false
     t.string "user_name"
-    t.integer "join_members_num"
+    t.integer "total_participants"
     t.integer "total_price"
     t.date "activity_date"
     t.time "activity_start_time"
@@ -263,6 +272,12 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
   end
 
   create_table "countries", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "country_codes", force: :cascade do |t|
+    t.string "code"
+    t.string "name_with_num"
     t.string "name"
   end
 
@@ -465,17 +480,24 @@ ActiveRecord::Schema.define(version: 2020_12_16_061607) do
     t.string "first_name"
     t.string "last_name"
     t.string "username"
-    t.text "profile_text"
-    t.integer "country_id"
     t.integer "language_id"
+    t.integer "country_id"
+    t.string "post_code"
+    t.string "prefecture"
+    t.string "town"
+    t.string "detail_address"
+    t.string "building"
     t.integer "birth_year"
     t.integer "birth_month"
     t.integer "birth_day"
     t.string "gender"
     t.string "avatar"
     t.string "phone"
-    t.string "uid"
-    t.string "provider"
+    t.string "emergency_person_name"
+    t.string "emergency_person_relation"
+    t.string "emergency_person_email"
+    t.string "emergency_person_country_code"
+    t.string "emergency_person_phone"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
