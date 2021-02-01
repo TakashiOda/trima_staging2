@@ -26,6 +26,7 @@ SupplierProfile.seed(:supplier_id) do |org|
 end
 
 ActivityBusiness.seed(:id) do |biz|
+<<<<<<< HEAD
   biz.id: 1
   biz.supplier_id: 1
   biz.profile_image: nil
@@ -52,4 +53,15 @@ ActivityBusiness.seed(:id) do |biz|
   biz.insurance_image: nil
   biz.status: "send_approve"
   biz.is_approved: true
+=======
+  biz.id = 1
+  biz.supplier_id = 1
+  biz.name = "十勝リバーラフティング"
+  biz.profile_text = "十勝川の大自然を感じる十勝リバーラフティング"
+  biz.prefecture_id = 2
+  biz.area_id = 5
+  biz.guide_certification = "1"
+  biz.status = "send_approve"
+  biz.is_approved = true
+>>>>>>> eb45e6d0f9b79c36adea2bc8b8e2e697a7823f46
 end

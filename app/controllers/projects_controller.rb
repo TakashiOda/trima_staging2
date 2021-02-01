@@ -35,20 +35,15 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    if params[:project][:project_areas_attributes]['0']['area_id'] != ""
-      @project = current_user.projects.create(project_params)
-      if @project.persisted?
-        @project.add_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
-        @project.add_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
-        @project.add_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
-        @project.add_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
-        # @project.add_me_as_admin(current_user)
-        redirect_to projects_path(current_user)
-      else
-        render 'new'
-      end
+    @project = current_user.projects.create(project_params)
+    if @project.persisted?
+      @project.add_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
+      @project.add_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
+      @project.add_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
+      @project.add_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
+      # @project.add_me_as_admin(current_user)
+      redirect_to projects_path
     else
-      flash[:alert] = 'Select At least one area'
       render 'new'
     end
   end
@@ -69,7 +64,8 @@ class ProjectsController < ApplicationController
       @project.replace_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
       @project.replace_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
       @project.replace_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
-      redirect_to user_project_trip_managers_home_path(@user, @project)
+      # redirect_to project_trip_managers_home_path(@project)
+      redirect_to projects_path
     else
       render 'edit'
     end
@@ -97,23 +93,14 @@ class ProjectsController < ApplicationController
 
   def destroy
     @user = current_user
-    # @user = User.find(params[:user_id])
     @project = Project.find(params[:id])
     if @project.is_owner?(current_user) # current_userは管理者かどうか is_owner?はモデルメソッド
       @project.project_areas.destroy_all
       @project.user_projects.destroy_all
-      # if !@project.has_other_members?(current_user) # 他のメンバーが存在しないかどうか　has_other_members?はモデルメソッド
-      #   @project.destroy_last_owner(current_user) #
-      #   @project.destroy
-      flash[:notice] = "Project has been Deleted!"
-      redirect_to user_projects_path(@user)
-      # else
-      #   flash[:alert] = "At first, please delete members"
-      #   render 'edit'
-      # end
+      redirect_to projects_path
     else
       flash[:alert] = "Permission denied! You are not owner!"
-      render 'edit'
+      render 'index'
     end
   end
 

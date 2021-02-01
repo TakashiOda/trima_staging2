@@ -7,7 +7,8 @@
     <ul class="header__links">
       <% if user_signed_in? %>
         <%= link_to(user_path(current_user), class: 'header_mypage_link') do %>
-          <li class="header_to_dashboad_text">マイページ
+          <li class="header_to_dashboad_text">
+            <%= t("label.header.mypage")%>
           </li>
           <li>
             <% if !current_user.avatar.blank? %>
@@ -42,9 +43,9 @@
           <% end %>
         </li>
       <% elsif controller.action_name.include?("supplier") || request.path_info.include?("supplier") %>
-        <li><%= link_to "trimaについて", about_for_supplier_path %></li>
-        <li><%=link_to "事業者ログイン", suppliers_sign_in_path %></li>
-        <li class="header_signup_link"><%=link_to "事業者お申込み", new_supplier_apply_path %></li>
+        <li><%= link_to t("label.header.about"), about_for_supplier_path %></li>
+        <li><%=link_to t("label.header.sign_in"), suppliers_sign_in_path %></li>
+        <li class="header_signup_link"><%=link_to t("label.header.sign_up"), new_supplier_apply_path %></li>
       <% elsif admin_signed_in? %>
         <li>
           <%= link_to admin_path(current_admin), id: 'header_current_supplier_link' do %>

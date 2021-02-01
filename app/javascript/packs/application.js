@@ -1,8 +1,9 @@
-
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+require("chartkick")
+require("chart.js")
 import '../stylesheets/application';
 import '@fortawesome/fontawesome-free/js/all'
 import "cocoon";

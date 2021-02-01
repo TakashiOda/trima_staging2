@@ -17,7 +17,6 @@ class BookActivitiesController < ApplicationController
     @booked_activity.purchase_number = SecureRandom.alphanumeric(10)
     @booked_activity.activity_name = @booked_activity.activity.name
     @booked_activity.activity_end_time = @booked_activity.activity_start_time + (@booked_activity.activity.activity_minutes).minutes
-    @booked_activity.join_members_num = @booked_activity.project_members.size
     if @booked_activity.save
       redirect_to project_cart_path(@project)
     else
@@ -45,8 +44,9 @@ class BookActivitiesController < ApplicationController
   private
     def booked_activity_params
       params.require(:booked_activity).permit(:project_id, :cart_id, :activity_id, :activity_name,
-                                              :user_id, :user_name, :join_members_num,
-                                              :total_price, :activity_date,
+                                              :user_id, :user_name,
+                                              :total_price, :activity_date, :total_participants,
+                                              :course_id, :stock_id,
                                               :activity_start_time, :activity_end_time,
                                               { project_member_ids: []}, :supplier_id)
     end

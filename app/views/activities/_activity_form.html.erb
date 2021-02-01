@@ -298,27 +298,32 @@
           </div>
         </div>
         <div class="form-group ageprice_table">
-          <div class="label_with_must">
-            <%= f.label :activity_ageprices %><span class="must_input">必須</span>
-          </div>
-          <div class="ageprice_table_head">
-            <div class="ageprice_row agefrom">下限</div>
-            <div class="ageprice_row fromsign">〜</div>
-            <div class="ageprice_row ageto">上限</div>
-            <div class="ageprice_row normal_price">通常料金</div>
-            <div class="ageprice_row season_price"><span>ロー料金</span></div>
-            <div class="ageprice_row season_price"><span>ハイ料金</span></div>
-            <div class="ageprice_row row_delete">削除</div>
-          </div>
-          <div id="ageprice">
-            <%= f.fields_for :activity_ageprices do |t| %>
-              <%= render "activity_ageprice_fields", f: t %>
-            <% end %>
-            <div class="links">
-              <%= link_to_add_association "年齢別料金を追加", f, :activity_ageprices, form_name: 'f', id:"ageprice_add_btn" %>
-            </div>
-          </div>
-
+          <table class="ageprice_table">
+            <tr>
+              <th class="ageprice_type">料金タイプ</th>
+              <th class="ageprice_price">通常料金</th>
+              <th class="ageprice_price season_price_item">ローシーズン料金</th>
+              <th class="ageprice_price season_price_item">ハイシーズン料金</th>
+            </tr>
+            <tr>
+              <td class="ageprice_type"><%= f.label :大人料金（中学生以上）%></td>
+              <td class="ageprice_price input_box"><%= f.number_field :normal_adult_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item"><%= f.number_field :low_adult_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item"><%= f.number_field :high_adult_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+            </tr>
+            <tr>
+              <td class="ageprice_type"><%= f.label :小学生 %></td>
+              <td class="ageprice_price input_box"><%= f.number_field :normal_middle_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item"><%= f.number_field :low_middle_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item"><%= f.number_field :high_middle_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+            </tr>
+            <tr>
+              <td class="ageprice_type"><%= f.label :未就学児 %></td>
+              <td class="ageprice_price input_box"><%= f.number_field :normal_kids_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item"><%= f.number_field :low_kids_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item"><%= f.number_field :high_kids_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+            </tr>
+          </table>
         </div>
       </section>
       <section class="form_section">
@@ -551,6 +556,38 @@
   ul.help_steps li {
     color: gray;
   }
+  table.ageprice_table .ageprice_type {
+    text-align: left;
+    width: 25%;
+  }
+  table.ageprice_table th {
+    text-align: left;
+  }
+  table.ageprice_table tr {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .ageprice_price {
+    width: 25%;
+  }
+  td.ageprice_price.input_box {
+    display: flex;
+    flex-direction: row;
+    width: 25%;
+    align-items: flex-end;
+  }
+  td.ageprice_price input {
+    width: calc(100% - 60px);
+  }
+  .ageprice_unit {
+    width: 30px;
+    padding-left: 4px;
+    font-size: 15px;
+    font-weight: bold;
+    color: gray;
+    line-height: 18px;
+  }
 </style>
 
 
@@ -745,10 +782,10 @@
 
   function hasSeasonPrice(obj) {
     var isChecked = obj.checked;
-    var seasonPriceBoxes = document.querySelectorAll("div.season_price");
+    var seasonPriceBoxes = document.querySelectorAll(".season_price_item");
     if (isChecked) {
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
-        seasonPriceBoxes[i].children[0].classList.remove("hidden");
+        seasonPriceBoxes[i].classList.remove("hidden");
         // if (seasonPriceBoxes[i].children[1]) {
         //   seasonPriceBoxes[i].children[1].classList.remove("hidden");
         // }
@@ -757,10 +794,10 @@
   }
   function noSeasonPrice(obj) {
     var isChecked = obj.checked;
-    var seasonPriceBoxes = document.querySelectorAll("div.season_price");
+    var seasonPriceBoxes = document.querySelectorAll(".season_price_item");
     if (isChecked) {
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
-        seasonPriceBoxes[i].children[0].classList.add("hidden");
+        seasonPriceBoxes[i].classList.add("hidden");
         // if (seasonPriceBoxes[i].children[1]) {
         //   seasonPriceBoxes[i].children[1].classList.add("hidden");
         // }

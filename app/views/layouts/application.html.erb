@@ -51,16 +51,16 @@
             <%= yield %>
           </div>
         </div>
-      <% elsif controller.controller_name == "projects" && controller.action_name == "edit" %>
-        <%= stylesheet_link_tag 'users' %>
-        <div class="container user_show container-fluid">
-          <div class="trip_manage_side">
-            <%= render 'trip_managers/user_trip_manager_sidebar' %>
-          </div>
-          <div class="project_index_container">
-            <%= yield %>
-          </div>
-        </div>
+      <%# elsif controller.controller_name == "projects" && controller.action_name == "edit" %>
+        <%#= stylesheet_link_tag 'users' %>
+        <!-- <div class="container user_show container-fluid"> -->
+          <!-- <div class="trip_manage_side"> -->
+            <%#= render 'trip_managers/user_trip_manager_sidebar' %>
+          <!-- </div> -->
+          <!-- <div class="project_index_container"> -->
+            <%#= yield %>
+          <!-- </div> -->
+        <!-- </div> -->
       <% elsif controller.controller_name == "users" || controller.controller_name == "projects" %>
         <%= stylesheet_link_tag 'users' %>
         <div class="container user_show container-fluid">

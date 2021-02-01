@@ -35,24 +35,28 @@ class TripManagersController < ApplicationController
     @project = Project.find(params[:project_id])
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
     @user_projects = UserProject.where(project_id: @project.id)
+    @favorites = FavoriteActivity.where(project_id: @project.id)
+    @booked = @project.cart.booked_activities
   end
   def search_home
     @project = Project.find(params[:project_id])
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
     @user_projects = UserProject.where(project_id: @project.id)
     @activities = Activity.joins(:activity_courses).where("activity_courses.id IS NOT NULL").distinct
+
   end
 
   def activity_detail
     @project = Project.find(params[:project_id])
+    @current_user = current_user
     @activity = Activity.find(params[:activity_id])
     @supplier = Supplier.find(@activity.supplier_id)
-    @ageprices = @activity.activity_ageprices.order(age_from: :desc)
-    @ageprices_json = @ageprices.to_json
+    # @ageprices = @activity.activity_ageprices.order(age_from: :desc)
+    # @ageprices_json = @ageprices.to_json
     @activity_business = ActivityBusiness.find(@activity.activity_business_id)
     @holidays = [@activity.monday_open, @activity.tuesday_open, @activity.wednesday_open, @activity.thursday_open,
                  @activity.friday_open, @activity.saturday_open, @activity.sunday_open]
-    @members = @project.project_members
+    # @members = @project.project_members
     if @activity.activity_courses.any?
       @courses = @activity.activity_courses
       if @courses[0].activity_stocks.any?
@@ -133,6 +137,10 @@ class TripManagersController < ApplicationController
       @cart = @project.cart
       @booked_activities = @cart.booked_activities.where(is_paid: true).order(created_at: :desc)
     end
+  end
+  def favorite_list
+    @project = Project.find(params[:project_id])
+    @favorites = FavoriteActivity.where(project_id: @project.id)
   end
 
   def experience_search

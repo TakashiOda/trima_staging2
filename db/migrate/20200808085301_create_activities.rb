@@ -53,8 +53,16 @@ class CreateActivities < ActiveRecord::Migration[6.0]
       t.date    :end_date
 
       #　シーズン料金設定
-      t.integer :normal_adult_price
       t.boolean :has_season_price, default: false
+      t.integer :normal_adult_price
+      t.integer :high_adult_price
+      t.integer :low_adult_price
+      t.integer :normal_middle_price
+      t.integer :high_middle_price
+      t.integer :low_middle_price
+      t.integer :normal_kids_price
+      t.integer :high_kids_price
+      t.integer :low_kids_price
 
       # 定休日情報
       t.boolean :monday_open, default: true
