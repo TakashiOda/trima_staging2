@@ -25,7 +25,7 @@ SupplierProfile.seed(:supplier_id) do |org|
   org.is_suspended = false
 end
 
-ActivityBusiness.seed( =id) do |biz|
+ActivityBusiness.seed(:id) do |biz|
   biz.id = 1
   biz.supplier_id = 1
   biz.profile_image = nil
