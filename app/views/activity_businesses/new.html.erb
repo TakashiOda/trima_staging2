@@ -1,1 +1,786 @@
-<%= render 'activity_businesses/biz_form' %>
+<%= form_for [@supplier, @activity_business], url: supplier_activity_businesses_path(current_supplier), method: :put do |form| %>
+  <div class="form_title">
+    <h3>体験事業の情報を編集</h3>
+  </div>
+  <%= render 'layouts/error_messages', model: form.object %>
+  <div class="user_show_content_down">
+    <div class="user_show_info_items_box">
+      <section class="form_section">
+        <div class="form_big_title">
+          <h3>体験事業の基本情報</h3>
+        </div>
+        <div class="user_edit_image_container">
+          <div class="form-group user_edit_image_box">
+            <div class="user_edit_image_box_inside">
+              <img id="user_image_prev" src="#" class="hidden" />
+              <% if !@activity_business.profile_image.blank? %>
+                <%= image_tag @activity_business.profile_image.to_s, class: 'user_present_image', id: 'user_present_image' %>
+              <% else %>
+                <%= image_tag 'default_images/no_avatar_for_biz.png', class: 'user_present_image', id: 'user_present_image' %>
+                <%= form.hidden_field :profile_image_cache %>
+              <% end %>
+            </div>
+            <div id="user_edit_image_upload_btn_box">
+              <%= form.file_field :profile_image, id: 'post_image', oninput: 'hasInput()' %>
+              <span id="user_edit_image_upload_btn" onclick="image_input_btn()"><i class="fas fa-camera"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="activity_description_language_box">
+          <ul class="activity_description_language_box_tab_list" role="tablist">
+            <li id="japanese_tab" class="active" onclick="toggleDescriptionTab(this)">
+              <span>日本語</span>
+            </li>
+            <li id="english_tab" onclick="toggleDescriptionTab(this)">
+              <span>英語</span>
+            </li>
+            <li id="chinese_tab" onclick="toggleDescriptionTab(this)">
+              <span>中国語（簡体字）</span>
+            </li>
+            <li id="taiwanese_tab" onclick="toggleDescriptionTab(this)">
+              <span>中国語（繁体字）</span>
+            </li>
+          </ul>
+          <div class="tab-content-items">
+            <div id="japanese_tab_content">
+              <div class="form-group">
+                <%= form.label :name %>
+                <%= form.text_field :name, minlength: 2, required: true, class: "form-control", oninput: 'hasInput()' %>
+              </div>
+              <div class="form-group">
+                <div class="limited_textbox_label_box">
+                  <%= form.label :profile_text %>
+                  <label><span>残り<span id="biz_japanese_description_count">300</span>字</span></label>
+                </div>
+                <%= form.text_area :profile_text, rows: 7, minlength: 5, maxlength: 300, required: true, class: "form-control", oninput: 'countBizDescriptionJP(this)' %>
+              </div>
+            </div>
+            <div class="hidden" id="english_tab_content">
+              <div class="form-group">
+                <%= form.label :en_name %>
+                <%= form.text_field :en_name, class: "form-control", oninput: 'hasInput()' %>
+              </div>
+              <div class="form-group">
+                <div class="limited_textbox_label_box">
+                  <%= form.label :en_profile_text %>
+                  <label><span>残り<span id="biz_english_description_count">300</span>字</span></label>
+                </div>
+                <%= form.text_area :en_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionEN(this)' %>
+              </div>
+            </div>
+            <div class="hidden" id="chinese_tab_content">
+              <div class="form-group">
+                <%= form.label :cn_name %>
+                <%= form.text_field :cn_name, minlength: 2, class: "form-control", oninput: 'hasInput()' %>
+              </div>
+              <div class="form-group">
+                <div class="limited_textbox_label_box">
+                  <%= form.label :cn_profile_text %>
+                  <label><span>残り<span id="biz_chinese_description_count">300</span>字</span></label>
+                </div>
+                <%= form.text_area :cn_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionCN(this)' %>
+              </div>
+            </div>
+            <div class="hidden" id="taiwanese_tab_content">
+              <div class="form-group">
+                <%= form.label :tw_name %>
+                <%= form.text_field :tw_name, class: "form-control", oninput: 'hasInput()' %>
+              </div>
+              <div class="form-group">
+                <div class="limited_textbox_label_box">
+                  <%= form.label :tw_profile_text %>
+                  <label><span>残り<span id="biz_taiwanese_description_count">300</span>字</span></label>
+                </div>
+                <%= form.text_area :tw_profile_text, size: "22x5", maxlength: 300, class: "form-control", oninput: 'countBizDescriptionTW(this)' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="form_section">
+        <div class="form_big_title">
+          <h3>ガイド・案内人情報</h3>
+        </div>
+        <div id="guides">
+          <%= form.fields_for :guides do |g| %>
+            <%= render "guide_fields", f: g %>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association "ガイドを追加", form, :guides, onClick: "addIdToGuideItem(this)" %>
+          </div>
+        </div>
+      </section>
+      <section class="form_section">
+        <div class="form_big_title">
+          <h3>対応可能言語</h3>
+        </div>
+        <div class="form-group language_activity_list">
+          <%= form.collection_check_boxes :language_ids, Language.where(id: [3,26,28]), :id, :name, {}, {:onChange=>"hasInput();"} %>
+        </div>
+      </section>
+      <section class="form_section">
+        <div class="form_big_title">
+          <h3>体験のキャンセル設定</h3>
+        </div>
+        <div class="radio_item_box">
+          <%= form.label "無料キャンセルの期限" %>
+          <div class="radio_items cansel_setting_radio">
+            <div class="radio_item">
+              <%= form.radio_button :no_charge_cansel_before, :the_day_before, onClick: 'showExplanation(this)', oninput: 'hasInput()' %>
+              <%= form.label :no_charge_cansel_before, "前日まで無料/それ以降は100%", {value: :the_day_before, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item">
+              <%= form.radio_button :no_charge_cansel_before, :three_days_before, onClick: 'showExplanation(this)', oninput: 'hasInput()' %>
+              <%= form.label :no_charge_cansel_before, "3日前まで無料/それ以降は100%", {value: :three_days_before, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item">
+              <%= form.radio_button :no_charge_cansel_before, :a_week_before, onClick: 'showExplanation(this)', oninput: 'hasInput()' %>
+              <%= form.label :no_charge_cansel_before, "1週間前まで無料/それ以降は100%", {value: :a_week_before, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div class="explanation_about_cansel">
+          <div id="explanation_about_the_day_before" class="">
+            <div class="hosoku_title_box">
+              <span class="hosoku_title">補足</span>
+              <span class="hosoku_sub_title">前日まで無料の場合</span>
+            </div>
+            <ul>
+              <li>ユーザーが体験実施日の前日23時59分（現地時間）までにキャンセルする場合、
+              無料キャンセルとなり体験料金は事業者様に支払われません。</li>
+              <li>例えば体験実施日が1月20日の場合、前日1月19日の23時59分までにキャンセルされた場合は
+                無料キャンセルとなり事業者様に料金は支払われず、
+                1月20日0時00分を過ぎてキャンセルされた場合は通常の手数料を差し引いた
+                体験料金の100%が事業者様に支払われます。</li>
+            </ul>
+          </div>
+          <div id="explanation_about_three_days_before" class="hidden">
+            <div class="hosoku_title_box">
+              <span class="hosoku_title">補足</span>
+              <span class="hosoku_sub_title">３日前まで無料の場合</span>
+            </div>
+            <ul>
+              <li>ユーザーが体験実施日の3日前の23時59分（現地時間）までにキャンセルする場合、
+              無料キャンセルとなり体験料金は事業者様に支払われません。</li>
+              <li>例えば体験実施日が1月20日の場合、３日前の1月17日の23時59分までにキャンセルされた場合は
+                無料キャンセルとなり事業者様に料金は支払われず、
+                1月18日0時00分を過ぎてキャンセルされた場合は通常の手数料を差し引いた
+                体験料金の100%が事業者様に支払われます。</li>
+            </ul>
+          </div>
+          <div id="explanation_about_a_week_before" class="hidden">
+            <div class="hosoku_title_box">
+              <span class="hosoku_title">補足</span>
+              <span class="hosoku_sub_title">１週間前まで無料の場合</span>
+            </div>
+            <ul>
+              <li>ユーザーは体験を実施日の１週間前の23時59分（現地時間）までにキャンセルする場合、
+              無料キャンセルとなり体験料金は事業者様に支払われません。</li>
+              <li>例えば体験実施日が1月20日の場合、１週間前の1月13日の23時59分までにキャンセルされた場合は
+                無料キャンセルとなり事業者様に料金は支払われず、
+                1月14日0時00分を過ぎてキャンセルされた場合は通常の手数料を差し引いた
+                体験料金の100%が事業者様に支払われます。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="form_section">
+        <div class="form_big_title">
+          <h3>保険加入について</h3>
+        </div>
+        <div class="radio_item_box">
+          <%= form.label "保険に加入していますか？" %>
+          <div class="radio_items">
+            <div class="radio_item on">
+              <%= form.radio_button :has_insurance, :false, onClick: "hideInsuranceUploader()", oninput: 'hasInput()' %>
+              <%= form.label :has_insurance, "加入していない", {value: :false, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item off">
+              <%= form.radio_button :has_insurance, :true, onClick: "showInsuranceUploader()", oninput: 'hasInput()' %>
+              <%= form.label :has_insurance, "加入している", {value: :true, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group hidden" id="insurance_uploader_box">
+          <%= form.label "加入保険の証書アップロード" %>
+          <%# if @activity_business.insurance_image %>
+            <%# if @activity_business.insurance_image.url[-3, 3] == 'pdf' || @activity_business.insurance_image.url[-3, 3] == 'PDF' %>
+              <!-- <object data="" type="application/pdf" class="insurance_type_pdf"></object> -->
+              <%#=@activity_business.insurance_image.url%>
+            <%# else %>
+              <%#= image_tag(@activity_business.insurance_image.url, class: 'insurance_type_image') %>
+            <%# end %>
+          <%# end %>
+          <%= form.file_field :insurance_image, id: 'insurance_image_form', oninput: 'hasInput()', class: "hidden", onChange: 'changeFile(this)' %>
+          <%= form.hidden_field :insurance_image_cache %>
+          <div class="insurance_image_input_box">
+            <button type="button" name="button" onclick="insurance_image_input_btn()">ファイルを選択</button>
+            <span id="insurance_file_name"><%= @activity_business.insurance_image.identifier %></span>
+          </div>
+        </div>
+        <div class="explanation_about_cansel">
+          <div id="explanation_about_the_day_before" class="">
+            <div class="hosoku_title_box">
+              <span class="hosoku_title">補足</span>
+              <span class="hosoku_sub_title">保険の加入について</span>
+            </div>
+            <ul>
+              <li>保険の加入と保険への加入は任意ですが、保険への加入有無はユーザーに表示されます</li>
+              <li>提供されるアクティビティによっては（ウォータースポーツなど）保険への加入を必須とさせていただく場合がございます。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="form_section">
+        <div class="form_big_title">
+          <h3>所在地・連絡先</h3>
+        </div>
+        <div class="radio_item_box">
+          <%= form.label "住所" %>
+          <div class="radio_items">
+            <div class="radio_item on">
+              <%= form.radio_button :apply_suuplier_address, :true, onClick: "applySupplierAddress(this)", oninput: 'hasInput()' %>
+              <%= form.label :apply_suuplier_address, "アカウント登録住所と同じ", {value: :true, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item off">
+              <%= form.radio_button :apply_suuplier_address, :false, onClick: "hasOwnSupplierAddress(this)", oninput: 'hasInput()' %>
+              <%= form.label :apply_suuplier_address, "別の住所を設定する", {value: :false, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div id="address_box" class="<%= "hidden" if @activity_business.apply_suuplier_address %>">
+          <div class="form-group">
+            <div class="form-group">
+              <%= form.label "郵便番号（ハイフンあり・半角）" %>
+              <%= form.text_field :post_code, class: "form-control", oninput: 'hasInput()' %>
+            </div>
+            <div class="form-group">
+              <%= form.label "都道府県" %>
+              <%= form.select :prefecture_id, {'北海道': 1}, { include_blank: false}, { class: 'form-control' } %>
+            </div>
+            <div class="form-group">
+              <%= form.label "エリア" %>
+              <%= form.collection_select :area_id, Area.all, :id, :local_name, {}, class: "form-control", id: 'area_input', onChange: 'hasChangeArea(this)' %>
+            </div>
+            <div class="form-group town_box">
+              <%= form.hidden_field :town_id, id: 'hidden_town_field' %>
+              <%= form.label "市区町村" %>
+              <div id="area_1" class="town_select">
+                <%= collection_select :town_name, :name, Town.where(area_id: 1), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_2" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 2), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_3" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 3), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_4" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 4), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_5" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 5), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_6" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 6), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_7" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 7), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_8" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 8), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_9" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 9), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_10" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 10), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+              <div id="area_11" class="town_select hidden">
+                <%= collection_select :town_name, :name, Town.where(area_id: 11), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= form.label "以降の住所" %>
+              <%= form.text_field :detail_address, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
+            </div>
+            <div class="form-group">
+              <%= form.label "建物名・部屋番号など" %>
+              <%= form.text_field :building, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
+            </div>
+          </div>
+        </div>
+        <div class="radio_item_box">
+          <%= form.label "電話番号" %>
+          <div class="radio_items">
+            <div class="radio_item on">
+              <%= form.radio_button :apply_suuplier_phone, :true, onClick: "applySupplierPhone(this)", oninput: 'hasInput()' %>
+              <%= form.label :apply_suuplier_phone, "アカウント登録電話番号と同じ", {value: :true, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item off">
+              <%= form.radio_button :apply_suuplier_phone, :false, onClick: "hasOwnSupplierPhone(this)", oninput: 'hasInput()' %>
+              <%= form.label :apply_suuplier_phone, "別の電話番号を設定する", {value: :false, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div id="phone_box" class="<%= "hidden" if @activity_business.apply_suuplier_phone %>">
+          <div class="form-group">
+            <%= form.label "別の電話番号を入力してください（ハイフンなし）" %>
+            <%= form.text_field :phone, class: "form-control", oninput: 'hasInput()' %>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="user_show_info_button_box">
+      <div class="form_sidebtns_container">
+        <div class="biz_form_status_toggle_box">
+          <div class="biz_form_status_toggle_box_title">
+            この内容で事業者申請しますか？
+          </div>
+          <div class="biz_form_status_toggle_radio_items">
+            <div class="biz_form_status_toggle_radio_item on">
+              <%= form.radio_button :status, :inputing, oninput: 'hasInput()' %>
+              <%= form.label :status, "下書き", {value: :inputing, style: "display: inline-block;"} %>
+            </div>
+            <div class="biz_form_status_toggle_radio_item off">
+              <%= form.radio_button :status, :send_approve, oninput: 'hasInput()'%>
+              <%= form.label :status, "承認申請", {value: :send_approve, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div class="form_sidebtns">
+          <div class="form_sidebtn">
+            <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
+          </div>
+          <div class="form_sidebtn">
+            <%= form.submit('更新する',class: 'button btn-submit', id: "biz_form_submit_btn") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<style>
+  .radio_items.cansel_setting_radio {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .radio_items.cansel_setting_radio .radio_item {
+    display: flex;
+    align-items: center;
+    border: solid 1px lightgray;
+    margin-bottom: 3px;
+    padding: 5px 0px;
+    border-radius: 5px;
+    width: 100%;
+    height: 30px;
+  }
+  .radio_items.cansel_setting_radio input {
+    margin-left: 15px;
+    width: 10%;
+    height: 20px;
+  }
+  .radio_items.cansel_setting_radio label {
+    width: 90%;
+  }
+  .hosoku_title {
+    font-size: 12px;
+    background: #d0d0d0;
+    display: inline-block;
+    padding: 1px 15px;
+    color: gray;
+    border-radius: 30px;
+    margin: 0;
+  }
+  .hosoku_sub_title {
+    margin: 3px 0;
+    color: gray;
+    font-size: 15px;
+  }
+  div#explanation_about_the_day_before ul,
+  div#explanation_about_three_days_before ul,
+  div#explanation_about_a_week_before ul {
+    list-style: disc !important;
+    padding-left: 20px;
+    margin: 15px 0;
+  }
+  div#explanation_about_the_day_before ul li,
+  div#explanation_about_three_days_before ul li,
+  div#explanation_about_a_week_before ul li {
+    font-size: 12px;
+    color: gray;
+    margin-bottom: 5px;
+  }
+  input#insurance_image_form {
+    display: flex;
+    border-radius: 0;
+    background: #fff;
+    margin: 10px 0 0;
+  }
+  .explanation_about_cansel {
+    margin-top: 30px;
+  }
+  div#insurance_uploader_box {
+    background: lightgray;
+    padding: 15px 10px;
+    border-radius: 5px;
+    width: 90%;
+  }
+  .biz_form_status_toggle_box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 40px;
+    width: 100%;
+  }
+  .biz_form_status_toggle_box_title {
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 2px;
+    color: #8a8a8a;
+  }
+  .biz_form_status_toggle_radio_items {
+    width: 100%;
+    display: flex;
+  }
+  .biz_form_status_toggle_radio_items input[type=radio] {
+    display: none;
+  }
+  .biz_form_status_toggle_radio_item label {
+    width: 100%;
+    padding: 3px 0;
+    text-align: center;
+    background: #eaeaea;
+  }
+  .biz_form_status_toggle_radio_items input[type="radio"]:checked + label {
+    background: #23a0ff;
+    color: #ffffff;
+  }
+  .biz_form_status_toggle_radio_item.on,
+  .biz_form_status_toggle_radio_item.off {
+    width: 50%;
+  }
+  .biz_form_status_toggle_radio_item.on label {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+  .biz_form_status_toggle_radio_item.off label {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+  .town_box {
+    display: flex;
+  }
+  div.town_select select {
+    width: 100%;
+  }
+  .insurance_type_image {
+    width: 100%;
+  }
+  .insurance_type_pdf {
+    width: 200px;
+    height: 290px;
+  }
+</style>
+
+<script type="text/javascript">
+  (window.onload = function() {
+    //読み込み時に残り文字数カウント
+    const description = document.getElementById('activity_business_profile_text');
+    const enDescription = document.getElementById('activity_business_en_profile_text');
+    const cnDescription = document.getElementById('activity_business_cn_profile_text');
+    const twDescription = document.getElementById('activity_business_tw_profile_text');
+    changeCountAndColor(description, 'biz_japanese_description_count', 300)
+    changeCountAndColor(enDescription, 'biz_english_description_count', 300)
+    changeCountAndColor(cnDescription, 'biz_chinese_description_count', 300)
+    changeCountAndColor(twDescription, 'biz_taiwanese_description_count', 300)
+
+    const theDayBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_the_day_before");
+    const threeDaysBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_three_days_before");
+    const aWeekBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_a_week_before");
+    if (theDayBeforeRadio.checked) {
+      showExplanationWithValue('the_day_before');
+    } else if (threeDaysBeforeRadio.checked) {
+      showExplanationWithValue('three_days_before');
+    } else {
+      showExplanationWithValue('a_week_before');
+    }
+
+    const guideItems = document.querySelectorAll("div.nested-fields");
+    for (var i = 0; i < guideItems.length; i++) {
+      const guidePrevElement = guideItems[i].children[0].children[0].children[0];
+      guidePrevElement.id = 'guide_image_prev'+i;
+      const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
+      guidePresentElement.id = 'guide_present_image'+i;
+      const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
+      guideImageInput.id = i;
+    }
+
+    const insuranceCheck = document.getElementById("activity_business_has_insurance_true");
+    const checkVal = insuranceCheck.checked;
+    if (checkVal) {
+      const insuranceInput = document.getElementById("insurance_uploader_box");
+      insuranceInput.classList.remove('hidden');
+    }
+
+    // 初期でエリアに応じて市町村セレクタを分岐表示
+    const areaInput = document.getElementById('area_input');
+    if (areaInput.value !== '') {
+      const townSelectors = document.querySelectorAll("div.town_select");
+      for (var i = 0; i < townSelectors.length; i++) {
+        const townSelectItem = townSelectors[i];
+        townSelectItem.classList.add('hidden');
+      }
+      const targetId = `area_${areaInput.value}`;
+      const targetTownSelectBox = document.getElementById(`${targetId}`);
+      targetTownSelectBox.classList.remove('hidden');
+    }
+
+    // 初期で市町村セレクタを選択する
+    const townInput = document.getElementById('hidden_town_field');
+    if (townInput.value !== '') {
+      const targetId = `area_${areaInput.value}`;
+      const targetTownSelectBox = document.getElementById(`${targetId}`);
+      const select =targetTownSelectBox.children[0];
+      const options = select.options;
+      for (var i = 0; i < options.length; i++) {
+        if (options[i].value == townInput.value) {
+          options[i].selected = true;
+        }
+      }
+    }
+
+  })();
+
+  function hasInput() {
+    const submitBtn = document.getElementById('biz_form_submit_btn');
+    submitBtn.classList.add('need_submit');
+  }
+
+  function countBizDescriptionJP(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_japanese_description_count', 300);
+  }
+  function countBizDescriptionEN(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_english_description_count', 300);
+  }
+  function countBizDescriptionCN(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_chinese_description_count', 300);
+  }
+  function countBizDescriptionTW(obj) {
+    hasInput();
+    changeCountAndColor(obj, 'biz_taiwanese_description_count', 300);
+  }
+
+  // textを変更するtarget idと数字を入れると、数字を超えたときにtargetのtextと色を変えてくれる
+  function changeCountAndColor(obj, targetId, textNum) {
+    const leftTextTarget = document.getElementById(targetId);
+    leftTextTarget.innerHTML = textNum-obj.value.length;
+    if ((textNum-obj.value.length) < 20) {
+      leftTextTarget.style.color = 'red';
+    } else {
+      leftTextTarget.style.color = '#8a8a8a';
+    }
+  }
+
+  function toggleDescriptionTab(obj) {
+    const tabId = obj.id;
+    const japaneseTab = document.getElementById('japanese_tab');
+    const englishTab = document.getElementById('english_tab');
+    const chineseTab = document.getElementById('chinese_tab');
+    const taiwaneseTab = document.getElementById('taiwanese_tab');
+
+    const japaneseContent = document.getElementById('japanese_tab_content');
+    const englishContent = document.getElementById('english_tab_content');
+    const chineseContent = document.getElementById('chinese_tab_content');
+    const taiwaneseContent = document.getElementById('taiwanese_tab_content');
+
+    if (tabId == 'japanese_tab') {
+      japaneseTab.classList.add('active');
+      englishTab.classList.remove('active');
+      chineseTab.classList.remove('active');
+      taiwaneseTab.classList.remove('active');
+
+      japaneseContent.classList.remove('hidden');
+      englishContent.classList.add('hidden');
+      chineseContent.classList.add('hidden');
+      taiwaneseContent.classList.add('hidden');
+    } else if (tabId == 'english_tab') {
+      japaneseTab.classList.remove('active');
+      englishTab.classList.add('active');
+      chineseTab.classList.remove('active');
+      taiwaneseTab.classList.remove('active');
+
+      japaneseContent.classList.add('hidden');
+      englishContent.classList.remove('hidden');
+      chineseContent.classList.add('hidden');
+      taiwaneseContent.classList.add('hidden');
+    } else if (tabId == 'chinese_tab') {
+      japaneseTab.classList.remove('active');
+      englishTab.classList.remove('active');
+      chineseTab.classList.add('active');
+      taiwaneseTab.classList.remove('active');
+
+      japaneseContent.classList.add('hidden');
+      englishContent.classList.add('hidden');
+      chineseContent.classList.remove('hidden');
+      taiwaneseContent.classList.add('hidden');
+    } else {
+      japaneseTab.classList.remove('active');
+      englishTab.classList.remove('active');
+      chineseTab.classList.remove('active');
+      taiwaneseTab.classList.add('active');
+
+      japaneseContent.classList.add('hidden');
+      englishContent.classList.add('hidden');
+      chineseContent.classList.add('hidden');
+      taiwaneseContent.classList.remove('hidden');
+    }
+  }
+
+  const selectElement = document.getElementById('post_image');
+  function image_input_btn() {
+    selectElement.click();
+  }
+
+  function insurance_image_input_btn() {
+    const insuranceInput = document.getElementById('insurance_image_form');
+    insuranceInput.click();
+  }
+
+  function changeFile(fileInput) {
+    const file = fileInput.files[0];
+    const fileName = file.name;
+    const ext = getExt(fileName);
+    const extArr = ['pdf', 'PDF', 'jpg', 'jpeg','JPG','JPEG', 'PNG', 'png']
+    const isContain = extArr.indexOf(ext);
+    console.log(isContain);
+    if (isContain == -1) {
+      alert('ファイル形式が正しくありません',
+            'jpg、png、pdfのいずれかの形式のファイルを選んでください');
+    } else {
+      const display = document.getElementById('insurance_file_name');
+      display.innerHTML = fileName;
+    }
+  }
+  function getExt(filename) {
+  	var pos = filename.lastIndexOf('.');
+  	if (pos === -1) return '';
+  	return filename.slice(pos + 1);
+  }
+
+  document.getElementById('post_image').addEventListener('change', function (e) {
+    // 1枚だけ表示する
+    const file = e.target.files[0];
+    // ファイルのブラウザ上でのURLを取得する
+    const blobUrl = window.URL.createObjectURL(file);
+    // img要素に表示
+    const post_img = document.getElementById('user_image_prev');
+    post_img.src = blobUrl;
+    post_img.classList.toggle("hidden");
+    const before_img = document.getElementById('user_present_image');
+    before_img.classList.toggle("hidden");
+  });
+
+  function applySupplierAddress(obj) {
+    var isChecked = obj.checked;
+    var address_box = document.getElementById("address_box");
+    if (isChecked) {
+      address_box.classList.add("hidden");
+    }
+  }
+
+  function hasOwnSupplierAddress(obj) {
+    var isChecked = obj.checked;
+    var address_box = document.getElementById("address_box");
+    if (isChecked) {
+      address_box.classList.remove("hidden");
+    }
+  }
+
+  function applySupplierPhone(obj) {
+    var isChecked = obj.checked;
+    var phone_box = document.getElementById("phone_box");
+    if (isChecked) {
+      phone_box.classList.add("hidden");
+    }
+  }
+
+  function hasOwnSupplierPhone(obj) {
+    var isChecked = obj.checked;
+    var phone_box = document.getElementById("phone_box");
+    if (isChecked) {
+      phone_box.classList.remove("hidden");
+    }
+  }
+
+  function addIdToGuideItem(obj) {
+    setTimeout(function(){
+      const guideItems = document.querySelectorAll("div.nested-fields");
+      for (var i = 0; i < guideItems.length; i++) {
+        const guidePrevElement = guideItems[i].children[0].children[0].children[0];
+        guidePrevElement.id = 'guide_image_prev'+i;
+        const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
+        guidePresentElement.id = 'guide_present_image'+i;
+        const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
+        guideImageInput.id = i;
+      }
+    }, 100);
+  }
+
+  function showExplanation(obj) {
+    const radioVal = obj.value;
+    showExplanationWithValue(radioVal);
+  }
+
+  function showExplanationWithValue(value) {
+    const theDayBefore = document.getElementById("explanation_about_the_day_before");
+    const threeDaysBefore = document.getElementById("explanation_about_three_days_before");
+    const aWeekBefore = document.getElementById("explanation_about_a_week_before");
+    if (value == 'the_day_before') {
+      theDayBefore.classList.remove('hidden');
+      threeDaysBefore.classList.add('hidden');
+      aWeekBefore.classList.add('hidden');
+    } else if (value == 'three_days_before') {
+      theDayBefore.classList.add('hidden');
+      threeDaysBefore.classList.remove('hidden');
+      aWeekBefore.classList.add('hidden');
+    } else {
+      theDayBefore.classList.add('hidden');
+      threeDaysBefore.classList.add('hidden');
+      aWeekBefore.classList.remove('hidden');
+    }
+  }
+
+  function hideInsuranceUploader(obj) {
+    const uploadBox = document.getElementById("insurance_uploader_box");
+    uploadBox.classList.add('hidden');
+  }
+
+  function showInsuranceUploader(obj) {
+    const uploadBox = document.getElementById("insurance_uploader_box");
+    uploadBox.classList.remove('hidden');
+  }
+
+  function hasChangeArea(obj) {
+    const townSelectors = document.querySelectorAll("div.town_select");
+    for (var i = 0; i < townSelectors.length; i++) {
+      const townSelectItem = townSelectors[i];
+      townSelectItem.classList.add('hidden');
+    }
+
+    const selectedAreaNum = obj.value;
+    const targetId = `area_${selectedAreaNum}`;
+    const targetTownSelectBox = document.getElementById(`${targetId}`);
+    targetTownSelectBox.classList.remove('hidden');
+  }
+
+  function hasSelectTown(obj) {
+    const targetTownSelectBox = document.getElementById('hidden_town_field');
+    targetTownSelectBox.value = obj.value;
+  }
+
+  </script>

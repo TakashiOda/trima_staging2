@@ -90,7 +90,7 @@
       <% if @supplier_profile.nil? %>
         <div class="info_list_box_contents">
           <div>まだ契約者情報がありません</div>
-          <%= link_to "契約者情報を登録", "#", class: "org_edit_btn" %>
+          <%= link_to "契約者情報を登録", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
         </div>
       <% else %>
         <div class="info_list_box_contents">

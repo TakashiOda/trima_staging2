@@ -170,6 +170,8 @@ a.member_delete_btn.edit {
 }
 .info_list_box_contents {
   padding: 0 3px;
+  display: flex;
+  justify-content: space-between;
 }
 .add_new_org_box {
   display: flex;
