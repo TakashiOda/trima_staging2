@@ -1,4 +1,3 @@
-
 User.seed(:email) do |u|
   u.id = 1
   u.email = "cedarsdev01@gmail.com"
