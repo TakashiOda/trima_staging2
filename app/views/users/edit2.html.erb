@@ -1,0 +1,128 @@
+<%= form_for(@user) do |form| %>
+<div class="user_show_content_down">
+  <%= render 'layouts/error_messages', model: form.object %>
+  <div class="user_show_info_items_box">
+        <div class="user_edit_image_container">
+          <div class="form-group user_edit_image_box">
+            <div class="user_edit_image_box_inside">
+              <img id="user_image_prev" src="#" class="hidden" />
+              <% if current_user.persisted? && current_user.avatar? %>
+                <%= image_tag current_user.avatar.to_s, class: 'user_present_image', id: 'user_present_image' %>
+              <% else %>
+                <%= image_tag 'default_images/no_avatar_image.png', class: 'user_present_image', id: 'user_present_image' %>
+                <%= form.hidden_field :avatar_cache %>
+              <% end %>
+            </div>
+            <div id="user_edit_image_upload_btn_box">
+              <%= form.file_field :avatar, id: 'post_image' %>
+              <span id="user_edit_image_upload_btn" onclick="image_input_btn()"><i class="fas fa-camera"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= form.label :username %>
+          <%= form.text_field :username, required: true, class: "form-control" %>
+        </div>
+        <div class="no_show_profile_input_box">
+          <div class="comment_for_no_show">
+            <i class="fas fa-eye-slash"></i>
+            <span>following doesn't display for others</span>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-half">
+                <%= form.label "First Name" %>
+                <%= form.text_field :first_name, required: true, class: "form-control" %>
+              </div>
+              <div class="col-half">
+                <%= form.label "Last Name" %>
+                <%= form.text_field :last_name, required: true, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <div class="col-half">
+                <%= form.label "Nationality" %>
+                <%= form.collection_select :country_id, Country.all, :id, :name,{prompt: "Select Nationality"}, required: true, class: "form-control" %>
+              </div>
+              <div class="col-half">
+                <%= form.label "Language" %>
+                <%= form.collection_select :language_id, Language.all, :id, :name,{prompt: "Select Nationality"}, required: true, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group gender_input_box">
+            <%= form.label "Gender" %>
+            <div class="gender_input_items">
+              <div class="radio_item">
+                <%= form.radio_button :gender, :male %>
+                <%= form.label :gender, "male", {value: :male, style: "display: inline-block;"} %>
+              </div>
+              <div class="radio_item">
+                <%= form.radio_button :gender, :female %>
+                <%= form.label :gender, "femail", {value: :female, style: "display: inline-block;"} %>
+              </div>
+              <div class="radio_item">
+                <%= form.radio_button :gender, :other %>
+                <%= form.label :gender, "other", {value: :other, style: "display: inline-block;"} %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group birth_day_input_box">
+            <%= form.label "Date of Birth" %>
+            <div class="birth_day_input_items">
+              <%= form.select :birth_month, [['Jan', 1], ['Feb', 2], ['Mar', 3], ['Apr', 4], ['May', 5], ['Jun', 6], ['Jul', 7], ['Aug', 8], ['Sep', 9], ['Oct', 10], ['Nov', 11], ['Dec', 12]], { include_blank: "Month" }, { required: true, id: "user_id", class: "form-control" } %>
+              <%= form.select :birth_day, options_for_select((1..31), :selected => form.object.birth_day), { include_blank: "Day" } ,{ required: true, class: "form-control" }%>
+              <%= form.select :birth_year, options_for_select((1940..2010), :selected => form.object.birth_year), { include_blank: "Year" } ,{ required: true, class: "form-control" }%>
+            </div>
+          </div>
+        </div>
+
+        <div class="form_btns">
+          <div class="row">
+            <div class="col-half">
+              <%= link_to "cansel", user_path(current_user), class: "button btn-cansel" %>
+            </div>
+            <div class="col-half">
+              <%= form.submit('Update',class: 'button btn-submit') %>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+<% end %>
+
+<script>
+  const selectElement = document.querySelector('#post_image');
+  function image_input_btn() {
+    selectElement.click();
+  }
+
+  document.getElementById('post_image').addEventListener('change', function (e) {
+    // 1枚だけ表示する
+    const file = e.target.files[0];
+    // ファイルのブラウザ上でのURLを取得する
+    const blobUrl = window.URL.createObjectURL(file);
+    // img要素に表示
+    const post_img = document.getElementById('user_image_prev');
+    post_img.src = blobUrl;
+    post_img.classList.toggle("hidden");
+    const before_img = document.getElementById('user_present_image');
+    before_img.classList.toggle("hidden");
+    // before_img.classList.remove("user_present_image");
+  });
+</script>
+
+<style lang="scss">
+  #user_edit_image_upload_btn:hover {
+    cursor: pointer;
+  }
+  .hidden {
+    display: none;
+  }
+  .user_show_content {
+    padding: 0px;
+  }
+</style>

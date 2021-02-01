@@ -1,0 +1,300 @@
+<div class="admin_supplier_detail_container">
+  <div class="admin_supplier_detail_supplier_info_box">
+    <table class="supplier_detail_table">
+      <tr>
+        <td class="table_header" colspan="2">契約者情報</td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">会社名</td>
+        <td class="supplier_detail_table_back"><%=@supplier.name%></td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">ステータス</td>
+        <td class="supplier_detail_table_back">
+          <% if @activity_business.nil? %>
+            事業者情報未入力
+          <% elsif !@activity_business.nil? && @activity_business.is_approved && @activity_business.status == 'send_approve' %>
+            承認済み
+          <% elsif !@activity_business.nil? && !@activity_business.is_approved && @activity_business.status == 'send_approve' %>
+            承認待ち
+          <% elsif !@activity_business.nil? && !@activity_business.is_approved && @activity_business.status == 'inputing' %>
+            作成中
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">メール</td>
+        <td class="supplier_detail_table_back"><%=@supplier.email%></td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">代表者氏名</td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.representative_name %></td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">代表者氏名カナ</td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.representative_kana %></td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">担当者氏名</td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.manager_name %></td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">担当者氏名カナ</td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.manager_name_kana %></td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">郵便番号</td>
+        <td class="supplier_detail_table_back"><%= "〒#{@supplier_profile.post_code}" if !@supplier_profile.post_code.blank? %></td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">住所</td>
+        <td class="supplier_detail_table_back">
+          <%= Prefecture.find(@supplier_profile.prefecture_id).local_name %>
+          <%= Town.find(@supplier_profile.town_id).jp_name %>
+          <%=@supplier_profile.detail_address%>
+          <%=@supplier_profile.building%>
+        </td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">エリア</td>
+        <td class="supplier_detail_table_back"><%= Area.find(@supplier_profile.area_id).local_name if !@supplier_profile.area_id.nil? %></td>
+      </tr>
+      <tr>
+        <td class="supplier_detail_table_front">電話</td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.phone%></td>
+      </tr>
+    </table>
+  </div>
+  <div class="admin_supplier_detail_activity_biz_info_box">
+    <% if !@activity_business.nil? %>
+      <table class="supplier_detail_table">
+        <tr>
+          <td class="table_header" colspan="2">体験事業情報</td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">事業者アイコン</td>
+          <td class="supplier_detail_table_back">
+            <% if !@activity_business.profile_image.blank? %>
+              <%=image_tag @activity_business.profile_image.to_s %>
+            <% else %>
+              アイコン登録なし
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">事業名</td>
+          <td class="supplier_detail_table_back">
+            <ul>
+              <li><span class="admin_supplier_detail_biz_name_lang">日本語</span><%=@activity_business.name%></li>
+              <li><span class="admin_supplier_detail_biz_name_lang">英語</span><%=@activity_business.en_name%></li>
+              <li><span class="admin_supplier_detail_biz_name_lang">簡体字</span><%=@activity_business.cn_name%></li>
+              <li><span class="admin_supplier_detail_biz_name_lang">繁体字</span><%=@activity_business.tw_name%></li>
+            </ul>
+
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">プロフィール（日本語）</td>
+          <td class="supplier_detail_table_back"><%=@activity_business.profile_text %></td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">プロフィール（英語）</td>
+          <td class="supplier_detail_table_back"><%=@activity_business.en_profile_text %></td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">プロフィール（簡体字）</td>
+          <td class="supplier_detail_table_back"><%=@activity_business.cn_profile_text %></td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">プロフィール（繁体字）</td>
+          <td class="supplier_detail_table_back"><%=@activity_business.tw_profile_text %></td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">住所</td>
+          <td class="supplier_detail_table_back">
+            <% if @activity_business.apply_suuplier_address %>
+              契約者住所と同じ
+            <% else %>
+              <%= Area.find(@activity_business.area_id).local_name if !@activity_business.area_id.nil? %>
+              <%= "〒#{@activity_business.post_code}" if !@activity_business.post_code.blank? %>
+              <%= Prefecture.find(@activity_business.prefecture_id).local_name %>
+              <%= Town.find(@activity_business.town_id).jp_name %>
+              <%=@activity_business.detail_address%>
+              <%=@activity_business.building%>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">電話</td>
+          <td class="supplier_detail_table_back">
+            <% if @activity_business.apply_suuplier_phone %>
+              契約者電話番号と同じ
+            <% else %>
+              <%= @activity_business.phone%>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">キャンセルポリシー</td>
+          <td class="supplier_detail_table_back">
+            <% if @activity_business.no_charge_cansel_before == 'the_day_before' %>
+              前日までキャンセル無料
+            <% elsif @activity_business.no_charge_cansel_before == 'three_days_before' %>
+              ３日前までキャンセル無料
+            <% elsif @activity_business.no_charge_cansel_before == 'a_week_before' %>
+              ７日前までキャンセル無料
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">保険の加入</td>
+          <td class="supplier_detail_table_back">
+            <% if @activity_business.has_insurance %>
+              加入している
+            <% else %>
+              加入していない
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">保険証書</td>
+          <td class="supplier_detail_table_back">
+            <% if @activity_business.has_insurance && !@activity_business.insurance_image.blank? %>
+              <%= link_to 'pdfへのリンク', asset_path(@activity_business.insurance_image), target: :_blank %>
+            <% else %>
+              保険証書なし
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    <% else %>
+      <table class="supplier_detail_table">
+        <tr>
+          <td class="table_header" colspan="2">契約者情報</td>
+        </tr>
+        <tr>
+          <td class="" colspan="2">事業者情報がありません</td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+
+  <% if !@activity_business.nil? %>
+    <%= form_for(@activity_business, url: activity_biz_approve_path(@activity_business)) do |form| %>
+      <div class="admin_edit_form_inner">
+        <div class="biz_form_status_toggle_box">
+          <div class="biz_form_status_toggle_box_title">
+            この事業者を承認しますか？
+          </div>
+          <div class="biz_form_status_toggle_radio_items">
+            <div class="biz_form_status_toggle_radio_item on">
+              <%= form.radio_button :is_approved, :false %>
+              <%= form.label :is_approved, "しない", {value: :false, style: "display: inline-block;"} %>
+            </div>
+            <div class="biz_form_status_toggle_radio_item off">
+              <%= form.radio_button :is_approved, :true %>
+              <%= form.label :is_approved, "承認する", {value: :true, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div class="form_btns">
+          <%= form.submit('更新',class: 'button btn-submit') %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<style lang="scss">
+  .admin_supplier_detail_container {
+    padding: 20px 30px;
+  }
+  .admin_supplier_detail_supplier_info_box {
+    margin-bottom: 40px;
+  }
+  .admin_supplier_detail_activity_biz_info_box {
+    margin-bottom: 20px;
+  }
+  table.supplier_detail_table {
+    width: 100%;
+  }
+  td.table_header {
+    background: #93b6d6;
+    color: #001552;
+    font-weight: bold;
+    padding-left: 20px;
+  }
+  td.supplier_detail_table_front {
+    background: #d6d6d6;
+    width: 20%;
+    text-align: end;
+    padding-right: 20px;
+    font-size: 12px;
+  }
+  td.supplier_detail_table_back {
+    font-size: 14px;
+    padding: 6px 0px 6px 15px;
+  }
+  /* 事業者 */
+  td.supplier_detail_table_back img {
+    width: 60px;
+  }
+  td.supplier_detail_table_back ul {
+    margin: 5px 0;
+  }
+  span.admin_supplier_detail_biz_name_lang {
+    background: #cacaca;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    width: 40px;
+    display: inline-block;
+    text-align: center;
+  }
+  .biz_form_status_toggle_box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  .biz_form_status_toggle_box_title {
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 2px;
+    color: #8a8a8a;
+  }
+  .biz_form_status_toggle_radio_items {
+    width: 100%;
+    display: flex;
+  }
+  .biz_form_status_toggle_radio_items input[type=radio] {
+    display: none;
+  }
+  .biz_form_status_toggle_radio_item label {
+    width: 100%;
+    padding: 3px 0;
+    text-align: center;
+    background: #eaeaea;
+  }
+  .biz_form_status_toggle_radio_items input[type="radio"]:checked + label {
+    background: #23a0ff;
+    color: #ffffff;
+  }
+  .biz_form_status_toggle_radio_item.on,
+  .biz_form_status_toggle_radio_item.off {
+    width: 50%;
+  }
+  .biz_form_status_toggle_radio_item.on label {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+  .biz_form_status_toggle_radio_item.off label {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+  .form_btns {
+    margin: 20px 0px;
+  }
+
+</style>

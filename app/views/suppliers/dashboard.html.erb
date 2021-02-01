@@ -1,0 +1,48 @@
+<div class="supplier_show_content_inside">
+  <div class="chart_box">
+    <div class="chart_box_inner">
+      <h3>1週間の収益状況</h3>
+      <%= line_chart @data,
+                    height: "300px",
+                    curve: false,
+                    ytitle: "合計予約金額（円）" %><!-- 追記 -->
+    </div>
+  </div>
+  <div class="top_info_items">
+    <div class="activity_business_info_box">
+      <h4 style="margin-top: 0;margin-bottom: 10px;">予約</h4>
+      <%= link_to supplier_bookeditem_index_future_path(current_supplier) do %>
+        <%= @booked.size %>件
+      <% end %>
+    </div>
+    <div class="activity_business_info_box">
+      <h4 style="margin-top: 0;margin-bottom: 10px;">体験数</h4>
+      <%= link_to supplier_activities_path(current_supplier.id) do %>
+        <%= @activities.size %>件
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .chart_box {
+    width: calc(62% + 47px);
+    padding: 0px;
+    margin: 15px 0 35px;
+  }
+  .chart_box_inner {
+    padding: 10px 30px 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px -2px grey;
+  }
+  .top_info_items {
+    display: flex;
+    /* justify-content: space-between; */
+  }
+  .activity_business_info_box {
+    width: 29%;
+    margin-right: 10px;
+  }
+
+</style>

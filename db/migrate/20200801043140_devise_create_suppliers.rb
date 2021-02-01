@@ -35,11 +35,6 @@ class DeviseCreateSuppliers < ActiveRecord::Migration[6.0]
       #supplier_info
       t.string   :name
       t.string   :avatar
-      t.references :organization, foreign_key: true
-      t.integer  :control_level, default: 0, null: false
-      t.integer :accept_invite, default: 0, null: false
-
-      t.timestamps null: false
     end
 
     add_index :suppliers, :email,                unique: true

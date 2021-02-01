@@ -1,3 +1,3 @@
 class ActivityCategory < ApplicationRecord
-  has_one :activity
+  # has_one :activity
 end

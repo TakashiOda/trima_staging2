@@ -1,0 +1,126 @@
+<div class="apply_form_container">
+  <section class="apply_form_section section_top">
+    <h4><span>trima</span>事業者申込フォーム</h4>
+    <p>事業者としてのご参加に興味のある方は以下のフォームにご記入の上、資料をダウンロードしてください。
+      資料ダウンロードの際に事業者アカウントが作成できます
+    </p>
+  </section>
+  <section class="apply_form_section">
+    <%= form_for(@supplier_apply) do |form| %>
+      <div class="form-group">
+        <%= form.label "企業または屋号名" %>
+        <%= form.text_field :company, minlength: 3, maxlength: 40, required: true, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= form.label "担当者氏名" %>
+        <%= form.text_field :name, minlength: 3, maxlength: 40, required: true, class: "form-control" %>
+      </div>
+      <div class="has_two_form_box">
+        <div class="form-group half_form">
+          <%= form.label "事業所がある都道府県" %>
+          <%= form.text_field :prefecture, required: false, class: "form-control" %>
+        </div>
+        <div class="form-group half_form">
+          <%= form.label "市区町村" %>
+          <%= form.text_field :town, required: false, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= form.label "以降の住所" %>
+        <%= form.text_field :address, minlength: 5, maxlength: 80, required: false, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= form.label "電話番号" %>
+        <%= form.telephone_field :phone, required: false, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= form.label "メールアドレス" %>
+        <%= form.email_field :email, required: false, class: "form-control" %>
+      </div>
+      <div class="apply_form_agree_box">
+        <%= form.check_box(:agree_term, required: true, checked: false) %>
+        <div class="apply_form_agree_text">
+          <%=link_to "利用規約", "#" %>と<%=link_to "プライバシーポリシー", "#" %>に同意しました
+        </div>
+      </div>
+      <div class="submit_on_static_form">
+        <%= form.submit('申し込む',class: 'button btn-submit', id: 'apply_form_btn') %>
+      </div>
+    <% end %>
+  </section>
+</div>
+
+<style lang="scss">
+  .apply_form_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 100px;
+    background: #e9f1f4;
+  }
+  section.apply_form_section.section_top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin-bottom: 30px; */
+  }
+  section.apply_form_section.section_top h4 {
+    color: #184968;
+    font-size: 23px;
+  }
+  section.apply_form_section.section_top > h4 > span {
+    letter-spacing: 4px;
+  }
+  section.apply_form_section {
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+  }
+  section.apply_form_section .form-group {
+    margin-bottom: 15px;
+  }
+  .has_two_form_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .form-group.half_form {
+    width: 47%;
+  }
+  input#apply_form_btn {
+    margin-top: 25px;
+    /* background: linear-gradient(to right,#e3973a, #e8cd3f); */
+  }
+  input#apply_form_btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+    /* background: linear-gradient(to right,#ffab43, #ffe240) */
+  }
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="email"]:focus,
+  input#apply_form_btn:focus {
+    outline: 0;
+  }
+
+  .apply_form_agree_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  input#supplier_apply_agree_term {
+    width: 25px;
+    height: 25px;
+    margin: 0 10px 0 0;
+  }
+  .apply_form_agree_text {
+    font-size: 12px;
+  }
+  .apply_form_agree_text a {
+    color: #00b7ff;
+    margin: 0 3px;
+    border-bottom: solid 0.5px;
+  }
+</style>

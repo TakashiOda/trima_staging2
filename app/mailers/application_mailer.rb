@@ -1,5 +1,3 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
-  # subject: "notification from trima"
-  layout 'mailer'
+  default from: "trima事務局 <noreply-trima@cedars.jp>"
 end

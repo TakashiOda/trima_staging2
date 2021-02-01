@@ -1,88 +1,67 @@
 <div class="home_contents">
   <div class="home_contents__top">
-    <div class="home_contents__top__up">
-      <h4>trima</h4>
-      <p>Lets make amazing trip!</p>
+    <div class="home_contents__top__center">
+      <div class="home_contents__top__up">
+        <p>旅行の計画、下調べ、予約は<br>トリマでぜんぶカンタンに</p>
+      </div>
+      <div class="home_contents__top__down">
+        <ul>
+          <% if current_user %>
+            <li><%= link_to "旅行プロジェクトをつくる", new_project_path, class: 'home_eyecatch_first_btn' %></li>
+            <li><%= link_to "使い方を見てみる", "#", class: 'home_eyecatch_second_btn' %></li>
+          <% else %>
+            <li><%= link_to "trimaについて", about_for_supplier_path, class: 'home_eyecatch_first_btn' %></li>
+            <li><%= link_to "事業者登録", new_supplier_apply_path, class: 'home_eyecatch_second_btn' %></li>
+            <li><%#= link_to "事業者登録", new_user_registration_path, class: 'home_eyecatch_second_btn' %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="home_contents__top__bottom">
+        <p>2021年4月リリース予定</p>
+      </div>
     </div>
-    <div class="home_contents__top__down">
-      <ul>
-        <% if current_user %>
-          <li><%= link_to "Create Project", new_user_project_path(current_user) %></li>
-          <li><%= link_to "How to Use", "#" %></li>
-        <% else %>
-          <li><%= link_to "About Service", "#" %></li>
-          <li><%= link_to "Sign UP", new_user_registration_path %></li>
+  </div>
+  <div class="home_contents__itembox">
+    <div class="itembox__inner">
+      <div class="itembox__inner__title">
+        <h4>新着の体験</h4>
+      </div>
+      <div class="home_new_activity_container">
+        <% if !@activities.nil? %>
+          <% @activities.each do |activity| %>
+            <div class="home_new_activity_right_top_item">
+              <%= image_tag activity.main_image.to_s, class: 'home_item_image' %>
+              <div class="activity_info_box">
+                <div class="activity_name"><%= activity.name[0, 20] %></div>
+                <div class="activity_price">¥<%= activity.normal_adult_price.to_s(:delimited) %></div>
+              </div>
+            </div>
+          <% end %>
         <% end %>
-      </ul>
-    </div>
-  </div>
-  <div class="home_contents__itembox">
-    <div class="itembox__inner">
-      <div class="itembox__inner__title">
-        <h4>Pick Up!</h4>
-      </div>
-      <div class="itembox__inner__items">
-        <ul>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
   <div class="home_contents__itembox">
     <div class="itembox__inner">
       <div class="itembox__inner__title">
-        <h4>Pick Up!</h4>
+        <h4>カテゴリー</h4>
       </div>
-      <div class="itembox__inner__items">
+      <div class="category_item_box">
         <ul>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="home_contents__itembox">
-    <div class="itembox__inner">
-      <div class="itembox__inner__title">
-        <h4>Pick Up!</h4>
-      </div>
-      <div class="itembox__inner__items">
-        <ul>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
-          <li>
-            <%= image_tag 'view_item_small.jpg', class: 'home_item_image' %>
-          </li>
+          <% @categories.each do |category| %>
+            <div class="category_item">
+              <%= category.jp_name %>
+            </div>
+          <% end %>
+          <li></li>
         </ul>
       </div>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(".notice" ).fadeOut(2000);
+  $(".alert" ).fadeOut(2000);
+
+</script>

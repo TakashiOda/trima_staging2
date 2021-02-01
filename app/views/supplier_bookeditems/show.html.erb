@@ -1,0 +1,74 @@
+<div class="supplier_activity_page_top">
+  <h3>予約詳細</h3>
+  <table class="bookitems_detail_page__table">
+    <tr>
+      <th>予約コード</th>
+      <td><%= @booked_activity.purchase_number %></td>
+    </tr>
+    <tr>
+      <th>体験名</th>
+      <td><%=@booked_activity.activity_name %></td>
+    </tr>
+    <tr>
+      <th>体験日時</th>
+      <td>
+        <%=@booked_activity.activity_date.strftime("%m/%d(#{@wd[@booked_activity.activity_date.wday]})")%>
+        <%=@booked_activity.activity_start_time.strftime("%H:%M")%>〜<%=@booked_activity.activity_end_time.strftime("%H:%M")%>
+      </td>
+    </tr>
+    <tr>
+      <th>予約金額</th>
+      <td>¥<%= @gain_price.to_s(:delimited) %></td>
+    </tr>
+    <tr>
+      <th>予約者</th>
+      <td><%=@booked_activity.user_name if @booked_activity.user_name%></td>
+    </tr>
+    <tr>
+      <th>参加者人数</th>
+      <td><%=@booked_activity.total_participants if @booked_activity.total_participants%></td>
+    </tr>
+    <tr>
+      <th>参加者一覧</th>
+      <td>
+        <ul>
+          <% todayDate = Date.today.strftime("%Y%m%d").to_i %>
+          <% @members.each do |member| %>
+            <li>
+              <% birthDate = Date.new(member.birth_year, member.birth_month, member.birth_date).strftime("%Y%m%d").to_i%>
+              <% memberAge = (todayDate - birthDate) / 10000%>
+              <%=member.first_name%> <%=member.last_name%>（<span class="age_title">性別</span><%= member.gender == 'male' ? '男性' : '女性' %><span class="age_title">年齢</span><%=memberAge%>歳<span class="age_title">生年月日</span><%="#{member.birth_year}/#{member.birth_month}/#{member.birth_date}"%>）
+            </li>
+          <% end %>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<style lang="scss">
+  table.bookitems_detail_page__table {
+    width: 100%;
+    margin-top: 30px;
+  }
+  table.bookitems_detail_page__table th {
+    text-align: right;
+    background: lightgray;
+    padding: 10px;
+    font-weight: normal;
+    font-size: 14px;
+  }
+  table.bookitems_detail_page__table td {
+    width: 85%;
+    border: solid 1px lightgray;
+    background: #fff;
+    padding: 15px;
+  }
+  span.age_title {
+    padding: 2px 11px;
+    margin: 0 7px;
+    background: lightgray;
+    font-size: 11px;
+    border-radius: 4px;
+  }
+</style>

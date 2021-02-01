@@ -1,6 +1,6 @@
 <div class="sign_up_in_page child_position_center">
   <div class="sign_up_in_page_end">
-    <h3>Resend unlock Email</h3>
+    <h3>アカウントロックを解除する</h3>
     <%= form_for(resource, as: resource_name, url: user_unlock_path(resource_name), html: { method: :post }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <div class="form-group">
@@ -8,13 +8,13 @@
       </div>
 
       <div class="form-group button">
-        <%= f.submit "Resend unlock", class: "button btn-submit" %>
+        <%= f.submit "アカウントロック解除メール送信", class: "button btn-submit" %>
       </div>
     <% end %>
     <div class="another_way_btn_box">
-        <%= link_to "Sign in", users_sign_in_path %><br />
-        <%= link_to "Sign up", new_user_registration_path %><br />
-        <%= link_to "Forget Password?", new_user_password_path %>
+        <%= link_to "ログイン", users_sign_in_path %><br />
+        <%= link_to "ユーザー登録", new_user_registration_path %><br />
+        <%= link_to "パスワードを忘れた方はコチラ", new_user_password_path %>
     </div>
   </div>
 </div>

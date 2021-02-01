@@ -1,3 +1,1252 @@
-// Place all the styles related to the suppliers controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+$user-main-color: #0068b7; //ヘッダーに適用・コバルトブルー
+$user-main-light-color: #23a0ff;; //ラジオやチェックボックスに適用
+$user-main-dark-color: #192f60; //サイドバーに適用・プルシャンブルー
+
+// 事業者の色が関係する部分============================================
+header.erb_header {
+  background: linear-gradient(to right, #2193b0, #6dd5ed) !important;
+}
+
+.btn-submit {
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+}
+
+.form-group.supplier.login_button input.button {
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+}
+
+.user_show_side {
+  background: $user-main-dark-color !important;
+}
+
+.activity_index_top_box a.add_btn {
+  background: $user-main-color !important;
+}
+
+a.org_edit_btn {
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+}
+
+input.need_submit {
+  background: #e04e4e !important;
+}
+// 事業者thankyou メール===========================
+.static_pages.short_messages_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px auto 0px;
+  padding: 30px 0px;
+  width: 90vw;
+  min-width: 320px;
+  max-width: 490px;
+  background: #cff6ff;
+  border-radius: 20px;
+}
+.short_messages_box_title {
+  margin-bottom: 20px;
+  font-size: 18px;
+  padding-bottom: 7px;
+  font-weight: bold;
+}
+
+// 事業者thankyou メール=======================終わり=======
+
+
+// Supplier Show==============================
+.supplier_show_content_inside {
+  padding: 20px 20px;
+}
+.activity_business_info_box,
+.supplier_info_box {
+  border: solid 1px lightgray;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  background: #fff;
+  box-shadow: 0px 0px 5px -2px grey;
+}
+.supplier_profile_box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.supplier_name {
+  margin-left: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.supplier_business_box {
+  margin-bottom: 70px;
+}
+
+table.info_list_table {
+  width: 100%;
+  font-size: 11px;
+}
+table.info_list_table tr .td_front {
+  width: 20%;
+}
+
+.info_list_box_title {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+.info_list_box_title_no_info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+.info_list_box_no_bix_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+div#supplier_info_contents {
+    margin: 20px 0;
+}
+.info_list_box_title_btn {
+  text-align: center;
+}
+.info_list_box_title_btn div svg {
+  color: gray;
+  margin: 0;
+  width: 100px !important;
+  height: 20px;
+  cursor: pointer;
+}
+table.supplier_business_items {
+  font-size: 12px;
+  width: 100%;
+}
+table.supplier_business_items td.supplier_business_items_td1 {
+  width: 5%;
+  font-size: 10px;
+  padding: 5px;
+  text-align: center;
+}
+table.supplier_business_items td.supplier_business_items_td2 {
+  width: 8%;
+}
+table.supplier_business_items td.supplier_business_items_td3 {
+  width: 72%;
+}
+table.supplier_business_items td.supplier_business_items_td4 {
+  width: 15%;
+  text-align: end;
+}
+table.supplier_business_items td.supplier_business_items_blank_td2 {
+  width: 85%;
+}
+table.supplier_business_items td.supplier_business_items_blank_td3 {
+  width: 10%;
+}
+td.supplier_business_items_td2 div {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #17a599;
+  border-radius: 50%;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+}
+a.org_edit_btn {
+  background: #e6e6e6 !important;
+  padding: 7px 13px;
+  font-size: 11px;
+  color: #656565;
+  border-radius: 3px;
+}
+a.member_delete_btn.edit {
+  background: #2bb560;
+}
+.info_list_box_contents {
+  padding: 0 3px;
+}
+.add_new_org_box {
+  display: flex;
+  justify-content: space-between;
+}
+img.business_icon_image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.supplier_show_guide_items {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+}
+.supplier_show_guide_item_box {
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+.supplier_show_guide_item_box__name {
+  font-size: 15px;
+  padding-left: 15px;
+}
+.guide_input_box {
+    margin-bottom: 10px;
+}
+.guide_input_box.profile textarea {
+  width: 100% !important;
+  max-height: 200px !important;
+  min-height: 90px !important;
+}
+.guide_language_check_boxes {
+  display: flex;
+  align-items: center;
+}
+.guide_language_check_boxes li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+.guide_language_check_boxes li input {
+  margin: 0 6px 0 0;
+  width: 20px;
+  height: 20px;
+}
+.form-group.language_activity_list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  label {
+    margin-right: 20px;
+    padding-left: 5px;
+  }
+  input {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+
+// 事業者 体験一覧============================================
+.activity_index_top_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.activity_index_top_box h3 {
+    margin: 0;
+}
+.activity_index_top_box a.add_btn {
+  padding: 5px 15px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+}
+.activity_category_by_status_linkbox {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background: #e0e0e0;
+  border-radius: 50px;
+}
+.activity_category_by_status_linkbox a {
+  background: #cecece;
+  padding: 4px 11px;
+  width: 21%;
+  height: 14px;
+  margin: 0;
+  color: gray;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+}
+.activity_category_by_status_linkbox a:hover {
+  opacity: 0.7;
+}
+.activity_category_by_status_linkbox a.selected {
+  background: #0068b6;
+  color: #fff;
+  font-weight: bold;
+}
+
+li.activity_list_item {
+  padding: 10px 20px 10px 15px;
+  border-bottom: solid 1px #dfdfdf;
+  border-top: solid 1px #dfdfdf;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  box-shadow: 0px 0px 7px -4px grey;
+}
+li.activity_list_item.no_stock {
+    background: #cecece;
+}
+a.link:link, a.link:visited, a.link:hover, a.link:active {
+  color: #565656;
+}
+.activity_list_item_front {
+  display: flex;
+  align-items: center;
+}
+img.activity_icon_image {
+  width: 100px;
+  margin-right: 20px;
+  border-radius: 7px;
+}
+.activity_index_detail_info {
+  font-size: 11px;
+  color: darkgrey;
+}
+.no_stock_alert_box span {
+  background: #ffc6c6;
+  padding: 4px 15px;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 20px;
+}
+.latest_stock_box span.latest_stock_text {
+  font-size: 11px !important;
+  color: #888888 !important;
+  background: #d7eeff;
+  padding: 4px 15px;
+  text-align: center;
+  font-size: 12px;
+  border-radius: 20px;
+}
+span.stock_will_be_expire {
+    font-size: 13px;
+    color: red;
+    margin-left: 5px;
+}
+.to_stock_btn_on_activity_index {
+  padding: 6px 20px;
+  border-radius: 30px;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.to_stock_btn_on_activity_index.edit_link {
+  background: lightgray;
+  color: #797979;
+}
+.to_stock_btn_on_activity_index.add_link {
+  background: #0068b6;
+  color: #fff;
+}
+.to_stock_btn_on_activity_index:hover {
+  opacity: 0.6;
+}
+nav.pagination {
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+span.page {
+  width: 34px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+}
+span.page.current {
+  background: #0068b6;
+  color: #fff;
+  border-radius: 40px;
+}
+span.page a {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+span.next {
+  padding: 0 6px;
+}
+span.prev {
+  display: none;
+}
+span.next {
+  display: none;
+}
+// 事業者 体験============================================
+#user_edit_image_upload_btn:hover {
+  cursor: pointer;
+}
+.activity_season_input_box,
+.activity_openday_input_box {
+  display: flex;
+  flex-wrap: wrap;
+}
+.activity_season_input_box .form-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0px;
+  width: 16.6%;
+}
+
+.activity_openday_input_box .form-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0px;
+  width: 14.28%;
+}
+.activity_season_input_box input[type=checkbox],
+.activity_openday_input_box input[type=checkbox] {
+  display: none;
+}
+.activity_openday_input_box input[type="checkbox"]:checked + label {
+  background: #22a0ff;
+  color: #ffffff;
+}
+.activity_season_input_box input[type="checkbox"]:checked + label {
+  background: #22a0ff;
+  color: #ffffff;
+}
+
+
+.activity_season_input_box label,
+.activity_openday_input_box label {
+  padding: 5px 10px;
+  text-align: center;
+  background: #e8e8e8;
+  user-select: none;
+  width: 100%;
+}
+.activity_season_input_box label:hover,
+.activity_openday_input_box label:hover {
+  background: #22a0ff52;
+  color: #fff;
+}
+label.first_check_label {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+label.last_check_label {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.top_left_check_label {border-top-left-radius: 6px;}
+.top_right_check_label {border-top-right-radius: 6px;}
+.bottom_left_check_label {border-bottom-left-radius: 6px;}
+.bottom_right_check_label {border-bottom-right-radius: 6px;}
+.form-group.time_input input {
+  width: 60px;
+  border-radius: 6px;
+}
+
+div#courses .nested-fields .form-group {
+  align-items: center;
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: row;
+}
+
+#add_course_btn {
+  border: solid 1px #fff;
+  background: #ececec;
+  color: #656565;
+  padding: 3px 20px;
+  border-radius: 50px;
+  width: 160px;
+  text-align: center;
+  user-select:none;
+}
+#add_course_btn:hover {
+  cursor: pointer;
+  background: #d8d8d8;
+}
+#add_course_btn svg {
+  color: #7b7b7b;
+}
+div#courses .nested-fields .form-group {
+  align-items: center;
+  margin-bottom: 6px;
+}
+a.remove_course_btn {
+  background: #ef6c6c;
+  color: #fff;
+  border-radius: 93px;
+  padding: 3px 0;
+  font-size: 12px;
+}
+a.remove_course_btn span {
+  padding: 0px 9px 0px 10px;
+}
+.course_table_head {
+  display: flex;
+  background: gainsboro;
+  color: #fff;
+  font-size: 14px;
+}
+.course_row1 {
+  width: 60%;
+}
+
+.course_row2 {
+  width: 40%;
+  text-align: right;
+  padding-right: 10px;
+}
+select.time_input {
+  width: 70px;
+  margin: 4px 5px 0px;
+  height: 40px;
+  padding: 5px 10px;
+}
+.course_row2.time_select {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+.links {
+  text-align: center;
+  margin: 10px 30%;
+  padding: 2px;
+  border-radius: 40px;
+  font-size: 14px;
+}
+.links a {
+  color: #777777;
+  display: block;
+  user-select: none;
+}
+
+a.disable {
+  pointer-events: none;
+}
+.ageprice_table_head {
+  display: flex;
+  align-items: center;
+  background: gainsboro;
+  color: #fff;
+  font-size: 10px;
+  width: 100%;
+}
+
+.ageprice_row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+.ageprice_row input {
+  padding: 8px 8px;
+  text-align: right;
+}
+.nested-fields {
+  display: flex;
+  // align-items: center;
+}
+.agefrom, .ageto {
+  width: 13%;
+  padding: 0 0.5%;
+}
+
+.fromsign {
+  display: flex;
+  align-items: flex-end;
+  width: 3%;
+  padding: 0.5%;
+  font-size: 11px;
+}
+.normal_price,
+.season_price {
+  width: 18%;
+  padding-left: 2%;
+}
+.season_price_inner {
+  display: flex;
+  align-items: flex-end;
+}
+
+span.ageprice_unit {
+  font-size: 10px;
+  font-weight: bold;
+  color: gray;
+  padding: 0 0 1% 1%;
+}
+span.seasonal_price {
+  font-size: 12px;
+  color: #a2a2a2;
+}
+
+.row_delete {
+  width: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+a.remove_ageprice_btn {
+    padding: 5px;
+    font-size: 14px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+a.remove_ageprice_btn svg {
+  width:100%;
+  margin: 0;
+  color: #ef6c6c;
+}
+div#ageprice div.nested-fields:first-child div.ageto input,
+div#ageprice div.nested-fields:first-child div.ageto span {
+  display: none;
+}
+.form-group.season_price_radio_box {
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+}
+.form-group.activity_season_radio {
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+    justify-content: space-between;
+}
+
+.season_price_radio_box_inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // height: 90px;
+  padding: 0 10px;
+}
+div#activity_date_input_box {
+    margin-bottom: 40px;
+}
+.form-group.season_price_radio_box label:first-child {
+  margin-right: 20px;
+}
+.season_price_radio_items {
+  display: flex;
+  // width: 30%;
+}
+.season_price_radio_items input[type=radio],
+.season_price_radio_items input[type=radio] {
+  display: none;
+}
+.season_price_radio_items label {
+  background: gainsboro;
+  padding: 3px 12px;
+  user-select: none;
+}
+.season_price_radio_item.on label {
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+.season_price_radio_item.off label {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.season_price_radio_items input[type="radio"]:checked + label {
+  background: #23a0ff;
+  color: #ffffff;
+}
+input.date_select {
+  font-size: 13px;
+}
+
+.radio_items.rain_or_shine_radio .radio_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.radio_items.rain_or_shine_radio label {
+  display: block;
+  width: 100%;
+}
+
+@media screen and (max-width: 787px) {
+  .season_price_radio_box_inner {
+    flex-direction: column;
+    align-items: baseline;
+  }
+}
+
+.activity_activate_btn_box,
+.activity_delete_btn_box {
+  margin: 20px 5px;
+}
+.activate_btn_box div {
+  display: flex;
+  align-items: unset;
+}
+.activity_delete_btn_box svg {
+  color: #949494;
+  margin-right: 0px;
+}
+.activity_delete_btn_box a {
+  color: gray;
+}
+.activity_image_items {
+  display: flex;
+  margin-bottom: 0;
+  flex-direction: row;
+}
+.activity_image_item {
+  width: 24%;
+  margin-right: 1%;
+  margin-bottom: 0;
+}
+.activity_image_box_inside:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.activity_image_box_inside img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.activity_image_delete_box ul {
+  display: flex;
+  width: 100%;
+  margin-top: 0;
+}
+.activity_image_delete_box ul li {
+  width: 24%;
+  margin-right: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#map {
+  height: 400px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+#meetingmap {
+    height: 400px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+ul.activity_description_language_box_tab_list {
+  display: flex;
+  border-bottom: 3px solid #0268b5;
+}
+ul.activity_description_language_box_tab_list li {
+  padding: 8px 20px;
+  background: #eee;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  margin-right: 2px;
+}
+
+ul.activity_description_language_box_tab_list li:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+ul.activity_description_language_box_tab_list li.active {
+  background: #0068b6;
+}
+ul.activity_description_language_box_tab_list li span {
+  font-size: 13px;
+  color: gray;
+}
+ul.activity_description_language_box_tab_list li.active span {
+  font-size: 13px;
+  color: #fff;
+}
+
+a.button.btn-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0068b6;
+  height: 40px;
+}
+a.button.btn-link span {
+  color: #fff;
+  font-size: 14px;
+}
+a.button.btn-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+// guides fields====================================
+.nested-fields {
+  display: flex;
+}
+.guide_item_left_box {
+  width: 25%;
+  padding-top: 10px;
+  max-width: 120px;
+}
+.guide_item_right_box {
+  width: 75%;
+  display: flex;
+}
+.guide_image_box_inside {
+  position: relative;
+}
+.guide_item_right_box_left {
+  width: 90%;
+}
+.guide_item_right_box_left .form-control {
+  width: 90%;
+}
+.guide_item_right_box_right {
+  width: 10%;
+  padding-top: 20px;
+}
+div.user_edit_image_upload_btn_box {
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 60px;
+}
+
+div#guides .nested-fields {
+  padding: 15px;
+  background: #e8e8e8;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.guide_image_box_inside img {
+  background: #fff;
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+.guide_image_upload_btn {
+  display: none;
+}
+.user_edit_image_upload_btn_box svg{
+  background: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 9px;
+  border-radius: 50%;
+}
+
+// biz==============================
+#user_edit_image_upload_btn:hover {
+  cursor: pointer;
+}
+.form-group.manage_agent_input_box {
+  flex-wrap: wrap;
+}
+.form-group.manage_agent_input_box .form-group {
+  align-items: center;
+  margin-bottom: 5px;
+  width: 46%;
+}
+.form-group.manage_agent_input_box input[type=checkbox] {
+  width: 25px;
+  height: 30px;
+}
+.radio_item_box {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.radio_items {
+  display: flex
+}
+.delete_guide_btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffebeb;
+  border-radius: 7px;
+}
+.delete_guide_btn svg {
+    color: red;
+    margin: 0;
+}
+.links a {
+  width: 150px;
+  padding: 5px 15px;
+  background: #0068b6;
+  color: #fff;
+  border-radius: 20px;
+}
+
+.guide_profile_box textarea {
+  width: 100% !important;
+  max-height: 200px !important;
+}
+
+
+// 在庫作成・編集＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+
+.supplier_activity_page_top_stock_form {
+  padding: 0px 0px !important;
+}
+
+.stock_form_btn_box {
+  position: sticky;
+  top: 56px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: -50px;
+}
+.stock_form_btn_box_inner {
+  width: 400px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+input.button.btn-submit.stock_submit {
+  width: 130px;
+  height: 40px;
+  border-radius: 6px;
+  padding: 0;
+  margin-bottom: 0;
+}
+input.button.btn-submit.stock_submit:hover {
+  cursor: pointer !important;
+  opacity: 0.6;
+}
+
+.stock_form {
+  padding: 0 !important;
+  border-radius: 3px;
+}
+.stock_form form {
+    padding: 0 !important;
+}
+
+.activity_stock_form_main_content {
+  padding: 0 20px 40px;
+}
+
+.stock_table_header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #0268b5;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.field {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.course_stock_column,
+.date_list {
+  display: flex;
+  flex-direction: column;
+}
+.date_column {
+  width: 160px;
+  text-align: center;
+}
+.activity_stock_input_box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+  height: 35px;
+  border-bottom: solid 1px lightgray;
+}
+.is_high_season {
+  background: #ff8a8a;
+}
+.is_low_season {
+  background: #4e9bc7;
+}
+.stock_table_th.date_column {
+  width: 170px;
+}
+.stock_table_th.course_column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 81px;
+  height: 43px;
+  line-height: 10px;
+  margin-right: 13px;
+  color: #fff;
+}
+.date_item {
+  font-size: 12px;
+  padding: 5px 10px 5px 5px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid 1px lightgray;
+}
+.stock_items {
+  display: flex;
+  flex-direction: row;
+}
+.stock_input_box input {
+  font-size: 19px;
+  width: 62px;
+  height: 16px;
+  text-align: right;
+  padding-right: 5px;
+  margin-right: 5px;
+  border: solid 1px #d0d0d0;
+  border-radius: 6px;
+  color: #504f4f;
+}
+.season_input_box select {
+  height: 35px;
+  font-size: 12px;
+}
+.date_item.saturday {
+  color: #2669ff;
+}
+.date_item.sunday {
+  color: red;
+}
+
+
+
+/* タブのCSS **************************************************************/
+.cp_tab {
+  margin: 10px 0px 0px;
+  padding-left: 15px;
+  height: 45px;
+  display: flex;
+}
+a.month_tab {
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background: lightgray;
+  color: gray;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 8px;
+  border: solid 0.5px #b9b9b9;
+  border-bottom: none;
+}
+a.month_tab:hover {
+  cursor: pointer !important;
+  opacity: 0.6;
+}
+a.month_tab.selected {
+  background: #0068b6;
+  color: #fff;
+}
+
+.stock_is_close {
+  background: #d8d8d8;
+}
+.all_input_container {
+  height: 85px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  background: lightgray;
+  padding: 3px 0px;
+  margin-bottom: 5px;
+}
+.date_column_allset {
+  width: 160px;
+}
+.date_item_allset {
+  font-size: 12px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.date_item_allset svg {
+  margin-left: 10px;
+  width: 22px !important;
+  height: 22px !important;
+  color: #0568b4;
+}
+
+//吹き出し*******************************************************************
+.form_big_title_questionIcon.about_stock_term {
+  position: relative;
+}
+
+.fukidashi {
+  display: none;
+  width: 200px;
+  position: absolute;
+  bottom: 30px;
+  right: -89px;
+  z-index: 100;
+  padding: 16px;
+  border-radius: 5px;
+  background: #9e9e9eeb;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+}
+.fukidashi:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 100px;
+  right: 100px;
+  bottom: -20px;
+  margin-left: 10px;
+  border: solid transparent;
+  border-color: rgba(51, 204, 153, 0);
+  border-top-color: #9e9e9eeb;
+  border-width: 10px;
+  pointer-events: none;
+  content: " ";
+}
+.date_item_allset svg:hover + .fukidashi_about_stock_term {
+  display: block;
+}
+
+.form_big_title_questionIcon.aboutAllStock {
+  position: relative;
+}
+
+.fukidashi {
+  display: none;
+  width: 200px;
+  position: absolute;
+  bottom: 30px;
+  right: -89px;
+  z-index: 100;
+  padding: 16px;
+  border-radius: 5px;
+  background: #9e9e9eeb;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+}
+.fukidashi:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 100px;
+  right: 100px;
+  bottom: -20px;
+  margin-left: 10px;
+  border: solid transparent;
+  border-color: rgba(51, 204, 153, 0);
+  border-top-color: #9e9e9eeb;
+  border-width: 10px;
+  pointer-events: none;
+  content: " ";
+}
+.date_item_allset svg:hover + .fukidashi_aboutAllStock {
+  display: block;
+}
+//吹き出し*******************************************************************
+
+.all_input_stock {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  height: 55px;
+}
+.all_stock_input_box {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  height: 55px;
+}
+.all_stock_input {
+  display: flex;
+  flex-direction: column;
+}
+.all_stock_input input {
+  font-size: 19px;
+  width: 64px;
+  height: 15px;
+  text-align: right;
+  padding-right: 5px;
+  margin-right: 3px;
+  border: solid 1px #d0d0d0;
+  border-radius: 6px;
+  color: #504f4f;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+}
+.all_season_input_box select {
+  height: 35px;
+  font-size: 12px;
+}
+#all_season_price {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+}
+.all_stock_input button {
+  height: 32px;
+  width: 81px;
+  font-size: 14px;
+  background: #0068b6;
+  border: solid 0.5px lightgray;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: none;
+}
+
+.all_stock_input button:hover {
+  cursor: pointer;
+  background: #037eda;
+}
+.season_input_box button {
+  height: 32px;
+  width: 138px;
+  font-size: 14px;
+  background: #0068b6;
+  border: solid 0.5px lightgray;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: none;
+  :hover {
+    opacity: 0.7;
+  }
+}
+.season_input_box button:hover {
+  cursor: pointer;
+  background: #037eda;
+}
+
+.all_stock_input_box input:focus,
+.all_stock_input_box button:focus,
+ {
+    outline: 0;
+}

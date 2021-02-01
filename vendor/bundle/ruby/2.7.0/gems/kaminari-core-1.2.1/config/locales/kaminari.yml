@@ -4,7 +4,7 @@ en:
   views:
     pagination:
       first: "&laquo; First"
-      last: "Last &raquo;"
+      last: "&raquo;"
       previous: "&lsaquo; Prev"
       next: "Next &rsaquo;"
       truncate: "&hellip;"

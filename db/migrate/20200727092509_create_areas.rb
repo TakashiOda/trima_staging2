@@ -1,8 +1,6 @@
 class CreateAreas < ActiveRecord::Migration[6.0]
   def change
     create_table :areas do |t|
-      t.references :country, null: false, foreign_key: true
-      t.references :state, null: false, foreign_key: true
       t.references :prefecture, null: false, foreign_key: true
       t.string :en_name
       t.string :local_name

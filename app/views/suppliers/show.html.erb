@@ -1,252 +1,141 @@
-<div class="container user_show container-fluid">
-  <div class="user_show_side">
-    <%= render 'suppliers/supplier_page_front_sidebar' %>
-  </div>
-  <div class="supplier_show_main_content"><!--メインコンテンツ-->
-    <div class="supplier_show_content_inside"><!--メインコンテンツ内部-->
-      <div class="supplier_profile_box"><!--メインコンテンツprofile-->
-        <div class="user_show_avatar_box">
-          <div class="user_show_avatar_box_inside">
-            <% if @supplier.avatar.present? %>
-              <%= image_tag current_supplier.avatar.url, class: "user_avatar" %>
+<div class="supplier_show_content_inside">
+  <div class="activity_business_info_box"><!--メインコンテンツorg-->
+    <% if !@activity_business.nil? %>
+      <div class="info_list_box_title">
+        <div class="info_list_box_title_inner">
+          企業情報
+          <% if @activity_business.is_approved %>
+            <div class="activity_business_status is_approved">
+              承認済み
+            </div>
+          <% else %>
+            <% if @activity_business.status == 'inputing' %>
+              <div class="activity_business_status inputting">
+                まだ事業者申請がされていません
+              </div>
             <% else %>
-              <%= image_tag "default_images/no_avatar_image.png", class: "user_avatar" %>
+              <div class="activity_business_status send_approve">
+                承認待ち
+              </div>
             <% end %>
-          </div>
+          <% end %>
         </div>
-        <div class="supplier_name">
-          <div><%= !@supplier.name.nil? ? @supplier.name : "お名前未登録" %></div>
-          <div class="supplier_profile_edit_btn">
-            <% if @supplier == current_supplier %>
-              <%= link_to "編集",edit_supplier_path(current_supplier), class: "org_edit_btn" %>
-            <% end %>
-          </div>
+        <div>
+          <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business), class: "org_edit_btn" %>
         </div>
-      </div><!--メインコンテンツprofile end-->
-      <!--事業リスト---------------------------------------------------------------->
-      <% if !@organization.nil? %>
-      <div class="supplier_business_box">
-        <div class="info_list_box_title">
-          <div>事業リスト（現在体験事業のみ）</div>
-        </div>
-        <table class="supplier_business_items">
-            <% if @activity_business %>
-            <tr>
-              <td class="supplier_business_items_td1">体験</td>
-              <td class="supplier_business_items_td2">
-                <% if !@activity_business.profile_image.blank? %>
-                  <%= image_tag @activity_business.profile_image.to_s, class: 'business_icon_image' %>
-                <% else %>
-                  <div><%= @activity_business.name[0] %></div>
-                  <%# image_tag 'default_images/no_avatar_image.png', class: 'business_icon_image' %>
-                <% end %>
-              </td>
-              <td class="supplier_business_items_td3"><%= @activity_business.name %></td>
-              <td class="supplier_business_items_td4">
-                <% if current_supplier.control_level == 0 %>
-                  <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business ), class: "member_delete_btn edit" %>
-                <% end %>
-              </td>
-            </tr>
-            <% else %>
-            <tr>
-              <td class="supplier_business_items_td1">体験</td>
-              <td class="supplier_business_items_blank_td2">まだ事業が登録されていません</td>
-              <td class="supplier_business_items_blank_td3">
-                <% if current_supplier.control_level == 0 %>
-                  <%= link_to "追加", new_supplier_activity_business_path(current_supplier), class: "member_delete_btn" %>
-                <% end %>
-              </td>
-            </tr>
-            <% end %>
-        </table>
       </div>
-      <% end %>
-      <!--事業リスト---------------------------------------------------------------->
-      <!--メンバーリスト---------------------------------------------------------------->
-      <% if !@joined_members.blank? && !@inviting_members.blank? %>
-        <div class="project_members_box">
-          <div class="info_list_box_title">
-            <div>メンバー情報</div>
-          </div>
-          <table class="project_members_list">
-            <% if !@joined_members.nil? %>
-              <% @joined_members.each do |joined_member| %>
-                <tr>
-                  <td>参加済</td>
-                  <td><%= joined_member.name if joined_member.name %></td>
-                  <td>
-                    <% if current_supplier.control_level == 0 %>
-                      <%= link_to "削除", supplier_org_member_delete_path(current_supplier.id, joined_member.organization_id, joined_member.id),
-                      class: "member_delete_btn",
-                      method: :delete, data: { confirm: "本当に削除しますか？" }
-                      %>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
+      <div id="activity_business_info_contents" class="">
+        <div class="info_list_box_contents">
+          <table class="info_list_table">
+            <tr>
+              <td class="td_front">体験事業名</td>
+              <td class="td_end"><%= current_supplier.activity_business.name if current_supplier.activity_business.name %></td>
+            </tr>
+            <tr>
+              <td class="td_front">プロフィール</td>
+              <td class="td_end">
+                <%= current_supplier.activity_business.profile_text if current_supplier.activity_business.profile_text %>
+              </td>
+            </tr>
+            <% if !@activity_business.apply_suuplier_address %>
+            <tr>
+              <td class="td_front">都道府県・エリア</td>
+              <td class="td_end">
+                <%= Prefecture.find(current_supplier.activity_business.prefecture_id).local_name if current_supplier.activity_business.prefecture_id %> /
+                <%= Area.find(current_supplier.activity_business.area_id).local_name if current_supplier.activity_business.area_id %>
+              </td>
+            </tr>
             <% end %>
-            <% if !@inviting_members.nil? %>
-              <% @inviting_members.each do |inviting_member| %>
-                <tr>
-                  <td><%= inviting_member.has_account == 0 ? "未承認" : "未登録" %></td>
-                  <td><%= inviting_member.invited_email %></td>
-                  <td>
-                    <% if current_supplier.control_level == 0 %>
-                      <%= link_to "削除", supplier_org_invite_delete_path(current_supplier.id, inviting_member.organization_id, inviting_member.id),
-                      class: "member_delete_btn",
-                      method: :delete, data: { confirm: "本当に削除しますか？" }
-                      %>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            <% end %>
+            <tr>
+              <td class="td_front">登録ガイド</td>
+              <td class="td_end">
+                <div class="supplier_show_guide_items">
+                <% if current_supplier.activity_business.guides.any? %>
+                  <% current_supplier.activity_business.guides.each do |guide| %>
+                    <div class="supplier_show_guide_item_box">
+                      <div class="supplier_show_guide_item_box__image"><%= image_tag guide.avatar.to_s, class: "user_avatar" %></div>
+                      <div class="supplier_show_guide_item_box__name"><%= guide.name %></div>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <div>ガイドは登録されていません</div>
+                <% end %>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    <% else %>
+      <div class="info_list_box_title_no_info">
+        <div class="info_list_box_title_inner">企業情報</div>
+        <div class="info_list_box_no_bix_info">
+          <div>まだ事業情報がありません</div>
+          <%= link_to "体験事業を登録", new_supplier_activity_business_path(current_supplier), class: "org_edit_btn" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <!--事業者情報---------------------------------------------------------------->
+  <div class="supplier_info_box"><!--メインコンテンツorg-->
+    <div class="info_list_box_title">
+      <div>契約者情報</div>
+      <div>
+        <% unless @supplier.supplier_profile.nil? %>
+          <%= link_to "編集", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
+        <% end %>
+      </div>
+    </div>
+    <div id="supplier_info_contents">
+      <% if @supplier_profile.nil? %>
+        <div class="info_list_box_contents">
+          <div>まだ契約者情報がありません</div>
+          <%= link_to "契約者情報を登録", "#", class: "org_edit_btn" %>
+        </div>
+      <% else %>
+        <div class="info_list_box_contents">
+          <table class="info_list_table">
+            <tr>
+              <td class="td_front">ご契約社名</td>
+              <td class="td_end"><%= @supplier.name if @supplier.name %></td>
+            </tr>
+            <tr>
+              <td class="td_front">ご契約の住所</td>
+              <td class="td_end">
+                <%= Prefecture.find(@supplier_profile .prefecture_id).local_name if @supplier_profile.prefecture_id %>
+                <%= Town.find(@supplier_profile.town_id).jp_name if @supplier_profile.town_id %>
+                <%= @supplier_profile.detail_address if @supplier_profile.detail_address %>
+                <%= @supplier_profile.building if @supplier_profile.building %>
+              </td>
+            </tr>
           </table>
         </div>
       <% end %>
-      <!--メンバーリスト---------------------------------------------------------------->
-      <!--組織情報---------------------------------------------------------------->
-      <div class="info_box"><!--メインコンテンツorg-->
-        <div class="info_list_box_title">
-          <div>組織情報</div>
-          <div>
-            <% unless @supplier.organization_id.nil? %>
-              <%= link_to "編集", edit_supplier_organization_path(@supplier, @supplier.organization_id), class: "org_edit_btn" %>
-            <% end %>
-          </div>
-        </div>
-          <% if @supplier.organization_id.nil? %>
-            <div class="add_new_org_box">
-              <div>まだ組織情報がありません</div>
-              <%= link_to "組織情報を作成", new_supplier_organization_path(@supplier), class: "org_edit_btn" %>
-            </div>
-          <% else %>
-            <div class="info_list_box_contents">
-              <table class="info_list_table">
-                <tr>
-                  <td class="td_front">組織名</td>
-                  <td class="td_end"><%= @organization.name if @organization.name %></td>
-                </tr>
-                <tr>
-                  <td class="td_front">組織分類</td>
-                  <td class="td_end"><%= @organization.org_type if @organization.org_type %></td>
-                </tr>
-                <tr>
-                  <td class="td_front">都道府県・市町村</td>
-                  <td class="td_end"><%= Prefecture.find(@organization.prefecture_id).local_name %>・<%= Town.find(@organization.town_id).jp_name %></td>
-                </tr>
-                <tr>
-                  <td class="td_front">住所</td>
-                  <td class="td_end"><%= @organization.detail_address if @organization.detail_address%><%= @organization.building if @organization.building %></td>
-                </tr>
-              </table>
-            </div>
-          <% end %>
-      </div>
-      <!--組織情報---------------------------------------------------------------->
-    </div><!--メインコンテンツ内部-->
-  </div><!--メインコンテンツ-->
+    </div>
+  </div>
 </div>
 
-<style>
-  .supplier_show_content_inside {
-    padding: 20px 20px;
-  }
-  .supplier_profile_box {
+<style lang="scss">
+  .info_list_box_title_inner {
     display: flex;
-    align-items: center;
-    margin-bottom: 30px;
   }
-  .user_show_avatar_box {
-    width: 80px;
-    height: 80px;
-  }
-  img.user_avatar {
-    width: 80px;
-    height: 80px;
-  }
-  .supplier_name {
+  .activity_business_status {
+    padding: 2px 20px;
+    font-size: 13px;
+    color: #fff;
     margin-left: 15px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+    border-radius: 40px;
+    /* display: flex; */
+    /* align-items: center; */
   }
-  .supplier_business_box {
-    margin-bottom: 70px;
+  .is_approved {
+    background: #47d23e;
   }
-  table.info_list_table {
-    width: 100%;
-    font-size: 11px;
+  .send_approve {
+    background: #ff9292;
   }
-  table.info_list_table tr .td_front {
-    width: 20%;
+  .inputting {
+    background: #b3b3b3;
   }
-  .info_list_box_title {
-    border-bottom: solid 1px lightgray;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 3px 5px;
-    margin-bottom: 5px;
-  }
-  table.supplier_business_items {
-    font-size: 12px;
-    width: 100%;
-  }
-  table.supplier_business_items td.supplier_business_items_td1 {
-    width: 5%;
-    font-size: 10px;
-    padding: 5px;
-    text-align: center;
-  }
-  table.supplier_business_items td.supplier_business_items_td2 {
-    width: 8%;
-  }
-  table.supplier_business_items td.supplier_business_items_td3 {
-    width: 72%;
-  }
-  table.supplier_business_items td.supplier_business_items_td4 {
-    width: 15%;
-    text-align: end;
-  }
-  table.supplier_business_items td.supplier_business_items_blank_td2 {
-    width: 85%;
-  }
-  table.supplier_business_items td.supplier_business_items_blank_td3 {
-    width: 10%;
-  }
-  td.supplier_business_items_td2 div {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #17a599;
-    border-radius: 50%;
-    font-size: 16px;
-    color: #fff;
-    font-weight: bold;
-  }
-  a.org_edit_btn {
-    background: #2bb561;
-    padding: 5px 9px;
-    font-size: 15px;
-    color: #fff;
-    border-radius: 5px;
-  }
-  a.member_delete_btn.edit {
-    background: #2bb560;
-  }
-  .info_list_box_contents {
-    padding: 0 3px;
-  }
-  .add_new_org_box {
-    display: flex;
-    justify-content: space-between;
-  }
-  img.business_icon_image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
+
 </style>

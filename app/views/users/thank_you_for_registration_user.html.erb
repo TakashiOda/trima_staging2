@@ -1,15 +1,15 @@
-<div class="container">
+<div class="thankyou_email_container">
   <div class="static_pages short_messages_box">
     <div class="short_messages_box_title">
-      <span>Thank you for registration!</span>
+      <span>認証メールをお送りしました</span>
     </div>
     <div class="short_messages_box_contents">
       <span>
-        We sent you confirmation Email.<br />
-        Please check your Email Box.<br />And activate your account!
+        ご登録誠にありがとうございます。
+        お客様のメールアドレスに認証メールをお送りしました。
+        アドレスに記載のリンクからアカウントを有効化していただきログインしてください。
       </span>
-      <p><%= link_to "Didn't recieve confirmation?", new_user_confirmation_path %></p>
-
+      <p><%= link_to "認証メールが届かない方はこちら", new_user_confirmation_path %></p>
     </div>
   </div>
 </div>

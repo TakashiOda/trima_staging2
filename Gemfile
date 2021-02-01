@@ -14,7 +14,10 @@ gem 'bootsnap', '1.4.6', require: false
 gem 'activeadmin','2.7.0'
 gem 'omniauth'
 gem 'devise','4.7.2'
-gem 'i18n'
+gem 'devise-i18n'
+# gem 'devise-i18n-views'
+# gem 'i18n'
+gem 'rails-i18n'
 gem 'rack-cors'
 gem 'dotenv-rails'
 gem 'seed-fu'
@@ -25,11 +28,18 @@ gem 'kaminari'
 gem 'nokogiri'
 gem 'cocoon'
 gem "jquery-rails"
-
+gem "actionview", ">= 6.0.3.3"
+gem 'meta-tags'
+gem 'stripe'
+gem "simple_calendar"
+gem 'file_validators'
+gem "chartkick"
 
 group :development, :test do
   gem 'byebug',"11.1.3", platforms: [:mri, :mingw, :x64_mingw]
   gem 'sqlite3', '1.4.2'
+  gem "rspec-rails"
+  gem "factory_bot_rails"
 end
 
 group :development do

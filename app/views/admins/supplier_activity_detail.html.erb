@@ -1,0 +1,578 @@
+<div class="admin_supplier_detail_container">
+  <div class="admin_supplier_detail_activity_biz_info_box">
+    <% if !@activity.nil? %>
+      <%= form_for(@activity, url: activity_approve_path(@activity)) do |form| %>
+        <div class="admin_activity_detail_form_inner">
+          <div class="activity_form_approve_toggle_box">
+            <div class="biz_form_status_toggle_radio_items">
+              <div class="biz_form_status_toggle_radio_item on">
+                <%= form.radio_button :is_approved, :false %>
+                <%= form.label :is_approved, "承認しない", {value: :false, style: "display: inline-block;"} %>
+              </div>
+              <div class="biz_form_status_toggle_radio_item off">
+                <%= form.radio_button :is_approved, :true %>
+                <%= form.label :is_approved, "承認する", {value: :true, style: "display: inline-block;"} %>
+              </div>
+            </div>
+          </div>
+          <% if @activity.status == 'published' %>
+            <div class="form_btns">
+              <%= form.submit('更新',class: 'button btn-submit') %>
+            </div>
+          <% else %>
+            <div class="form_btns_disabled">
+              <button type="button" name="button" class="disabled_btn" onclick="disableBtnAlert()">更新</button>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <table class="supplier_detail_table">
+        <tr>
+          <td class="table_header page_top_header" colspan="2">アクティビティ情報</td>
+        </tr>
+        <tr>
+          <td class="table_header" colspan="2">ステータス</td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">承認</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <% if @activity.is_approved %>
+              承認済み
+            <% else %>
+              未承認
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">入力ステータス</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <% if @activity.status == 'draft' %>
+              下書き
+            <% elsif @activity.status == 'published' %>
+              掲載希望
+            <% elsif @activity.status == 'deleted' %>
+              削除
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">掲載停止</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <% if @activity.stop_now %>
+              停止中
+            <% else %>
+              なし
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_header" colspan="2">文字情報</td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">画像</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <% if !@activity.main_image.blank? || !@activity.second_image.blank? || !@activity.third_image.blank? || !@activity.fourth_image.blank? %>
+              <%= image_tag @activity.main_image.to_s, class: 'activity_icon_image' if !@activity.main_image.blank? %>
+              <%= image_tag @activity.second_image.to_s, class: 'activity_icon_image' if !@activity.second_image.blank? %>
+              <%= image_tag @activity.third_image.to_s, class: 'activity_icon_image' if !@activity.third_image.blank? %>
+              <%= image_tag @activity.fourth_image.to_s, class: 'activity_icon_image' if !@activity.fourth_image.blank? %>
+            <% else %>
+              アイコン登録なし
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">日本語</td>
+          <td class="supplier_detail_table_back">
+            <div class="admin_supplier_detail_biz_toggle_box" id="toggle_Japanese_Info_div">
+              <i class="fas fa-angle-up"></i>
+            </div>
+            <ul>
+              <li>
+                <div class="admin_supplier_detail_biz_info_subtitle">
+                  <span class="admin_supplier_detail_biz_info_subtitle_bg">タイトル</span>
+                </div>
+                <div class="admin_supplier_detail_biz_info_text">
+                  <%=@activity.name%>
+                </div>
+              </li>
+            </ul>
+            <ul id="japanese_info_list_for_toggle" class="">
+              <li class="second_column">
+                <div class="admin_supplier_detail_biz_info_subtitle">
+                  <span class="admin_supplier_detail_biz_info_subtitle_bg">紹介文</span>
+                </div>
+                <div class="admin_supplier_detail_biz_info_text">
+                  <%=@activity.description%>
+                </div>
+              </li>
+              <li>
+                <div class="admin_supplier_detail_biz_info_subtitle">
+                  <span class="admin_supplier_detail_biz_info_subtitle_bg">その他事項</span>
+                </div>
+                <div class="admin_supplier_detail_biz_info_text">
+                  <%=@activity.notes%>
+                </div>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">英語</td>
+          <td class="supplier_detail_table_back">
+            <div class="admin_supplier_detail_biz_toggle_box" id="toggle_English_Info_div">
+              <i class="fas fa-angle-down"></i>
+            </div>
+            <ul>
+              <li>
+                <div class="admin_supplier_detail_biz_info_subtitle">
+                  <span class="admin_supplier_detail_biz_info_subtitle_bg">タイトル</span>
+                </div>
+                <div class="admin_supplier_detail_biz_info_text">
+                  <%= @english_activity_info.name if !@english_activity_info.nil? %>
+                </div>
+              </li>
+            </ul>
+            <ul id="english_info_list_for_toggle" class="hidden">
+              <li class="second_column">
+                <div class="admin_supplier_detail_biz_info_subtitle">
+                  <span class="admin_supplier_detail_biz_info_subtitle_bg">紹介文</span>
+                </div>
+                <div class="admin_supplier_detail_biz_info_text">
+                  <%=@english_activity_info.profile_text if !@english_activity_info.nil? %>
+                </div>
+              </li>
+              <li>
+                <div class="admin_supplier_detail_biz_info_subtitle">
+                  <span class="admin_supplier_detail_biz_info_subtitle_bg">その他事項</span>
+                </div>
+                <div class="admin_supplier_detail_biz_info_text">
+                  <%=@english_activity_info.notes if !@english_activity_info.nil?%>
+                </div>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">カテゴリー</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <%= ActivityCategory.find(@activity.activity_category_id).jp_name %>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_header" colspan="2">料金について</td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front <%= 'td_no_info' if !@activity.activity_ageprices.any? %>">
+            <div class="supplier_detail_table_front_title">料金</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <table class="ageprice_table">
+              <% if @activity.activity_ageprices.any? %>
+                <% @activity.activity_ageprices.each_with_index do |ageprice, index| %>
+                <tr>
+                  <th>設定No.</th>
+                  <th>年齢下限</th>
+                  <th>〜</th>
+                  <th>年齢上限</th>
+                  <th>通常料金</th>
+                  <th>ハイシーズン</th>
+                  <th>ローシーズン</th>
+                </tr>
+                <tr>
+                  <td>料金No.<%= index + 1%></td>
+                  <td><%=ageprice.age_from %>歳</td>
+                  <td>〜</td>
+                  <td><%=ageprice.age_to %>歳</td>
+                  <td><%=ageprice.normal_price %>円</td>
+                  <td><%=ageprice.high_price %>円</td>
+                  <td><%=ageprice.low_price %>円</td>
+                </tr>
+                <% end %>
+              <% else %>
+                <tr class="tr_no_ageprice_info">
+                  <td colspan="7">入力なし</td>
+                </tr>
+              <% end %>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_header" colspan="2">参加条件</td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">年齢</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <%= @activity.available_age ? "#{@activity.available_age}歳" : '入力なし' %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">最少催行人数</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <%= @activity.minimum_num ? "#{@activity.minimum_num}名" : '入力なし' %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">最大参加可能人数</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <%= @activity.maximum_num ? "#{@activity.maximum_num}名" : '入力なし' %>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_header" colspan="2">位置情報</td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front <%= 'td_no_info' if @activity.area_id.nil? %>">
+            <div class="supplier_detail_table_front_title">実施エリア</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <%= !@activity.area_id.nil? ? "#{Area.find(@activity.area_id).local_name}" : "入力なし" %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front <%= 'td_no_info' if @activity.town_id.nil? && @activity.detail_address.nil? %>">
+            <div class="supplier_detail_table_front_title">実施場所</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <% if !@activity.town_id.nil? || !@activity.detail_address.nil? %>
+              <%= !@activity.town_id.nil? ? "#{Town.find(@activity.town_id).jp_name}" : "（市町村情報なし）" %>
+              <%= @activity.detail_address if !@activity.detail_address.nil? %>
+              <%= @activity.building if !@activity.building.nil? %>
+            <% else %>
+              入力なし
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front <%= 'td_no_info' if @activity.latitude.nil? && @activity.longitude.nil? %>">
+            <div class="supplier_detail_table_front_title">実施場所MAP</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <% if !@activity.latitude.nil? && !@activity.longitude.nil? %>
+              <a href="https://maps.google.com/maps?q=<%=@activity.latitude%>,<%=@activity.longitude%>" target="_blank">GoogleMapで表示</a>
+            <% else %>
+              入力なし
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front <%= 'td_no_info' if @activity.meeting_spot1_japanese_address.nil? %>">
+            <div class="supplier_detail_table_front_title">集合場所</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <%= !@activity.meeting_spot1_japanese_address.nil? ? @activity.meeting_spot1_japanese_address : '入力なし' %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front <%= 'td_no_info' if @activity.meeting_spot1_japanese_description.nil? %>">
+            <div class="supplier_detail_table_front_title">集合場所の詳細</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <%= !@activity.meeting_spot1_japanese_description.nil? ? @activity.meeting_spot1_japanese_description : '入力なし' %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front <%= 'td_no_info' if @activity.meeting_spot1_latitude.nil? && @activity.meeting_spot1_longitude.nil? %>">
+            <div class="supplier_detail_table_front_title">集合場所MAP</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <% if !@activity.meeting_spot1_latitude.nil? && !@activity.meeting_spot1_longitude.nil? %>
+              <a href="https://maps.google.com/maps?q=<%=@activity.meeting_spot1_latitude%>,<%=@activity.meeting_spot1_longitude%>" target="_blank">GoogleMapで表示</a>
+            <% else %>
+              入力なし
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_header" colspan="2">スケジュール</td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">アクティビティ時間</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <%= @activity.activity_minutes ? "#{@activity.activity_minutes}分" : '入力なし' %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">期間</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <% if @activity.is_all_year_open %>
+              <span>通年</span>
+            <% else %>
+              <span><%= @activity.start_date.strftime("%Y年%m月%d日") if !@activity.start_date.nil? %> 〜 <%= @activity.end_date.strftime("%Y年%m月%d日") if !@activity.end_date.nil? %></span>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="supplier_detail_table_front">
+            <div class="supplier_detail_table_front_title">定休日</div>
+          </td>
+          <td class="supplier_detail_table_back">
+            <%= '月曜/' if !@activity.monday_open %>
+            <%= '火曜/' if !@activity.tuesday_open %>
+            <%= '水曜/' if !@activity.wednesday_open %>
+            <%= '木曜' if !@activity.thursday_open %>
+            <%= '金曜' if !@activity.friday_open %>
+            <%= '土曜' if !@activity.saturday_open %>
+            <%= '日曜' if !@activity.sunday_open %>
+            <%= '定休日なし' if @activity.monday_open && @activity.tuesday_open && @activity.wednesday_open && @activity.thursday_open && @activity.friday_open && @activity.saturday_open && @activity.sunday_open %>
+          </td>
+        </tr>
+        <tr>
+          <td class="table_header" colspan="2">実施条件</td>
+        </tr>
+        <td class="supplier_detail_table_front">
+          <div class="supplier_detail_table_front_title">雨天時</div>
+        </td>
+        <td class="supplier_detail_table_back">
+          <%= @activity.rain_or_shine ? '雨天決行' : '雨天中止' %>
+        </td>
+      </tr>
+      </table>
+    <% else %>
+      <table class="supplier_detail_table">
+        <tr>
+          <td class="table_header" colspan="2">アクティビティ情報</td>
+        </tr>
+        <tr>
+          <td class="" colspan="2">アクティビティ情報がありません</td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+</div>
+
+<style lang="scss">
+  .admin_supplier_detail_container {
+    padding: 20px 30px;
+  }
+  .admin_supplier_detail_activity_biz_info_box form {
+    margin-bottom: 20px;
+  }
+  .admin_activity_detail_form_inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .activity_form_approve_toggle_box {
+    width: 250px;
+  }
+  .form_btns {
+    margin: 0 !important;
+    width: 150px;
+  }
+  .form_btns:hover {
+    cursor: pointer;
+  }
+  .form_btns input {
+    margin: 0;
+  }
+  /* .form_btns_disabled input {
+    margin: 0 !important;
+    width: 150px;
+    background: gray;
+  } */
+  button.disabled_btn {
+    width: 150px;
+    background: gray;
+    border: none;
+    padding: 8px;
+    color: #fff;
+    border-radius: 7px;
+  }
+  button.disabled_btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  button.disabled_btn:focus {
+    outline: 0;
+  }
+  .admin_supplier_detail_supplier_info_box {
+    margin-bottom: 40px;
+  }
+  .admin_supplier_detail_activity_biz_info_box {
+    margin-bottom: 20px;
+  }
+  table.supplier_detail_table {
+    width: 100%;
+  }
+  td.table_header {
+    background: #93b6d6;
+    color: #001552;
+    font-weight: bold;
+    padding-left: 20px;
+  }
+  td.table_header.page_top_header {
+    background: #354f8a;
+    color: #ffffff;
+    font-weight: bold;
+    padding-left: 20px;
+  }
+  td.supplier_detail_table_front {
+    background: #d6d6d6;
+    width: 20%;
+    text-align: end;
+    padding: 10px 20px 10px 10px;
+    font-size: 12px;
+    vertical-align: initial;
+  }
+  td.supplier_detail_table_back {
+    font-size: 14px;
+    padding: 10px 0px 10px 15px;
+    position: relative;
+  }
+  .admin_supplier_detail_biz_toggle_box {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    user-select: none;
+  }
+  .admin_supplier_detail_biz_toggle_box svg {
+    height: 30px !important;
+    color: gray;
+    width: 30px !important;
+    margin-right: 0;
+  }
+  /* 事業者 */
+  td.supplier_detail_table_back img {
+    width: 60px;
+  }
+  td.supplier_detail_table_back ul {
+    margin: 0px;
+  }
+  td.supplier_detail_table_back ul li {
+    margin: 0px;
+    display: flex;
+  }
+  td.supplier_detail_table_back ul li.second_column {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+  .admin_supplier_detail_biz_info_subtitle {
+    width: 15%;
+  }
+  .admin_supplier_detail_biz_info_text {
+    width: 85%;
+  }
+  span.admin_supplier_detail_biz_info_subtitle_bg {
+    background: #cacaca;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    width: 80px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 10px;
+  }
+  .biz_form_status_toggle_box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  .biz_form_status_toggle_box_title {
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 2px;
+    color: #8a8a8a;
+  }
+  .biz_form_status_toggle_radio_items {
+    width: 100%;
+    display: flex;
+  }
+  .biz_form_status_toggle_radio_items input[type=radio] {
+    display: none;
+  }
+  .biz_form_status_toggle_radio_item label {
+    width: 100%;
+    padding: 3px 0;
+    text-align: center;
+    background: #eaeaea;
+  }
+  .biz_form_status_toggle_radio_items input[type="radio"]:checked + label {
+    background: #23a0ff;
+    color: #ffffff;
+  }
+  .biz_form_status_toggle_radio_item.on,
+  .biz_form_status_toggle_radio_item.off {
+    width: 50%;
+  }
+  .biz_form_status_toggle_radio_item.on label {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+  .biz_form_status_toggle_radio_item.off label {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+  /* .form_btns {
+    margin: 20px 0px;
+  } */
+  table.ageprice_table {
+    width: 100%;
+    margin: 10px 0px 20px;
+  }
+  table.ageprice_table th {
+    text-align: inherit;
+    font-size: 10px;
+    background: lightgray;
+  }
+  tr.tr_no_ageprice_info {
+    border-bottom: none;
+  }
+  td.supplier_detail_table_front.td_no_info {
+    background: #ffadad;
+  }
+</style>
+
+<script type="text/javascript">
+  document.getElementById("toggle_Japanese_Info_div").onclick = function(){
+    const thisBtn = document.getElementById("toggle_Japanese_Info_div");
+    const japaneseInfo = document.getElementById('japanese_info_list_for_toggle');
+    if (japaneseInfo.classList.contains('hidden')) {
+      japaneseInfo.classList.remove('hidden');
+      thisBtn.innerHTML = "<i class='fas fa-angle-up'></i>";
+    } else {
+      japaneseInfo.classList.add('hidden');
+      thisBtn.innerHTML = "<i class='fas fa-angle-down'></i>";
+    }
+  }
+  document.getElementById("toggle_English_Info_div").onclick = function(){
+    const thisBtn = document.getElementById("toggle_English_Info_div");
+    const englishInfo = document.getElementById('english_info_list_for_toggle');
+    if (englishInfo.classList.contains('hidden')) {
+      englishInfo.classList.remove('hidden');
+      thisBtn.innerHTML = "<i class='fas fa-angle-up'></i>";
+    } else {
+      englishInfo.classList.add('hidden');
+      thisBtn.innerHTML = "<i class='fas fa-angle-down'></i>";
+    }
+  }
+
+  function disableBtnAlert() {
+    alert('アクティビティが下書きのため承認できません');
+  }
+
+</script>

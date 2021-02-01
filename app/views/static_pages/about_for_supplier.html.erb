@@ -1,0 +1,605 @@
+<div class="static_page_container">
+  <div class="static_page_lp_eyecatch_container">
+    <section class="eyecatch">
+      <%=image_tag 'lp_image_supplier/trima_eyecatch_pc_wide_transparent02.png', class: 'eyecatch_pc_image' %>
+      <div class="eyecatch_pc_contents_box">
+        <h3 class="eyecatch_pc_contents_box_title">
+          <span class="trima_letter_space" id="eyecatch_trima_spell_parent">trima</span>なら<br>体験も、宿泊も、交通も
+        </h3>
+        <span id="eyecatch_trima_spell_child">トリマ</span>
+        <p class="eyecatch_pc_contents_box_text">あらゆる旅行商品をカンタンに<br>オンライン販売できるプラットフォーム</p>
+        <%=link_to "事業者アカウントを作成", new_supplier_registration_path, class:"eyecatch_pc_contents_btn" %>
+      </div>
+    </section>
+    <section class="about_section">
+      <div class="lp_section_inner">
+        <div class="lp_section_title_box">
+          <span class="about_english_title">About</span>
+          <span class="about_Japanese_title">trimaとは？</span>
+        </div>
+        <div class="about_section_contents">
+          <div class="about_section_contents_left">
+            <%=image_tag 'lp_image_supplier/trima_about_image_round_shape02.png', id: 'trima_mock_image' %>
+          </div>
+          <div class="about_section_contents_right">
+            <h5 class="about_section_contents_right_title">
+              あらゆる旅行客向けサービスの<br>
+              オンライン予約・決済サイト
+            </h5>
+            <p class="about_section_contents_right_text">
+              <span class="trima_spell trima_letter_space">trima</span>（トリマ）は<br>アクティビティ、レストラン、宿泊、イベント、交通といった
+              あらゆる旅行者向けサービスを一括予約・決済できる総合旅行プラットフォームです。
+              他にも観光スポット検索、旅程＆ルート作成、旅行プロジェクトのメンバー共有など旅行に関する様々な便利機能を提供します。
+              2021年春に北海道からサービスをスタートします。
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="about_section gray_bg">
+      <div class="lp_section_inner">
+        <div class="lp_section_title_box">
+          <span class="about_english_title">Features</span>
+          <span class="about_Japanese_title">trimaでできること</span>
+        </div>
+        <ul class="about_section_feature_list_box">
+          <li class="about_section_feature_item">
+            <%=image_tag 'lp_image_supplier/trima_supplier_feature_book_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_title">カンタン予約管理</div>
+            <div class="about_section_feature_item_text">アクティビティ予約をオンラインで一元管理</div>
+          </li>
+          <li class="about_section_feature_item">
+            <%=image_tag 'lp_image_supplier/trima_supplier_feature_calender_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_title">カンタン在庫管理</div>
+            <div class="about_section_feature_item_text">在庫登録も一括操作でカンタン登録</div>
+          </li>
+          <li class="about_section_feature_item">
+            <%=image_tag 'lp_image_supplier/trima_supplier_feature_credit_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_title">オンライン決済</div>
+            <div class="about_section_feature_item_text">事前クレジット決済で徴収の手間が省けます</div>
+          </li>
+          <li class="about_section_feature_item">
+            <%=image_tag 'lp_image_supplier/trima_supplier_feature_group_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_title">グループ予約受付</div>
+            <div class="about_section_feature_item_text">グループのお客様でもスムーズに予約を受けられます</div>
+          </li>
+          <!-- <li class="about_section_feature_item">
+            <%#=image_tag 'lp_image_supplier/trima_supplier_feature_guide_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_title">事業者の顔が見える</div>
+            <div class="about_section_feature_item_text">事業者の顔が見えるサイトなのでお客様も安心、事業者のブランド力向上にもつながります</div>
+          </li> -->
+          <!-- <li class="about_section_feature_item">
+            <%#=image_tag 'lp_image_supplier/trima_supplier_feature_translate_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_title">多言語発信</div>
+            <div class="about_section_feature_item_text">日本語だけでなく、英語、中国語（簡体字・繁体字）対応。翻訳を依頼することもできます</div>
+          </li> -->
+          <!-- <li class="about_section_feature_item">
+            <%#=image_tag 'lp_image_supplier/trima_supplier_feature_circle_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_title">交通や宿泊と連携</div>
+            <div class="about_section_feature_item_text">あらゆる旅行サービス同士が連携することで、ホテルや交通手段の予約からの流入が見込めます</div>
+          </li> -->
+          <!-- <li class="about_section_feature_item">
+            <%#=image_tag 'lp_image_supplier/trima_supplier_feature_analyze_transparent.png', class: 'about_section_feature_item_icon' %>
+            <div class="about_section_feature_item_title">マーケティング分析</div>
+            <div class="about_section_feature_item_text">予約や閲覧ユーザーの国や地域、、属性などのデータを分析できます</div>
+          </li> -->
+        </ul>
+      </div>
+    </section>
+    <section class="about_section">
+      <div class="lp_section_inner">
+        <div class="lp_section_title_box">
+          <span class="about_english_title">Advantages</span>
+          <span class="about_Japanese_title">導入するメリット</span>
+        </div>
+        <ul class="features_section_contents">
+          <li>
+            <div class="features_item_text_side">
+              <h4 class="features_item_text_side_number_title_left">01</h4>
+              <div class="features_item_text_side_contents_left">
+                <h5>予約受付・スケジュール管理の<br>手間と時間を大幅削減</h5>
+                <p>trimaならアクティビティを簡単に登録でき、スムーズな予約受付、
+                  そして在庫管理が可能です。予約受付と在庫管理に費やしていた時間を
+                  より生産的な業務に充てられます</p>
+              </div>
+            </div>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_time_transparent.png', class: 'about_section_advantages_image_icon' %>
+            </div>
+          </li>
+          <li>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_guide_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_left' %>
+            </div>
+            <div class="features_item_text_side">
+              <h4 class="features_item_text_side_number_title_right">02</h4>
+              <div class="features_item_text_side_contents_right">
+                <h5>事業者の顔が見える設計で<br>お客様への安心感UP</h5>
+                <p>trimaは、アクティビティを提供するガイドの方や事業者の顔が見える設計です。
+                予約をするお客様に安心感を与えられ、事業者の人となりが見えることで
+                サービスへの信頼も高まります</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="features_item_text_side">
+              <h4 class="features_item_text_side_number_title_left">03</h4>
+              <div class="features_item_text_side_contents_left">
+                <h5>様々な旅行サービスとの連携により<br>他の業種からの流入が見込めます</h5>
+                <p>体験アクティビティだけでなく、trimaではレストラン予約や宿泊予約、
+                  交通予約、スポット検索など旅行に関する様々なサービスを予約できるため、
+                  同じ地域の他のサービスを予約したお客様によるあなたのサービスへの流入が見込めます</p>
+              </div>
+            </div>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_circle_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_right' %>
+            </div>
+          </li>
+          <li>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_translate_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_left' %>
+            </div>
+            <div class="features_item_text_side">
+              <h4 class="features_item_text_side_number_title_right">04</h4>
+              <div class="features_item_text_side_contents_right">
+                <h5>多言語対応で<br>地域のサービスを世界へ発信</h5>
+                <p>長年、海外に多数のサーバーを設置し、訪日WEBメディアを運営してきた経験から、
+                  効果的な多言語による発信を可能にします。特に中国国内では中国政府の許可を得て
+                  サーバーを設置しているため、中国大陸への発信・流入には大きな強みを持っています</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="features_item_text_side">
+              <h4 class="features_item_text_side_number_title_left">05</h4>
+              <div class="features_item_text_side_contents_left">
+                <h5>閲覧・予約データを元に<br>マーケティング分析が可能</h5>
+                <p>どの国と地域から、どんな属性のユーザーが閲覧・予約したかなど細かいデータを提供します.
+                それにより、ターゲットを絞ったマーケティング戦略を構築することが可能になります。</p>
+              </div>
+            </div>
+            <div class="features_item_image_side for_icon">
+              <%=image_tag 'lp_image_supplier/trima_supplier_feature_analyze_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_supplier_feature_circle_transparent.png', class: 'about_section_advantages_image_icon' %>
+              <%#=image_tag 'lp_image_supplier/trima_feature_image01.jpg', class: 'trima_features_image_right' %>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section class="about_section apply_section">
+      <div class="lp_section_inner">
+        <div class="lp_section_title_box">
+          <span class="about_english_title">Apply</span>
+          <span class="about_Japanese_title">お申し込み</span>
+        </div>
+        <div class="about_section_contents_apply_box">
+          <h5>現在、trima α版申請受付中です。下記リンクよりぜひお申し込みください</h5>
+          <%=link_to "事業者として申込む", new_supplier_apply_path, class: 'eyecatch_pc_contents_btn' %>
+        </div>
+      </div>
+    </section>
+    <section class="about_section">
+      <div class="lp_section_inner">
+        <div class="lp_section_title_box">
+          <span class="about_english_title">Price</span>
+          <span class="about_Japanese_title">導入費用</span>
+        </div>
+        <div class="about_section_contents_price_box">
+          <div class="price_item_box">
+            <div class="price_item_box_title">
+              初期費用
+            </div>
+            <div class="price_item_price_set">
+              <span class="price_item_price_number">0</span>
+              <span class="price_item_price_unit">円</span>
+            </div>
+          </div>
+          <div class="price_item_box">
+            <div class="price_item_box_title">
+              掲載料
+            </div>
+            <div class="price_item_price_set">
+              <span class="price_item_price_number">0</span>
+              <span class="price_item_price_unit">円</span>
+            </div>
+          </div>
+        </div>
+        <div class="hosoku_for_price">
+          <p class="hosoku_for_price_text">※発生する費用は決済の予約手数料のみです</p>
+          <p class="hosoku_for_price_text">※予約手数料についてはお申し込み時にお問合せください</p>
+        </div>
+      </div>
+    </section>
+    <section class="about_section apply_section last_section">
+      <div class="lp_section_inner">
+        <div class="lp_section_title_box">
+          <span class="about_english_title">Apply</span>
+          <span class="about_Japanese_title">お申し込み</span>
+        </div>
+        <div class="about_section_contents_apply_box">
+          <h5>現在、trima α版申請受付中です。下記リンクよりぜひお申し込みください</h5>
+          <%=link_to "事業者アカウントを作成", new_supplier_registration_path, class: 'eyecatch_pc_contents_btn' %>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<style>
+  /* header.erb_header {
+    display: none !important;
+  } */
+  header#supplier_lp_header.lp_pc_header {
+    background: #2bb56000 !important;
+    padding: 0px;
+    height: 60px;
+    width: 100%;
+    z-index: 200;
+    background: linear-gradient(to right, #2193b0, #6dd5ed) !important;
+    position: fixed;
+    top: 0;
+    box-shadow: 0px 4px 5px -5px #00000082;
+  }
+  header#supplier_lp_header.lp_pc_header .header_inner {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  a#supplier_lp_header_logo {
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 25px;
+    letter-spacing: 4px;
+  }
+  header#supplier_lp_header.lp_pc_header ul.header__links {
+    display: flex;
+    margin-right: 15px;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 3px;
+    align-items: center;
+  }
+  header#supplier_lp_header.lp_pc_header ul.header__links li {
+    margin: 0 10px;
+  }
+  header#supplier_lp_header.lp_pc_header ul.header__links li:hover {
+    opacity: 0.5;
+  }
+  header#supplier_lp_header.lp_pc_header ul.header__links li a {
+    color: #fff;
+  }
+  li#lp_pc_header_apply_btn {
+    border: solid 1px #fff;
+    padding: 5px 15px;
+    border-radius: 50px;
+  }
+  .trima_letter_space {
+    font-weight: bold;
+    letter-spacing: 4px;
+  }
+  span.trima_spell {
+    font-size: 19px;
+    color: #2896b2;
+  }
+  span#eyecatch_trima_spell_parent {
+    position: relative;
+  }
+  span#eyecatch_trima_spell_child {
+    position: absolute;
+    top: 5px;
+    right: 91px;
+    letter-spacing: 15px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+  }
+  section.eyecatch {
+    position: relative;
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+  }
+  .eyecatch_pc_contents_box {
+    position: absolute;
+    top: 130px;
+    right: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  h3.eyecatch_pc_contents_box_title {
+    font-size: 36px;
+    margin: 10px 0;
+    color: #fff;
+    text-align: end;
+  }
+  p.eyecatch_pc_contents_box_text {
+    color: #fff;
+    text-align: end;
+    font-size: 21px;
+    font-weight: bold;
+    margin: 10px 0 30px;
+  }
+  a.eyecatch_pc_contents_btn {
+    background: linear-gradient(to right,#e3973a, #e8cd3f);
+    padding: 10px 70px;
+    border-radius: 60px;
+    color: #184968;
+    font-weight: bold;
+  }
+  a.eyecatch_pc_contents_btn:hover {
+    background: linear-gradient(to right,#ffab43, #ffe240);
+    /* background: linear-gradient(to right,#f4a440, #f8dc45); */
+  }
+  section.about_section {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  section.about_section.gray_bg {
+    background: #e9f1f4;
+  }
+  .lp_section_inner {
+    width: 95%;
+    max-width: 750px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 10px 50px;
+  }
+  .lp_section_title_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 1px #3e3e3e;
+  }
+  span.about_english_title {
+    color: #2596b2;
+    font-weight: bold;
+    letter-spacing: 3px;
+    font-size: 20px;
+  }
+  span.about_Japanese_title {
+    font-size: 23px;
+    color: #3e3e3e;
+  }
+  .about_section_contents {
+    display: flex;
+    width: 100%;
+  }
+  .about_section_contents {
+    display: flex;
+    width: 100%;
+    padding: 50px 0 40px;
+  }
+  .about_section_contents_left {
+    width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .about_section_contents_right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* padding: 10px 25px; */
+    padding: 0px 0px 0px 30px;
+  }
+  h5.about_section_contents_right_title {
+    font-size: 21px;
+    margin: 0 0 10px;
+    color: #522504;
+  }
+  p.about_section_contents_right_text {
+    margin: 0;
+  }
+  img#trima_mock_image {
+    height: 300px;
+    z-index: 100;
+  }
+  ul.features_section_contents {
+    width: 100%;
+    margin: 0;
+    padding: 40px 0;
+  }
+  ul.features_section_contents li {
+    width: 100%;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 2px 20px -6px #d4d4d4;
+    border-radius: 10px;
+    background: #fff;
+    margin-bottom: 40px;
+  }
+  ul.features_section_contents li:hover {
+    box-shadow: 1px 2px 18px -1px #6cd4eb;
+  }
+  .features_item_text_side {
+    width: 50%;
+    height: 100%;
+    position: relative;
+  }
+
+  h4.features_item_text_side_number_title_left {
+    position: absolute;
+    top: -30px;
+    left: 20px;
+    font-size: 55px;
+    margin: 0;
+    color: #6bd3ea;
+  }
+  h4.features_item_text_side_number_title_right {
+    position: absolute;
+    top: -30px;
+    right: 20px;
+    font-size: 55px;
+    margin: 0;
+    color: #6bd3ea;
+  }
+  .features_item_text_side_contents_left {
+    position: absolute;
+    top: 40px;
+    height: 180px;
+    padding: 0 0 20px 30px;
+  }
+  .features_item_text_side_contents_right {
+    position: absolute;
+    top: 40px;
+    height: 180px;
+    padding: 0 30px 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .features_item_text_side_contents_right p {
+    text-align: right;
+  }
+  .features_item_image_side {
+    width: 50%;
+    height: 100%;
+  }
+  .features_item_image_side.for_icon {
+    text-align: center;
+  }
+  img.about_section_advantages_image_icon {
+    height: 240px;
+  }
+
+  img.trima_features_image_right {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  img.trima_features_image_left {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+  .features_item_text_side_contents_left h5,
+  .features_item_text_side_contents_right h5 {
+    font-size: 18px;
+    margin: 10px 0 5px;
+    color: #6cd4ea;
+  }
+  .features_item_text_side_contents_right h5 {
+    text-align: right;
+  }
+  .features_item_text_side_contents_left p,
+  .features_item_text_side_contents_right p {
+    margin: 10px 0 0;
+    line-height: 18px;
+  }
+  ul.about_section_feature_list_box {
+    width: 100%;
+    padding: 50px 0 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  li.about_section_feature_item {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 35px;
+  }
+  img.about_section_feature_item_icon {
+    width: 200px;
+    height: 200px;
+  }
+  img.about_section_feature_item_icon:hover {
+    background: #cde3eb;
+    border-radius: 50%;
+  }
+  .about_section_feature_item_title {
+    margin: 0px 0px 5px;
+    width: 140px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .about_section_feature_item_text {
+    width: 140px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  section.about_section.apply_section {
+    background: linear-gradient(to right, #2193b0, #6dd5ed) !important;
+  }
+  section.about_section.apply_section.last_section {
+    padding-bottom: 50px;
+  }
+  section.about_section.apply_section span.about_english_title,
+  section.about_section.apply_section span.about_Japanese_title {
+    color: #fff;
+  }
+  section.about_section.apply_section .lp_section_title_box {
+    border-bottom: solid 1px #fff;
+  }
+  .about_section_contents_apply_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0 10px;
+  }
+  .about_section_contents_price_box {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    padding: 50px 0 20px;
+  }
+  .price_item_box {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .price_item_box_title {
+    font-size: 24px;
+    color: #2896b2;
+  }
+  .price_item_price_set {
+    margin-left: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+    margin-top: -20px;
+  }
+  span.price_item_price_number {
+    font-size: 90px;
+    color: #2a96b2;
+    font-weight: bold;
+  }
+  span.price_item_price_unit {
+    font-size: 30px;
+    font-weight: bold;
+    color: #2c96b2;
+  }
+  p.hosoku_for_price_text {
+    margin: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: #929292;
+  }
+</style>

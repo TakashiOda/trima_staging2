@@ -12,14 +12,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    @user = User.find_by(email: params[:user][:email])
-    params[:user][:email]
+    # @user = User.find_by(email: params[:user][:email])
     invitations = ProjectInvite.where(invited_email: params[:user][:email])
-    invitations.each do |invitation|
-      UserProject.create(user_id: @user.id, project_id: invitation.project_id,
-                         control_level: 1, accept_invite: 1)
-      invitation.has_account =  0
-      invitation.save!
+    if !invitations.nil?
+      invitations.each do |invitation|
+        UserProject.create(user_id: @user.id, project_id: invitation.project_id,
+                           control_level: 1, accept_invite: 1)
+        invitation.has_account =  0
+        invitation.save!
+      end
     end
   end
 
@@ -65,7 +66,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_inactive_sign_up_path_for(resource)
+    thank_you_for_registration_user_path
+  end
 end

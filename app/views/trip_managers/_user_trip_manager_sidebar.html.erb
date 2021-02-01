@@ -1,0 +1,29 @@
+<div class="trip_manage_side_inner">
+  <div class="trip_manage_side_back_link">
+    <%=link_to projects_path do %>
+      <span class="back_nav_text"><i class="fas fa-angle-left"></i><%= t("label.page_control.back")%></span>
+    <% end %>
+  </div>
+  <div class="trip_manage_side_links">
+    <%= link_to project_trip_managers_home_path(@project) do %>
+      <h3 style="color: #fff;">
+        <%= image_tag "project_icons/#{@project.icon}", class: 'project_icon_on_sidebar' %>
+        <%= @project.name %>
+      </h3>
+    <% end %>
+    <ul class="trip_manage_side_menu_link_ul">
+      <li><i class="fas fa-home"></i><%= link_to t("label.sidebar.trip_manager_sidebar.home"), project_trip_managers_home_path(@project) %></li>
+      <li><i class="fas fa-search"></i><%= link_to t("label.sidebar.trip_manager_sidebar.search"), project_search_home_path(@project) %></li>
+      <li><i class="far fa-heart"></i><%= link_to t("label.sidebar.trip_manager_sidebar.favorite"), project_favorite_list_path(@project) %></li>
+      <li><i class="fas fa-shopping-cart"></i><%= link_to t("label.sidebar.trip_manager_sidebar.cart"), project_cart_path(@project) %></li>
+      <li><i class="far fa-bookmark"></i><%= link_to t("label.sidebar.trip_manager_sidebar.purchase"), project_purchase_list_path(@project) %></li>
+      <li><i class="fas fa-users"></i><%= link_to t("label.sidebar.trip_manager_sidebar.members"), project_members_path(@project) %></li>
+    </ul>
+  </div>
+</div>
+
+<style lang="scss">
+  ul.trip_manage_side_menu_link_ul li {
+    padding: 3px 0;
+  }
+</style>

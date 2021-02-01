@@ -1,62 +1,85 @@
-<div class="form-group">
-  <%= form.label "Project Name" %>
-  <%= form.text_field :name, required: true, class: "form-control" %>
-</div>
-<div class="form-group">
-  <div class="row">
-    <div class="date_pick_box">
-      <%= form.label "Start Date" %>
-      <%= form.date_field :start_date, use_month_numbers: true, class: "form-control"  %>
-    </div>
-    <div class="date_pick_box">
-      <%= form.label "End Date" %>
-      <%= form.date_field :start_date, use_month_numbers: true, class: "form-control"  %>
-    </div>
-  </div>
-</div>
-
-<div class="form-group">
-  <div class="row">
-    <div class="date_pick_box">
-      <%= form.label "Start Place" %>
-      <%= form.text_field :start_place, class: "form-control" %>
-    </div>
-    <div class="date_pick_box">
-      <%= form.label "End Place" %>
-      <%= form.text_field :end_place, class: "form-control" %>
-    </div>
-  </div>
-</div>
-<div class="form-group invite_member_box">
-  <div class="form_inner_form_title">Share with trip member</div>
-  <div class="form_inner_form_box">
-    <% if @members.any? %>
-      <% @members.each do |member| %>
-      <span>Member</span>
-      <input type="textbox" value="<%= User.find(member.user_id).email %>" name="invite_emails[member]" class="form-control">
-      <% end %>
+<div class="project_new_top_box">
+  <h2>
+    <% if action_name == 'new' %>
+      <%= t("label.project_new.page_title") %>
+    <% else %>
+      <%= t("label.project_edit.page_title") %>
     <% end %>
-    <% if @inviting_members.any? %>
-      <% @inviting_members.each do |inviting_member| %>
-      <span>Member</span>
-      <input type="textbox" value="<%= inviting_member.invited_email %>" name="invite_emails[member]" class="form-control">
-      <% end %>
-    <% end %>
-    <% if @left_invite_num > 0 %>
-      <% @left_invite_num.times do %>
-        <span>Member</span>
-        <input type="textbox" name="invite_emails[member]" class="form-control">
-      <% end %>
-    <% end %>
-  </div>
+  </h2>
 </div>
-<div class="form_btns">
-  <div class="row">
-    <div class="col-half">
-      <%= link_to "cansel", user_projects_path(current_user), class: "button btn-cansel" %>
+<div class="activity_index_activity_list_box">
+  <%= form_for @project do |form| %>
+    <div class="project_form_inner">
+      <%= render 'layouts/error_messages', model: form.object %>
+      <section class="form_section">
+        <div class="form-group">
+          <%= form.label :name %>
+          <%= form.text_field :name, required: true, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= form.label :icon %>
+          <div class="project_icon_radio_box">
+              <% project_icon_list = [
+              'project_icon-01','project_icon-02','project_icon-03','project_icon-04','project_icon-05',
+              'project_icon-06','project_icon-07','project_icon-08','project_icon-09','project_icon-10',
+              ]%>
+              <% project_icon_list.each_with_index do |icon, index| %>
+                <%= form.radio_button :icon, icon, id: "project_icon_#{index}", class: 'project_icon_radio_btn hidden' %>
+                <%= form.label index, image_tag("project_icons/#{icon}"), :for => "project_icon_#{index}" %>
+              <% end %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= form.label :start_date %>
+          <%= form.date_field :start_date, use_month_numbers: true, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= form.label :end_date %>
+          <%= form.date_field :end_date, use_month_numbers: true, class: "form-control" %>
+        </div>
+        <div class="form-group invite_member_box">
+          <!-- <div class="form_inner_form_title"> -->
+          <%= form.label t("label.project_new.share_member") %>
+          <!-- </div> -->
+          <ul class="form_inner_form_box">
+            <% if @members %>
+              <% @members.each do |member| %>
+              <li>
+                <span><%= t("label.project_new.member_title") %></span>
+                <input type="textbox" value="<%= User.find(member.user_id).email %>" name="invite_emails[member]" class="form-control member_email_input">
+              </li>
+              <% end %>
+            <% end %>
+            <% if @inviting_members %>
+              <% @inviting_members.each do |inviting_member| %>
+              <li>
+                <span><%= t("label.project_new.member_title") %></span>
+                <input type="textbox" value="<%= inviting_member.invited_email %>" name="invite_emails[member]" class="form-control member_email_input">
+              </li>
+              <% end %>
+            <% end %>
+            <% if @left_invite_num %>
+              <% @left_invite_num.times do %>
+              <li>
+                <span><%= t("label.project_new.member_title") %></span>
+                <input type="textbox" name="invite_emails[member]" class="form-control member_email_input">
+              </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </section>
     </div>
-    <div class="col-half">
-      <%= form.submit('Create Projct',class: 'button btn-submit') %>
+    <div class="form_btns_box">
+      <div id="form_btns">
+        <div class="submit_btn_box">
+          <% if action_name == "new" %>
+            <%= form.submit(t("label.project_new.create_btn_label"),class: 'button btn-submit') %>
+          <% else %>
+            <%= form.submit(t("label.project_new.edit_btn_label"),class: 'button btn-submit') %>
+          <% end %>
+        </div>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

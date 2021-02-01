@@ -11,6 +11,7 @@ class Suppliers::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
   # def create
   #   super
+  #   redirect_to supplier_path(current_supplier)
   # end
 
   # DELETE /resource/sign_out

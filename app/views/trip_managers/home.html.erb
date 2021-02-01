@@ -1,0 +1,203 @@
+<div class="project_inside_container_inner">
+  <div class="project_index_container_inner_title_box">
+    <h3 class="trip_manager_page_title"><%= @project.name %><%= t("label.page_title.home")%></h3>
+  </div>
+  <div class="item_box">
+    <li>
+      <div class="project_link">
+        <%= image_tag "project_icons/#{@project.icon}", class: 'project_icon' %>
+        <div class="project_title">
+          <span class="project_title_text"><%= @project.name %></span>
+          <div class="date_item">
+            <span class="project_date_label"><%= t("label.project_show.start_date") %>:</span>
+            <span class="project_date_text">
+              <% if @project.start_date %>
+                <%= @project.start_date.strftime("%Y") %>
+                <%= t("label.project_show.year_unit") %>
+                <%= @project.start_date.strftime("%m") %>
+                <%= t("label.project_show.month_unit") %>
+                <%= @project.start_date.strftime("%d") %>
+                <%= t("label.project_show.day_unit") %>
+              <% else %>
+                開始日の設定なし
+              <% end %>
+            </span>
+          </div>
+          <div class="date_item">
+            <span class="project_date_label"><%= t("label.project_show.end_date") %>:</span>
+            <span class="project_date_text">
+              <% if @project.end_date %>
+                <%= @project.end_date.strftime("%Y") %>
+                <%= t("label.project_show.year_unit") %>
+                <%= @project.end_date.strftime("%m") %>
+                <%= t("label.project_show.month_unit") %>
+                <%= @project.end_date.strftime("%d") %>
+                <%= t("label.project_show.day_unit") %>
+              <% else %>
+                終了日の設定なし
+              <% end %>
+            </span>
+          </div>
+        </div>
+      </div>
+    </li>
+  </div>
+  <div class="info_items">
+    <div class="info_item">
+      <h5>購入済み体験</h5>
+      <%= @booked.size %>件
+    </div>
+    <div class="info_item">
+      <h5>お気に入りアイテム</h5>
+      <%= @favorites.size %>件
+    </div>
+  </div>
+</div>
+
+
+
+
+<style>
+  .project_index_container_inner_top {
+      height: 60px;
+      width: 100%;
+  }
+
+  .item_box li {
+    width: 100%;
+    height: 90px;
+    border: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 1px 1px 5px -1px grey;
+    position: relative;
+  }
+  .item_box li .project_link {
+    width: 90%;
+    height: 78px;
+    padding: 6px;
+    display: flex
+  }
+  .item_box li img {
+    width: 78px;
+    height: 78px;
+    border-radius: 5px;
+  }
+  .project_title {
+    width: 100%;
+    height: 73px;
+    padding: 5px 15px 0px;
+    display: flex;
+    flex-direction: column;
+  }
+  span.project_title_text {
+    color: #4a4a4a;
+    font-size: 25px;
+    line-height: 26px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .date_item {
+    margin-bottom: 3px;
+    color: gray;
+  }
+  .item_box li .setting_link {
+    width: 25px;
+    height: 30px;
+    padding: 6px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .setting_btn {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  span.setting_btn_dot {
+    width: 8px;
+    height: 8px;
+    background: #afafaf;
+    border-radius: 40px;
+    margin-bottom: 2px;
+  }
+  .setting_links_box {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    width: 150px;
+    z-index: 10;
+  }
+  .setting_links_box ul.setting_links_ul {
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 0px;
+    border: solid 1px #ececec;
+    border-radius: 10px;
+    box-shadow: 0px 0px 6px -5px #969696;
+    user-select: none;
+  }
+  .setting_links_box ul.setting_links_ul li {
+    height: 40px;
+    margin: 0;
+    background: none;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  a.edit_project_btn {
+    width: 85%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+  }
+  a.edit_project_btn:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+  li.setting_link_item.edit a {
+    color: gray;
+  }
+  li.setting_link_item.delete a {
+    color: #ff7a7a;
+  }
+  li.setting_link_item.edit svg {
+      width: 17px;
+      height: 17px;
+      color: gray;
+  }
+  li.setting_link_item.delete svg {
+      width: 17px;
+      height: 17px;
+      color: #ff7a7a;
+  }
+  li.setting_link_item.edit {
+      border-bottom: solid 1px #d8d8d8;
+      border-radius: unset;
+  }
+  .info_items {
+    padding: 20px 0;
+  }
+  .info_item {
+    /* background: #efefef; */
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 1px 1px 5px -1px grey;
+  }
+  .info_item h5 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 17px;
+  }
+</style>

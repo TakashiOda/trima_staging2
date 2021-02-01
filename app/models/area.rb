@@ -1,7 +1,8 @@
 class Area < ApplicationRecord
-  belongs_to :country
-  belongs_to :state
   belongs_to :prefecture
+  has_many :towns
+  has_many :project_areas
+  has_many :projects, through: :project_areas
 
   validates :en_name,  length: { maximum: 20, too_long: "Maximum %{count} characters" }
   validates :local_name,  length: { maximum: 20, too_long: "Maximum %{count} characters" }

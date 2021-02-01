@@ -8,6 +8,13 @@ class ProjectsController < ApplicationController
     @waitings = current_user.waiting_projects #Userのモデルメソッド
   end
 
+  def new
+    @user = current_user
+    @project = @user.projects.build
+    @left_invite_num = 5
+    @project.project_areas.build
+  end
+
   def show
     @project = Project.find(params[:id])
     @owner = User.find(UserProject.find_by(project_id: params[:id], control_level: 0).user_id)
@@ -27,27 +34,22 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def new
-    @user = User.find(params[:user_id])
-    @project = @user.projects.build
-  end
-
   def create
-    @project = Project.new(project_params)
-    if @project.save
+    @project = current_user.projects.create(project_params)
+    if @project.persisted?
       @project.add_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
       @project.add_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
       @project.add_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
       @project.add_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
-      @project.add_me_as_admin(current_user)
-      redirect_to user_projects_path(current_user)
+      # @project.add_me_as_admin(current_user)
+      redirect_to projects_path
     else
       render 'new'
     end
   end
 
   def edit
-    @user = User.find(params[:user_id])
+    @user = current_user
     @project = Project.find(params[:id])
     @members = UserProject.where(project_id: @project.id).where.not(user_id: current_user.id )
     @inviting_members = ProjectInvite.where(project_id: @project.id, has_account: 1)
@@ -55,15 +57,15 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    # binding.pry
-    @user = User.find(params[:user_id])
+    @user = current_user
     @project = Project.find(params[:id])
     if @project.update(project_params)
       @project.replace_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
       @project.replace_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
       @project.replace_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
       @project.replace_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
-      redirect_to user_project_path(@user, @project)
+      # redirect_to project_trip_managers_home_path(@project)
+      redirect_to projects_path
     else
       render 'edit'
     end
@@ -90,29 +92,24 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:user_id])
+    @user = current_user
     @project = Project.find(params[:id])
     if @project.is_owner?(current_user) # current_userは管理者かどうか is_owner?はモデルメソッド
-      unless @project.has_other_members?(current_user) # 他のメンバーが存在しないかどうか　has_other_members?はモデルメソッド
-        @project.destroy_last_owner(current_user) #
-        @project.destroy
-        flash[:notice] = "Project has been Deleted!"
-        redirect_to user_projects_path(@user)
-      else
-        flash[:alert] = "At first, please delete members"
-        render 'edit'
-      end
+      @project.project_areas.destroy_all
+      @project.user_projects.destroy_all
+      redirect_to projects_path
     else
       flash[:alert] = "Permission denied! You are not owner!"
-      render 'edit'
+      render 'index'
     end
   end
 
   private
     def project_params
       params.require(:project).permit(:name, :start_date, :end_date,
-                                      :start_place, :end_place,
-                                      :destination_area_id, { invite_emails: [] })
+                                      :start_place, :end_place, :icon,
+                                      :destination_area_id, { invite_emails: [] },
+                                      project_areas_attributes: [:id, :project_id, :area_id, :_destroy])
     end
 
     def member_destroy_params

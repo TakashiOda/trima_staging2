@@ -1,0 +1,137 @@
+// Place all the styles related to the Admins controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+header.erb_header {
+  background: linear-gradient(0deg, #d60002, #ff2812 20%, #ff9d0b 74%, #fff700);
+  background: -webkit-linear-gradient(0deg, #d60002, #ff2812 20%, #ff9d0b 74%, #fff700);
+}
+
+.btn-submit {
+  background: linear-gradient(0deg, #d60002, #ff2812 20%, #ff9d0b 74%, #fff700);
+  background: -webkit-linear-gradient(0deg, #d60002, #ff2812 20%, #ff9d0b 74%, #fff700);
+}
+
+.form-group.supplier.login_button input.button {
+  background: linear-gradient(0deg, #d60002, #ff2812 20%, #ff9d0b 74%, #fff700);
+  background: -webkit-linear-gradient(0deg, #d60002, #ff2812 20%, #ff9d0b 74%, #fff700);
+}
+
+
+.admin_container {
+    width: 80%;
+}
+
+.admin_container_inner {
+    min-height: 80vh !important;
+    /* width: 100%; */
+    padding: 30px 40px;
+    background: whitesmoke;
+}
+
+form.edit_admin {
+    width: 450px;
+    margin: 0 auto;
+    /* padding: 30px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin_edit_form_inner {
+    width: 100%;
+    padding-top: 30px;
+}
+.activity_category_by_status_linkbox {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background: #e0e0e0;
+  border-radius: 50px;
+}
+.activity_category_by_status_linkbox a {
+  background: #cecece;
+  padding: 4px 11px;
+  width: 21%;
+  height: 14px;
+  margin: 0;
+  color: gray;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+}
+.activity_category_by_status_linkbox a:hover {
+  opacity: 0.7;
+}
+.activity_category_by_status_linkbox a.selected {
+  background: #0068b6;
+  color: #fff;
+  font-weight: bold;
+}
+li.supplier_list_item {
+  padding: 10px 20px 10px 15px;
+  border-bottom: solid 1px #dfdfdf;
+  border-top: solid 1px #dfdfdf;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  box-shadow: 0px 0px 7px -4px grey;
+}
+.activity_list_item_front {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+img.activity_icon_image {
+  width: 100px;
+  margin-right: 20px;
+  border-radius: 7px;
+  box-shadow: 0px 0px 4px -1px #a0a0a0;
+}
+.admin_contents_title_box h5 {
+    margin: 0 0 10px;
+}
+// ページネーション＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+nav.pagination {
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+span.page {
+  width: 34px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+}
+span.page.current {
+  background: #0068b6;
+  color: #fff;
+  border-radius: 40px;
+}
+span.page a {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+span.next {
+  padding: 0 6px;
+}
+span.prev {
+  display: none;
+}
+span.next {
+  display: none;
+}
+// ページネーション＊終わり＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊

@@ -1,0 +1,307 @@
+<div class="project_inside_container_inner">
+  <div class="">
+    <div class="">
+      <h3 class="trip_manager_page_title"><%= @project.name %><%= t("label.page_title.cart")%></h3>
+    </div>
+    <div class="table_container">
+      <% if !@booked_activities.blank? %>
+        <table>
+          <tr>
+            <th class="cart_table_first_column"><%= t("label.cart.book_item")%></th>
+            <th class="cart_table_member_column"><%= t("label.cart.participants")%></th>
+            <th class="cart_table_time_column"><%= t("label.cart.book_date_time")%></th>
+            <th class="cart_table_price_column"><%= t("label.cart.total_before_tax")%></th>
+            <th class="cart_table_delete_column"><%= t("label.cart.delete")%></th>
+          </tr>
+          <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
+          <% @booked_activities.each do |booked_activity| %>
+            <tr class="contents_tr">
+              <td class="cart_activity_info_first_td cart_table_first_column">
+                <div class="cart_activity_info_td_front">
+                  <%= image_tag booked_activity.activity.main_image.to_s, class: 'cart_activity_image' if !booked_activity.activity.main_image.blank? %>
+                </div>
+                <div class="cart_activity_info_td_back">
+                  <div class="activity_title">
+                    <%= booked_activity.activity.name[0, 20] %>
+                  </div>
+                  <div class="activity_place">
+                    <%= "#{Area.find(booked_activity.activity.area_id).local_name}エリア / " if booked_activity.activity.area_id %>
+                    <%= Town.find(booked_activity.activity.town_id).jp_name if booked_activity.activity.town_id %>
+                  </div>
+
+                </div>
+              </td>
+              <td class="cart_table_member_column">
+                <ul>
+                  <% booked_activity.project_members.each do |member| %>
+                    <li><%= member.nickname %></li>
+                  <% end %>
+                </ul>
+              </td>
+              <td class="cart_table_time_column">
+                <div class="book_date">
+                  <%= booked_activity.activity_date.strftime("%m/%d(#{wd[booked_activity.activity_date.wday]})") if booked_activity.activity_date%>
+                </div>
+                <div class="book_time">
+                  <%= "#{booked_activity.activity_start_time.strftime("%H:%M")}〜" if booked_activity.activity_start_time%>
+                </div>
+              </td>
+              <td class="cart_table_price_column">¥<%= booked_activity.total_price.to_s(:delimited) %></td>
+              <td class="cart_table_delete_column">
+                <div class="delete_btn_box">
+                  <%#= link_to "削除", "#", class: "cart_item_delete_btn" %>
+                  <%= link_to "削除" ,
+                  project_book_activity_delete_path(@project.id, booked_activity.activity.id, booked_activity.id),
+                  class: "cart_item_delete_btn",
+                  method: :delete, data: { confirm: "本当に削除しますか？" }
+                  %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+        <div class="cart_side_box">
+          <div class="cart_side_box_inner">
+            <div class="cart_side_title_box">
+              <div class="cart_side_title">
+                <%= @project.name %>
+              </div>
+            </div>
+            <table class="cart_side_price_box">
+              <tr class="tax_box_tr">
+                <th><%= t("label.cart.tax")%></th>
+                <td class="cart_side_price">¥<%= @tax.to_s(:delimited)%></td>
+              </tr>
+              <tr class="total_box_tr">
+                <th><%= t("label.cart.total_before_tax")%></th>
+                <td class="cart_side_price">¥<%= @total_price.to_s(:delimited)%></td>
+              </tr>
+              <tr class="total_box_tr">
+                <th class="total"><%= t("label.cart.cart_total")%></th>
+                <td class="cart_side_price total">¥<%= (@total_price + @tax).to_s(:delimited)%></td>
+              </tr>
+            </table>
+            <%# form_for %>
+            <%#= button_to "購入する", "#", class: "purchase_btn_in_cart" %>
+            <%= form_tag project_charges_path(@project) do %>
+              <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-amount="<%= @total_price + @tax %>"
+                data-currency="jpy"
+                data-description="クレジット決済"
+                data-name=<%= "カートの中全て予約" %>
+                data-email=<%= "#{current_user.email}" %>
+                data-label="購入する"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto"
+                data-allow-remember-me="false">
+              </script>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <table>
+          <tr>
+            <th class="cart_table_first_column"><%= t("label.cart.book_item")%></th>
+            <th class="cart_table_member_column"><%= t("label.cart.participants")%></th>
+            <th class="cart_table_time_column"><%= t("label.cart.book_date_time")%></th>
+            <th class="cart_table_price_column"><%= t("label.cart.total_before_tax")%></th>
+            <th class="cart_table_delete_column"><%= t("label.cart.delete")%></th>
+          </tr>
+          <tr style="border: none;">
+            <td colspan="5"><%= t("label.cart.no_book_in_the_cart")%></td>
+          </tr>
+        </table>
+        <div class="cart_side_box">
+          <div class="cart_side_box_inner">
+            <div class="cart_side_title_box">
+              <div class="cart_side_title">
+                <%= @project.name %>
+              </div>
+            </div>
+            <table class="cart_side_price_box">
+              <tr class="tax_box_tr">
+                <th><%= t("label.cart.tax")%></th>
+                <td class="cart_side_price">¥<%= @tax.to_s(:delimited)%></td>
+              </tr>
+              <tr class="total_box_tr">
+                <th><%= t("label.cart.total_before_tax")%></th>
+                <td class="cart_side_price">¥<%= @total_price.to_s(:delimited)%></td>
+              </tr>
+              <tr class="total_box_tr">
+                <th class="total"><%= t("label.cart.cart_total")%></th>
+                <td class="cart_side_price total">¥<%= (@total_price + @tax).to_s(:delimited)%></td>
+              </tr>
+            </table>
+            <button class="stripe-button-el disabled"><span onclick="alertNoItems()">購入する</span></button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  .project_index_container_cart_inner {
+    padding: 20px 0px 50px 40px;
+    height: 100%;
+  }
+  .table_container {
+    width: 100%;
+    display: flex;
+    padding: 20px 0px;
+    justify-content: space-between;
+  }
+  .table_container table {
+    width: 68%;
+    margin: 0;
+  }
+  .table_container div.cart_side_box {
+    width: 29%;
+    margin: 0 auto;
+  }
+  .cart_side_box_inner {
+    background: #f0f0f0;
+    height: 80vh;
+    position: sticky;
+    top: 58px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .table_container tr.contents_tr:nth-child(odd) {
+    background: #f6f6f6;
+  }
+  .table_container th {
+    padding: 10px;
+    color: #505050;
+    font-weight: normal;
+    font-size: 13px;
+  }
+  td.cart_activity_info_first_td {
+    display: flex;
+    width: 100%;
+  }
+  img.cart_activity_image {
+    width: 90px;
+    height: 90px;
+    border-radius: 6px;
+  }
+
+  .table_container td {
+    padding: 10px 10px !important;
+  }
+  .cart_table_first_column {
+    width: 50%;
+  }
+  .cart_table_member_column {
+    width: 13%;
+    text-align: left;
+  }
+  td.cart_table_member_column {
+    color: #6a6a6a;
+  }
+  td.cart_table_member_column ul {
+    margin: 0;
+  }
+  td.cart_table_member_column ul li {
+    font-size: 12px !important;
+  }
+  .cart_table_time_column {
+    width: 13%;
+  }
+  td.cart_table_time_column {
+    font-size: 12px;
+    color: #6a6a6a;
+  }
+  .cart_table_price_column {
+    width: 14%;
+  }
+  .cart_table_delete_column {
+    width: 10%;
+    text-align: center;
+  }
+  td.cart_table_price_column {
+    text-align: right;
+  }
+  .cart_activity_info_td_back {
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+  }
+  .activity_title {
+    font-size: 13px;
+    color: #2a2a2a;
+  }
+  .activity_place {
+    color: gray;
+    font-size: 12px;
+  }
+  a.cart_item_delete_btn {
+    font-size: 14px;
+    color: #ee7676;
+  }
+  .cart_side_title_box {
+    margin-bottom: 20px;
+  }.cart_side_title {
+    font-size: 22px;
+  }
+  table.cart_side_price_box {
+    width: 100% !important;
+  }
+  td.cart_side_price {
+    text-align: right;
+    font-size: 20px;
+  }
+  input.purchase_btn_in_cart {
+    margin: 25px 10px;
+    width: 100%;
+    padding: 10px;
+    background: #0ebbdc;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    color: white;
+  }
+  .total {
+    font-size: 20px !important;
+    font-weight: bold;
+  }
+
+  button.stripe-button-el {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    user-select: none;
+    box-shadow: none;
+    margin-top: 20px;
+    border: none;
+  }
+  button.stripe-button-el:focus {
+    outline: 0;
+    background: #0ebbdc;
+    opacity: 0.6;
+    border: 0;
+  }
+  button.stripe-button-el span {
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    background: #0ebbdc;
+    font-size: 16px;
+    color: #fff;
+  }
+  button.disabled span {
+    background: #b1b1b1;
+  }
+  button.disabled span:hover {
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  function alertNoItems() {
+    alert("商品がありません");
+  }
+</script>

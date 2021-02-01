@@ -1,7 +1,5 @@
 class AvatarUploader < CarrierWave::Uploader::Base
-  # Include RMagick or MiniMagick support:
   include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
 
   # S3にアップロードする場合
   if Rails.env.production?
@@ -27,16 +25,17 @@ class AvatarUploader < CarrierWave::Uploader::Base
      %w(jpg jpeg gif png)
   end
 
-  # def scale(width, height)
-  #   # do something
-  # end
+  def size_range
+    0..2.megabytes
+  end
 
-
-  # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # 保存するファイルの命名規則
   def filename
-     "user_avatar.jpg" if original_filename
+    if original_filename
+      "#{original_filename}"
+    else
+     "avatar_#{model.class.to_s.underscore}_#{model.id}.jpg"
+    end
   end
 
   protected

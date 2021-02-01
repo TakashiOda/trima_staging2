@@ -1,18 +1,24 @@
 <div class="email_container">
-  <span>Hello <%= @email %>!</span><br /><br /><br />
-  <span>We are trima team!</span><br />
-  <span>Thank you for registration.</span><br />
-  <span>To create account is almost there!please click bellow link and Sign in to activate your account.</span><br /><br />
-  <%= link_to 'Activate Account', confirmation_url(@resource, confirmation_token: @token), class: "email_activate_btn" %>
+  <span>こんにちは <%= @email %>様</span><br /><br />
+  <span>trima（トリマ）事務局です。</span><br />
+  <span>この度はtrimaにご登録いただき誠にありがとうございます。</span><br /><br />
+  <span>登録への最終ステップのご案内です</span><br /><br />
+  <span>下記リンクをクリックしてアカウントを有効化してください。</span><br />
+  <span>ログインできるようになります（あなたのアカウントはまだ有効ではありません）。</span><br /><br />
+  <%= link_to 'アカウントを有効化する', confirmation_url(@resource, confirmation_token: @token), class: "email_activate_btn" %>
+  <br /><br />
   <div class="email_supplement_box">
-    <span>※if you don't remember this, please delete this Email.</span><br />
-    <span>※This is ONLY-SENDING-ACCOUNT, so we cannot response in this email.</span><br />
-    <span>※If you have a question? Ask us <a href="https://ccc.ne.jp/contact_uu/">here</a>!</span>
+    <span>※このメールに身に覚えがない場合は破棄してください。</span><br />
+    <span>※このメールアドレスは送信専用です。返信できません。</span><br />
+    <span>※その他お問い合わせは<a href="https://ccc.ne.jp/contact_uu/">コチラ</a>よりお願い致します。</span>
   </div>
+  <br />
   <div class="email_signature_box">
-    <p>trima</p>
-    <span>is a travel platform</span><br />
-    <span>Website:<a href="https://trima-staging2.herokuapp.com/">trima.com</a></span>
+    <span>----------------------------------------------------</span><br />
+    <span>trima事務局（<a href="https://www.uu-trima.com/">https://www.uu-trima.com/</a>）</span><br />
+    <span>シーダースコミュニケーションズ株式会社</span><br />
+    <span>〒060-0003</span><br />
+    <span>北海道札幌市中央区北3条西18丁目2-20MMAビル2F</span><br />
   </div>
 </div>
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p><%= @supplier.name %> 様</p>
+    <p>いつもtrimaをご利用いただき誠にありがとうございます。<br>
+  　trimaにて体験への予約が入りましたのでお知らせいたします。</p>
+    <div class="details">
+      <% @booked_items.each do |booked_item| %>
+        <li class="detail">
+          <div class="activity_name">
+            体験名：<%= Activity.find(booked_item.activity_id).name %>
+          </div>
+          <div class="activity_date">
+            体験実施日時：<%= booked_item.activity_date.strftime("%y年%m月%d日") %>
+          </div>
+          <div class="activity_time">
+            体験実施時間：<%= booked_item.activity_start_time.strftime("%H:%M〜") %>
+          </div>
+        </li>
+      <% end %>
+    </div>
+
+    <p>詳しくは以下のURLからサイトにログインしてご確認ください</p>
+    <a href="https://www.uu-trima.com/suppliers/sign_in">事業者ページを確認する</a>
+
+    <p>-------------------------</p>
+    <p>trima運営チーム</p>
+    <style>
+      .detail {
+        margin-bottom: 10px;
+      }
+    </style>
+  </body>
+</html>

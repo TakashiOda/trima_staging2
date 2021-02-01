@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TrimaV00</title>
+    <title>trima | Online Trip Booking and Management</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <%= stylesheet_pack_tag "application", media: "all" %>
     <%= javascript_pack_tag 'application', media: 'all' %>
+    <%= favicon_link_tag('trima_favicon.ico') %>
+    <meta charset="utf-8">
+    <% if !@this_page_is_for.nil? && @this_page_is_for == 'supplier' %>
+      <%= display_meta_tags(supplier_meta_tags) %>
+    <% else %>
+      <%= display_meta_tags(default_meta_tags) %>
+    <% end %>
   </head>
 
-  <body class="erb_body <%= "add_padding_top" unless controller.action_name == "about" %>">
-    <% unless controller.action_name == "about" %>
-      <%= render 'layouts/header'%>
-    <% end %>
+  <body class="erb_body">
+    <div id="loading_box" class="">
+      <div class="loading_inner">
+          <div class="loader"></div>
+        <p class="loading_text">読み込み中...</p>
+      </div>
+    </div>
+    <%= render 'layouts/header'%>
     <% if notice %>
       <p class="notice"><%= notice %></p>
     <% end %>
@@ -21,10 +32,83 @@
       <p class="alert"><%= alert %></p>
     <% end %>
     <div class="body_content">
-      <%= yield %>
+      <%#= request.path_info %>
+      <%#= controller.controller_name %>
+      <%#= controller.action_name %>
+      <% if controller.action_name == "thank_you_for_registration_user" || controller.action_name == "after_resend_confirmation_user" %>
+        <%= stylesheet_link_tag 'users' %>
+        <%= yield %>
+      <% elsif controller.action_name == "thank_you_for_registration_supplier" || controller.action_name == "after_resend_confirmation_supplier" || controller.controller_name == 'supplier_applies' || request.path_info == '/suppliers/sign_in' || request.path_info == "/supplier_applies/new" || request.path_info == "/about_trima_for_supplier"%>
+        <%= stylesheet_link_tag 'suppliers' %>
+        <%= yield %>
+      <% elsif controller.controller_name == "activities" || controller.controller_name == "activity_businesses" || controller.controller_name == "suppliers" || controller.controller_name == "supplier_bookeditems"%>
+        <%= stylesheet_link_tag 'suppliers' %>
+        <div class="container user_show container-fluid row">
+          <div class="user_show_side">
+            <%= render 'suppliers/supplier_page_front_sidebar' %>
+          </div>
+          <div class="user_show_content">
+            <%= yield %>
+          </div>
+        </div>
+      <%# elsif controller.controller_name == "projects" && controller.action_name == "edit" %>
+        <%#= stylesheet_link_tag 'users' %>
+        <!-- <div class="container user_show container-fluid"> -->
+          <!-- <div class="trip_manage_side"> -->
+            <%#= render 'trip_managers/user_trip_manager_sidebar' %>
+          <!-- </div> -->
+          <!-- <div class="project_index_container"> -->
+            <%#= yield %>
+          <!-- </div> -->
+        <!-- </div> -->
+      <% elsif controller.controller_name == "users" || controller.controller_name == "projects" %>
+        <%= stylesheet_link_tag 'users' %>
+        <div class="container user_show container-fluid">
+          <div class="user_show_side">
+            <%= render 'users/user_page_front_sidebar' %>
+          </div>
+          <div class="user_show_main_content">
+            <%= yield %>
+          </div>
+        </div>
+      <% elsif controller.controller_name == "trip_managers" %>
+        <%= stylesheet_link_tag 'users' %>
+        <div class="container user_show container-fluid">
+          <div class="trip_manage_side">
+            <%= render 'user_trip_manager_sidebar' %>
+          </div>
+          <div class="project_index_container">
+            <%= yield %>
+          </div>
+        </div>
+      <% elsif current_admin || controller.controller_name == "admins" %>
+        <%= stylesheet_link_tag 'admins' %>
+        <div class="container user_show container-fluid">
+          <div class="admin_side_menu_container">
+            <%= render 'admins/admin_page_front_sidebar' %>
+          </div>
+          <div class="admin_container">
+            <%= yield %>
+          </div>
+        </div>
+
+      <% else %>
+        <%= yield %>
+      <% end %>
+
     </div>
     <% unless controller.controller_name == "home" && controller.action_name == "about" %>
       <%= render 'layouts/footer' %>
     <% end %>
   </body>
 </html>
+
+<script type="text/javascript">
+  // $(".notice" ).fadeOut(5000);
+  // $(".alert" ).fadeOut(5000);
+
+  (window.onload = function() {
+    const loadingScreen = document.getElementById('loading_box');
+    loadingScreen.classList.add('hidden');
+  })();
+</script>

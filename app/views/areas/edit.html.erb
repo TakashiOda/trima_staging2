@@ -6,14 +6,6 @@
         <!-- <form> -->
           <%= form_for(@area) do |form| %>
             <div class="form-group select_id_items">
-                <div class="select_id_item">
-                  <%= form.label "国" %>
-                  <%= form.select :country_id, [['日本', 1]], { include_blank: "国を選ぶ", selected: 1 }, { class: "form-control" } %>
-                </div>
-                <div class="col-select_id_item">
-                  <%= form.label "地域名" %>
-                  <%= form.select :state_id, [['北海道', 1]], { include_blank: "地域を選ぶ", selected: 1 }, { class: "form-control" } %>
-                </div>
                 <div class="col-select_id_item">
                   <%= form.label "都道府県" %>
                   <%= form.select :prefecture_id, [['北海道', 1]], { include_blank: "都道府県を選ぶ", selected: 1 }, { class: "form-control" } %>

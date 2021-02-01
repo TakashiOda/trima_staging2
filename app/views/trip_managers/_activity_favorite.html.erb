@@ -1,0 +1,20 @@
+<div class="faborite_box" id="favorite_<%=@activity.id%>">
+  <% if current_user && !@project.nil? %>
+    <% if !FavoriteActivity.exists?(user_id: current_user.id, activity_id: @activity.id, project_id: @project.id)%>
+      <%=link_to project_favorite_activity_path(@project, @activity), method: :post, remote: true, class: "favorite-btn favorite-post" do%>
+        <i class="far fa-heart"></i>
+        <span class="favorite_text">お気に入りに追加</span>
+      <% end %>
+    <% else %>
+      <%=link_to project_favorite_activity_path(@project, @activity), method: :delete, remote: true, class: "favorite-btn favorite-delete" do%>
+        <i class="fas fa-heart"></i>
+        <span class="favorite_text">お気に入り追加済</span>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%=link_to users_sign_in_path(alert: "need_sign_in"), class: "favorite-btn favorite-post" do%>
+      <i class="far fa-heart"></i>
+      <span class="favorite_text">お気に入りに追加</span>
+    <% end %>
+  <% end %>
+</div>

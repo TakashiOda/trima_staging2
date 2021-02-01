@@ -1,0 +1,134 @@
+<div class="project_index_container_inner">
+  <div class="project_index_container_inner_title_box">
+    <h4><%= @project.name %>のメンバー追加</h4>
+  </div>
+  <div class="project_index_container_inner_title_box">
+    <%= form_for(@member, url: project_members_path(@project)) do |form| %>
+    <div class="project_member_form">
+      <%= render 'layouts/error_messages', model: form.object %>
+        <div class="form-group">
+          <%= form.label "ニックネーム" %>
+          <%= form.text_field :nickname, required: true, class: "form-control" %>
+        </div>
+        <div class="form-group name_row">
+          <div class="name_form_item">
+            <%= form.label "名" %>
+            <%= form.text_field :first_name, class: "form-control" %>
+          </div>
+          <div class="name_form_item">
+            <%= form.label "姓" %>
+            <%= form.text_field :last_name, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= form.label "性別" %>
+          <div class="member_gnder_radio_items">
+            <div class="member_gnder_radio_item left">
+              <%= form.radio_button :gender, :male, checked: true %>
+              <%= form.label :gender, "男性", {value: :male, style: "display: inline-block;"} %>
+            </div>
+            <div class="member_gnder_radio_item right">
+              <%= form.radio_button :gender, :female %>
+              <%= form.label :gender, "女性", {value: :female, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= form.label "生年月日" %>
+          <div class="birth_form_box">
+            <%= form.select :birth_year, options_for_select(1950..2020), { prompt: "年" }, required: true %>
+            <%= form.select :birth_month, options_for_select(1..12), { prompt: "月" }, required: true %>
+            <%= form.select :birth_date, options_for_select(1..31), { prompt: "日" }, required: true %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= form.submit('追加する',class: 'button btn-submit', id: "member_submit_btn") %>
+        </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+
+<style lang="scss">
+.project_index_container_inner_title_box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.member_add_btn a {
+  padding: 10px 20px;
+  background: #11a6e6;
+  border-radius: 30px;
+  color: #fff;
+  font-weight: bold;
+}
+form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.project_member_form {
+  width: 100%;
+  max-width: 450px;
+}
+.form-group.name_row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.name_form_item {
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+}
+.birth_form_box input {
+  width: 27%;
+  background: #f9f9f9;
+}
+.birth_form_box select {
+  width: 20%;
+  background: #f9f9f9;
+  height: 40px;
+  border-radius: 10px;
+  border: solid 1px gainsboro;
+  margin-right: 10px;
+  padding-left: 10px;
+}
+.birth_form_box select:focus {
+  outline: 0;
+}
+
+.member_gnder_radio_items {
+  display: flex;
+  /* margin-bottom: 20px; */
+}
+.member_gnder_radio_item {
+  width: 50%;
+}
+.member_gnder_radio_items input[type=radio],
+.member_gnder_radio_items input[type=radio] {
+  display: none;
+}
+.member_gnder_radio_items label {
+  background: gainsboro;
+  padding: 6px 0;
+  user-select: none;
+  width: 100%;
+  text-align: center;
+}
+.member_gnder_radio_item.left label {
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+.member_gnder_radio_item.right label {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.member_gnder_radio_items input[type="radio"]:checked + label {
+  background: #23a0ff;
+  color: #ffffff;
+}
+
+</style>
