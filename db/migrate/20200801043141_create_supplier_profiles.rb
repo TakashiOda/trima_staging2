@@ -7,8 +7,11 @@ class CreateSupplierProfiles < ActiveRecord::Migration[6.0]
       t.string  :manager_name
       t.string  :manager_name_kana
       t.string :post_code
+      t.string :prefecture
       t.integer :prefecture_id
+      t.string :area
       t.integer :area_id
+      t.string :town
       t.integer :town_id
       t.string :detail_address
       t.string :building
