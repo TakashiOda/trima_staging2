@@ -34,9 +34,27 @@
           <%= pf.label :post_code %>
           <div class="post_code_box">
             <span>〒</span>
-            <input class="p-postal-code form-control" type="text" id="post_code_input3" size="3" maxlength="3" oninput="post_code3()">
+            <!-- <input class="p-postal-code form-control" type="text" id="post_code_input3" size="7" maxlength="7" oninput="post_code3()"> -->
+            <input
+              class="p-postal-code form-control"
+              type="text"
+              id="post_code_input3"
+              size="3"
+              maxlength="3"
+              oninput="post_code3()"
+              value="<%= @supplier.supplier_profile.post_code[0, 3] if !@supplier.supplier_profile.nil? && !@supplier.supplier_profile.post_code.nil? %>"
+            >
             <span>-</span>
-            <input class="p-postal-code form-control" type="text" id="post_code_input4" size="4" maxlength="4" oninput="post_code4()">
+            <!-- <input class="form-control" type="text" id="post_code_input4" size="4" maxlength="4" oninput="post_code4()"> -->
+            <input
+              class="p-postal-code form-control"
+              type="text"
+              id="post_code_input4"
+              size="4"
+              maxlength="4"
+              oninput="post_code4()"
+              value="<%= @supplier.supplier_profile.post_code[3, 4]%>"
+            >
           </div>
           <%= pf.hidden_field :post_code, id: 'hidden_post_code' %>
         </div>

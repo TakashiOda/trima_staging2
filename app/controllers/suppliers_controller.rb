@@ -56,6 +56,7 @@ class SuppliersController < ApplicationController
   end
 
   def update
+    # binding.pry
     @supplier = Supplier.find(params[:id])
     if @supplier.update(supplier_params)
       flash[:notice] = '事業者情報を更新しました'

@@ -35,6 +35,7 @@ class DeviseCreateSuppliers < ActiveRecord::Migration[6.0]
       #supplier_info
       t.string   :name
       t.string   :avatar
+      t.integer   :profile_ratio
     end
 
     add_index :suppliers, :email,                unique: true

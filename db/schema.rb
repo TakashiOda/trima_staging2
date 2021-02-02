@@ -391,11 +391,11 @@ ActiveRecord::Schema.define(version: 2021_01_19_085225) do
     t.string "manager_name"
     t.string "manager_name_kana"
     t.string "post_code"
-    t.integer "prefecture"
+    t.string "prefecture"
     t.integer "prefecture_id"
-    t.integer "area"
+    t.string "area"
     t.integer "area_id"
-    t.integer "town"
+    t.string "town"
     t.integer "town_id"
     t.string "detail_address"
     t.string "building"
@@ -425,6 +425,7 @@ ActiveRecord::Schema.define(version: 2021_01_19_085225) do
     t.datetime "locked_at"
     t.string "name"
     t.string "avatar"
+    t.integer "profile_ratio"
     t.index ["confirmation_token"], name: "index_suppliers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_suppliers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_suppliers_on_reset_password_token", unique: true

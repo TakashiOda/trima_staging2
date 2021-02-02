@@ -1,4 +1,40 @@
 <div class="supplier_show_content_inside">
+  <div class="supplier_info_box"><!--メインコンテンツorg-->
+    <div class="info_list_box_title">
+      <div>契約者情報</div>
+      <div>
+        <% unless @supplier.supplier_profile.nil? %>
+          <%= link_to "編集", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
+        <% end %>
+      </div>
+    </div>
+    <div id="supplier_info_contents">
+      <% if @supplier_profile.nil? %>
+        <div class="info_list_box_contents">
+          <div>まだ契約者情報がありません</div>
+          <%= link_to "契約者情報を登録", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
+        </div>
+      <% else %>
+        <div class="info_list_box_contents">
+          <table class="info_list_table">
+            <tr>
+              <td class="td_front">ご契約社名</td>
+              <td class="td_end"><%= @supplier.name if @supplier.name %></td>
+            </tr>
+            <tr>
+              <td class="td_front">ご契約の住所</td>
+              <td class="td_end">
+                <%#= Prefecture.find(@supplier_profile .prefecture_id).local_name if @supplier_profile.prefecture_id %>
+                <%#= Town.find(@supplier_profile.town_id).jp_name if @supplier_profile.town_id %>
+                <%#= @supplier_profile.detail_address if @supplier_profile.detail_address %>
+                <%#= @supplier_profile.building if @supplier_profile.building %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  </div>
   <div class="activity_business_info_box"><!--メインコンテンツorg-->
     <% if !@activity_business.nil? %>
       <div class="info_list_box_title">
@@ -77,42 +113,6 @@
     <% end %>
   </div>
   <!--事業者情報---------------------------------------------------------------->
-  <div class="supplier_info_box"><!--メインコンテンツorg-->
-    <div class="info_list_box_title">
-      <div>契約者情報</div>
-      <div>
-        <% unless @supplier.supplier_profile.nil? %>
-          <%= link_to "編集", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
-        <% end %>
-      </div>
-    </div>
-    <div id="supplier_info_contents">
-      <% if @supplier_profile.nil? %>
-        <div class="info_list_box_contents">
-          <div>まだ契約者情報がありません</div>
-          <%= link_to "契約者情報を登録", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
-        </div>
-      <% else %>
-        <div class="info_list_box_contents">
-          <table class="info_list_table">
-            <tr>
-              <td class="td_front">ご契約社名</td>
-              <td class="td_end"><%= @supplier.name if @supplier.name %></td>
-            </tr>
-            <tr>
-              <td class="td_front">ご契約の住所</td>
-              <td class="td_end">
-                <%#= Prefecture.find(@supplier_profile .prefecture_id).local_name if @supplier_profile.prefecture_id %>
-                <%#= Town.find(@supplier_profile.town_id).jp_name if @supplier_profile.town_id %>
-                <%#= @supplier_profile.detail_address if @supplier_profile.detail_address %>
-                <%#= @supplier_profile.building if @supplier_profile.building %>
-              </td>
-            </tr>
-          </table>
-        </div>
-      <% end %>
-    </div>
-  </div>
 </div>
 
 <style lang="scss">
