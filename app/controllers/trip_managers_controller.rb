@@ -36,7 +36,11 @@ class TripManagersController < ApplicationController
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
     @user_projects = UserProject.where(project_id: @project.id)
     @favorites = FavoriteActivity.where(project_id: @project.id)
-    @booked = @project.cart.booked_activities
+    if !@project.cart.nil? && @project.cart.booked_activities.any?
+      @booked = @project.cart.booked_activities
+    else
+      @booked = []
+    end
   end
   def search_home
     @project = Project.find(params[:project_id])

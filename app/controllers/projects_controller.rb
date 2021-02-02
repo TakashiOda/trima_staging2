@@ -37,10 +37,10 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.create(project_params)
     if @project.persisted?
-      @project.add_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
-      @project.add_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
-      @project.add_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
-      @project.add_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
+      # @project.add_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
+      # @project.add_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
+      # @project.add_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
+      # @project.add_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
       # @project.add_me_as_admin(current_user)
       redirect_to projects_path
     else

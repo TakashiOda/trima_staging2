@@ -17,7 +17,7 @@
           <%= form.text_field :name, required: true, class: "form-control" %>
         </div>
         <div class="form-group">
-          <%= form.label :icon %>
+          <%#= form.label :icon %>
           <div class="project_icon_radio_box">
               <% project_icon_list = [
               'project_icon-01','project_icon-02','project_icon-03','project_icon-04','project_icon-05',
@@ -25,7 +25,7 @@
               ]%>
               <% project_icon_list.each_with_index do |icon, index| %>
                 <%= form.radio_button :icon, icon, id: "project_icon_#{index}", class: 'project_icon_radio_btn hidden' %>
-                <%= form.label index, image_tag("project_icons/#{icon}"), :for => "project_icon_#{index}" %>
+                <%= form.label index, image_tag("project_icons/#{icon}.png"), :for => "project_icon_#{index}" %>
               <% end %>
           </div>
         </div>
@@ -37,37 +37,35 @@
           <%= form.label :end_date %>
           <%= form.date_field :end_date, use_month_numbers: true, class: "form-control" %>
         </div>
-        <div class="form-group invite_member_box">
-          <!-- <div class="form_inner_form_title"> -->
-          <%= form.label t("label.project_new.share_member") %>
-          <!-- </div> -->
+        <!-- <div class="form-group invite_member_box">
+          <%#= form.label t("label.project_new.share_member") %>
           <ul class="form_inner_form_box">
-            <% if @members %>
-              <% @members.each do |member| %>
+            <%# if @members %>
+              <%# @members.each do |member| %>
               <li>
-                <span><%= t("label.project_new.member_title") %></span>
-                <input type="textbox" value="<%= User.find(member.user_id).email %>" name="invite_emails[member]" class="form-control member_email_input">
+                <span><%#= t("label.project_new.member_title") %></span>
+                <input type="textbox" value="<%#= User.find(member.user_id).email %>" name="invite_emails[member]" class="form-control member_email_input">
               </li>
-              <% end %>
-            <% end %>
-            <% if @inviting_members %>
-              <% @inviting_members.each do |inviting_member| %>
+              <%# end %>
+            <%# end %>
+            <%# if @inviting_members %>
+              <%# @inviting_members.each do |inviting_member| %>
               <li>
-                <span><%= t("label.project_new.member_title") %></span>
-                <input type="textbox" value="<%= inviting_member.invited_email %>" name="invite_emails[member]" class="form-control member_email_input">
+                <span><%#= t("label.project_new.member_title") %></span>
+                <input type="textbox" value="<%#= inviting_member.invited_email %>" name="invite_emails[member]" class="form-control member_email_input">
               </li>
-              <% end %>
-            <% end %>
-            <% if @left_invite_num %>
-              <% @left_invite_num.times do %>
+              <%# end %>
+            <%# end %>
+            <%# if @left_invite_num %>
+              <%# @left_invite_num.times do %>
               <li>
-                <span><%= t("label.project_new.member_title") %></span>
+                <span><%#= t("label.project_new.member_title") %></span>
                 <input type="textbox" name="invite_emails[member]" class="form-control member_email_input">
               </li>
-              <% end %>
-            <% end %>
+              <%# end %>
+            <%# end %>
           </ul>
-        </div>
+        </div> -->
       </section>
     </div>
     <div class="form_btns_box">
