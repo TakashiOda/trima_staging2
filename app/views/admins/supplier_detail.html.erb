@@ -28,19 +28,19 @@
       </tr>
       <tr>
         <td class="supplier_detail_table_front">代表者氏名</td>
-        <td class="supplier_detail_table_back"><%=@supplier_profile.representative_name %></td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.representative_name if @supplier_profile.representative_name%></td>
       </tr>
       <tr>
         <td class="supplier_detail_table_front">代表者氏名カナ</td>
-        <td class="supplier_detail_table_back"><%=@supplier_profile.representative_kana %></td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.representative_kana if @supplier_profile.representative_kana%></td>
       </tr>
       <tr>
         <td class="supplier_detail_table_front">担当者氏名</td>
-        <td class="supplier_detail_table_back"><%=@supplier_profile.manager_name %></td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.manager_name if @supplier_profile.manager_name %></td>
       </tr>
       <tr>
         <td class="supplier_detail_table_front">担当者氏名カナ</td>
-        <td class="supplier_detail_table_back"><%=@supplier_profile.manager_name_kana %></td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.manager_name_kana if @supplier_profile.manager_name_kana %></td>
       </tr>
       <tr>
         <td class="supplier_detail_table_front">郵便番号</td>
@@ -49,19 +49,15 @@
       <tr>
         <td class="supplier_detail_table_front">住所</td>
         <td class="supplier_detail_table_back">
-          <%= Prefecture.find(@supplier_profile.prefecture_id).local_name %>
-          <%= Town.find(@supplier_profile.town_id).jp_name %>
-          <%=@supplier_profile.detail_address%>
-          <%=@supplier_profile.building%>
+          <%= @supplier_profile.prefecture if @supplier_profile.prefecture %>
+          <%= @supplier_profile.town if @supplier_profile.town %>
+          <%= @supplier_profile.detail_address if @supplier_profile.detail_address %>
+          <%= @supplier_profile.building if @supplier_profile.building %>
         </td>
       </tr>
       <tr>
-        <td class="supplier_detail_table_front">エリア</td>
-        <td class="supplier_detail_table_back"><%= Area.find(@supplier_profile.area_id).local_name if !@supplier_profile.area_id.nil? %></td>
-      </tr>
-      <tr>
         <td class="supplier_detail_table_front">電話</td>
-        <td class="supplier_detail_table_back"><%=@supplier_profile.phone%></td>
+        <td class="supplier_detail_table_back"><%=@supplier_profile.phone %></td>
       </tr>
     </table>
   </div>
@@ -115,10 +111,10 @@
             <% if @activity_business.apply_suuplier_address %>
               契約者住所と同じ
             <% else %>
-              <%= Area.find(@activity_business.area_id).local_name if !@activity_business.area_id.nil? %>
+              <%#= Area.find(@activity_business.area_id).local_name if !@activity_business.area_id.nil? %>
               <%= "〒#{@activity_business.post_code}" if !@activity_business.post_code.blank? %>
-              <%= Prefecture.find(@activity_business.prefecture_id).local_name %>
-              <%= Town.find(@activity_business.town_id).jp_name %>
+              <%= @activity_business.prefecture_id %>
+              <%= @activity_business.town_id %>
               <%=@activity_business.detail_address%>
               <%=@activity_business.building%>
             <% end %>
