@@ -41,7 +41,6 @@ class SuppliersController < ApplicationController
     end
   end
 
-
   def show
     @supplier = Supplier.find(params[:id])
     @supplier_profile = @supplier.supplier_profile
