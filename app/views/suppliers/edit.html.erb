@@ -110,10 +110,10 @@
     submitBtn.classList.add('need_submit');
   }
 
-  const selectElement = document.querySelector('#post_image');
-  function image_input_btn() {
-    selectElement.click();
-  }
+  // const selectElement = document.querySelector('#post_image');
+  // function image_input_btn() {
+  //   selectElement.click();
+  // }
   // function fullFillPostCode() {
   //   const code3 = document.querySelector('#post_code_input3').value;
   //   const code4 = document.querySelector('#post_code_input4').value;
@@ -141,14 +141,6 @@
   //   const hiddenPostCode = document.querySelector('#hidden_post_code');
   //   hiddenPostCode.value = fullCode;
   // }
-  function prefectureChange(obj) {
-    // const code3 = document.querySelector('#post_code_input3').value;
-    // const code4 = document.querySelector('#post_code_input4').value;
-    // const fullCode = code3 + code4;
-    console.log(obj);
-    // const hiddenPostCode = document.querySelector('#hidden_post_code');
-    // hiddenPostCode.value = fullCode;
-  }
 
   // document.getElementById('post_image').addEventListener('change', function (e) {
   //   const file = e.target.files[0];
@@ -160,23 +152,23 @@
   //   before_img.classList.toggle("hidden");
   // });
 
-  function hasChangeArea(obj) {
-    const townSelectors = document.querySelectorAll("div.town_select");
-    for (var i = 0; i < townSelectors.length; i++) {
-      const townSelectItem = townSelectors[i];
-      townSelectItem.classList.add('hidden');
-    }
-
-    const selectedAreaNum = obj.value;
-    const targetId = `area_${selectedAreaNum}`;
-    const targetTownSelectBox = document.getElementById(`${targetId}`);
-    targetTownSelectBox.classList.remove('hidden');
-  }
-
-  function hasSelectTown(obj) {
-    const targetTownSelectBox = document.getElementById('hidden_town_field');
-    targetTownSelectBox.value = obj.value;
-  }
+  // function hasChangeArea(obj) {
+  //   const townSelectors = document.querySelectorAll("div.town_select");
+  //   for (var i = 0; i < townSelectors.length; i++) {
+  //     const townSelectItem = townSelectors[i];
+  //     townSelectItem.classList.add('hidden');
+  //   }
+  //
+  //   const selectedAreaNum = obj.value;
+  //   const targetId = `area_${selectedAreaNum}`;
+  //   const targetTownSelectBox = document.getElementById(`${targetId}`);
+  //   targetTownSelectBox.classList.remove('hidden');
+  // }
+  //
+  // function hasSelectTown(obj) {
+  //   const targetTownSelectBox = document.getElementById('hidden_town_field');
+  //   targetTownSelectBox.value = obj.value;
+  // }
 </script>
 
 <style lang="scss">
