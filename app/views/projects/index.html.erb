@@ -31,7 +31,7 @@
           <% @owns.each do |own| %>
             <li>
               <%= link_to project_trip_managers_home_path(own), class: 'project_link' do %>
-                <%= image_tag "project_icons/#{own.icon}", class: 'project_icon' %>
+                <%= image_tag "project_icons/#{own.icon}.png", class: 'project_icon' %>
                 <div class="project_title">
                   <span class="project_title_text"><%= own.name %></span>
                   <div class="date_item">
