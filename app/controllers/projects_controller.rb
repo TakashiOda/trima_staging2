@@ -60,10 +60,10 @@ class ProjectsController < ApplicationController
     @user = current_user
     @project = Project.find(params[:id])
     if @project.update(project_params)
-      @project.replace_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
-      @project.replace_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
-      @project.replace_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
-      @project.replace_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
+      # @project.replace_member(params[:invite_emails][:member], current_user) #Projectのモデルメソッド
+      # @project.replace_member(params[:invite_emails][:member2], current_user) #Projectのモデルメソッド
+      # @project.replace_member(params[:invite_emails][:member3], current_user) #Projectのモデルメソッド
+      # @project.replace_member(params[:invite_emails][:member4], current_user) #Projectのモデルメソッド
       # redirect_to project_trip_managers_home_path(@project)
       redirect_to projects_path
     else
