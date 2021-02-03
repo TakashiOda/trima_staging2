@@ -1,118 +1,268 @@
 <div class="supplier_show_content_inside">
+  <div class="supplier_show_top_box">
+    <div class="supplier_show_help_btn">
+      ヘルプ<i class="fas fa-question-circle"></i>
+    </div>
+  </div>
   <div class="supplier_info_box"><!--メインコンテンツorg-->
-    <div class="info_list_box_title">
-      <div>契約者情報</div>
-      <div>
-        <% unless @supplier.supplier_profile.nil? %>
-          <%= link_to "編集", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
+    <%= link_to edit_supplier_path(current_supplier) do %>
+    <!-- <div class="info_list_box_title"> -->
+      <!-- <div class="activity_business_info_item_title">
+        <i class="fas fa-user-circle"></i>アカウント情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+      </div> -->
+      <div class="activity_business_info_item_title">
+        <div class="title_front">
+          <i class="fas fa-user-circle"></i>アカウント情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+        </div>
+        <!-- <div class="title_back">
+          <i class="fas fa-check-circle"></i>
+        </div> -->
+      </div>
+      <!-- <div>
+        <%# if !@activity_business.nil? && @activity_business.is_approved %>
+          <div class="activity_business_status is_approved">
+            承認済み
+          </div>
+        <%# else %>
+          <%# if !@activity_business.nil? && @activity_business.status == 'inputing' %>
+            <div class="activity_business_status inputting">
+              未承認
+            </div>
+          <%# else %>
+            <div class="activity_business_status send_approve">
+              承認待ち
+            </div>
+          <%# end %>
+        <%# end %>
+      </div> -->
+    <!-- </div> -->
+      <div id="supplier_info_contents">
+        <% if @supplier_profile.nil? %>
+          <div class="info_list_box_contents">
+            <div>契約者情報を入力してください</div>
+          </div>
+        <% else %>
+          <div class="info_list_box_contents">
+            <table class="info_list_table">
+              <tr>
+                <th class="supplier_show_info_title">ご契約社名</th>
+                <td><%= @supplier.name if @supplier.name %></td>
+              </tr>
+              <tr>
+                <th class="supplier_show_info_title">代表者名</th>
+                <td><%= @supplier_profile.representative_name if !@supplier_profile.nil? %></td>
+              </tr>
+              <tr>
+                <th class="supplier_show_info_title">ご契約住所</th>
+                <td>
+                  <%= "〒#{@supplier_profile.post_code[0,3]}-#{@supplier_profile.post_code[3,4]}" if !@supplier_profile.nil? %>
+                  <%= @supplier_profile.prefecture if !@supplier_profile.nil? %>
+                  <%= @supplier_profile.town if !@supplier_profile.nil? %>
+                  <%= @supplier_profile.detail_address if @supplier_profile.detail_address %>
+                  <%= @supplier_profile.building if @supplier_profile.building %>
+                </td>
+              </tr>
+              <tr>
+                <th class="supplier_show_info_title">お電話番号</th>
+                <td>
+                  <% if @supplier_profile.phone && @supplier_profile.phone.length == 10 %>
+                    <%= "#{@supplier_profile.phone[0,3]}-❇︎❇︎❇︎-#{@supplier_profile.phone[6,4]}" %>
+                  <% elsif @supplier_profile.phone && @supplier_profile.phone.length == 11 %>
+                    <%= "#{@supplier_profile.phone[0,3]}-❇︎❇︎❇︎❇︎-#{@supplier_profile.phone[7,4]}" %>
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          </div>
         <% end %>
       </div>
+    <% end %>
+  </div>
+  <div class="gap_with_border">
+    <div class="gap_title">
+      以下はユーザーに表示される情報です
     </div>
-    <div id="supplier_info_contents">
-      <% if @supplier_profile.nil? %>
-        <div class="info_list_box_contents">
-          <div>まだ契約者情報がありません</div>
-          <%= link_to "契約者情報を登録", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
-        </div>
-      <% else %>
-        <div class="info_list_box_contents">
-          <table class="info_list_table">
+  </div>
+  <div class="activity_business_info_items">
+    <div class="activity_business_info_item">
+      <% if !@activity_business.nil? %>
+        <%= link_to edit_supplier_activity_business_path(current_supplier, @activity_business) do %>
+        <div class="activity_business_info_item_card">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-address-card"></i>体験事業のプロフィール<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="title_back">
+              <% if @activity_business.profile_image.blank? || @activity_business.name.nil? || @activity_business.profile_text.nil? %>
+                <span class="not_input_mark">未入力あり</span>
+              <% else %>
+                <i class="fas fa-check-circle"></i>
+              <% end %>
+            </div>
+          </div>
+          <table>
             <tr>
-              <td class="td_front">ご契約社名</td>
-              <td class="td_end"><%= @supplier.name if @supplier.name %></td>
+              <th class="supplier_show_info_title">事業名</th>
+              <td><%= @activity_business.name ? @activity_business.name : "登録されていません" %></td>
             </tr>
             <tr>
-              <td class="td_front">ご契約の住所</td>
-              <td class="td_end">
-                <%#= Prefecture.find(@supplier_profile .prefecture_id).local_name if @supplier_profile.prefecture_id %>
-                <%#= Town.find(@supplier_profile.town_id).jp_name if @supplier_profile.town_id %>
-                <%#= @supplier_profile.detail_address if @supplier_profile.detail_address %>
-                <%#= @supplier_profile.building if @supplier_profile.building %>
-              </td>
+              <th class="supplier_show_info_title">紹介文</th>
+              <td><%= @activity_business.profile_text ? @activity_business.profile_text : "登録されていません" %></td>
             </tr>
           </table>
+        </div>
+        <% end %>
+      <% else %>
+        <div class="activity_business_info_item_card link_disable">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-address-card"></i>体験事業のプロフィール<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="title_back">
+              <span class="not_input_mark">未入力あり</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="activity_business_info_item">
+      <% if !@activity_business.nil? %>
+        <%= link_to supplier_activity_business_edit_guides_path(current_supplier, @activity_business) do %>
+        <div class="activity_business_info_item_card">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-users"></i>ガイド情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="title_back">
+              <% if @guides.any? %>
+                <i class="fas fa-check-circle"></i>
+              <% else %>
+                <span class="not_input_mark">未入力あり</span>
+              <% end %>
+            </div>
+          </div>
+          <% if @guides.any? %>
+          <ul class="supplier_show_guide_images">
+            <% @guides.each do |guide| %>
+              <%= image_tag guide.avatar.to_s, class: 'supplier_show_guide_image' %>
+            <% end %>
+          </ul>
+          <% end %>
+        </div>
+        <% end %>
+      <% else %>
+        <div class="activity_business_info_item_card link_disable">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-users"></i>ガイド情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="title_back">
+              <span class="not_input_mark">未入力あり</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="activity_business_info_item">
+      <% if !@activity_business.nil? %>
+        <%= link_to supplier_activity_business_edit_cansel_path(current_supplier, @activity_business) do %>
+        <div class="activity_business_info_item_card">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-ban"></i>キャンセル設定<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="title_back">
+              <% if @activity_business.cansel_input_done == true %>
+                <i class="fas fa-check-circle"></i>
+              <% else %>
+                <span class="not_input_mark">未設定</span>
+              <% end %>
+            </div>
+          </div>
+          <% if @activity_business.cansel_input_done == true %>
+            <table>
+              <tr>
+                <th class="supplier_show_info_title">キャンセル期限</th>
+                <td>
+                  <% if @activity_business.no_charge_cansel_before == "the_day_before" %>
+                    前日までキャンセル無料
+                  <% elsif @activity_business.no_charge_cansel_before == "three_days_before"%>
+                    ３日前までキャンセル無料
+                  <% else %>
+                    １週間前までキャンセル無料
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          <% end %>
+        </div>
+        <% end %>
+      <% else %>
+        <div class="activity_business_info_item_card link_disable">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-ban"></i>キャンセル設定<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="title_back">
+              <span class="not_input_mark">未入力あり</span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="activity_business_info_item">
+      <% if !@activity_business.nil? %>
+        <%= link_to supplier_activity_business_edit_insurance_path(current_supplier, @activity_business) do %>
+        <div class="activity_business_info_item_card">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-shield-alt"></i>加入保険の情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <% if @activity_business.has_insurance && @activity_business.insurance_image.blank?%>
+              <div class="title_back">
+                <span class="not_input_mark">未入力あり</span>
+              </div>
+            <% end %>
+            <div class="title_back">
+              <% if @activity_business.insurance_input_done == true %>
+                <i class="fas fa-check-circle"></i>
+              <% elsif @activity_business.has_insurance && @activity_business.insurance_image.blank?%>
+                <span class="not_input_mark">未入力あり</span>
+              <% else %>
+                <span class="not_input_mark">未設定</span>
+              <% end %>
+            </div>
+          </div>
+          <% if @activity_business.insurance_input_done == true %>
+            <table>
+              <tr>
+                <th class="supplier_show_info_title">保険加入</th>
+                <td><%= @activity_business.has_insurance ? "加入している" : "加入なし" %></td>
+              </tr>
+              <% if @activity_business.has_insurance %>
+              <tr>
+                <th class="supplier_show_info_title">保険証書</th>
+                <td><%= @activity_business.insurance_image.blank? ? "未アップロード" : "アップロード済" %></td>
+              </tr>
+              <% end %>
+          </table>
+          <% end %>
+        </div>
+        <% end %>
+      <% else %>
+        <div class="activity_business_info_item_card link_disable">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-shield-alt"></i>加入保険の情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="title_back">
+              <span class="not_input_mark">未入力あり</span>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
   </div>
-  <div class="activity_business_info_box"><!--メインコンテンツorg-->
-    <% if !@activity_business.nil? %>
-      <div class="info_list_box_title">
-        <div class="info_list_box_title_inner">
-          企業情報
-          <% if @activity_business.is_approved %>
-            <div class="activity_business_status is_approved">
-              承認済み
-            </div>
-          <% else %>
-            <% if @activity_business.status == 'inputing' %>
-              <div class="activity_business_status inputting">
-                まだ事業者申請がされていません
-              </div>
-            <% else %>
-              <div class="activity_business_status send_approve">
-                承認待ち
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-        <div>
-          <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business), class: "org_edit_btn" %>
-        </div>
-      </div>
-      <div id="activity_business_info_contents" class="">
-        <div class="info_list_box_contents">
-          <table class="info_list_table">
-            <tr>
-              <td class="td_front">体験事業名</td>
-              <td class="td_end"><%= current_supplier.activity_business.name if current_supplier.activity_business.name %></td>
-            </tr>
-            <tr>
-              <td class="td_front">プロフィール</td>
-              <td class="td_end">
-                <%= current_supplier.activity_business.profile_text if current_supplier.activity_business.profile_text %>
-              </td>
-            </tr>
-            <% if !@activity_business.apply_suuplier_address %>
-            <tr>
-              <td class="td_front">都道府県・エリア</td>
-              <td class="td_end">
-                <%= Prefecture.find(current_supplier.activity_business.prefecture_id).local_name if current_supplier.activity_business.prefecture_id %> /
-                <%= Area.find(current_supplier.activity_business.area_id).local_name if current_supplier.activity_business.area_id %>
-              </td>
-            </tr>
-            <% end %>
-            <tr>
-              <td class="td_front">登録ガイド</td>
-              <td class="td_end">
-                <div class="supplier_show_guide_items">
-                <% if current_supplier.activity_business.guides.any? %>
-                  <% current_supplier.activity_business.guides.each do |guide| %>
-                    <div class="supplier_show_guide_item_box">
-                      <div class="supplier_show_guide_item_box__image"><%= image_tag guide.avatar.to_s, class: "user_avatar" %></div>
-                      <div class="supplier_show_guide_item_box__name"><%= guide.name %></div>
-                    </div>
-                  <% end %>
-                <% else %>
-                  <div>ガイドは登録されていません</div>
-                <% end %>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    <% else %>
-      <div class="info_list_box_title_no_info">
-        <div class="info_list_box_title_inner">企業情報</div>
-        <div class="info_list_box_no_bix_info">
-          <div>まだ事業情報がありません</div>
-          <%= link_to "体験事業を登録", new_supplier_activity_business_path(current_supplier), class: "org_edit_btn" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <!--事業者情報---------------------------------------------------------------->
 </div>
 
 <style lang="scss">
@@ -120,8 +270,8 @@
     display: flex;
   }
   .activity_business_status {
-    padding: 2px 20px;
-    font-size: 13px;
+    padding: 4px 20px;
+    font-size: 16px;
     color: #fff;
     margin-left: 15px;
     border-radius: 40px;
@@ -135,7 +285,108 @@
     background: #ff9292;
   }
   .inputting {
-    background: #b3b3b3;
+    background: #ff9292;
+  }
+  .activity_business_info_contents {
+    display: flex;
+    justify-content: space-between;
+  }
+  .activity_business_info_items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .activity_business_info_item {
+    width: 49%;
+    /* padding: 10px; */
+    margin-bottom: 20px;
+  }
+  .activity_business_info_item_card {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 8px !important;
+    height: 130px;
+  }
+  .link_disable {
+    opacity: 0.5;
+  }
+  .activity_business_info_item_title {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .activity_business_info_item_title .title_front{
+    font-size: 21px;
+    color: #626262;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+  .activity_business_info_item_title svg {
+    color: #35a4bf;
+    width: 50px !important;
+    height: 35px;
+  }
+  .title_back {
+    /* width: 30%; */
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .title_back svg {
+      margin: 0;
+      display: flex;
+      width: 30px !important;
+      height: 30px;
+      color: #74d574;
+  }
+  span.not_input_mark {
+    background: #ff9898;
+    padding: 0px 15px;
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 15px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+  }
+  .gap_title {
+    display: flex;
+    align-items: center; /* 垂直中心 */
+    justify-content: center; /* 水平中心 */
+    margin-bottom: 20px;
+    color:#b3b3b3;
+    font-weight: bold;
+  }
+  .gap_title:before, .gap_title:after {
+    border-top: 3px solid;
+    content: "";
+    width: 30%; /* 線の長さ */
+    color:#b3b3b3;
+  }
+  .gap_title:before {
+    margin-right: 1em; /* 文字の右隣 */
+  }
+  .gap_title:after {
+    margin-left: 1em; /* 文字の左隣 */
+  }
+  ul.supplier_show_guide_images {
+    /* height: 100%; */
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  img.supplier_show_guide_image {
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  .user_show_content table td {
+    font-size: 14px;
+    color: #6e6e6e;
   }
 
 </style>

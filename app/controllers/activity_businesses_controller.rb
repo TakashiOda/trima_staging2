@@ -25,13 +25,27 @@ class ActivityBusinessesController < ApplicationController
 
   def edit
     @supplier = current_supplier
-    @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
-    # @activity_business.insurance_image.cache! unless @activity_business.insurance_image.blank?
+    @activity_business = @supplier.activity_business
+  end
+
+  def edit_cansel
+    @supplier = current_supplier
+    @activity_business = @supplier.activity_business
+  end
+
+  def edit_insurance
+    @supplier = current_supplier
+    @activity_business = @supplier.activity_business
+  end
+
+  def edit_guides
+    @supplier = current_supplier
+    @activity_business = @supplier.activity_business
+    @guide = @activity_business.guides.build
   end
 
   def update
     # binding.pry
-    # params[:activity_business][:profile_image]
     @supplier = current_supplier
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity_business.update_attributes(activity_biz_params)
@@ -42,6 +56,11 @@ class ActivityBusinessesController < ApplicationController
       @activity_business.town_id = nil
       @activity_business.detail_address = nil
       @activity_business.building = nil
+    end
+    if params["input_type"] == "cansel_setting"
+      @activity_business.cansel_input_done = true
+    elsif params["input_type"] == "insurance_setting"
+      @activity_business.insurance_input_done = true
     end
     if @activity_business.save
       flash[:notice] = '体験事業の情報を更新しました'

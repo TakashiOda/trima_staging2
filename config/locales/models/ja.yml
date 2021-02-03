@@ -41,12 +41,14 @@ ja:
         representative_kana: 代表者カナ
         manager_name: 予約担当者氏名
         manager_name_kana: 予約担当者カナ
+        prefecture: 都道府県
         prefecture_id: 都道府県
         area_id: エリア
+        town: 市町村名
         town_id: 市町村名
         detail_address: 以降の住所
         building: 建物名・部屋番号
-        post_code: 郵便番号（ハイフンあり・半角数字）
+        post_code: 郵便番号（ハイフンなし・半角数字）
         phone: 電話番号（ハイフンなし・半角数字）
         contract_plan: 契約プラン
         is_suspended: 休止中

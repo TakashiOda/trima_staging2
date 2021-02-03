@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_19_085225) do
+ActiveRecord::Schema.define(version: 2021_02_03_091655) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -138,6 +138,9 @@ ActiveRecord::Schema.define(version: 2021_01_19_085225) do
     t.boolean "is_approved", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "profile_input_done", default: false, null: false
+    t.boolean "cansel_input_done", default: false, null: false
+    t.boolean "insurance_input_done", default: false, null: false
     t.index ["area_id"], name: "index_activity_businesses_on_area_id"
     t.index ["guide_certification"], name: "index_activity_businesses_on_guide_certification"
     t.index ["has_insurance"], name: "index_activity_businesses_on_has_insurance"

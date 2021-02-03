@@ -1,5 +1,4 @@
-<script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
-<%= form_for @supplier, html: { class: "h-adr" } do |form| %>
+<%= form_for @supplier do |form| %>
 <div class="form_title">
   <h3>契約者情報を編集</h3>
 </div>
@@ -34,15 +33,17 @@
           <div class="post_code_box">
             <span>〒</span>
             <!-- <input class="p-postal-code form-control" type="text" id="post_code_input3" size="7" maxlength="7" oninput="post_code3()"> -->
-            <input
+            <!-- <input
               class="p-postal-code form-control"
               type="text"
               id="post_code_input3"
               size="7"
               maxlength="7"
               oninput="post_code3()"
-              value="<%= @supplier.supplier_profile.post_code if !@supplier.supplier_profile.nil? && !@supplier.supplier_profile.post_code.nil? %>"
-            >
+              value="<%#= @supplier.supplier_profile.post_code if !@supplier.supplier_profile.nil? && !@supplier.supplier_profile.post_code.nil? %>"
+            > -->
+            <%= pf.text_field :post_code, size: 7, max: 7, id: "supplier_address_post_code",class: "form-control", oninput: 'hasInput()'%>
+            <button type="button" name="button" id="supplier_address_get_btn">住所検索</button>
             <!-- <input
               class="p-postal-code form-control"
               type="text"
@@ -63,20 +64,19 @@
               value="<%#= @supplier.supplier_profile.post_code[3, 4] if !@supplier.supplier_profile.nil? && !@supplier.supplier_profile.post_code.nil?%>"
             > -->
           </div>
-          <%= pf.hidden_field :post_code, id: 'hidden_post_code' %>
+          <%#= pf.hidden_field :post_code, id: 'hidden_post_code' %>
         </div>
         <div class="form-group">
-          <span class="p-country-name" style="display:none;">Japan</span>
           <%= pf.label :prefecture %>
-          <%= pf.text_field :prefecture, class: "p-region form-control", oninput: 'hasInput()', onchange: 'prefectureChange()' %>
+          <%= pf.text_field :prefecture, id: "supplier_pref", class: "form-control", oninput: 'hasInput()', onchange: 'prefectureChange()' %>
         </div>
         <div class="form-group">
           <%= pf.label :town %>
-          <%= pf.text_field :town, class: "p-locality form-control", oninput: 'hasInput()' %>
+          <%= pf.text_field :town, id: "supplier_city", class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :detail_address %>
-          <%= pf.text_field :detail_address, minlength: 3, maxlength: 100, class: "p-street-address p-extended-address form-control", oninput: 'hasInput()' %>
+          <%= pf.text_field :detail_address, id: "supplier_address", minlength: 3, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :building %>
