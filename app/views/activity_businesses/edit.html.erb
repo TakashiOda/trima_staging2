@@ -21,7 +21,7 @@
               <% end %>
             </div>
             <div id="user_edit_image_upload_btn_box">
-              <%= form.file_field :profile_image, id: 'post_image', oninput: 'hasInput()' %>
+              <%= form.file_field :profile_image, id: 'post_image', onChange: 'imagePost(this)',oninput: 'hasInput()' %>
               <span id="user_edit_image_upload_btn" onclick="image_input_btn()"><i class="fas fa-camera"></i></span>
             </div>
           </div>
@@ -102,7 +102,7 @@
           <h3>対応可能言語</h3>
         </div>
         <div class="form-group language_activity_list">
-          <%= form.collection_check_boxes :language_ids, Language.where(id: [3,26,28]), :id, :name, {}, {:onChange=>"hasInput();"} %>
+          <%= form.collection_check_boxes :language_ids, Language.where(id: [3,26,28]), :id, :name, {checked: @language_ids}, {:onChange=>"hasInput();"} %>
         </div>
       </section>
       <section class="form_section">
@@ -206,21 +206,6 @@
     </div>
     <div class="user_show_info_button_box">
       <div class="form_sidebtns_container">
-        <!-- <div class="biz_form_status_toggle_box">
-          <div class="biz_form_status_toggle_box_title">
-            この内容で事業者申請しますか？
-          </div>
-          <div class="biz_form_status_toggle_radio_items">
-            <div class="biz_form_status_toggle_radio_item on">
-              <%#= form.radio_button :status, :inputing, oninput: 'hasInput()' %>
-              <%#= form.label :status, "下書き", {value: :inputing, style: "display: inline-block;"} %>
-            </div>
-            <div class="biz_form_status_toggle_radio_item off">
-              <%#= form.radio_button :status, :send_approve, oninput: 'hasInput()'%>
-              <%#= form.label :status, "承認申請", {value: :send_approve, style: "display: inline-block;"} %>
-            </div>
-          </div>
-        </div> -->
         <div class="form_sidebtns">
           <div class="form_sidebtn">
             <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
@@ -515,8 +500,9 @@
     }
   }
 
-  const selectElement = document.getElementById('post_image');
+
   function image_input_btn() {
+    const selectElement = document.getElementById('post_image');
     selectElement.click();
   }
 
@@ -531,7 +517,6 @@
     const ext = getExt(fileName);
     const extArr = ['pdf', 'PDF', 'jpg', 'jpeg','JPG','JPEG', 'PNG', 'png']
     const isContain = extArr.indexOf(ext);
-    console.log(isContain);
     if (isContain == -1) {
       alert('ファイル形式が正しくありません',
             'jpg、png、pdfのいずれかの形式のファイルを選んでください');
@@ -545,19 +530,32 @@
   	if (pos === -1) return '';
   	return filename.slice(pos + 1);
   }
-
-  document.getElementById('post_image').addEventListener('change', function (e) {
-    // 1枚だけ表示する
-    const file = e.target.files[0];
-    // ファイルのブラウザ上でのURLを取得する
+  function imagePost(e) {
+    const file = e.files[0];
+  	// console.log(file);
     const blobUrl = window.URL.createObjectURL(file);
-    // img要素に表示
+    // console.log(blobUrl);
     const post_img = document.getElementById('user_image_prev');
     post_img.src = blobUrl;
     post_img.classList.toggle("hidden");
     const before_img = document.getElementById('user_present_image');
     before_img.classList.toggle("hidden");
-  });
+  }
+
+  // document.getElementById('post_image').addEventListener('change', function (e) {
+  //   // 1枚だけ表示する
+  //   const file = e.target.files[0];
+  //   console.log(file);
+  //
+  //   // ファイルのブラウザ上でのURLを取得する
+  //   const blobUrl = window.URL.createObjectURL(file);
+  //   // img要素に表示
+  //   const post_img = document.getElementById('user_image_prev');
+  //   post_img.src = blobUrl;
+  //   post_img.classList.toggle("hidden");
+  //   const before_img = document.getElementById('user_present_image');
+  //   before_img.classList.toggle("hidden");
+  // });
 
   function applySupplierAddress(obj) {
     var isChecked = obj.checked;

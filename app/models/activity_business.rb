@@ -6,9 +6,9 @@ class ActivityBusiness < ApplicationRecord
   has_many :guides, dependent: :destroy
   accepts_nested_attributes_for :guides, allow_destroy: true
 
-  has_many :activity_languages
-  has_many :languages, through: :activity_languages
-  accepts_nested_attributes_for :activity_languages
+  has_many :activity_languages, dependent: :destroy
+  has_many :languages, through: :activity_languages, dependent: :destroy
+  accepts_nested_attributes_for :activity_languages, allow_destroy: true
 
   # uploader ***********************************************
   mount_uploader :profile_image, AvatarUploader
@@ -38,7 +38,7 @@ class ActivityBusiness < ApplicationRecord
   validates :detail_address, length: { maximum: 100, message: "は最大100文字まで" }, allow_blank: true
   validates :building, length: { maximum: 100, message: "は最大100文字まで" }, allow_blank: true
   validates :no_charge_cansel_before, inclusion: { in: %w(the_day_before three_days_before a_week_before) }, allow_blank: true
-  validates :status, inclusion: { in: %w(inputing send_approve) }, allow_blank: true
+  # validates :status, inclusion: { in: %w(inputting send_approve) }, allow_blank: true
   validates :guide_certification, length: { maximum: 100, message: "は最大100文字まで" }, allow_blank: true
   validates :has_insurance, inclusion: { in: [true, false] }, allow_blank: true
   # validates :insurance_image, presence: true, if: :has_insurance?

@@ -93,6 +93,7 @@ Rails.application.routes.draw do
     get '/activity_businesses/:id/edit_guides', to: 'activity_businesses#edit_guides', as: 'activity_business_edit_guides'
     get '/activity_businesses/:id/edit_cansel', to: 'activity_businesses#edit_cansel', as: 'activity_business_edit_cansel'
     get '/activity_businesses/:id/edit_insurance', to: 'activity_businesses#edit_insurance', as: 'activity_business_edit_insurance'
+    get '/activity_businesses/:id/send_approve', to: 'activity_businesses#send_approve', as: 'activity_business_send_approve'
     get "dashboard", to: "suppliers#dashboard", as: :dashboard
     get "drafts_activities", to: "activities#drafts_activities", as: :drafts_activities
     get "published_activities", to: "activities#published_activities", as: :published_activities

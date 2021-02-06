@@ -1,41 +1,65 @@
 <div class="supplier_show_content_inside">
-  <div class="supplier_show_top_box">
-    <div class="supplier_show_help_btn">
-      ヘルプ<i class="fas fa-question-circle"></i>
+  <div class="supplier_show_top_help_box">
+    <div class="supplier_show_help_btn" onclick="showHelp()">
+      <i class="fas fa-question-circle"></i>ヘルプ
+    </div>
+  </div>
+  <div class="supplier_show_help_modal hidden" id="help_modal">
+    <div class="help_modal_inner">
+      <div class="closeBtn" onclick="closeHelp()">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="help_modal_inner_top">
+        <div class="title">
+          アカウント情報登録について
+        </div>
+      </div>
+      <div class="help_modal_content">
+
+        aaaaaaaaaaaaaaaaaaaaa
+      </div>
+    </div>
+  </div>
+  <div class="supplier_show_top_approve_box">
+    <div class="supplier_show_approve_box">
+      <div class="status_title">
+        承認ステータス
+      </div>
+      <% if @activity_business.status == 'inputting' && !@activity_business.is_approved %>
+        <div class="status">
+          未承認
+        </div>
+      <% elsif @activity_business.status == 'send_approve' && !@activity_business.is_approved %>
+        <div class="status wait">
+          承認待ち
+        </div>
+      <% else %>
+        <div class="status done">
+          承認済
+        </div>
+      <% end %>
+      <% if @activity_business.status == 'inputting' %>
+        <% if !@activity_business.nil? %>
+          <%=link_to supplier_activity_business_send_approve_path(current_supplier, @activity_business), class: "approve_btn" do%>
+            <i class="fas fa-envelope"></i>
+            <span class="favorite_text">承認申請する</span>
+          <% end %>
+        <% else %>
+          <button onclick="notYetAlert()">
+            <i class="fas fa-envelope"></i>
+            <span class="favorite_text">承認申請する</span>
+          </button>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <div class="supplier_info_box"><!--メインコンテンツorg-->
     <%= link_to edit_supplier_path(current_supplier) do %>
-    <!-- <div class="info_list_box_title"> -->
-      <!-- <div class="activity_business_info_item_title">
-        <i class="fas fa-user-circle"></i>アカウント情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
-      </div> -->
       <div class="activity_business_info_item_title">
         <div class="title_front">
           <i class="fas fa-user-circle"></i>アカウント情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
         </div>
-        <!-- <div class="title_back">
-          <i class="fas fa-check-circle"></i>
-        </div> -->
       </div>
-      <!-- <div>
-        <%# if !@activity_business.nil? && @activity_business.is_approved %>
-          <div class="activity_business_status is_approved">
-            承認済み
-          </div>
-        <%# else %>
-          <%# if !@activity_business.nil? && @activity_business.status == 'inputing' %>
-            <div class="activity_business_status inputting">
-              未承認
-            </div>
-          <%# else %>
-            <div class="activity_business_status send_approve">
-              承認待ち
-            </div>
-          <%# end %>
-        <%# end %>
-      </div> -->
-    <!-- </div> -->
       <div id="supplier_info_contents">
         <% if @supplier_profile.nil? %>
           <div class="info_list_box_contents">
@@ -93,10 +117,10 @@
               <i class="fas fa-address-card"></i>体験事業のプロフィール<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
             </div>
             <div class="title_back">
-              <% if @activity_business.profile_image.blank? || @activity_business.name.nil? || @activity_business.profile_text.nil? %>
-                <span class="not_input_mark">未入力あり</span>
-              <% else %>
+              <% if @activity_business.profile_input_done %>
                 <i class="fas fa-check-circle"></i>
+              <% else %>
+                <span class="not_input_mark">未入力あり</span>
               <% end %>
             </div>
           </div>
@@ -268,23 +292,85 @@
 <style lang="scss">
   .info_list_box_title_inner {
     display: flex;
+    position: relative;
   }
-  .activity_business_status {
-    padding: 4px 20px;
-    font-size: 16px;
+  div#help_modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: 10%;
+    background: rgba(47,47,47,0.6);
+  }
+  .help_modal_inner {
+    width: 100%;
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px 40px;
+    position: relative;
+  }
+  .title {
+    font-size: 22px;
+    font-weight: bold;
+    color: gray;
+    margin-bottom: 20px;
+  }
+  .closeBtn {
+    width: 60px;
+    height: 60px;
+    border: solid 3px gray;
+    background: #cbcbcb;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -15px;
+    right: -20px;
+  }
+  .closeBtn svg {
+    width: 45px !important;
+    height: 45px;
+    margin: 0 !important;
+  }
+  .closeBtn:hover {
+    cursor: pointer;
+    background: #e2e2e2;
+  }
+  .supplier_show_approve_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
+  .status_title {
+    font-size: 18px;
+    font-weight: bold;
+    color: gray;
+  }
+  .status {
+    background: gray;
     color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
     margin-left: 15px;
-    border-radius: 40px;
-    /* display: flex; */
-    /* align-items: center; */
   }
-  .is_approved {
+  a.approve_btn {
+    background: #5ec8e1;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-left: 20px;
+  }
+  .done {
     background: #47d23e;
   }
-  .send_approve {
-    background: #ff9292;
-  }
-  .inputting {
+  .wait {
     background: #ff9292;
   }
   .activity_business_info_contents {
@@ -390,3 +476,14 @@
   }
 
 </style>
+
+<script type="text/javascript">
+  function showHelp() {
+    const modal = document.getElementById('help_modal');
+    modal.classList.remove('hidden');
+  }
+  function closeHelp() {
+    const modal = document.getElementById('help_modal');
+    modal.classList.add('hidden');
+  }
+</script>

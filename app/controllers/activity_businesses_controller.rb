@@ -26,6 +26,12 @@ class ActivityBusinessesController < ApplicationController
   def edit
     @supplier = current_supplier
     @activity_business = @supplier.activity_business
+    if @activity_business.activity_languages.any?
+      @language_ids = @activity_business.activity_languages.pluck(:language_id)
+    else
+      @language_ids = [28]
+    end
+
   end
 
   def edit_cansel
@@ -44,8 +50,12 @@ class ActivityBusinessesController < ApplicationController
     @guide = @activity_business.guides.build
   end
 
+  def send_approve
+    @supplier = current_supplier
+    @activity_business = @supplier.activity_business
+  end
+
   def update
-    # binding.pry
     @supplier = current_supplier
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity_business.update_attributes(activity_biz_params)
@@ -59,15 +69,51 @@ class ActivityBusinessesController < ApplicationController
     end
     if params["input_type"] == "cansel_setting"
       @activity_business.cansel_input_done = true
+      if @activity_business.save
+        flash[:notice] = '体験事業の情報を更新しました'
+        redirect_to supplier_path(@supplier)
+      else
+        render :edit_cansel
+      end
     elsif params["input_type"] == "insurance_setting"
       @activity_business.insurance_input_done = true
-    end
-    if @activity_business.save
-      flash[:notice] = '体験事業の情報を更新しました'
-      redirect_to supplier_path(@supplier)
+      if @activity_business.save
+        flash[:notice] = '体験事業の情報を更新しました'
+        redirect_to supplier_path(@supplier)
+      else
+        render :edit_insurance
+      end
+    elsif params["input_type"] == "guides_input"
+      if @activity_business.save
+        flash[:notice] = '体験事業の情報を更新しました'
+        redirect_to supplier_path(@supplier)
+      else
+        render :edit_guides
+      end
+    elsif params["input_type"] == "send_approve"
+      if @activity_business.save
+        flash[:notice] = '申請が送信されました'
+        redirect_to supplier_path(@supplier)
+      else
+        render :send_approve
+      end
     else
-      render :edit
+      if !@activity_business.profile_image.blank? && @activity_business.name && @activity_business.profile_text
+        @activity_business.profile_input_done = true
+      end
+      if @activity_business.save
+        flash[:notice] = '体験事業の情報を更新しました'
+        redirect_to supplier_path(@supplier)
+      else
+        render :edit
+      end
     end
+    # if @activity_business.save
+    #   flash[:notice] = '体験事業の情報を更新しました'
+    #   redirect_to supplier_path(@supplier)
+    # else
+    #   render :edit
+    # end
   end
 
   def destroy

@@ -2,6 +2,7 @@
   <div class="form_title">
     <h3>体験事業の情報を編集</h3>
   </div>
+  <%= hidden_field_tag 'input_type', 'guides_input' %>
   <%= render 'layouts/error_messages', model: form.object %>
   <div class="user_show_content_down">
     <div class="user_show_info_items_box">
@@ -160,26 +161,6 @@
 
 <script type="text/javascript">
   (window.onload = function() {
-    //読み込み時に残り文字数カウント
-    const description = document.getElementById('activity_business_profile_text');
-    const enDescription = document.getElementById('activity_business_en_profile_text');
-    const cnDescription = document.getElementById('activity_business_cn_profile_text');
-    const twDescription = document.getElementById('activity_business_tw_profile_text');
-    changeCountAndColor(description, 'biz_japanese_description_count', 300)
-    changeCountAndColor(enDescription, 'biz_english_description_count', 300)
-    changeCountAndColor(cnDescription, 'biz_chinese_description_count', 300)
-    changeCountAndColor(twDescription, 'biz_taiwanese_description_count', 300)
-
-    const theDayBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_the_day_before");
-    const threeDaysBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_three_days_before");
-    const aWeekBeforeRadio = document.getElementById("activity_business_no_charge_cansel_before_a_week_before");
-    if (theDayBeforeRadio.checked) {
-      showExplanationWithValue('the_day_before');
-    } else if (threeDaysBeforeRadio.checked) {
-      showExplanationWithValue('three_days_before');
-    } else {
-      showExplanationWithValue('a_week_before');
-    }
 
     const guideItems = document.querySelectorAll("div.nested-fields");
     for (var i = 0; i < guideItems.length; i++) {
@@ -190,41 +171,6 @@
       const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
       guideImageInput.id = i;
     }
-
-    const insuranceCheck = document.getElementById("activity_business_has_insurance_true");
-    const checkVal = insuranceCheck.checked;
-    if (checkVal) {
-      const insuranceInput = document.getElementById("insurance_uploader_box");
-      insuranceInput.classList.remove('hidden');
-    }
-
-    // 初期でエリアに応じて市町村セレクタを分岐表示
-    const areaInput = document.getElementById('area_input');
-    if (areaInput.value !== '') {
-      const townSelectors = document.querySelectorAll("div.town_select");
-      for (var i = 0; i < townSelectors.length; i++) {
-        const townSelectItem = townSelectors[i];
-        townSelectItem.classList.add('hidden');
-      }
-      const targetId = `area_${areaInput.value}`;
-      const targetTownSelectBox = document.getElementById(`${targetId}`);
-      targetTownSelectBox.classList.remove('hidden');
-    }
-
-    // 初期で市町村セレクタを選択する
-    const townInput = document.getElementById('hidden_town_field');
-    if (townInput.value !== '') {
-      const targetId = `area_${areaInput.value}`;
-      const targetTownSelectBox = document.getElementById(`${targetId}`);
-      const select =targetTownSelectBox.children[0];
-      const options = select.options;
-      for (var i = 0; i < options.length; i++) {
-        if (options[i].value == townInput.value) {
-          options[i].selected = true;
-        }
-      }
-    }
-
   })();
 
   function hasInput() {
@@ -232,164 +178,11 @@
     submitBtn.classList.add('need_submit');
   }
 
-  function countBizDescriptionJP(obj) {
-    hasInput();
-    changeCountAndColor(obj, 'biz_japanese_description_count', 300);
-  }
-  function countBizDescriptionEN(obj) {
-    hasInput();
-    changeCountAndColor(obj, 'biz_english_description_count', 300);
-  }
-  function countBizDescriptionCN(obj) {
-    hasInput();
-    changeCountAndColor(obj, 'biz_chinese_description_count', 300);
-  }
-  function countBizDescriptionTW(obj) {
-    hasInput();
-    changeCountAndColor(obj, 'biz_taiwanese_description_count', 300);
-  }
-
-  // textを変更するtarget idと数字を入れると、数字を超えたときにtargetのtextと色を変えてくれる
-  function changeCountAndColor(obj, targetId, textNum) {
-    const leftTextTarget = document.getElementById(targetId);
-    leftTextTarget.innerHTML = textNum-obj.value.length;
-    if ((textNum-obj.value.length) < 20) {
-      leftTextTarget.style.color = 'red';
-    } else {
-      leftTextTarget.style.color = '#8a8a8a';
-    }
-  }
-
-  function toggleDescriptionTab(obj) {
-    const tabId = obj.id;
-    const japaneseTab = document.getElementById('japanese_tab');
-    const englishTab = document.getElementById('english_tab');
-    const chineseTab = document.getElementById('chinese_tab');
-    const taiwaneseTab = document.getElementById('taiwanese_tab');
-
-    const japaneseContent = document.getElementById('japanese_tab_content');
-    const englishContent = document.getElementById('english_tab_content');
-    const chineseContent = document.getElementById('chinese_tab_content');
-    const taiwaneseContent = document.getElementById('taiwanese_tab_content');
-
-    if (tabId == 'japanese_tab') {
-      japaneseTab.classList.add('active');
-      englishTab.classList.remove('active');
-      chineseTab.classList.remove('active');
-      taiwaneseTab.classList.remove('active');
-
-      japaneseContent.classList.remove('hidden');
-      englishContent.classList.add('hidden');
-      chineseContent.classList.add('hidden');
-      taiwaneseContent.classList.add('hidden');
-    } else if (tabId == 'english_tab') {
-      japaneseTab.classList.remove('active');
-      englishTab.classList.add('active');
-      chineseTab.classList.remove('active');
-      taiwaneseTab.classList.remove('active');
-
-      japaneseContent.classList.add('hidden');
-      englishContent.classList.remove('hidden');
-      chineseContent.classList.add('hidden');
-      taiwaneseContent.classList.add('hidden');
-    } else if (tabId == 'chinese_tab') {
-      japaneseTab.classList.remove('active');
-      englishTab.classList.remove('active');
-      chineseTab.classList.add('active');
-      taiwaneseTab.classList.remove('active');
-
-      japaneseContent.classList.add('hidden');
-      englishContent.classList.add('hidden');
-      chineseContent.classList.remove('hidden');
-      taiwaneseContent.classList.add('hidden');
-    } else {
-      japaneseTab.classList.remove('active');
-      englishTab.classList.remove('active');
-      chineseTab.classList.remove('active');
-      taiwaneseTab.classList.add('active');
-
-      japaneseContent.classList.add('hidden');
-      englishContent.classList.add('hidden');
-      chineseContent.classList.add('hidden');
-      taiwaneseContent.classList.remove('hidden');
-    }
-  }
-
   const selectElement = document.getElementById('post_image');
   function image_input_btn() {
     selectElement.click();
   }
 
-  function insurance_image_input_btn() {
-    const insuranceInput = document.getElementById('insurance_image_form');
-    insuranceInput.click();
-  }
-
-  function changeFile(fileInput) {
-    const file = fileInput.files[0];
-    const fileName = file.name;
-    const ext = getExt(fileName);
-    const extArr = ['pdf', 'PDF', 'jpg', 'jpeg','JPG','JPEG', 'PNG', 'png']
-    const isContain = extArr.indexOf(ext);
-    console.log(isContain);
-    if (isContain == -1) {
-      alert('ファイル形式が正しくありません',
-            'jpg、png、pdfのいずれかの形式のファイルを選んでください');
-    } else {
-      const display = document.getElementById('insurance_file_name');
-      display.innerHTML = fileName;
-    }
-  }
-  function getExt(filename) {
-  	var pos = filename.lastIndexOf('.');
-  	if (pos === -1) return '';
-  	return filename.slice(pos + 1);
-  }
-
-  document.getElementById('post_image').addEventListener('change', function (e) {
-    // 1枚だけ表示する
-    const file = e.target.files[0];
-    // ファイルのブラウザ上でのURLを取得する
-    const blobUrl = window.URL.createObjectURL(file);
-    // img要素に表示
-    const post_img = document.getElementById('user_image_prev');
-    post_img.src = blobUrl;
-    post_img.classList.toggle("hidden");
-    const before_img = document.getElementById('user_present_image');
-    before_img.classList.toggle("hidden");
-  });
-
-  function applySupplierAddress(obj) {
-    var isChecked = obj.checked;
-    var address_box = document.getElementById("address_box");
-    if (isChecked) {
-      address_box.classList.add("hidden");
-    }
-  }
-
-  function hasOwnSupplierAddress(obj) {
-    var isChecked = obj.checked;
-    var address_box = document.getElementById("address_box");
-    if (isChecked) {
-      address_box.classList.remove("hidden");
-    }
-  }
-
-  function applySupplierPhone(obj) {
-    var isChecked = obj.checked;
-    var phone_box = document.getElementById("phone_box");
-    if (isChecked) {
-      phone_box.classList.add("hidden");
-    }
-  }
-
-  function hasOwnSupplierPhone(obj) {
-    var isChecked = obj.checked;
-    var phone_box = document.getElementById("phone_box");
-    if (isChecked) {
-      phone_box.classList.remove("hidden");
-    }
-  }
 
   function addIdToGuideItem(obj) {
     setTimeout(function(){
@@ -403,11 +196,6 @@
         guideImageInput.id = i;
       }
     }, 100);
-  }
-
-  function showExplanation(obj) {
-    const radioVal = obj.value;
-    showExplanationWithValue(radioVal);
   }
 
   function showExplanationWithValue(value) {
@@ -427,34 +215,6 @@
       threeDaysBefore.classList.add('hidden');
       aWeekBefore.classList.remove('hidden');
     }
-  }
-
-  function hideInsuranceUploader(obj) {
-    const uploadBox = document.getElementById("insurance_uploader_box");
-    uploadBox.classList.add('hidden');
-  }
-
-  function showInsuranceUploader(obj) {
-    const uploadBox = document.getElementById("insurance_uploader_box");
-    uploadBox.classList.remove('hidden');
-  }
-
-  function hasChangeArea(obj) {
-    const townSelectors = document.querySelectorAll("div.town_select");
-    for (var i = 0; i < townSelectors.length; i++) {
-      const townSelectItem = townSelectors[i];
-      townSelectItem.classList.add('hidden');
-    }
-
-    const selectedAreaNum = obj.value;
-    const targetId = `area_${selectedAreaNum}`;
-    const targetTownSelectBox = document.getElementById(`${targetId}`);
-    targetTownSelectBox.classList.remove('hidden');
-  }
-
-  function hasSelectTown(obj) {
-    const targetTownSelectBox = document.getElementById('hidden_town_field');
-    targetTownSelectBox.value = obj.value;
   }
 
   </script>

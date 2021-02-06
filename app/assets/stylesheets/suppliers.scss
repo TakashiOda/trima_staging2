@@ -58,8 +58,15 @@ input.need_submit {
 .supplier_show_content_inside {
   padding: 20px 20px;
 }
-.supplier_show_top_box {
-    margin-bottom: 15px;
+.supplier_show_top_help_box {
+    margin-bottom: 5px;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.supplier_show_top_approve_box {
+    margin-bottom: 20px;
     height: 60px;
     display: flex;
     justify-content: flex-end;
@@ -74,6 +81,10 @@ input.need_submit {
     font-size: 20px;
     color: #b3b3b3;
     font-weight: bold;
+}
+.supplier_show_help_btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 .supplier_show_help_btn svg {
     width: 30px !important;
