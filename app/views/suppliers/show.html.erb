@@ -11,12 +11,48 @@
       </div>
       <div class="help_modal_inner_top">
         <div class="title">
-          アカウント情報登録について
+          アカウント情報入力のフローについて
         </div>
       </div>
       <div class="help_modal_content">
-
-        aaaaaaaaaaaaaaaaaaaaa
+        <ul>
+          <li class="help_modal_li">
+            <div class="flow_title">
+              <span class="flow_title_num">1</span>
+              <span class="flow_title_text">アカウント情報を入力</span>
+            </div>
+            <div class="flow_explanation">
+              <span class="flow_explanation_text">上部のアカウント情報のリンクから契約事業者様の基本情報を入力してください</span>
+            </div>
+          </li>
+          <li class="help_modal_li">
+            <div class="flow_title">
+              <span class="flow_title_num">2</span>
+              <span class="flow_title_text">４つの各リンクから体験事業情報を入力</span>
+            </div>
+            <div class="flow_explanation">
+              <span class="flow_explanation_text">４つある体験事業情報フォームにて体験事業の基本情報を入力してください</span>
+            </div>
+          </li>
+          <li class="help_modal_li">
+            <div class="flow_title">
+              <span class="flow_title_num">3</span>
+              <span class="flow_title_text">全ての入力を終えましたら承認申請を送る</span>
+            </div>
+            <div class="flow_explanation">
+              <span class="flow_explanation_text">最上部の承認申請ボタンのリンクから承認申請をお送りください。</span>
+            </div>
+          </li>
+          <li class="help_modal_li">
+            <div class="flow_title">
+              <span class="flow_title_num">4</span>
+              <span class="flow_title_text">運営チームによる承認後に体験情報を作成</span>
+            </div>
+            <div class="flow_explanation">
+              <span class="flow_explanation_text">運営チームによりアカウントが承認された後に体験情報を作成できるようになります</span>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -473,6 +509,34 @@
   .user_show_content table td {
     font-size: 14px;
     color: #6e6e6e;
+  }
+  li.help_modal_li {
+    margin-bottom: 25px;
+  }
+  .flow_title {
+    display: flex;
+    align-items: center;
+  }
+  span.flow_title_num {
+    display: flex;
+    font-size: 25px;
+    background: #60c9e2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+  }
+  span.flow_title_text {
+    font-size: 20px;
+    margin-left: 15px;
+    color: #6f6f6f;
+    font-weight: bold;
+  }
+  .flow_explanation {
+    padding-left: 55px;
   }
 
 </style>
