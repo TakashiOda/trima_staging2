@@ -556,7 +556,6 @@
               </div>
               <% if current_user %>
                 <%= link_to '予約する', projects_path, class: 'button btn-submit' %>
-                <%#=link_to '予約する', users_sign_in_path(alert: "need_sign_in"), class: 'button btn-submit'%>
               <% else %>
                 <%=link_to '予約する', users_sign_in_path(alert: "need_sign_in"), class: 'button btn-submit'%>
               <% end %>
