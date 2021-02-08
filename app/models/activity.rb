@@ -15,9 +15,9 @@ class Activity < ApplicationRecord
 
   # 画像アップローダー ****************************************************
   mount_uploader :main_image, MainImageUploader
-  mount_uploader :second_image, MainImageUploader
-  mount_uploader :third_image, MainImageUploader
-  mount_uploader :fourth_image, MainImageUploader
+  mount_uploader :second_image, SecondImageUploader
+  mount_uploader :third_image, ThirdImageUploader
+  mount_uploader :fourth_image, FourthImageUploader
 
   # バリデーション *********************************************************
   validates  :name, presence: true, length: { maximum: 40, message: "体験名は最大40字までです" }
