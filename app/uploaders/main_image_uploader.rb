@@ -32,7 +32,11 @@ class MainImageUploader < CarrierWave::Uploader::Base
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # 保存するファイルの命名規則
   def filename
-     "main_image.jpg" if original_filename
+    if original_filename
+      original_filename
+    else
+      "main_image.jpg"
+    end
   end
 
   protected
