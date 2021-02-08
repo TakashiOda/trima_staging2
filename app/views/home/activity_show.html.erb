@@ -13,7 +13,7 @@
       <li class="activity_detail_image_item last_item">
         <%= image_tag @activity.main_image.to_s, class: 'activity_detail_image right_image' if !@activity.main_image.blank? %>
       </li>
-      <%= render partial: 'activity_favorite', locals: { @activity => @activity, @project => @project } %>
+      <%#= render partial: 'activity_favorite', locals: { @activity => @activity, @project => @project } %>
     </ul>
   </section>
   <div class="activity_detail_under_image_container">
@@ -251,36 +251,13 @@
           <div class="activity_price_box_price">¥<%= @activity.normal_adult_price.to_s(:delimited)%></div>
           <div class="activity_price_box_text">/おとな一人</div>
         </div>
-        <%= form_for(@book_activity, url: project_book_activity_create_path) do |form| %>
+        <%#= form_for(@book_activity, url: project_book_activity_create_path) do |form| %>
+        <div class="no_user_activity_show">
+
+
           <div class="sidebar_form_inner_top">
-            <%= form.hidden_field :supplier_id, value: @supplier.id %>
-            <%= form.hidden_field :total_price, value: 0%>
-            <%= form.hidden_field :project_id, value: @project.id %>
-            <%= form.hidden_field :activity_id, value: @activity.id %>
-            <%= form.hidden_field :maximum_num, value: @activity.maximum_num %>
-            <%= form.hidden_field :total_participants, value: 1 %>
-            <% if current_user %>
-              <%= form.hidden_field :user_id, value: current_user.id %>
-            <% end %>
-            <% if current_user && current_user.first_name && current_user.last_name %>
-              <%= form.hidden_field :user_name, value: "#{current_user.first_name} #{current_user.last_name}"%>
-            <% else %>
-              <%= form.hidden_field :user_name, value: "no name"%>
-            <% end %>
-            <%= form.hidden_field :course_id, value: nil %>
-            <%= form.hidden_field :stock_id, value: nil %>
-            <%= hidden_field_tag "selected_stock_season", "normal" %>
-            <%= hidden_field_tag "normal_adult_price", @activity.normal_adult_price %>
-            <%= hidden_field_tag "high_adult_price", @activity.high_adult_price %>
-            <%= hidden_field_tag "low_adult_price", @activity.low_adult_price %>
-            <%= hidden_field_tag "normal_middle_price", @activity.normal_middle_price %>
-            <%= hidden_field_tag "high_middle_price", @activity.high_middle_price %>
-            <%= hidden_field_tag "low_middle_price", @activity.low_middle_price %>
-            <%= hidden_field_tag "normal_kids_price", @activity.normal_kids_price %>
-            <%= hidden_field_tag "high_kids_price", @activity.high_kids_price %>
-            <%= hidden_field_tag "low_kids_price", @activity.low_kids_price %>
             <div class="calendar_form_fix_field">
-              <%= form.label 'スケジュール' %>
+              <%#= form.label 'スケジュール' %>
               <div class="date_field_box" id="date_field_box">
                 <div class="date_field_box_date">
                   <span class="date_field_box_icon"><i class="far fa-calendar-alt"></i></span>
@@ -291,8 +268,6 @@
                   <span id="date_field_box_time_span">00:00</span>
                 </div>
               </div>
-              <%= form.hidden_field :activity_date ,class: "form-control", id: 'activity_date_form' %>
-              <%= form.hidden_field :activity_start_time ,class: "form-control", id: 'activity_time_form' %>
             </div>
             <div class="calendar_form hidden" id="activity_stock_calendar_form">
               <div class="calendar_form_month_link_container">
@@ -521,7 +496,7 @@
 
             </div>
             <div class="member_select_box">
-              <%= form.label :参加人数を入力 %>
+              <%= label_tag :参加人数を入力 %>
               <div class="participant_input_box">
                 <div class="participant_input_item">
                   <div class="participant_type">
@@ -571,7 +546,6 @@
             </div>
           </div>
           <div class="sidebar_form_inner_bottom">
-            <%= form.hidden_field :total_price, value: 0, id: "total_price_input" %>
             <div id="total_price_box">
               <div class="total_price">
                 <div class="total_price_title">TOTAL:</div>
@@ -581,13 +555,14 @@
                 </div>
               </div>
               <% if current_user %>
-                <%= form.submit('予約する',class: 'button btn-submit disabled', id: 'book_activity_btn', disabled: true) %>
+                <%= link_to '予約する', projects_path, class: 'button btn-submit' %>
+                <%#=link_to '予約する', users_sign_in_path(alert: "need_sign_in"), class: 'button btn-submit'%>
               <% else %>
                 <%=link_to '予約する', users_sign_in_path(alert: "need_sign_in"), class: 'button btn-submit'%>
               <% end %>
             </div>
           </div>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>
@@ -841,8 +816,8 @@
     height: 20px;
   }
   /* カレンダー ***********************************/
-  form#new_booked_activity {
-    position: relative;
+  form#new_booked_activity,
+  div.no_user_activity_show {
     position: relative;
     height: 100%;
     display: flex;

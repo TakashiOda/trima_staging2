@@ -61,11 +61,15 @@
       <div class="status_title">
         承認ステータス
       </div>
-      <% if @activity_business.status == 'inputting' && !@activity_business.is_approved %>
+      <% if @activity_business.nil? %>
         <div class="status">
           未承認
         </div>
-      <% elsif @activity_business.status == 'send_approve' && !@activity_business.is_approved %>
+      <% elsif !@activity_business.nil? && @activity_business.status == 'inputing' && !@activity_business.is_approved %>
+        <div class="status">
+          未承認
+        </div>
+      <% elsif !@activity_business.nil? && @activity_business.status == 'send_approve' && !@activity_business.is_approved %>
         <div class="status wait">
           承認待ち
         </div>
@@ -74,14 +78,14 @@
           承認済
         </div>
       <% end %>
-      <% if @activity_business.status == 'inputting' %>
-        <% if !@activity_business.nil? %>
+      <% if @activity_business && @activity_business.status == 'inputing' %>
+        <% if !@activity_business.nil? && @activity_business.profile_input_done && @guides.any? && @activity_business.cansel_input_done && @activity_business.insurance_input_done %>
           <%=link_to supplier_activity_business_send_approve_path(current_supplier, @activity_business), class: "approve_btn" do%>
             <i class="fas fa-envelope"></i>
             <span class="favorite_text">承認申請する</span>
           <% end %>
         <% else %>
-          <button onclick="notYetAlert()">
+          <button onclick="notYetAlert()" class="approve_btn">
             <i class="fas fa-envelope"></i>
             <span class="favorite_text">承認申請する</span>
           </button>
@@ -93,7 +97,7 @@
     <%= link_to edit_supplier_path(current_supplier) do %>
       <div class="activity_business_info_item_title">
         <div class="title_front">
-          <i class="fas fa-user-circle"></i>アカウント情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+          <i class="fas fa-user-circle"></i>アカウント情報
         </div>
       </div>
       <div id="supplier_info_contents">
@@ -150,15 +154,15 @@
         <div class="activity_business_info_item_card">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-address-card"></i>体験事業のプロフィール<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+              <i class="fas fa-address-card"></i>プロフィール
             </div>
-            <div class="title_back">
-              <% if @activity_business.profile_input_done %>
-                <i class="fas fa-check-circle"></i>
-              <% else %>
-                <span class="not_input_mark">未入力あり</span>
-              <% end %>
-            </div>
+          </div>
+          <div class="title_back2">
+            <% if @activity_business.profile_input_done %>
+              <i class="fas fa-check-circle"></i>
+            <% else %>
+              <span class="not_input_mark">未入力あり</span>
+            <% end %>
           </div>
           <table>
             <tr>
@@ -167,7 +171,7 @@
             </tr>
             <tr>
               <th class="supplier_show_info_title">紹介文</th>
-              <td><%= @activity_business.profile_text ? @activity_business.profile_text : "登録されていません" %></td>
+              <td style="white-space: nowrap;"><%= @activity_business.profile_text ? @activity_business.profile_text[0, 20] : "登録されていません" %></td>
             </tr>
           </table>
         </div>
@@ -176,11 +180,11 @@
         <div class="activity_business_info_item_card link_disable">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-address-card"></i>体験事業のプロフィール<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+              <i class="fas fa-address-card"></i>体験事業のプロフィール
             </div>
-            <div class="title_back">
-              <span class="not_input_mark">未入力あり</span>
-            </div>
+          </div>
+          <div class="title_back2">
+            <span class="not_input_mark">未入力あり</span>
           </div>
         </div>
       <% end %>
@@ -191,15 +195,15 @@
         <div class="activity_business_info_item_card">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-users"></i>ガイド情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+              <i class="fas fa-users"></i>ガイド情報
             </div>
-            <div class="title_back">
-              <% if @guides.any? %>
-                <i class="fas fa-check-circle"></i>
-              <% else %>
-                <span class="not_input_mark">未入力あり</span>
-              <% end %>
-            </div>
+          </div>
+          <div class="title_back2">
+            <% if @guides.any? %>
+              <i class="fas fa-check-circle"></i>
+            <% else %>
+              <span class="not_input_mark">未入力あり</span>
+            <% end %>
           </div>
           <% if @guides.any? %>
           <ul class="supplier_show_guide_images">
@@ -214,11 +218,11 @@
         <div class="activity_business_info_item_card link_disable">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-users"></i>ガイド情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+              <i class="fas fa-users"></i>ガイド情報
             </div>
-            <div class="title_back">
-              <span class="not_input_mark">未入力あり</span>
-            </div>
+          </div>
+          <div class="title_back2">
+            <span class="not_input_mark">未入力あり</span>
           </div>
         </div>
       <% end %>
@@ -229,17 +233,17 @@
         <div class="activity_business_info_item_card">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-ban"></i>キャンセル設定<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
-            </div>
-            <div class="title_back">
-              <% if @activity_business.cansel_input_done == true %>
-                <i class="fas fa-check-circle"></i>
-              <% else %>
-                <span class="not_input_mark">未設定</span>
-              <% end %>
+              <i class="fas fa-ban"></i>キャンセル設定
             </div>
           </div>
-          <% if @activity_business.cansel_input_done == true %>
+          <div class="title_back2">
+            <% if @activity_business.cansel_input_done %>
+              <i class="fas fa-check-circle"></i>
+            <% else %>
+              <span class="not_input_mark">未設定</span>
+            <% end %>
+          </div>
+          <% if @activity_business.cansel_input_done %>
             <table>
               <tr>
                 <th class="supplier_show_info_title">キャンセル期限</th>
@@ -261,11 +265,11 @@
         <div class="activity_business_info_item_card link_disable">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-ban"></i>キャンセル設定<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+              <i class="fas fa-ban"></i>キャンセル設定
             </div>
-            <div class="title_back">
-              <span class="not_input_mark">未入力あり</span>
-            </div>
+          </div>
+          <div class="title_back2">
+            <span class="not_input_mark">未入力あり</span>
           </div>
         </div>
       <% end %>
@@ -276,24 +280,19 @@
         <div class="activity_business_info_item_card">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-shield-alt"></i>加入保険の情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
-            </div>
-            <% if @activity_business.has_insurance && @activity_business.insurance_image.blank?%>
-              <div class="title_back">
-                <span class="not_input_mark">未入力あり</span>
-              </div>
-            <% end %>
-            <div class="title_back">
-              <% if @activity_business.insurance_input_done == true %>
-                <i class="fas fa-check-circle"></i>
-              <% elsif @activity_business.has_insurance && @activity_business.insurance_image.blank?%>
-                <span class="not_input_mark">未入力あり</span>
-              <% else %>
-                <span class="not_input_mark">未設定</span>
-              <% end %>
+              <i class="fas fa-shield-alt"></i>加入保険の情報
             </div>
           </div>
-          <% if @activity_business.insurance_input_done == true %>
+          <div class="title_back2">
+            <% if @activity_business.insurance_input_done %>
+              <i class="fas fa-check-circle"></i>
+            <% elsif @activity_business.has_insurance && @activity_business.insurance_image.blank?%>
+              <span class="not_input_mark">未入力あり</span>
+            <% else %>
+              <span class="not_input_mark">未設定</span>
+            <% end %>
+          </div>
+          <% if @activity_business.insurance_input_done %>
             <table>
               <tr>
                 <th class="supplier_show_info_title">保険加入</th>
@@ -313,11 +312,11 @@
         <div class="activity_business_info_item_card link_disable">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-shield-alt"></i>加入保険の情報<span class="arrow_right"><i class="fas fa-chevron-right"></i></span>
+              <i class="fas fa-shield-alt"></i>加入保険の情報
             </div>
-            <div class="title_back">
-              <span class="not_input_mark">未入力あり</span>
-            </div>
+          </div>
+          <div class="title_back">
+            <span class="not_input_mark">未入力あり</span>
           </div>
         </div>
       <% end %>
@@ -340,6 +339,7 @@
     justify-content: center;
     padding: 10%;
     background: rgba(47,47,47,0.6);
+    z-index: 100;
   }
   .help_modal_inner {
     width: 100%;
@@ -396,12 +396,21 @@
     border-radius: 20px;
     margin-left: 15px;
   }
-  a.approve_btn {
+  .approve_btn {
     background: #5ec8e1;
     color: #fff;
     padding: 5px 15px;
+    border: none;
     border-radius: 20px;
     margin-left: 20px;
+  }
+  .approve_btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  .approve_btn:focus {
+    outline: none;
+    cursor: pointer;
   }
   .done {
     background: #47d23e;
@@ -425,10 +434,11 @@
   }
   .activity_business_info_item_card {
     background: #fff;
-    padding: 20px 30px;
+    padding: 20px 15px;
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 8px !important;
     height: 130px;
+    position: relative;
   }
   .link_disable {
     opacity: 0.5;
@@ -440,7 +450,7 @@
     justify-content: space-between;
   }
   .activity_business_info_item_title .title_front{
-    font-size: 21px;
+    font-size: 16px;
     color: #626262;
     font-weight: bold;
     display: flex;
@@ -456,8 +466,15 @@
     display: flex;
     justify-content: flex-end;
   }
+  .title_back2 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
 
-  .title_back svg {
+  .title_back2 svg {
       margin: 0;
       display: flex;
       width: 30px !important;
@@ -466,12 +483,12 @@
   }
   span.not_input_mark {
     background: #ff9898;
-    padding: 0px 15px;
+    padding: 0px 10px;
     border-radius: 30px;
     color: #ffffff;
-    font-size: 15px;
-    height: 30px;
-    line-height: 30px;
+    font-size: 13px;
+    height: 25px;
+    line-height: 25px;
     font-weight: bold;
   }
   .gap_title {
@@ -538,7 +555,6 @@
   .flow_explanation {
     padding-left: 55px;
   }
-
 </style>
 
 <script type="text/javascript">
@@ -549,5 +565,8 @@
   function closeHelp() {
     const modal = document.getElementById('help_modal');
     modal.classList.add('hidden');
+  }
+  function notYetAlert() {
+    alert('未入力の情報があります');
   }
 </script>

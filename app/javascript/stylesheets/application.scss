@@ -410,13 +410,15 @@ form label {
   margin: 50px 0;
 }
 span.must_input {
-  background: #ff9d9d;
-  font-size: 13px;
-  color: #fff;
-  font-weight: bold;
-  padding: 3px 10px;
-  margin-left: 10px;
-  border-radius: 20px;
+    background: #ff9d9d;
+    font-size: 8px;
+    color: #fff;
+    font-weight: bold;
+    padding: 1px 5px;
+    margin-left: 5px;
+    border-radius: 20px;
+    height: 12px;
+    line-height: 12px;
 }
 .avatar_input_icon svg:hover {
   cursor: pointer;
@@ -764,10 +766,12 @@ img.eyecatch_image_home {
   flex-wrap: wrap;
   margin-top: 20px;
   width: 100%;
-  .home_new_activity_right_top_item {
+  a {
     width: 23%;
     padding: 0 1%;
     margin-bottom: 25px;
+    color: #626262;
+    font-size: 14px;
   }
   img.home_item_image {
     width: 100%;

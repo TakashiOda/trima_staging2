@@ -128,9 +128,10 @@ table.info_list_table {
 //   width: 20%;
 // }
 th.supplier_show_info_title {
-    font-size: 14px;
+    font-size: 10px;
     color: #626262;
     text-align: end;
+    white-space: nowrap;
     /* background: gray; */
     /* margin-right: 12px; */
     /* border-radius: 15px; */
@@ -386,7 +387,7 @@ span.stock_will_be_expire {
     margin-left: 5px;
 }
 .to_stock_btn_on_activity_index {
-  padding: 6px 20px;
+  padding: 6px 10px;
   border-radius: 30px;
   font-size: 12px;
   margin-top: 5px;

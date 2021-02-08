@@ -116,6 +116,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "activity_show/:activity_id", to: "home#activity_show", as: :activity_show
   get "activity_detail/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
 
   resources :admins

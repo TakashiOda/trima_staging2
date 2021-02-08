@@ -11,8 +11,7 @@
             <li><%= link_to "使い方を見てみる", "#", class: 'home_eyecatch_second_btn' %></li>
           <% else %>
             <li><%= link_to "trimaについて", about_for_supplier_path, class: 'home_eyecatch_first_btn' %></li>
-            <li><%= link_to "事業者登録", new_supplier_apply_path, class: 'home_eyecatch_second_btn' %></li>
-            <li><%#= link_to "事業者登録", new_user_registration_path, class: 'home_eyecatch_second_btn' %></li>
+            <li><%= link_to "事業者登録", new_supplier_registration_path, class: 'home_eyecatch_second_btn' %></li>
           <% end %>
         </ul>
       </div>
@@ -29,6 +28,7 @@
       <div class="home_new_activity_container">
         <% if !@activities.nil? %>
           <% @activities.each do |activity| %>
+            <%= link_to activity_show_path(activity) do %>
             <div class="home_new_activity_right_top_item">
               <%= image_tag activity.main_image.to_s, class: 'home_item_image' %>
               <div class="activity_info_box">
@@ -36,6 +36,7 @@
                 <div class="activity_price">¥<%= activity.normal_adult_price.to_s(:delimited) %></div>
               </div>
             </div>
+            <% end %>
           <% end %>
         <% end %>
       </div>
