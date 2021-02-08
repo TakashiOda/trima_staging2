@@ -87,21 +87,23 @@
         </div>
         <div class="form-group">
           <div class="num_input">
-            <div class="label_with_must">
+            <div class="label_with_must_column">
               <%= f.label :available_age %><span class="must_input">必須</span>
             </div>
             <%= f.number_field :available_age, min: 0, max: 100, required: true, class: "form-control", oninput: 'hasInput()' %>
           </div>
         </div>
-        <div class="form-group min_max_num_input">
+        <div class="form-group">
           <div class="num_input">
-            <div class="label_with_must">
+            <div class="label_with_must_column">
               <%= f.label :minimum_num %><span class="must_input">必須</span>
             </div>
             <%= f.number_field :minimum_num, min: 1, max: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
           </div>
+        </div>
+        <div class="form-group">
           <div class="num_input">
-            <div class="label_with_must">
+            <div class="label_with_must_column">
               <%= f.label :maximum_num %><span class="must_input">必須</span>
             </div>
             <%= f.number_field :maximum_num, min: 1, max: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
@@ -515,7 +517,7 @@
     flex-direction: row;
   }
   .num_input {
-    width: 45%;
+    /* width: 45%; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -523,21 +525,18 @@
     padding-left: 10px;
   }
   .num_input input {
-    width: 35%;
+    width: 25%;
+    text-align: right;
   }
   .geo_input {
     width: 48%;
     padding-right: 2%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
   }
   .geo_input input {
-    width: 65%;
+    width: 100%;
     text-align: right;
-  }
-  .geo_input label {
-    width: 35%;
   }
   p.form_hosoku {
     margin-top: 0;

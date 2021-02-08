@@ -1,0 +1,18 @@
+<%= form_for [@supplier, @activity_business], url: supplier_update_activity_business_path(current_supplier, @activity_business), method: :put do |form| %>
+<div class="form_title">
+  <h3>承認申請を送る</h3>
+</div>
+<div class="user_show_content_down">
+  <div class="user_show_info_items_box">
+    <section class="form_section">
+      <div class="form-group">
+        <%= hidden_field_tag 'input_type', 'send_approve' %>
+        <%= form.hidden_field :status, value: "send_approve"  %>
+      </div>
+      <div class="form-group">
+        <%= form.submit('申請する',class: 'button btn-submit', id: "supplier_form_submit_btn") %>
+      </div>
+    </section>
+  </div>
+</div>
+<% end %>

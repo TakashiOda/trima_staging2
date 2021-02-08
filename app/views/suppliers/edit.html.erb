@@ -1,5 +1,4 @@
-<script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
-<%= form_for @supplier, html: { class: "h-adr" } do |form| %>
+<%= form_for @supplier do |form| %>
 <div class="form_title">
   <h3>契約者情報を編集</h3>
 </div>
@@ -33,50 +32,21 @@
           <%= pf.label :post_code %>
           <div class="post_code_box">
             <span>〒</span>
-            <!-- <input class="p-postal-code form-control" type="text" id="post_code_input3" size="7" maxlength="7" oninput="post_code3()"> -->
-            <input
-              class="p-postal-code form-control"
-              type="text"
-              id="post_code_input3"
-              size="7"
-              maxlength="7"
-              oninput="post_code3()"
-              value="<%= @supplier.supplier_profile.post_code if !@supplier.supplier_profile.nil? && !@supplier.supplier_profile.post_code.nil? %>"
-            >
-            <!-- <input
-              class="p-postal-code form-control"
-              type="text"
-              id="post_code_input3"
-              size="3"
-              maxlength="3"
-              oninput="post_code3()"
-              value="<%#= @supplier.supplier_profile.post_code[0, 3] if !@supplier.supplier_profile.nil? && !@supplier.supplier_profile.post_code.nil? %>"
-            >
-            <span>-</span>
-            <input
-              class="p-postal-code form-control"
-              type="text"
-              id="post_code_input4"
-              size="4"
-              maxlength="4"
-              oninput="post_code4()"
-              value="<%#= @supplier.supplier_profile.post_code[3, 4] if !@supplier.supplier_profile.nil? && !@supplier.supplier_profile.post_code.nil?%>"
-            > -->
+            <%= pf.text_field :post_code, size: 7, max: 7, id: "supplier_address_post_code",class: "form-control", oninput: 'hasInput()'%>
+            <button type="button" name="button" id="supplier_address_get_btn">住所検索</button>
           </div>
-          <%= pf.hidden_field :post_code, id: 'hidden_post_code' %>
         </div>
         <div class="form-group">
-          <span class="p-country-name" style="display:none;">Japan</span>
           <%= pf.label :prefecture %>
-          <%= pf.text_field :prefecture, class: "p-region form-control", oninput: 'hasInput()', onchange: 'prefectureChange()' %>
+          <%= pf.text_field :prefecture, id: "supplier_pref", class: "form-control", oninput: 'hasInput()', onchange: 'prefectureChange()' %>
         </div>
         <div class="form-group">
           <%= pf.label :town %>
-          <%= pf.text_field :town, class: "p-locality form-control", oninput: 'hasInput()' %>
+          <%= pf.text_field :town, id: "supplier_city", class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :detail_address %>
-          <%= pf.text_field :detail_address, minlength: 3, maxlength: 100, class: "p-street-address p-extended-address form-control", oninput: 'hasInput()' %>
+          <%= pf.text_field :detail_address, id: "supplier_address", minlength: 3, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
         </div>
         <div class="form-group">
           <%= pf.label :building %>
@@ -110,65 +80,53 @@
     submitBtn.classList.add('need_submit');
   }
 
-  // const selectElement = document.querySelector('#post_image');
-  // function image_input_btn() {
-  //   selectElement.click();
-  // }
-  // function fullFillPostCode() {
-  //   const code3 = document.querySelector('#post_code_input3').value;
-  //   const code4 = document.querySelector('#post_code_input4').value;
-  //   const fullCode = code3 + code4;
-  //   console.log(code3);
-  //   console.log(code4);
-  //   console.log(fullCode);
-  //   const hiddenPostCode = document.querySelector('#hidden_post_code');
-  //   hiddenPostCode.value = fullCode;
-  // }
   function post_code3() {
     const code3 = document.querySelector('#post_code_input3').value;
-    // const code4 = document.querySelector('#post_code_input4').value;
-    // const fullCode = code3 + code4;
     const hiddenPostCode = document.querySelector('#hidden_post_code');
     hiddenPostCode.value = code3;
-    // if (code3.length == 3) {
-    //   document.getElementById('post_code_input4').focus();
-    // }
   }
-  // function post_code4() {
-  //   const code3 = document.querySelector('#post_code_input3').value;
-  //   const code4 = document.querySelector('#post_code_input4').value;
-  //   const fullCode = code3 + code4;
-  //   const hiddenPostCode = document.querySelector('#hidden_post_code');
-  //   hiddenPostCode.value = fullCode;
-  // }
 
-  // document.getElementById('post_image').addEventListener('change', function (e) {
-  //   const file = e.target.files[0];
-  //   const blobUrl = window.URL.createObjectURL(file);
-  //   const post_img = document.getElementById('user_image_prev');
-  //   post_img.src = blobUrl;
-  //   post_img.classList.toggle("hidden");
-  //   const before_img = document.getElementById('user_present_image');
-  //   before_img.classList.toggle("hidden");
-  // });
+</script>
 
-  // function hasChangeArea(obj) {
-  //   const townSelectors = document.querySelectorAll("div.town_select");
-  //   for (var i = 0; i < townSelectors.length; i++) {
-  //     const townSelectItem = townSelectors[i];
-  //     townSelectItem.classList.add('hidden');
-  //   }
-  //
-  //   const selectedAreaNum = obj.value;
-  //   const targetId = `area_${selectedAreaNum}`;
-  //   const targetTownSelectBox = document.getElementById(`${targetId}`);
-  //   targetTownSelectBox.classList.remove('hidden');
-  // }
-  //
-  // function hasSelectTown(obj) {
-  //   const targetTownSelectBox = document.getElementById('hidden_town_field');
-  //   targetTownSelectBox.value = obj.value;
-  // }
+<script>
+  $(function(){
+    $('#supplier_address_get_btn').on('click', () => {
+      const code = $('#supplier_address_post_code').val();
+      console.log(code);
+      $.ajax({
+        // url: "http://zipcloud.ibsnet.co.jp/api/search?zipcode=" + $('#supplier_address_post_code').val(),
+        url: `http://zipcloud.ibsnet.co.jp/api/search?zipcode=${code}`,
+        dataType: 'jsonp',
+      }).done((data) => {
+        if (data.results) {
+          getData(data.results[0]);
+        } else {
+          alert('該当データが見つかりません');
+        }
+      }).fail((data) => {
+        alert('通信に失敗しました');
+      });
+    });
+
+    function getData(data) {
+      $('#supplier_pref').val(data.address1);
+      $('#supplier_city').val(data.address2);
+      $('#supplier_address').val(data.address3);
+    }
+
+    $("#supplier_address_post_code").keydown(function() {
+      if( event.keyCode == 13 ) {
+        $("#supplier_address_get_btn").click();
+      }
+    });
+
+    $('form').on('keypress', e => {
+      if (e.keyCode == 13) {
+          return false;
+      }
+    });
+  });
+
 </script>
 
 <style lang="scss">

@@ -1,141 +1,572 @@
 <div class="supplier_show_content_inside">
-  <div class="supplier_info_box"><!--メインコンテンツorg-->
-    <div class="info_list_box_title">
-      <div>契約者情報</div>
-      <div>
-        <% unless @supplier.supplier_profile.nil? %>
-          <%= link_to "編集", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
-        <% end %>
+  <div class="supplier_show_top_help_box">
+    <div class="supplier_show_help_btn" onclick="showHelp()">
+      <i class="fas fa-question-circle"></i>ヘルプ
+    </div>
+  </div>
+  <div class="supplier_show_help_modal hidden" id="help_modal">
+    <div class="help_modal_inner">
+      <div class="closeBtn" onclick="closeHelp()">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="help_modal_inner_top">
+        <div class="title">
+          アカウント情報入力のフローについて
+        </div>
+      </div>
+      <div class="help_modal_content">
+        <ul>
+          <li class="help_modal_li">
+            <div class="flow_title">
+              <span class="flow_title_num">1</span>
+              <span class="flow_title_text">アカウント情報を入力</span>
+            </div>
+            <div class="flow_explanation">
+              <span class="flow_explanation_text">上部のアカウント情報のリンクから契約事業者様の基本情報を入力してください</span>
+            </div>
+          </li>
+          <li class="help_modal_li">
+            <div class="flow_title">
+              <span class="flow_title_num">2</span>
+              <span class="flow_title_text">４つの各リンクから体験事業情報を入力</span>
+            </div>
+            <div class="flow_explanation">
+              <span class="flow_explanation_text">４つある体験事業情報フォームにて体験事業の基本情報を入力してください</span>
+            </div>
+          </li>
+          <li class="help_modal_li">
+            <div class="flow_title">
+              <span class="flow_title_num">3</span>
+              <span class="flow_title_text">全ての入力を終えましたら承認申請を送る</span>
+            </div>
+            <div class="flow_explanation">
+              <span class="flow_explanation_text">最上部の承認申請ボタンのリンクから承認申請をお送りください。</span>
+            </div>
+          </li>
+          <li class="help_modal_li">
+            <div class="flow_title">
+              <span class="flow_title_num">4</span>
+              <span class="flow_title_text">運営チームによる承認後に体験情報を作成</span>
+            </div>
+            <div class="flow_explanation">
+              <span class="flow_explanation_text">運営チームによりアカウントが承認された後に体験情報を作成できるようになります</span>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
-    <div id="supplier_info_contents">
-      <% if @supplier_profile.nil? %>
-        <div class="info_list_box_contents">
-          <div>まだ契約者情報がありません</div>
-          <%= link_to "契約者情報を登録", edit_supplier_path(current_supplier), class: "org_edit_btn" %>
+  </div>
+  <div class="supplier_show_top_approve_box">
+    <div class="supplier_show_approve_box">
+      <div class="status_title">
+        承認ステータス
+      </div>
+      <% if @activity_business.nil? %>
+        <div class="status">
+          未承認
+        </div>
+      <% elsif !@activity_business.nil? && @activity_business.status == 'inputing' && !@activity_business.is_approved %>
+        <div class="status">
+          未承認
+        </div>
+      <% elsif !@activity_business.nil? && @activity_business.status == 'send_approve' && !@activity_business.is_approved %>
+        <div class="status wait">
+          承認待ち
         </div>
       <% else %>
-        <div class="info_list_box_contents">
-          <table class="info_list_table">
+        <div class="status done">
+          承認済
+        </div>
+      <% end %>
+      <% if @activity_business && @activity_business.status == 'inputing' %>
+        <% if !@activity_business.nil? && @activity_business.profile_input_done && @guides.any? && @activity_business.cansel_input_done && @activity_business.insurance_input_done %>
+          <%=link_to supplier_activity_business_send_approve_path(current_supplier, @activity_business), class: "approve_btn" do%>
+            <i class="fas fa-envelope"></i>
+            <span class="favorite_text">承認申請する</span>
+          <% end %>
+        <% else %>
+          <button onclick="notYetAlert()" class="approve_btn">
+            <i class="fas fa-envelope"></i>
+            <span class="favorite_text">承認申請する</span>
+          </button>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="supplier_info_box"><!--メインコンテンツorg-->
+    <%= link_to edit_supplier_path(current_supplier) do %>
+      <div class="activity_business_info_item_title">
+        <div class="title_front">
+          <i class="fas fa-user-circle"></i>アカウント情報
+        </div>
+      </div>
+      <div id="supplier_info_contents">
+        <% if @supplier_profile.nil? %>
+          <div class="info_list_box_contents">
+            <div>契約者情報を入力してください</div>
+          </div>
+        <% else %>
+          <div class="info_list_box_contents">
+            <table class="info_list_table">
+              <tr>
+                <th class="supplier_show_info_title">ご契約社名</th>
+                <td><%= @supplier.name if @supplier.name %></td>
+              </tr>
+              <tr>
+                <th class="supplier_show_info_title">代表者名</th>
+                <td><%= @supplier_profile.representative_name if !@supplier_profile.nil? %></td>
+              </tr>
+              <tr>
+                <th class="supplier_show_info_title">ご契約住所</th>
+                <td>
+                  <%= "〒#{@supplier_profile.post_code[0,3]}-#{@supplier_profile.post_code[3,4]}" if !@supplier_profile.nil? %>
+                  <%= @supplier_profile.prefecture if !@supplier_profile.nil? %>
+                  <%= @supplier_profile.town if !@supplier_profile.nil? %>
+                  <%= @supplier_profile.detail_address if @supplier_profile.detail_address %>
+                  <%= @supplier_profile.building if @supplier_profile.building %>
+                </td>
+              </tr>
+              <tr>
+                <th class="supplier_show_info_title">お電話番号</th>
+                <td>
+                  <% if @supplier_profile.phone && @supplier_profile.phone.length == 10 %>
+                    <%= "#{@supplier_profile.phone[0,3]}-❇︎❇︎❇︎-#{@supplier_profile.phone[6,4]}" %>
+                  <% elsif @supplier_profile.phone && @supplier_profile.phone.length == 11 %>
+                    <%= "#{@supplier_profile.phone[0,3]}-❇︎❇︎❇︎❇︎-#{@supplier_profile.phone[7,4]}" %>
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="gap_with_border">
+    <div class="gap_title">
+      以下はユーザーに表示される情報です
+    </div>
+  </div>
+  <div class="activity_business_info_items">
+    <div class="activity_business_info_item">
+      <% if !@activity_business.nil? %>
+        <%= link_to edit_supplier_activity_business_path(current_supplier, @activity_business) do %>
+        <div class="activity_business_info_item_card">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-address-card"></i>プロフィール
+            </div>
+          </div>
+          <div class="title_back2">
+            <% if @activity_business.profile_input_done %>
+              <i class="fas fa-check-circle"></i>
+            <% else %>
+              <span class="not_input_mark">未入力あり</span>
+            <% end %>
+          </div>
+          <table>
             <tr>
-              <td class="td_front">ご契約社名</td>
-              <td class="td_end"><%= @supplier.name if @supplier.name %></td>
+              <th class="supplier_show_info_title">事業名</th>
+              <td><%= @activity_business.name ? @activity_business.name : "登録されていません" %></td>
             </tr>
             <tr>
-              <td class="td_front">ご契約の住所</td>
-              <td class="td_end">
-                <%#= Prefecture.find(@supplier_profile .prefecture_id).local_name if @supplier_profile.prefecture_id %>
-                <%#= Town.find(@supplier_profile.town_id).jp_name if @supplier_profile.town_id %>
-                <%#= @supplier_profile.detail_address if @supplier_profile.detail_address %>
-                <%#= @supplier_profile.building if @supplier_profile.building %>
-              </td>
+              <th class="supplier_show_info_title">紹介文</th>
+              <td style="white-space: nowrap;"><%= @activity_business.profile_text ? @activity_business.profile_text[0, 20] : "登録されていません" %></td>
             </tr>
           </table>
+        </div>
+        <% end %>
+      <% else %>
+        <div class="activity_business_info_item_card link_disable">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-address-card"></i>体験事業のプロフィール
+            </div>
+          </div>
+          <div class="title_back2">
+            <span class="not_input_mark">未入力あり</span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="activity_business_info_item">
+      <% if !@activity_business.nil? %>
+        <%= link_to supplier_activity_business_edit_guides_path(current_supplier, @activity_business) do %>
+        <div class="activity_business_info_item_card">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-users"></i>ガイド情報
+            </div>
+          </div>
+          <div class="title_back2">
+            <% if @guides.any? %>
+              <i class="fas fa-check-circle"></i>
+            <% else %>
+              <span class="not_input_mark">未入力あり</span>
+            <% end %>
+          </div>
+          <% if @guides.any? %>
+          <ul class="supplier_show_guide_images">
+            <% @guides.each do |guide| %>
+              <%= image_tag guide.avatar.to_s, class: 'supplier_show_guide_image' %>
+            <% end %>
+          </ul>
+          <% end %>
+        </div>
+        <% end %>
+      <% else %>
+        <div class="activity_business_info_item_card link_disable">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-users"></i>ガイド情報
+            </div>
+          </div>
+          <div class="title_back2">
+            <span class="not_input_mark">未入力あり</span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="activity_business_info_item">
+      <% if !@activity_business.nil? %>
+        <%= link_to supplier_activity_business_edit_cansel_path(current_supplier, @activity_business) do %>
+        <div class="activity_business_info_item_card">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-ban"></i>キャンセル設定
+            </div>
+          </div>
+          <div class="title_back2">
+            <% if @activity_business.cansel_input_done %>
+              <i class="fas fa-check-circle"></i>
+            <% else %>
+              <span class="not_input_mark">未設定</span>
+            <% end %>
+          </div>
+          <% if @activity_business.cansel_input_done %>
+            <table>
+              <tr>
+                <th class="supplier_show_info_title">キャンセル期限</th>
+                <td>
+                  <% if @activity_business.no_charge_cansel_before == "the_day_before" %>
+                    前日までキャンセル無料
+                  <% elsif @activity_business.no_charge_cansel_before == "three_days_before"%>
+                    ３日前までキャンセル無料
+                  <% else %>
+                    １週間前までキャンセル無料
+                  <% end %>
+                </td>
+              </tr>
+            </table>
+          <% end %>
+        </div>
+        <% end %>
+      <% else %>
+        <div class="activity_business_info_item_card link_disable">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-ban"></i>キャンセル設定
+            </div>
+          </div>
+          <div class="title_back2">
+            <span class="not_input_mark">未入力あり</span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="activity_business_info_item">
+      <% if !@activity_business.nil? %>
+        <%= link_to supplier_activity_business_edit_insurance_path(current_supplier, @activity_business) do %>
+        <div class="activity_business_info_item_card">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-shield-alt"></i>加入保険の情報
+            </div>
+          </div>
+          <div class="title_back2">
+            <% if @activity_business.insurance_input_done %>
+              <i class="fas fa-check-circle"></i>
+            <% elsif @activity_business.has_insurance && @activity_business.insurance_image.blank?%>
+              <span class="not_input_mark">未入力あり</span>
+            <% else %>
+              <span class="not_input_mark">未設定</span>
+            <% end %>
+          </div>
+          <% if @activity_business.insurance_input_done %>
+            <table>
+              <tr>
+                <th class="supplier_show_info_title">保険加入</th>
+                <td><%= @activity_business.has_insurance ? "加入している" : "加入なし" %></td>
+              </tr>
+              <% if @activity_business.has_insurance %>
+              <tr>
+                <th class="supplier_show_info_title">保険証書</th>
+                <td><%= @activity_business.insurance_image.blank? ? "未アップロード" : "アップロード済" %></td>
+              </tr>
+              <% end %>
+          </table>
+          <% end %>
+        </div>
+        <% end %>
+      <% else %>
+        <div class="activity_business_info_item_card link_disable">
+          <div class="activity_business_info_item_title">
+            <div class="title_front">
+              <i class="fas fa-shield-alt"></i>加入保険の情報
+            </div>
+          </div>
+          <div class="title_back">
+            <span class="not_input_mark">未入力あり</span>
+          </div>
         </div>
       <% end %>
     </div>
   </div>
-  <div class="activity_business_info_box"><!--メインコンテンツorg-->
-    <% if !@activity_business.nil? %>
-      <div class="info_list_box_title">
-        <div class="info_list_box_title_inner">
-          企業情報
-          <% if @activity_business.is_approved %>
-            <div class="activity_business_status is_approved">
-              承認済み
-            </div>
-          <% else %>
-            <% if @activity_business.status == 'inputing' %>
-              <div class="activity_business_status inputting">
-                まだ事業者申請がされていません
-              </div>
-            <% else %>
-              <div class="activity_business_status send_approve">
-                承認待ち
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-        <div>
-          <%= link_to "編集", edit_supplier_activity_business_path(current_supplier, @activity_business), class: "org_edit_btn" %>
-        </div>
-      </div>
-      <div id="activity_business_info_contents" class="">
-        <div class="info_list_box_contents">
-          <table class="info_list_table">
-            <tr>
-              <td class="td_front">体験事業名</td>
-              <td class="td_end"><%= current_supplier.activity_business.name if current_supplier.activity_business.name %></td>
-            </tr>
-            <tr>
-              <td class="td_front">プロフィール</td>
-              <td class="td_end">
-                <%= current_supplier.activity_business.profile_text if current_supplier.activity_business.profile_text %>
-              </td>
-            </tr>
-            <% if !@activity_business.apply_suuplier_address %>
-            <tr>
-              <td class="td_front">都道府県・エリア</td>
-              <td class="td_end">
-                <%= Prefecture.find(current_supplier.activity_business.prefecture_id).local_name if current_supplier.activity_business.prefecture_id %> /
-                <%= Area.find(current_supplier.activity_business.area_id).local_name if current_supplier.activity_business.area_id %>
-              </td>
-            </tr>
-            <% end %>
-            <tr>
-              <td class="td_front">登録ガイド</td>
-              <td class="td_end">
-                <div class="supplier_show_guide_items">
-                <% if current_supplier.activity_business.guides.any? %>
-                  <% current_supplier.activity_business.guides.each do |guide| %>
-                    <div class="supplier_show_guide_item_box">
-                      <div class="supplier_show_guide_item_box__image"><%= image_tag guide.avatar.to_s, class: "user_avatar" %></div>
-                      <div class="supplier_show_guide_item_box__name"><%= guide.name %></div>
-                    </div>
-                  <% end %>
-                <% else %>
-                  <div>ガイドは登録されていません</div>
-                <% end %>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    <% else %>
-      <div class="info_list_box_title_no_info">
-        <div class="info_list_box_title_inner">企業情報</div>
-        <div class="info_list_box_no_bix_info">
-          <div>まだ事業情報がありません</div>
-          <%= link_to "体験事業を登録", new_supplier_activity_business_path(current_supplier), class: "org_edit_btn" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <!--事業者情報---------------------------------------------------------------->
 </div>
 
 <style lang="scss">
   .info_list_box_title_inner {
     display: flex;
+    position: relative;
   }
-  .activity_business_status {
-    padding: 2px 20px;
-    font-size: 13px;
+  div#help_modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: 10%;
+    background: rgba(47,47,47,0.6);
+    z-index: 100;
+  }
+  .help_modal_inner {
+    width: 100%;
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px 40px;
+    position: relative;
+  }
+  .title {
+    font-size: 22px;
+    font-weight: bold;
+    color: gray;
+    margin-bottom: 20px;
+  }
+  .closeBtn {
+    width: 60px;
+    height: 60px;
+    border: solid 3px gray;
+    background: #cbcbcb;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -15px;
+    right: -20px;
+  }
+  .closeBtn svg {
+    width: 45px !important;
+    height: 45px;
+    margin: 0 !important;
+  }
+  .closeBtn:hover {
+    cursor: pointer;
+    background: #e2e2e2;
+  }
+  .supplier_show_approve_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
+  .status_title {
+    font-size: 18px;
+    font-weight: bold;
+    color: gray;
+  }
+  .status {
+    background: gray;
     color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
     margin-left: 15px;
-    border-radius: 40px;
-    /* display: flex; */
-    /* align-items: center; */
   }
-  .is_approved {
+  .approve_btn {
+    background: #5ec8e1;
+    color: #fff;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 20px;
+    margin-left: 20px;
+  }
+  .approve_btn:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  .approve_btn:focus {
+    outline: none;
+    cursor: pointer;
+  }
+  .done {
     background: #47d23e;
   }
-  .send_approve {
+  .wait {
     background: #ff9292;
   }
-  .inputting {
-    background: #b3b3b3;
+  .activity_business_info_contents {
+    display: flex;
+    justify-content: space-between;
+  }
+  .activity_business_info_items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .activity_business_info_item {
+    width: 49%;
+    /* padding: 10px; */
+    margin-bottom: 20px;
+  }
+  .activity_business_info_item_card {
+    background: #fff;
+    padding: 20px 15px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 8px !important;
+    height: 130px;
+    position: relative;
+  }
+  .link_disable {
+    opacity: 0.5;
+  }
+  .activity_business_info_item_title {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .activity_business_info_item_title .title_front{
+    font-size: 16px;
+    color: #626262;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+  .activity_business_info_item_title svg {
+    color: #35a4bf;
+    width: 50px !important;
+    height: 35px;
+  }
+  .title_back {
+    /* width: 30%; */
+    display: flex;
+    justify-content: flex-end;
+  }
+  .title_back2 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: flex-end;
   }
 
+  .title_back2 svg {
+      margin: 0;
+      display: flex;
+      width: 30px !important;
+      height: 30px;
+      color: #74d574;
+  }
+  span.not_input_mark {
+    background: #ff9898;
+    padding: 0px 10px;
+    border-radius: 30px;
+    color: #ffffff;
+    font-size: 13px;
+    height: 25px;
+    line-height: 25px;
+    font-weight: bold;
+  }
+  .gap_title {
+    display: flex;
+    align-items: center; /* 垂直中心 */
+    justify-content: center; /* 水平中心 */
+    margin-bottom: 20px;
+    color:#b3b3b3;
+    font-weight: bold;
+  }
+  .gap_title:before, .gap_title:after {
+    border-top: 3px solid;
+    content: "";
+    width: 30%; /* 線の長さ */
+    color:#b3b3b3;
+  }
+  .gap_title:before {
+    margin-right: 1em; /* 文字の右隣 */
+  }
+  .gap_title:after {
+    margin-left: 1em; /* 文字の左隣 */
+  }
+  ul.supplier_show_guide_images {
+    /* height: 100%; */
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  img.supplier_show_guide_image {
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  .user_show_content table td {
+    font-size: 14px;
+    color: #6e6e6e;
+  }
+  li.help_modal_li {
+    margin-bottom: 25px;
+  }
+  .flow_title {
+    display: flex;
+    align-items: center;
+  }
+  span.flow_title_num {
+    display: flex;
+    font-size: 25px;
+    background: #60c9e2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+  }
+  span.flow_title_text {
+    font-size: 20px;
+    margin-left: 15px;
+    color: #6f6f6f;
+    font-weight: bold;
+  }
+  .flow_explanation {
+    padding-left: 55px;
+  }
 </style>
+
+<script type="text/javascript">
+  function showHelp() {
+    const modal = document.getElementById('help_modal');
+    modal.classList.remove('hidden');
+  }
+  function closeHelp() {
+    const modal = document.getElementById('help_modal');
+    modal.classList.add('hidden');
+  }
+  function notYetAlert() {
+    alert('未入力の情報があります');
+  }
+</script>

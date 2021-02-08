@@ -90,6 +90,10 @@ Rails.application.routes.draw do
     resources :supplier_profiles
     resources :activity_businesses, only: [:index, :new, :create, :edit, :destroy]
     put '/activity_businesses/:id/edit', to: 'activity_businesses#update', as: 'update_activity_business'
+    get '/activity_businesses/:id/edit_guides', to: 'activity_businesses#edit_guides', as: 'activity_business_edit_guides'
+    get '/activity_businesses/:id/edit_cansel', to: 'activity_businesses#edit_cansel', as: 'activity_business_edit_cansel'
+    get '/activity_businesses/:id/edit_insurance', to: 'activity_businesses#edit_insurance', as: 'activity_business_edit_insurance'
+    get '/activity_businesses/:id/send_approve', to: 'activity_businesses#send_approve', as: 'activity_business_send_approve'
     get "dashboard", to: "suppliers#dashboard", as: :dashboard
     get "drafts_activities", to: "activities#drafts_activities", as: :drafts_activities
     get "published_activities", to: "activities#published_activities", as: :published_activities
@@ -112,6 +116,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get "activity_show/:activity_id", to: "home#activity_show", as: :activity_show
   get "activity_detail/:activity_id", to: "trip_managers#activity_detail", as: :activity_detail
 
   resources :admins

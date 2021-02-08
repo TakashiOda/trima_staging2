@@ -1,0 +1,220 @@
+<%= form_for [@supplier, @activity_business], url: supplier_update_activity_business_path(current_supplier, @activity_business), method: :put do |form| %>
+  <div class="form_title">
+    <h3>体験事業の情報を編集</h3>
+  </div>
+  <%= hidden_field_tag 'input_type', 'guides_input' %>
+  <%= render 'layouts/error_messages', model: form.object %>
+  <div class="user_show_content_down">
+    <div class="user_show_info_items_box">
+      <section class="form_section">
+        <div class="form_big_title">
+          <h3>ガイド・案内人情報</h3>
+        </div>
+        <div id="guides">
+          <%= form.fields_for :guides do |g| %>
+            <%= render "guide_fields", f: g %>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association "ガイドを追加", form, :guides, onClick: "addIdToGuideItem(this)" %>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="user_show_info_button_box">
+      <div class="form_sidebtns_container">
+        <div class="form_sidebtns">
+          <div class="form_sidebtn">
+            <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
+          </div>
+          <div class="form_sidebtn">
+            <%= form.submit('更新する',class: 'button btn-submit', id: "biz_form_submit_btn") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<style>
+  .radio_items.cansel_setting_radio {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .radio_items.cansel_setting_radio .radio_item {
+    display: flex;
+    align-items: center;
+    border: solid 1px lightgray;
+    margin-bottom: 3px;
+    padding: 5px 0px;
+    border-radius: 5px;
+    width: 100%;
+    height: 30px;
+  }
+  .radio_items.cansel_setting_radio input {
+    margin-left: 15px;
+    width: 10%;
+    height: 20px;
+  }
+  .radio_items.cansel_setting_radio label {
+    width: 90%;
+  }
+  .hosoku_title {
+    font-size: 12px;
+    background: #d0d0d0;
+    display: inline-block;
+    padding: 1px 15px;
+    color: gray;
+    border-radius: 30px;
+    margin: 0;
+  }
+  .hosoku_sub_title {
+    margin: 3px 0;
+    color: gray;
+    font-size: 15px;
+  }
+  div#explanation_about_the_day_before ul,
+  div#explanation_about_three_days_before ul,
+  div#explanation_about_a_week_before ul {
+    list-style: disc !important;
+    padding-left: 20px;
+    margin: 15px 0;
+  }
+  div#explanation_about_the_day_before ul li,
+  div#explanation_about_three_days_before ul li,
+  div#explanation_about_a_week_before ul li {
+    font-size: 12px;
+    color: gray;
+    margin-bottom: 5px;
+  }
+  input#insurance_image_form {
+    display: flex;
+    border-radius: 0;
+    background: #fff;
+    margin: 10px 0 0;
+  }
+  .explanation_about_cansel {
+    margin-top: 30px;
+  }
+  div#insurance_uploader_box {
+    background: lightgray;
+    padding: 15px 10px;
+    border-radius: 5px;
+    width: 90%;
+  }
+  .biz_form_status_toggle_box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 40px;
+    width: 100%;
+  }
+  .biz_form_status_toggle_box_title {
+    font-size: 12px;
+    width: 100%;
+    margin-bottom: 2px;
+    color: #8a8a8a;
+  }
+  .biz_form_status_toggle_radio_items {
+    width: 100%;
+    display: flex;
+  }
+  .biz_form_status_toggle_radio_items input[type=radio] {
+    display: none;
+  }
+  .biz_form_status_toggle_radio_item label {
+    width: 100%;
+    padding: 3px 0;
+    text-align: center;
+    background: #eaeaea;
+  }
+  .biz_form_status_toggle_radio_items input[type="radio"]:checked + label {
+    background: #23a0ff;
+    color: #ffffff;
+  }
+  .biz_form_status_toggle_radio_item.on,
+  .biz_form_status_toggle_radio_item.off {
+    width: 50%;
+  }
+  .biz_form_status_toggle_radio_item.on label {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+  .biz_form_status_toggle_radio_item.off label {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+  }
+  .town_box {
+    display: flex;
+  }
+  div.town_select select {
+    width: 100%;
+  }
+  .insurance_type_image {
+    width: 100%;
+  }
+  .insurance_type_pdf {
+    width: 200px;
+    height: 290px;
+  }
+</style>
+
+<script type="text/javascript">
+  (window.onload = function() {
+
+    const guideItems = document.querySelectorAll("div.nested-fields");
+    for (var i = 0; i < guideItems.length; i++) {
+      const guidePrevElement = guideItems[i].children[0].children[0].children[0];
+      guidePrevElement.id = 'guide_image_prev'+i;
+      const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
+      guidePresentElement.id = 'guide_present_image'+i;
+      const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
+      guideImageInput.id = i;
+    }
+  })();
+
+  function hasInput() {
+    const submitBtn = document.getElementById('biz_form_submit_btn');
+    submitBtn.classList.add('need_submit');
+  }
+
+  const selectElement = document.getElementById('post_image');
+  function image_input_btn() {
+    selectElement.click();
+  }
+
+
+  function addIdToGuideItem(obj) {
+    setTimeout(function(){
+      const guideItems = document.querySelectorAll("div.nested-fields");
+      for (var i = 0; i < guideItems.length; i++) {
+        const guidePrevElement = guideItems[i].children[0].children[0].children[0];
+        guidePrevElement.id = 'guide_image_prev'+i;
+        const guidePresentElement = guideItems[i].children[0].children[0].getElementsByClassName('guide_present_image')[0];
+        guidePresentElement.id = 'guide_present_image'+i;
+        const guideImageInput = guideItems[i].children[0].children[0].getElementsByClassName('user_edit_image_upload_btn_box')[0].children[0];
+        guideImageInput.id = i;
+      }
+    }, 100);
+  }
+
+  function showExplanationWithValue(value) {
+    const theDayBefore = document.getElementById("explanation_about_the_day_before");
+    const threeDaysBefore = document.getElementById("explanation_about_three_days_before");
+    const aWeekBefore = document.getElementById("explanation_about_a_week_before");
+    if (value == 'the_day_before') {
+      theDayBefore.classList.remove('hidden');
+      threeDaysBefore.classList.add('hidden');
+      aWeekBefore.classList.add('hidden');
+    } else if (value == 'three_days_before') {
+      theDayBefore.classList.add('hidden');
+      threeDaysBefore.classList.remove('hidden');
+      aWeekBefore.classList.add('hidden');
+    } else {
+      theDayBefore.classList.add('hidden');
+      threeDaysBefore.classList.add('hidden');
+      aWeekBefore.classList.remove('hidden');
+    }
+  }
+
+  </script>
