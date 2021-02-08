@@ -92,10 +92,9 @@
   $(function(){
     $('#supplier_address_get_btn').on('click', () => {
       const code = $('#supplier_address_post_code').val();
-      console.log(code);
       $.ajax({
         // url: "http://zipcloud.ibsnet.co.jp/api/search?zipcode=" + $('#supplier_address_post_code').val(),
-        url: `http://zipcloud.ibsnet.co.jp/api/search?zipcode=${code}`,
+        url: `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${code}`,
         dataType: 'jsonp',
       }).done((data) => {
         if (data.results) {
