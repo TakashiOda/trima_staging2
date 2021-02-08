@@ -370,6 +370,7 @@ class ActivitiesController < ApplicationController
                                       :activity_category_id, :main_image, :second_image,
                                       :third_image, :fourth_image,
                                       :remove_main_image, :remove_second_image, :remove_third_image, :remove_fourth_image,
+                                      :main_image_cache, :second_image_cache, :third_image_cache, :fourth_image_cache,
                                       :prefecture_id, :area_id, :town_id,
                                       :detail_address, :longitude, :latitude,
                                       :meeting_spot1_japanese_address, :meeting_spot1_japanese_description,
