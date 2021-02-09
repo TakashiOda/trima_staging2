@@ -30,7 +30,15 @@
           <% @activities.each do |activity| %>
             <%= link_to activity_show_path(activity) do %>
             <div class="home_new_activity_right_top_item">
-              <%= image_tag activity.main_image.to_s, class: 'home_item_image' %>
+              <% if !activity.main_image.blank? %>
+                <%= image_tag activity.main_image.to_s, class: 'home_item_image' %>
+              <% elsif !activity.second_image.blank? %>
+                <%= image_tag activity.second_image.to_s, class: 'home_item_image' %>
+              <% elsif !activity.third_image.blank? %>
+                <%= image_tag activity.third_image.to_s, class: 'home_item_image' %>
+              <% elsif !activity.fourth_image.blank? %>
+                <%= image_tag activity.fourth_image.to_s, class: 'home_item_image' %>
+              <% end %>
               <div class="activity_info_box">
                 <div class="activity_name"><%= activity.name[0, 20] %></div>
                 <div class="activity_price">¥<%= activity.normal_adult_price.to_s(:delimited) %></div>
@@ -64,5 +72,4 @@
 <script type="text/javascript">
   $(".notice" ).fadeOut(2000);
   $(".alert" ).fadeOut(2000);
-
 </script>

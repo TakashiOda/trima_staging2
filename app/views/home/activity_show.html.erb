@@ -8,21 +8,21 @@
         <% if !@activity.second_image.blank? %>
           <%= image_tag @activity.second_image.to_s, class: 'activity_detail_image' %>
         <% else %>
-        <%= image_tag @activity.main_image.to_s, class: 'activity_detail_image left_image' if !@activity.main_image.blank? %>
+          <%= image_tag @activity.main_image.to_s, class: 'activity_detail_image' if !@activity.main_image.blank? %>
         <% end %>
       </li>
       <li class="activity_detail_image_item">
         <% if !@activity.third_image.blank? %>
           <%= image_tag @activity.third_image.to_s, class: 'activity_detail_image' %>
         <% else %>
-        <%= image_tag @activity.main_image.to_s, class: 'activity_detail_image left_image' if !@activity.main_image.blank? %>
+          <%= image_tag @activity.main_image.to_s, class: 'activity_detail_image' if !@activity.main_image.blank? %>
         <% end %>
       </li>
       <li class="activity_detail_image_item last_item">
         <% if !@activity.fourth_image.blank? %>
-          <%= image_tag @activity.fourth_image.to_s, class: 'activity_detail_image' %>
+          <%= image_tag @activity.fourth_image.to_s, class: 'activity_detail_image right_image' %>
         <% else %>
-        <%= image_tag @activity.main_image.to_s, class: 'activity_detail_image left_image' if !@activity.main_image.blank? %>
+          <%= image_tag @activity.main_image.to_s, class: 'activity_detail_image right_image' if !@activity.main_image.blank? %>
         <% end %>
       </li>
       <%#= render partial: 'activity_favorite', locals: { @activity => @activity, @project => @project } %>
