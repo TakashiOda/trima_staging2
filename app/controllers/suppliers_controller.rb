@@ -20,13 +20,14 @@ class SuppliersController < ApplicationController
       @booked = BookedActivity.where(supplier_id: @supplier.id)
       # 欲しいデータ
       # [["日付", 合計予約金額],[],[]]
-      @booked6daysBefore = @booked.select { |b6| b6.purchase_date.to_date == (Date.today - 6) }
-      @booked5daysBefore = @booked.select { |b5| b5.purchase_date.to_date == (Date.today - 5) }
-      @booked4daysBefore = @booked.select { |b4| b4.purchase_date.to_date == (Date.today - 4) }
-      @booked3daysBefore = @booked.select { |b3| b3.purchase_date.to_date == (Date.today - 3) }
-      @booked2daysBefore = @booked.select { |b2| b2.purchase_date.to_date == (Date.today - 2) }
-      @booked1dayBefore = @booked.select { |b1| b1.purchase_date.to_date == (Date.today - 1) }
-      @bookedTodayBefore = @booked.select { |b0| b0.purchase_date.to_date == Date.today }
+      # binding.pry
+      @booked6daysBefore = @booked.select { |b6| !b6.purchase_date.nil? && b6.purchase_date.to_date == (Date.today - 6) }
+      @booked5daysBefore = @booked.select { |b5| !b5.purchase_date.nil? && b5.purchase_date.to_date == (Date.today - 5) }
+      @booked4daysBefore = @booked.select { |b4| !b4.purchase_date.nil? && b4.purchase_date.to_date == (Date.today - 4) }
+      @booked3daysBefore = @booked.select { |b3| !b3.purchase_date.nil? && b3.purchase_date.to_date == (Date.today - 3) }
+      @booked2daysBefore = @booked.select { |b2| !b2.purchase_date.nil? && b2.purchase_date.to_date == (Date.today - 2) }
+      @booked1dayBefore = @booked.select { |b1| !b1.purchase_date.nil? && b1.purchase_date.to_date == (Date.today - 1) }
+      @bookedTodayBefore = @booked.select { |b0| !b0.purchase_date.nil? && b0.purchase_date.to_date == Date.today }
       @data = [
         [(Date.today - 6).strftime("%m/%d"),@booked6daysBefore.sum { |hash| hash[:total_price]}],
         [(Date.today - 5).strftime("%m/%d"),@booked5daysBefore.sum { |hash| hash[:total_price]}],
