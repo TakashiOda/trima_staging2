@@ -17,6 +17,7 @@ class ActivityBusinessesController < ApplicationController
     @supplier = current_supplier
     @activity_business = @supplier.build_activity_business(activity_biz_params)
     # @activity_business = ActivityBusiness.new(activity_biz_params)
+    @activity_business.profile_input_done = true
     if @activity_business.save
       redirect_to supplier_path(current_supplier)
     else
