@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
+  <title>The page you were looking for doesn't exist (404)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
   .rails-default-error-page {
@@ -24,10 +24,9 @@
     border-left-color: #999;
     border-bottom-color: #BBB;
     border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
+    border-radius: 10px;
     background-color: white;
-    padding: 7px 12% 0;
+    padding: 15px 15% 45px;
     box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
   }
 
@@ -51,16 +50,28 @@
     color: #666;
     box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
   }
+  .link_to_home {
+    display: block;
+    text-decoration: none;
+    margin: 50px !important;
+    padding: 10px 20px;
+    background-color: #730E15;
+    color: #fff;
+    border-radius: 15px;
+  }
   </style>
 </head>
 
 <body class="rails-default-error-page">
-  <!-- This file lives in public/500.html -->
+  <!-- This file lives in public/505.html -->
   <div class="dialog">
     <div>
-      <h1>We're sorry, but something went wrong.</h1>
+      <h1 style="font-size: 30px;">trima</h1>
+      <h1>サーバーエラーが発生しました</h1>
+      <p>しばらく経って再度お試しください</p>
+      <a href="https://www.uu-trima.com/" class="link_to_home">Home</a>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+
   </div>
 </body>
 </html>
