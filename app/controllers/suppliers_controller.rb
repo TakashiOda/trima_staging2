@@ -66,6 +66,7 @@ class SuppliersController < ApplicationController
     if @supplier.update(supplier_params)
       if @supplier.activity_business.nil?
         @activity_business = @supplier.build_activity_business
+        @activity_business.profile_image = nil
         @activity_business.save!
       end
       flash[:notice] = '事業者情報を更新しました'
