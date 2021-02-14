@@ -14,7 +14,10 @@
             <div class="user_edit_image_box_inside">
               <img id="user_image_prev" src="#" class="hidden" />
               <%# binding.pry %>
-              <% if !@activity_business.profile_image.blank? %>
+              <%= @activity_business.profile_image? ? 'profile_image? :画像あり' : 'profile_image? :画像なし'%>
+              <%= !@activity_business.profile_image.blank? ? 'profile_image.blank? :画像あり' : 'profile_image.blank? :画像なし'%>
+              <%= !@activity_business.profile_image.nil? ? 'profile_image.nil? :画像あり' : 'profile_image.nil? :画像なし'%>
+              <% if @activity_business.profile_image? %>
                 <%# binding.pry %>
                 <%= image_tag @activity_business.profile_image.to_s, class: 'user_present_image', id: 'user_present_image' %>
               <% else %>
