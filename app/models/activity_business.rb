@@ -15,11 +15,12 @@ class ActivityBusiness < ApplicationRecord
   mount_uploader :insurance_image, InsuranceImageUploader
 
   # validation ***********************************************
-  validates :name, length: { in: 2..40, message: "は2文字以上40文字以下" }, allow_blank: true
+  validates :name, length: { in: 2..40, message: "は2文字以上40文字以下" }
+  validates :profile_image, presence: true
   validates :en_name, length: { in: 2..40, message: "は2文字以上40文字以下" }, allow_blank: true
   validates :cn_name, length: { in: 2..40, message: "は2文字以上40文字以下" }, allow_blank: true
   validates :tw_name, length: { in: 2..40, message: "は2文字以上40文字以下" }, allow_blank: true
-  validates :profile_text, length: { in: 5..300, message: "は5文字以上300文字以下" }, allow_blank: true
+  validates :profile_text, length: { in: 5..300, message: "は5文字以上300文字以下" }
   validates :en_profile_text, length: { in: 5..300, message: "は5文字以上300文字以下" }, allow_blank: true
   validates :cn_profile_text, length: { in: 5..300, message: "は5文字以上300文字以下" }, allow_blank: true
   validates :tw_profile_text, length: { in: 5..300, message: "は5文字以上300文字以下" }, allow_blank: true
