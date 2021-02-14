@@ -62,8 +62,9 @@ class SuppliersController < ApplicationController
 
   def update
     @supplier = Supplier.find(params[:id])
-    @supplier.profile_set_done = true
     if @supplier.update(supplier_params)
+      @supplier.profile_set_done = true
+      @supplier.save!
       flash[:notice] = '事業者情報を更新しました'
       redirect_to supplier_path(@supplier)
     else
