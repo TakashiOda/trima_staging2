@@ -177,16 +177,18 @@
         </div>
         <% end %>
       <% else %>
-        <div class="activity_business_info_item_card link_disable">
-          <div class="activity_business_info_item_title">
-            <div class="title_front">
-              <i class="fas fa-address-card"></i>体験事業のプロフィール
+        <%= link_to new_supplier_activity_business_path(current_supplier) do %>
+          <div class="activity_business_info_item_card link_disable">
+            <div class="activity_business_info_item_title">
+              <div class="title_front">
+                <i class="fas fa-address-card"></i>体験事業のプロフィール
+              </div>
+            </div>
+            <div class="title_back2">
+              <span class="not_input_mark">未入力あり</span>
             </div>
           </div>
-          <div class="title_back2">
-            <span class="not_input_mark">未入力あり</span>
-          </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
     <div class="activity_business_info_item">

@@ -8,6 +8,7 @@ class ActivityBusinessesController < ApplicationController
   def new
     @supplier = current_supplier
     @activity_business = @supplier.build_activity_business
+    # binding.pry
     # @activity_business = ActivityBusiness.new(supplier_id: current_supplier.id)
     @guide = @activity_business.guides.build
   end

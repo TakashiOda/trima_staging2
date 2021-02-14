@@ -13,7 +13,6 @@
           <div class="form-group user_edit_image_box">
             <div class="user_edit_image_box_inside">
               <img id="user_image_prev" src="#" class="hidden" />
-              <%# binding.pry %>
               <%= @activity_business.profile_image? ? 'profile_image? :画像あり' : 'profile_image? :画像なし'%>
               <%= !@activity_business.profile_image.blank? ? 'profile_image.blank? :画像あり' : 'profile_image.blank? :画像なし'%>
               <%= !@activity_business.profile_image.nil? ? 'profile_image.nil? :画像あり' : 'profile_image.nil? :画像なし'%>
@@ -24,7 +23,6 @@
                 <div class="user_present_no_image" id='user_present_image'>
                   <i class="fas fa-image"></i>
                 </div>
-                <%#= image_tag 'default_images/no_avatar_for_biz.png', class: 'user_present_image', id: 'user_present_image' %>
                 <%= form.hidden_field :profile_image_cache %>
               <% end %>
             </div>

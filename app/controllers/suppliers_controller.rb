@@ -64,11 +64,11 @@ class SuppliersController < ApplicationController
   def update
     @supplier = Supplier.find(params[:id])
     if @supplier.update(supplier_params)
-      if @supplier.activity_business.nil?
-        @activity_business = @supplier.build_activity_business
-        @activity_business.profile_image = nil
-        @activity_business.save!
-      end
+      # if @supplier.activity_business.nil?
+      #   @activity_business = @supplier.build_activity_business
+      #   @activity_business.profile_image = nil
+      #   @activity_business.save!
+      # end
       flash[:notice] = '事業者情報を更新しました'
       redirect_to supplier_path(@supplier)
     else
