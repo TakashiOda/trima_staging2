@@ -18,8 +18,8 @@
               <%= !@activity_business.profile_image.blank? ? 'profile_image.blank? :画像あり' : 'profile_image.blank? :画像なし'%>
               <%= !@activity_business.profile_image.nil? ? 'profile_image.nil? :画像あり' : 'profile_image.nil? :画像なし'%>
               <% if @activity_business.profile_image? %>
-                <%# binding.pry %>
-                <%= image_tag @activity_business.profile_image.url, class: 'user_present_image', id: 'user_present_image' %>
+                <%#= image_tag @activity_business.profile_image.url, class: 'user_present_image', id: 'user_present_image' %>
+                <img src="<%=@activity_business.profile_image.url%>" class='user_present_image' id='user_present_image' />
               <% else %>
                 <div class="user_present_no_image" id='user_present_image'>
                   <i class="fas fa-image"></i>
