@@ -51,7 +51,6 @@ class SuppliersController < ApplicationController
     else
       @guides = []
     end
-    # @activity_business = ActivityBusiness.find_by(supplier_id: @supplier.id)
   end
 
   def edit
@@ -64,11 +63,8 @@ class SuppliersController < ApplicationController
   def update
     @supplier = Supplier.find(params[:id])
     if @supplier.update(supplier_params)
-      if @supplier.activity_business.nil?
-        @activity_business = @supplier.build_activity_business
-        @activity_business.profile_image = nil
-        @activity_business.save!
-      end
+      @supplier.profile_set_done = true
+      @supplier.save!
       flash[:notice] = '事業者情報を更新しました'
       redirect_to supplier_path(@supplier)
     else

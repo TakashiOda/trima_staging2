@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_091655) do
+ActiveRecord::Schema.define(version: 2021_02_14_054123) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -429,6 +429,7 @@ ActiveRecord::Schema.define(version: 2021_02_03_091655) do
     t.string "name"
     t.string "avatar"
     t.integer "profile_ratio"
+    t.boolean "profile_set_done", default: false, null: false
     t.index ["confirmation_token"], name: "index_suppliers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_suppliers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_suppliers_on_reset_password_token", unique: true
