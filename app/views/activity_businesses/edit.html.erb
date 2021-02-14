@@ -14,7 +14,6 @@
             <div class="user_edit_image_box_inside">
               <img id="user_image_prev" src="#" class="hidden" />
               <% if @activity_business.profile_image? %>
-                <%#= image_tag @activity_business.profile_image.url, class: 'user_present_image', id: 'user_present_image' %>
                 <img src="<%=@activity_business.profile_image.url%>" class='user_present_image' id='user_present_image' />
               <% else %>
                 <div class="user_present_no_image" id='user_present_image'>
