@@ -90,7 +90,9 @@
             <div class="label_with_must_column">
               <%= f.label :available_age %><span class="must_input">必須</span>
             </div>
-            <%= f.number_field :available_age, min: 0, max: 100, required: true, class: "form-control", oninput: 'hasInput()' %>
+            <div class="num_input_box">
+              <%= f.number_field :available_age, min: 0, max: 100, required: true, class: "form-control", oninput: 'hasInput()' %>歳
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -98,7 +100,9 @@
             <div class="label_with_must_column">
               <%= f.label :minimum_num %><span class="must_input">必須</span>
             </div>
-            <%= f.number_field :minimum_num, min: 1, max: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
+            <div class="num_input_box">
+              <%= f.number_field :minimum_num, min: 1, max: 50, required: true, class: "form-control", oninput: 'hasInput()' %>名
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -106,7 +110,9 @@
             <div class="label_with_must_column">
               <%= f.label :maximum_num %><span class="must_input">必須</span>
             </div>
-            <%= f.number_field :maximum_num, min: 1, max: 50, required: true, class: "form-control", oninput: 'hasInput()' %>
+            <div class="num_input_box">
+              <%= f.number_field :maximum_num, min: 1, max: 50, required: true, class: "form-control", oninput: 'hasInput()' %>名
+            </div>
           </div>
         </div>
       </section>
@@ -114,7 +120,6 @@
         <div class="form_big_title">
           <h3><i class="fas fa-map-marker-alt"></i>アクティビティの位置情報</h3>
         </div>
-        <div id="map"></div>
         <div class="form-group">
           <div class="label_with_must">
             <%= f.label :area_id %><span class="must_input">必須</span>
@@ -176,12 +181,12 @@
             </div>
           </div>
         </div>
+        <div id="map"></div>
       </section>
       <section class="form_section">
         <div class="form_big_title">
           <h3><i class="fas fa-street-view"></i>集合場所</h3>
         </div>
-        <div id="meetingmap"></div>
         <div class="form-group">
           <%= f.label :meeting_spot1_japanese_address %>
           <%= f.text_field :meeting_spot1_japanese_address, maxlength: 80, class: "form-control", oninput: 'hasInput()' %>
@@ -205,6 +210,7 @@
             </div>
           </div>
         </div>
+        <div id="meetingmap"></div>
       </section>
       <section class="form_section">
         <div class="form_big_title after_second_title">
@@ -284,18 +290,29 @@
         <div class="form_big_title after_second_title">
           <h3><i class="fas fa-yen-sign"></i>料金に関する設定</h3>
         </div>
-        <div class="form-group season_price_radio_box">
+        <div class="form-group">
           <%= f.label "シーズン料金の有無" %>
-          <div class="season_price_radio_box_inner">
-            <div class="season_price_radio_items">
-              <div class="season_price_radio_item on">
-                <%= f.radio_button :has_season_price, :true, onClick: "hasSeasonPrice(this)", oninput: 'hasInput()' %>
-                <%= f.label :has_season_price, "あり", {value: :true, style: "display: inline-block;"} %>
-              </div>
-              <div class="season_price_radio_item off">
-                <%= f.radio_button :has_season_price, :false, onClick: "noSeasonPrice(this)", oninput: 'hasInput()'%>
-                <%= f.label :has_season_price, "なし", {value: :false, style: "display: inline-block;"} %>
-              </div>
+          <div class="radio_items rain_or_shine_radio">
+            <div class="radio_item">
+              <%= f.radio_button :has_season_price, :true, onClick: "hasSeasonPrice(this)", oninput: 'hasInput()' %>
+              <%= f.label :has_season_price, "シーズン料金あり", {value: :true, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item">
+              <%= f.radio_button :has_season_price, :false, onClick: "noSeasonPrice(this)", oninput: 'hasInput()'%>
+              <%= f.label :has_season_price, "シーズン料金なし", {value: :false, style: "display: inline-block;"} %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label "年齢別料金の有無" %>
+          <div class="radio_items rain_or_shine_radio">
+            <div class="radio_item">
+              <%= f.radio_button :has_different_ageprices, :true, onClick: "hasDiffAgePrice(this)", oninput: 'hasInput()' %>
+              <%= f.label :has_different_ageprices, "年齢別料金あり", {value: :true, style: "display: inline-block;"} %>
+            </div>
+            <div class="radio_item">
+              <%= f.radio_button :has_different_ageprices, :false, onClick: "noDiffAgePrice(this)", oninput: 'hasInput()'%>
+              <%= f.label :has_different_ageprices, "年齢別料金なし", {value: :false, style: "display: inline-block;"} %>
             </div>
           </div>
         </div>
@@ -308,22 +325,22 @@
               <th class="ageprice_price season_price_item <%= "hidden" if !@activity.has_season_price %>">ハイシーズン料金</th>
             </tr>
             <tr>
-              <td class="ageprice_type"><%= f.label :大人料金（中学生以上）%></td>
-              <td class="ageprice_price input_box"><%= f.number_field :normal_adult_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :low_adult_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :high_adult_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_type"><%= f.label (@activity.has_different_ageprices ? '大人料金（中学生以上）' : '全ての年齢料金'), id: 'adult_price_label'%></td>
+              <td class="ageprice_price input_box normal_price_item adult_item"><%= f.number_field :normal_adult_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item adult_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :low_adult_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item adult_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :high_adult_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
             </tr>
-            <tr>
+            <tr class="other_ageprice_tr <%= "hidden" if !@activity.has_different_ageprices %>">
               <td class="ageprice_type"><%= f.label :小学生 %></td>
-              <td class="ageprice_price input_box"><%= f.number_field :normal_middle_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :low_middle_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :high_middle_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box not_adult normal_price_item"><%= f.number_field :normal_middle_price, min: 1000, max: 100000, required: @activity.has_different_ageprices, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item not_adult <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :low_middle_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item not_adult <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :high_middle_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
             </tr>
-            <tr>
+            <tr class="other_ageprice_tr <%= "hidden" if !@activity.has_different_ageprices %>">
               <td class="ageprice_type"><%= f.label :未就学児 %></td>
-              <td class="ageprice_price input_box"><%= f.number_field :normal_kids_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :low_kids_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :high_kids_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box not_adult normal_price_item"><%= f.number_field :normal_kids_price, min: 1000, max: 100000, required: @activity.has_different_ageprices, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item not_adult <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :low_kids_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item not_adult <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :high_kids_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
             </tr>
           </table>
         </div>
@@ -333,19 +350,18 @@
           <h3><i class="far fa-calendar-alt"></i>アクティビティの期間設定</h3>
         </div>
         <div class="form-group activity_season_radio">
-          <%= f.label "実施期間は通年ですか？" %>
-          <div class="season_price_radio_box_inner">
-            <div class="season_price_radio_items">
-              <div class="season_price_radio_item on">
+          <div class="form-group">
+            <%= f.label "実施期間は通年ですか？" %>
+            <div class="radio_items rain_or_shine_radio">
+              <div class="radio_item">
                 <%= f.radio_button :is_all_year_open, :true, onClick: "isAllYearOpen(this)", oninput: 'hasInput()' %>
                 <%= f.label :is_all_year_open, "通年", {value: :true, style: "display: inline-block;"} %>
               </div>
-              <div class="season_price_radio_item off">
+              <div class="radio_item">
                 <%= f.radio_button :is_all_year_open, :false, onClick: "isLimitedOpen(this)", oninput: 'hasInput()' %>
                 <%= f.label :is_all_year_open, "期間限定", {value: :false, style: "display: inline-block;"} %>
               </div>
             </div>
-
           </div>
         </div>
         <div class="form-group <%= "hidden" if @activity.is_all_year_open %>" id="activity_date_input_box">
@@ -363,13 +379,6 @@
         <div class="form-group">
           <%= f.label "営業する曜日" %>
           <div class="activity_openday_input_box">
-              <%#= f.check_box :monday_open, oninput: 'hasInput()' %><%#= f.label "monday_open","月曜" %>
-              <%#= f.check_box :tuesday_open, oninput: 'hasInput()' %><%#= f.label "tuesday_open","火曜" %>
-              <%#= f.check_box :wednesday_open, oninput: 'hasInput()' %><%#= f.label "wednesday_open","水曜" %>
-              <%#= f.check_box :thursday_open, oninput: 'hasInput()' %><%#= f.label "thursday_open","木曜" %>
-              <%#= f.check_box :friday_open, oninput: 'hasInput()' %><%#= f.label "friday_open","金曜" %>
-              <%#= f.check_box :saturday_open, oninput: 'hasInput()' %><%#= f.label "saturday_open","土曜" %>
-              <%#= f.check_box :sunday_open, oninput: 'hasInput()' %><%#= f.label "sunday_open","日曜" %>
               <div class="openday_checkbox"><%= f.check_box :monday_open, oninput: 'hasInput()' %><%= f.label "monday_open","月曜" %></div>
               <div class="openday_checkbox"><%= f.check_box :tuesday_open, oninput: 'hasInput()' %><%= f.label "tuesday_open","火曜" %></div>
               <div class="openday_checkbox"><%= f.check_box :wednesday_open, oninput: 'hasInput()' %><%= f.label "wednesday_open","水曜" %></div>
@@ -385,10 +394,12 @@
           <h3><i class="fas fa-clock"></i>アクティビティの時間設定</h3>
         </div>
         <div class="form-group">
-          <div class="row">
-            <div class="col-half">
-              <%= f.label :activity_minutes %>
-              <%= f.number_field :activity_minutes, min: 20, max: 480 ,step: 5, required: true, class: "form-control", id: "activity_minutes", oninput: 'hasInput()' %>
+          <div class="num_input">
+            <div class="label_with_must_column">
+              <%= f.label :activity_minutes %><span class="must_input">必須</span>
+            </div>
+            <div class="num_input_box">
+              <%= f.number_field :activity_minutes, min: 20, max: 480 ,step: 5, required: true, class: "form-control", id: "activity_minutes", oninput: 'hasInput()' %>分
             </div>
           </div>
         </div>
@@ -397,24 +408,26 @@
             <%= f.label :activity_courses %><span class="must_input">必須</span>
           </div>
           <div class="course_table_head">
-            <div class="course_row1"><span>開始時間</span></div>
-            <div class="course_row2"><span>削除</span></div>
+            <div class="course_row1"><span>コースNo.</span></div>
+            <div class="course_row2">
+              <span>開始時間</span>
+            </div>
           </div>
           <div id="courses">
             <%= f.fields_for :activity_courses do |t| %>
               <%= render "activity_course_fields", f: t %>
             <% end %>
             <div class="links">
-              <%= link_to_add_association "体験時間を追加", f, :activity_courses, form_name: 'f', id:"course_add_btn" %>
+              <%= link_to_add_association "コースを追加", f, :activity_courses, form_name: 'f', id:"course_add_btn" %>
             </div>
           </div>
         </div>
       </section>
       <section class="form_section">
+        <div class="form_big_title after_second_title">
+          <h3><i class="fas fa-cloud-rain"></i>悪天候時について</h3>
+        </div>
         <div class="form-group">
-          <div class="form_big_title after_second_title">
-            <h3><i class="fas fa-cloud-rain"></i>悪天候時について</h3>
-          </div>
           <%= f.label "雨天時の開催設定" %>
           <div class="radio_items rain_or_shine_radio">
             <div class="radio_item">
@@ -426,6 +439,7 @@
               <%= f.label :rain_or_shine, "雨天決行", {value: :true} %>
             </div>
           </div>
+        </div>
       </section>
       <!-- <section class="form_section">
         <div class="form-group">
@@ -453,6 +467,11 @@
       </section> -->
     </div>
     <div class="form_btns_box">
+      <div class="no_input_counter_box">
+        <span>未入力</span>
+        <span id="no_input_count">20</span>
+        <span>箇所</span>
+      </div>
       <div id="form_btns">
         <div class="submit_btn_box">
           <%=link_to "キャンセル", supplier_activities_path(current_supplier), class: 'button btn-cansel', id: "activity_form_cansel_btn" %>
@@ -528,16 +547,12 @@
     display: flex;
     flex-direction: row;
   }
-  .num_input {
-    /* width: 45%; */
+  .num_input_box {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 10px;
+    align-items: flex-end;
   }
-  .num_input input {
-    width: 25%;
+  .num_input_box input {
+    width: 100px;
     text-align: right;
   }
   .geo_input {
@@ -599,6 +614,38 @@
     color: gray;
     line-height: 18px;
   }
+  div#courses .form-group {
+    padding: 0px 10px;
+  }
+  .form-group.ageprice_table {
+    background: #dff9ff;
+    border-radius: 7px;
+  }
+  .course_table_head {
+    display: flex;
+    background: #dff9ff;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 10px;
+    margin: 0px 0;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom: solid 1px #e9e9e9;
+  }
+  div#courses .nested-fields {
+    background: #dff9ff;
+  }
+  .no_input_counter_box {
+    position: sticky;
+    top: 65px;
+    height: 40px;
+    background: #fff;
+    padding: 10px 15px 10px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 7px -1px #b7b7b7;
+    margin-bottom: 10px;
+  }
 </style>
 
 
@@ -649,6 +696,7 @@
     draftBtn.classList.add('need_submit');
     const submitBtn = document.getElementById('activity_form_submit_btn');
     submitBtn.classList.add('need_submit');
+    checkNoInput();
   }
 
   function countDescription(obj) {
@@ -791,30 +839,137 @@
   });
 
   function hasSeasonPrice(obj) {
-    var isChecked = obj.checked;
+    var hasSeason_Price = obj.checked;
     var seasonPriceBoxes = document.querySelectorAll(".season_price_item");
-    if (isChecked) {
+    const hasDiffAge_Price = document.getElementById('activity_has_different_ageprices_true').checked;
+    if (hasSeason_Price && hasDiffAge_Price) { // シーズンも年齢別もあり => 全て required = true;
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
         seasonPriceBoxes[i].classList.remove("hidden");
         if (i >= 2) {
           seasonPriceBoxes[i].children[0].required = true;
         }
       }
+    } else if (hasSeason_Price && !hasDiffAge_Price) { // シーズンはあるが年齢別なし => 大人のみ required = true;
+      for (var i = 0; i < seasonPriceBoxes.length; i++) {
+        seasonPriceBoxes[i].classList.remove("hidden");
+      }
+      document.getElementById('activity_low_adult_price').required = true;
+      document.getElementById('activity_high_adult_price').required = true;
+      document.getElementById('activity_normal_middle_price').required = false;
+      document.getElementById('activity_low_middle_price').required = false;
+      document.getElementById('activity_high_middle_price').required = false;
+      document.getElementById('activity_normal_kids_price').required = false;
+      document.getElementById('activity_low_kids_price').required = false;
+      document.getElementById('activity_high_kids_price').required = false;
     }
   }
   function noSeasonPrice(obj) {
-    var isChecked = obj.checked;
+    var hasNoSeason_Price = obj.checked;
     var seasonPriceBoxes = document.querySelectorAll(".season_price_item");
-    if (isChecked) {
+    const hasDiffAge_Price = document.getElementById('activity_has_different_ageprices_true').checked;
+    if (hasNoSeason_Price && hasDiffAge_Price) { // シーズンなし、年齢別はあり => シーズンは全て required = false;
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
         seasonPriceBoxes[i].classList.add("hidden");
-        if (i >= 2) {
-          seasonPriceBoxes[i].children[0].required = false;
-        }
-
       }
+      document.getElementById('activity_low_adult_price').required = false;
+      document.getElementById('activity_high_adult_price').required = false;
+      document.getElementById('activity_normal_middle_price').required = true;
+      document.getElementById('activity_low_middle_price').required = false;
+      document.getElementById('activity_high_middle_price').required = false;
+      document.getElementById('activity_normal_kids_price').required = true;
+      document.getElementById('activity_low_kids_price').required = false;
+      document.getElementById('activity_high_kids_price').required = false;
+    } else if (hasNoSeason_Price && !hasDiffAge_Price) { // シーズンも年齢別料金もなし => 全部 false
+      for (var i = 0; i < seasonPriceBoxes.length; i++) {
+        seasonPriceBoxes[i].classList.add("hidden");
+      }
+      document.getElementById('activity_low_adult_price').required = false;
+      document.getElementById('activity_high_adult_price').required = false;
+      document.getElementById('activity_normal_middle_price').required = false;
+      document.getElementById('activity_low_middle_price').required = false;
+      document.getElementById('activity_high_middle_price').required = false;
+      document.getElementById('activity_normal_kids_price').required = false;
+      document.getElementById('activity_low_kids_price').required = false;
+      document.getElementById('activity_high_kids_price').required = false;
     }
   }
+
+  function hasDiffAgePrice(obj) {
+    var kidsPriceBoxes = document.querySelectorAll(".other_ageprice_tr");
+    const hasSeason_Price = document.getElementById('activity_has_season_price_true').checked;
+    const adultLabel = document.getElementById('adult_price_label');
+    adultLabel.innerHTML = '大人料金（中学生以上）';
+    if (hasSeason_Price) { // せんぶ true
+      for (var i = 0; i < kidsPriceBoxes.length; i++) {
+        kidsPriceBoxes[i].classList.remove("hidden");
+      }
+      document.getElementById('activity_low_adult_price').required = true;
+      document.getElementById('activity_high_adult_price').required = true;
+      document.getElementById('activity_normal_middle_price').required = true;
+      document.getElementById('activity_low_middle_price').required = true;
+      document.getElementById('activity_high_middle_price').required = true;
+      document.getElementById('activity_normal_kids_price').required = true;
+      document.getElementById('activity_low_kids_price').required = true;
+      document.getElementById('activity_high_kids_price').required = true;
+    } else { // シーズンはなし、年齢別はあり => 通常料金のみtrue
+      for (var i = 0; i < kidsPriceBoxes.length; i++) {
+        kidsPriceBoxes[i].classList.remove("hidden");
+      }
+      document.getElementById('activity_low_adult_price').required = false;
+      document.getElementById('activity_high_adult_price').required = false;
+      document.getElementById('activity_normal_middle_price').required = true;
+      document.getElementById('activity_low_middle_price').required = false;
+      document.getElementById('activity_high_middle_price').required = false;
+      document.getElementById('activity_normal_kids_price').required = true;
+      document.getElementById('activity_low_kids_price').required = false;
+      document.getElementById('activity_high_kids_price').required = false;
+    }
+  }
+  function noDiffAgePrice(obj) {
+    var seasonPriceBoxes = document.querySelectorAll(".other_ageprice_tr");
+    const hasSeason_Price = document.getElementById('activity_has_season_price_true').checked;
+    const adultLabel = document.getElementById('adult_price_label');
+    adultLabel.innerHTML = '全ての年齢料金';
+    if (hasSeason_Price) { // シーズンあり、年齢別はなし => 大人のみtrue
+      for (var i = 0; i < seasonPriceBoxes.length; i++) {
+        seasonPriceBoxes[i].classList.add("hidden");
+      }
+      document.getElementById('activity_low_adult_price').required = true;
+      document.getElementById('activity_high_adult_price').required = true;
+      document.getElementById('activity_normal_middle_price').required = false;
+      document.getElementById('activity_low_middle_price').required = false;
+      document.getElementById('activity_high_middle_price').required = false;
+      document.getElementById('activity_normal_kids_price').required = false;
+      document.getElementById('activity_low_kids_price').required = false;
+      document.getElementById('activity_high_kids_price').required = false;
+    } else {
+      for (var i = 0; i < seasonPriceBoxes.length; i++) {
+        seasonPriceBoxes[i].classList.add("hidden");
+      }
+      document.getElementById('activity_low_adult_price').required = false;
+      document.getElementById('activity_high_adult_price').required = false;
+      document.getElementById('activity_normal_middle_price').required = false;
+      document.getElementById('activity_low_middle_price').required = false;
+      document.getElementById('activity_high_middle_price').required = false;
+      document.getElementById('activity_normal_kids_price').required = false;
+      document.getElementById('activity_low_kids_price').required = false;
+      document.getElementById('activity_high_kids_price').required = false;
+    }
+  }
+  // function checkRequierd() {
+  //   const adult_normal = document.getElementById('activity_normal_adult_price').required;
+  //   const adult_low = document.getElementById('activity_low_adult_price').required;
+  //   const adult_high = document.getElementById('activity_high_adult_price').required;
+  //   console.log('大人 ====>大人通常',adult_normal, '大人ロー',adult_low,'大人ハイ',adult_high);
+  //   const middle_normal = document.getElementById('activity_normal_middle_price').required;
+  //   const middle_low = document.getElementById('activity_low_middle_price').required;
+  //   const middle_high = document.getElementById('activity_high_middle_price').required;
+  //   console.log('小学生 ====>小学生通常',middle_normal, '小学生ロー',middle_low,'小学生ハイ',middle_high);
+  //   const kids_normal = document.getElementById('activity_normal_kids_price').required;
+  //   const kids_low = document.getElementById('activity_low_kids_price').required;
+  //   const kids_high = document.getElementById('activity_high_kids_price').required;
+  //   console.log('未就学児 ====>未就学児通常',kids_normal, '未就学児ロー',kids_low,'未就学児ハイ',kids_high);
+  // }
 
 
   function ageFromFocus(obj) {
@@ -886,31 +1041,23 @@
       } else {
         addBtn.classList.remove('disabled');
       }
-    }, 100);
-  }
-
-  function checkCourseNum() {
-    hasInput();
-    setTimeout(function(){
-      const courseItems = document.getElementById('courses').getElementsByClassName('nested-fields');
-      const addBtn = document.getElementById('course_add_btn');
-      if (courseItems.length < 5) {
-        addBtn.classList.remove('disabled');
-        addBtn.text = '体験時間を追加';
+      const courseTitles = document.querySelectorAll(".course_number");
+      for (var i = 0; i < courseTitles.length; i++) {
+        courseTitles[i].innerHTML =  'コース' + (i + 1);
       }
     }, 100);
   }
 
   function isAllYearOpen(obj) {
-    var dateBox = document.getElementById("activity_date_input_box");
-    var dateBoxClass = dateBox.classList;
+    const dateBox = document.getElementById("activity_date_input_box");
+    const dateBoxClass = dateBox.classList;
     if (obj.checked) {
       dateBoxClass.add("hidden");
     }
   }
   function isLimitedOpen(obj) {
-    var dateBox = document.getElementById("activity_date_input_box");
-    var dateBoxClass = dateBox.classList;
+    const dateBox = document.getElementById("activity_date_input_box");
+    const dateBoxClass = dateBox.classList;
     if (obj.checked) {
       dateBoxClass.remove("hidden");
     }
@@ -1032,6 +1179,181 @@
     const targetTownSelectBox = document.getElementById('hidden_town_field');
     targetTownSelectBox.value = obj.value;
   }
+  // 存在チェック
+  function checkNoInput() {
+    const noInputArr = [];
+    const nameVal = document.getElementById('activity_name').value;
+    if (!nameVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const profileVal = document.getElementById('activity_description').value;
+    if (!profileVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const ageVal = document.getElementById('activity_available_age').value;
+    if (!ageVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const minNumVal = document.getElementById('activity_minimum_num').value;
+    if (!minNumVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const maxNumVal = document.getElementById('activity_maximum_num').value;
+    if (!maxNumVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const areaVal = document.getElementById('area_input').selectedIndex;
+    if (areaVal == 0) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const townVal = document.getElementById('hidden_town_field').value;
+    if (!townVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const latitudeVal = document.getElementById('latitude_input').value;
+    if (!latitudeVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const longitudeVal = document.getElementById('longitude_input').value;
+    if (!longitudeVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const meetAddressVal = document.getElementById('activity_meeting_spot1_japanese_address').value;
+    if (!meetAddressVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const meetDescriptionVal = document.getElementById('activity_meeting_spot1_japanese_description').value;
+    if (!meetDescriptionVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const meetLatitudeVal = document.getElementById('meeting_spot1_latitude').value;
+    if (!meetLatitudeVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const meetLongitudeVal = document.getElementById('meeting_spot1_longitude').value;
+    if (!meetLongitudeVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const image1 = document.getElementById('post_activity_image1').files;
+    if (image1.length == 0) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const image2 = document.getElementById('post_activity_image2').files;
+    if (image2.length == 0) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const image3 = document.getElementById('post_activity_image3').files;
+    if (image3.length == 0) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const image4 = document.getElementById('post_activity_image4').files;
+    if (image4.length == 0) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const courseItems = document.querySelectorAll("#courses .nested-fields");
+    if (courseItems.length == 0) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+
+    const hasSeason_Price = document.getElementById('activity_has_season_price_true').checked; // シーズン料金あるか
+    const hasDiffAge_Price = document.getElementById('activity_has_different_ageprices_true').checked; // 年齢別料金あるか
+    if (hasSeason_Price && hasDiffAge_Price) { //
+      const priceVals = document.querySelectorAll("td.ageprice_price");
+      for (var i = 0; i < priceVals.length; i++) {
+        if (!priceVals[i].children[0].value) {
+          noInputArr.push('false');
+        } else {
+          noInputArr.push('true');
+        }
+      }
+    } else if (!hasSeason_Price && hasDiffAge_Price) {
+      const priceVals = document.querySelectorAll(".normal_price_item");
+      for (var i = 0; i < priceVals.length; i++) {
+        if (!priceVals[i].children[0].value) {
+          noInputArr.push('false');
+        } else {
+          noInputArr.push('true');
+        }
+      }
+    } else if (hasSeason_Price && !hasDiffAge_Price) {
+      const priceVals = document.querySelectorAll(".adult_item");
+      for (var i = 0; i < priceVals.length; i++) {
+        if (!priceVals[i].children[0].value) {
+          noInputArr.push('false');
+        } else {
+          noInputArr.push('true');
+        }
+      }
+    } else {
+      const adultNormal = document.getElementById('activity_normal_adult_price');
+      if (!adultNormal.value) {
+        noInputArr.push('false');
+      } else {
+        noInputArr.push('true');
+      }
+    }
+    const minutesVal = document.getElementById('activity_minutes').value;
+    if (!minutesVal) {
+      noInputArr.push('false');
+    } else {
+      noInputArr.push('true');
+    }
+    const limitedTerm = document.getElementById('activity_is_all_year_open_false').checked;
+    const startDate = document.getElementById('activity_start_select');
+    const endDate = document.getElementById('activity_end_select');
+    if (limitedTerm) {
+      if (!startDate.value || !endDate.value) {
+        noInputArr.push('false');
+      }
+    } else {
+      noInputArr.push('true');
+    }
+    let emptyInput = 0;
+    for (let i = 0;  i < noInputArr.length; i++) {
+      if(noInputArr[i] == 'false'){
+        emptyInput++;
+      }
+    }
+    const err_count = document.getElementById('no_input_count');
+    err_count.innerHTML = emptyInput;
+  }
+
 
 </script>
 <script defer

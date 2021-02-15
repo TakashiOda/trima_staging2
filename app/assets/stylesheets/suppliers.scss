@@ -531,6 +531,7 @@ div#courses .nested-fields .form-group {
 div#courses .nested-fields .form-group {
   align-items: center;
   margin-bottom: 6px;
+  margin-top: 2px;
 }
 a.remove_course_btn {
   background: #ef6c6c;
@@ -542,20 +543,15 @@ a.remove_course_btn {
 a.remove_course_btn span {
   padding: 0px 9px 0px 10px;
 }
-.course_table_head {
-  display: flex;
-  background: gainsboro;
-  color: #fff;
-  font-size: 14px;
-}
 .course_row1 {
-  width: 60%;
+  width: 15%;
 }
 
 .course_row2 {
-  width: 40%;
-  text-align: right;
-  padding-right: 10px;
+  width: 85%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 select.time_input {
   width: 70px;
@@ -564,9 +560,9 @@ select.time_input {
   padding: 5px 10px;
 }
 .course_row2.time_select {
-  padding: 5px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .links {
   text-align: center;
@@ -673,7 +669,7 @@ div#ageprice div.nested-fields:first-child div.ageto span {
 .form-group.activity_season_radio {
     flex-direction: row;
     align-items: center;
-    height: 30px;
+    height: 60px;
     justify-content: space-between;
 }
 
@@ -692,6 +688,7 @@ div#activity_date_input_box {
 }
 .season_price_radio_items {
   display: flex;
+  margin: 5px 0;
   // width: 30%;
 }
 .season_price_radio_items input[type=radio],
@@ -840,6 +837,7 @@ a.button.btn-link svg {
 // guides fields====================================
 .nested-fields {
   display: flex;
+  border-bottom: solid 1px lightgray;
 }
 .guide_item_left_box {
   width: 25%;
