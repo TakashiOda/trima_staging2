@@ -12,7 +12,7 @@
     <div class="user_show_info_items_box">
       <section class="form_section">
         <div class="form_big_title">
-          <h3>アクティビティの基本情報</h3>
+          <h3><i class="fas fa-info-circle"></i>アクティビティの基本情報</h3>
         </div>
         <div class="activity_description_language_box">
           <ul class="activity_description_language_box_tab_list" role="tablist">
@@ -83,7 +83,7 @@
       </section>
       <section class="form_section">
         <div class="form_big_title">
-          <h3>参加条件</h3>
+          <h3><i class="fas fa-sort-numeric-down-alt"></i>参加条件</h3>
         </div>
         <div class="form-group">
           <div class="num_input">
@@ -112,7 +112,7 @@
       </section>
       <section class="form_section">
         <div class="form_big_title">
-          <h3>アクティビティの位置情報</h3>
+          <h3><i class="fas fa-map-marker-alt"></i>アクティビティの位置情報</h3>
         </div>
         <div id="map"></div>
         <div class="form-group">
@@ -179,7 +179,7 @@
       </section>
       <section class="form_section">
         <div class="form_big_title">
-          <h3>集合場所</h3>
+          <h3><i class="fas fa-street-view"></i>集合場所</h3>
         </div>
         <div id="meetingmap"></div>
         <div class="form-group">
@@ -208,7 +208,7 @@
       </section>
       <section class="form_section">
         <div class="form_big_title after_second_title">
-          <h3>アクティビティの画像登録</h3>
+          <h3><i class="fas fa-images"></i>アクティビティの画像登録</h3>
         </div>
         <div class="hosoku_box">
           <p class="form_hosoku">削除するには画像にチェックを入れたまま保存してください</p>
@@ -267,7 +267,7 @@
               <% end %>
             </div>
             <div class="activity_image_upload_btn_box hidden">
-              <%= f.file_field :fourth_image, id: 'post_activity_image4', onChange: 'hasInput()' %>
+              <%= f.file_field :fourth_image, id: 'post_activity_image4',onChange: 'hasInput()' %>
             </div>
           </div>
         </div>
@@ -282,7 +282,7 @@
       </section>
       <section class="form_section">
         <div class="form_big_title after_second_title">
-          <h3>料金に関する設定</h3>
+          <h3><i class="fas fa-yen-sign"></i>料金に関する設定</h3>
         </div>
         <div class="form-group season_price_radio_box">
           <%= f.label "シーズン料金の有無" %>
@@ -330,15 +330,7 @@
       </section>
       <section class="form_section">
         <div class="form_big_title after_second_title">
-          <h3>アクティビティのスケジュール設定</h3>
-        </div>
-        <div class="form-group">
-          <div class="row">
-            <div class="col-half">
-              <%= f.label :activity_minutes %>
-              <%= f.number_field :activity_minutes, min: 20, max: 480 ,step: 5, required: true, class: "form-control", id: "activity_minutes", oninput: 'hasInput()' %>
-            </div>
-          </div>
+          <h3><i class="far fa-calendar-alt"></i>アクティビティの期間設定</h3>
         </div>
         <div class="form-group activity_season_radio">
           <%= f.label "実施期間は通年ですか？" %>
@@ -371,13 +363,33 @@
         <div class="form-group">
           <%= f.label "営業する曜日" %>
           <div class="activity_openday_input_box">
-              <div class="form-group"><%= f.check_box :monday_open, oninput: 'hasInput()' %><%= f.label "monday_open","月曜", class: "first_check_label" %></div>
-              <div class="form-group"><%= f.check_box :tuesday_open, oninput: 'hasInput()' %><%= f.label "tuesday_open","火曜" %></div>
-              <div class="form-group"><%= f.check_box :wednesday_open, oninput: 'hasInput()' %><%= f.label "wednesday_open","水曜" %></div>
-              <div class="form-group"><%= f.check_box :thursday_open, oninput: 'hasInput()' %><%= f.label "thursday_open","木曜" %></div>
-              <div class="form-group"><%= f.check_box :friday_open, oninput: 'hasInput()' %><%= f.label "friday_open","金曜" %></div>
-              <div class="form-group"><%= f.check_box :saturday_open, oninput: 'hasInput()' %><%= f.label "saturday_open","土曜" %></div>
-              <div class="form-group"><%= f.check_box :sunday_open, oninput: 'hasInput()' %><%= f.label "sunday_open","日曜", class: "last_check_label" %></div>
+              <%#= f.check_box :monday_open, oninput: 'hasInput()' %><%#= f.label "monday_open","月曜" %>
+              <%#= f.check_box :tuesday_open, oninput: 'hasInput()' %><%#= f.label "tuesday_open","火曜" %>
+              <%#= f.check_box :wednesday_open, oninput: 'hasInput()' %><%#= f.label "wednesday_open","水曜" %>
+              <%#= f.check_box :thursday_open, oninput: 'hasInput()' %><%#= f.label "thursday_open","木曜" %>
+              <%#= f.check_box :friday_open, oninput: 'hasInput()' %><%#= f.label "friday_open","金曜" %>
+              <%#= f.check_box :saturday_open, oninput: 'hasInput()' %><%#= f.label "saturday_open","土曜" %>
+              <%#= f.check_box :sunday_open, oninput: 'hasInput()' %><%#= f.label "sunday_open","日曜" %>
+              <div class="openday_checkbox"><%= f.check_box :monday_open, oninput: 'hasInput()' %><%= f.label "monday_open","月曜" %></div>
+              <div class="openday_checkbox"><%= f.check_box :tuesday_open, oninput: 'hasInput()' %><%= f.label "tuesday_open","火曜" %></div>
+              <div class="openday_checkbox"><%= f.check_box :wednesday_open, oninput: 'hasInput()' %><%= f.label "wednesday_open","水曜" %></div>
+              <div class="openday_checkbox"><%= f.check_box :thursday_open, oninput: 'hasInput()' %><%= f.label "thursday_open","木曜" %></div>
+              <div class="openday_checkbox"><%= f.check_box :friday_open, oninput: 'hasInput()' %><%= f.label "friday_open","金曜" %></div>
+              <div class="openday_checkbox"><%= f.check_box :saturday_open, oninput: 'hasInput()' %><%= f.label "saturday_open","土曜" %></div>
+              <div class="openday_checkbox"><%= f.check_box :sunday_open, oninput: 'hasInput()' %><%= f.label "sunday_open","日曜" %></div>
+          </div>
+        </div>
+      </section>
+      <section class="form_section">
+        <div class="form_big_title after_second_title">
+          <h3><i class="fas fa-clock"></i>アクティビティの時間設定</h3>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-half">
+              <%= f.label :activity_minutes %>
+              <%= f.number_field :activity_minutes, min: 20, max: 480 ,step: 5, required: true, class: "form-control", id: "activity_minutes", oninput: 'hasInput()' %>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -401,7 +413,7 @@
       <section class="form_section">
         <div class="form-group">
           <div class="form_big_title after_second_title">
-            <h3>悪天候時について</h3>
+            <h3><i class="fas fa-cloud-rain"></i>悪天候時について</h3>
           </div>
           <%= f.label "雨天時の開催設定" %>
           <div class="radio_items rain_or_shine_radio">
@@ -415,30 +427,30 @@
             </div>
           </div>
       </section>
-      <section class="form_section">
+      <!-- <section class="form_section">
         <div class="form-group">
           <div class="form_big_title after_second_title">
             <h3>検索に反映させる要素の設定</h3>
           </div>
-          <%= f.label "おすすめのシーズン" %>
+          <%#= f.label "おすすめのシーズン" %>
           <div class="activity_season_input_box">
-              <div class="form-group"><%= f.check_box :january, oninput: 'hasInput()' %><%= f.label "january", "１月", class: "top_left_check_label" %></div>
-              <div class="form-group"><%= f.check_box :febrary, oninput: 'hasInput()' %><%= f.label "febrary","2月" %></div>
-              <div class="form-group"><%= f.check_box :march, oninput: 'hasInput()' %><%= f.label "march","3月" %></div>
-              <div class="form-group"><%= f.check_box :april, oninput: 'hasInput()' %><%= f.label "april","4月" %></div>
-              <div class="form-group"><%= f.check_box :may, oninput: 'hasInput()' %><%= f.label "may","5月" %></div>
-              <div class="form-group"><%= f.check_box :june, oninput: 'hasInput()' %><%= f.label "june","6月", class: "top_right_check_label" %></div>
+              <div class="form-group"><%#= f.check_box :january, oninput: 'hasInput()' %><%#= f.label "january", "１月", class: "top_left_check_label" %></div>
+              <div class="form-group"><%#= f.check_box :febrary, oninput: 'hasInput()' %><%#= f.label "febrary","2月" %></div>
+              <div class="form-group"><%#= f.check_box :march, oninput: 'hasInput()' %><%#= f.label "march","3月" %></div>
+              <div class="form-group"><%#= f.check_box :april, oninput: 'hasInput()' %><%#= f.label "april","4月" %></div>
+              <div class="form-group"><%#= f.check_box :may, oninput: 'hasInput()' %><%#= f.label "may","5月" %></div>
+              <div class="form-group"><%#= f.check_box :june, oninput: 'hasInput()' %><%#= f.label "june","6月", class: "top_right_check_label" %></div>
           </div>
           <div class="activity_season_input_box">
-              <div class="form-group"><%= f.check_box :july, oninput: 'hasInput()' %><%= f.label "july","7月", class: "bottom_left_check_label" %></div>
-              <div class="form-group"><%= f.check_box :august, oninput: 'hasInput()' %><%= f.label "august","8月" %></div>
-              <div class="form-group"><%= f.check_box :september, oninput: 'hasInput()' %><%= f.label "september","9月" %></div>
-              <div class="form-group"><%= f.check_box :october, oninput: 'hasInput()' %><%= f.label "october","10月" %></div>
-              <div class="form-group"><%= f.check_box :november, oninput: 'hasInput()' %><%= f.label "november","11月" %></div>
-              <div class="form-group"><%= f.check_box :december, oninput: 'hasInput()' %><%= f.label "december","12月", class: "bottom_right_check_label" %></div>
+              <div class="form-group"><%#= f.check_box :july, oninput: 'hasInput()' %><%#= f.label "july","7月", class: "bottom_left_check_label" %></div>
+              <div class="form-group"><%#= f.check_box :august, oninput: 'hasInput()' %><%#= f.label "august","8月" %></div>
+              <div class="form-group"><%#= f.check_box :september, oninput: 'hasInput()' %><%#= f.label "september","9月" %></div>
+              <div class="form-group"><%#= f.check_box :october, oninput: 'hasInput()' %><%#= f.label "october","10月" %></div>
+              <div class="form-group"><%#= f.check_box :november, oninput: 'hasInput()' %><%#= f.label "november","11月" %></div>
+              <div class="form-group"><%#= f.check_box :december, oninput: 'hasInput()' %><%#= f.label "december","12月", class: "bottom_right_check_label" %></div>
           </div>
         </div>
-      </section>
+      </section> -->
     </div>
     <div class="form_btns_box">
       <div id="form_btns">

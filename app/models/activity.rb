@@ -21,6 +21,10 @@ class Activity < ApplicationRecord
 
   # バリデーション *********************************************************
   validates  :name, presence: true, length: { maximum: 40, message: "体験名は最大40字までです" }
+  validates  :main_image, presence: true
+  validates  :second_image, presence: true
+  validates  :third_image, presence: true
+  validates  :fourth_image, presence: true
   validates  :description, presence: true, length: { maximum: 200, message: "体験紹介文は最大200字までです" }
   validates  :notes, length: { maximum: 500, message: "注意事項は最大500字までです" }
   validates  :activity_category_id, presence: true, inclusion: { in: 1..32, message: "が選択されていません" }

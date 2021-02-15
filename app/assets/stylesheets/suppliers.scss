@@ -440,8 +440,29 @@ span.next {
 #user_edit_image_upload_btn:hover {
   cursor: pointer;
 }
-.activity_season_input_box,
+.openday_checkbox {
+    display: flex;
+    align-items: center;
+}
 .activity_openday_input_box {
+    width: 100%;
+    border: solid 1px lightgray;
+    padding: 10px 0;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-evenly;
+}
+.openday_checkbox input {
+    margin: 0 8px 0 0;
+    width: 18px;
+    height: 18px;
+}
+.openday_checkbox label {
+    line-height: 20px;
+    font-size: 14px;
+}
+.activity_season_input_box {
   display: flex;
   flex-wrap: wrap;
 }
@@ -453,20 +474,8 @@ span.next {
   width: 16.6%;
 }
 
-.activity_openday_input_box .form-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0px;
-  width: 14.28%;
-}
-.activity_season_input_box input[type=checkbox],
-.activity_openday_input_box input[type=checkbox] {
+.activity_season_input_box input[type=checkbox] {
   display: none;
-}
-.activity_openday_input_box input[type="checkbox"]:checked + label {
-  background: #22a0ff;
-  color: #ffffff;
 }
 .activity_season_input_box input[type="checkbox"]:checked + label {
   background: #22a0ff;
@@ -474,27 +483,18 @@ span.next {
 }
 
 
-.activity_season_input_box label,
-.activity_openday_input_box label {
+.activity_season_input_box label {
   padding: 5px 10px;
   text-align: center;
   background: #e8e8e8;
   user-select: none;
   width: 100%;
 }
-.activity_season_input_box label:hover,
-.activity_openday_input_box label:hover {
+.activity_season_input_box label:hover {
   background: #22a0ff52;
   color: #fff;
 }
-label.first_check_label {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-label.last_check_label {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
+
 .top_left_check_label {border-top-left-radius: 6px;}
 .top_right_check_label {border-top-right-radius: 6px;}
 .bottom_left_check_label {border-bottom-left-radius: 6px;}
