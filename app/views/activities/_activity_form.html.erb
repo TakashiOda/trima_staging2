@@ -304,26 +304,26 @@
             <tr>
               <th class="ageprice_type">料金タイプ</th>
               <th class="ageprice_price">通常料金</th>
-              <th class="ageprice_price season_price_item">ローシーズン料金</th>
-              <th class="ageprice_price season_price_item">ハイシーズン料金</th>
+              <th class="ageprice_price season_price_item <%= "hidden" if !@activity.has_season_price %>">ローシーズン料金</th>
+              <th class="ageprice_price season_price_item <%= "hidden" if !@activity.has_season_price %>">ハイシーズン料金</th>
             </tr>
             <tr>
               <td class="ageprice_type"><%= f.label :大人料金（中学生以上）%></td>
               <td class="ageprice_price input_box"><%= f.number_field :normal_adult_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item"><%= f.number_field :low_adult_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item"><%= f.number_field :high_adult_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :low_adult_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :high_adult_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
             </tr>
             <tr>
               <td class="ageprice_type"><%= f.label :小学生 %></td>
               <td class="ageprice_price input_box"><%= f.number_field :normal_middle_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item"><%= f.number_field :low_middle_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item"><%= f.number_field :high_middle_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :low_middle_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :high_middle_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
             </tr>
             <tr>
               <td class="ageprice_type"><%= f.label :未就学児 %></td>
               <td class="ageprice_price input_box"><%= f.number_field :normal_kids_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item"><%= f.number_field :low_kids_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
-              <td class="ageprice_price input_box season_price_item"><%= f.number_field :high_kids_price, min: 1000, max: 100000, required: true, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :low_kids_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
+              <td class="ageprice_price input_box season_price_item <%= "hidden" if !@activity.has_season_price %>"><%= f.number_field :high_kids_price, min: 1000, max: 100000, required: @activity.has_season_price, class: "form-control", oninput: 'hasInput()' %><div class="ageprice_unit">円</div></td>
             </tr>
           </table>
         </div>
@@ -776,7 +776,6 @@
     post_img.classList.toggle("hidden");
     const before_img = document.getElementById('activity4_present_image');
     before_img.classList.toggle("hidden");
-    // before_img.classList.remove("user_present_image");
   });
 
   function hasSeasonPrice(obj) {
@@ -785,9 +784,9 @@
     if (isChecked) {
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
         seasonPriceBoxes[i].classList.remove("hidden");
-        // if (seasonPriceBoxes[i].children[1]) {
-        //   seasonPriceBoxes[i].children[1].classList.remove("hidden");
-        // }
+        if (i >= 2) {
+          seasonPriceBoxes[i].children[0].required = true;
+        }
       }
     }
   }
@@ -797,9 +796,10 @@
     if (isChecked) {
       for (var i = 0; i < seasonPriceBoxes.length; i++) {
         seasonPriceBoxes[i].classList.add("hidden");
-        // if (seasonPriceBoxes[i].children[1]) {
-        //   seasonPriceBoxes[i].children[1].classList.add("hidden");
-        // }
+        if (i >= 2) {
+          seasonPriceBoxes[i].children[0].required = false;
+        }
+
       }
     }
   }
@@ -860,48 +860,6 @@
       downAgeTo.setAttribute('max', objMinusOne);
       downAgeTo.value = objMinusOne;
     }
-  }
-
-  // 年齢＆料金を追加する際にシーズン料金がONなら一定時間後にシーズン料金欄を表示
-  document.getElementById("ageprice_add_btn").onclick = function(){
-    hasInput();
-    setTimeout(function(){
-      var isChecked = document.getElementById("activity_has_season_price_true").checked;
-      var seasonPriceBoxes = document.querySelectorAll("div.season_price");
-      if (isChecked){ //シーズン料金有りの場合
-        for (var i = 0; i < seasonPriceBoxes.length; i++) {
-          var hasHidden = seasonPriceBoxes[i].children[0].classList.contains('hidden');
-            seasonPriceBoxes[i].children[0].classList.remove("hidden");
-        }
-      } else {
-        for (var i = 0; i < seasonPriceBoxes.length; i++) {
-          seasonPriceBoxes[i].children[0].classList.add("hidden");
-        }
-      }
-
-      //作れる料金は3つまで
-      const agePriceItems = document.getElementById('ageprice').getElementsByClassName('nested-fields');
-      const addBtn = document.getElementById('ageprice_add_btn');
-      if (agePriceItems.length >= 3) {
-        addBtn.classList.add('disabled');
-        addBtn.text = '年齢別料金は3つまで';
-      } else {
-        addBtn.classList.remove('disabled');
-      }
-
-    }, 100);
-  }
-
-  function checkAgePriceNum() {
-    hasInput();
-    setTimeout(function(){
-      const courseItems = document.getElementById('ageprice').getElementsByClassName('nested-fields');
-      const addBtn = document.getElementById('ageprice_add_btn');
-      if (courseItems.length < 3) {
-        addBtn.classList.remove('disabled');
-        addBtn.text = '年齢別料金を追加';
-      }
-    }, 100);
   }
 
   // 作れるコースは5こまで

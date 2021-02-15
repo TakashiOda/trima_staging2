@@ -71,7 +71,6 @@ class AdminsController < ApplicationController
   end
 
   def activity_approve
-    binding.pry
     @activity = Activity.find(params[:activity_id])
     @activity.is_approved = params[:activity][:is_approved]
     if @activity.save
