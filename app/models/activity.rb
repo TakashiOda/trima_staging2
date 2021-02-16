@@ -58,17 +58,17 @@ class Activity < ApplicationRecord
 
   validates  :meeting_spot1_japanese_address, length: { maximum: 80, message: "集合場所の住所は最大 %{count} 字までです" }
   validates  :meeting_spot1_japanese_description, length: { maximum: 200, message: "集合場所の詳細説明は最大 %{count} 字までです" }
-  validates :latitude , allow_blank: true,
+  validates :latitude,
             numericality: {
               greater_than_or_equal_to:  -90,
               less_than_or_equal_to:  90,
-              :message => '実施場所の緯度は-90から90までの数字で入力してください'
+              :message => '実施場所の緯度が未入力または不正な値です'
             }
-  validates :longitude , allow_blank: true,
+  validates :longitude,
             numericality: {
               greater_than_or_equal_to:  -180,
               less_than_or_equal_to:  180,
-              :message => '実施場所の経度は-90から90までの数字で入力してください'
+              :message => '実施場所の経度が未入力または不正な値です'
             }
 
   validate :limitedOpen_require_date
@@ -160,6 +160,7 @@ class Activity < ApplicationRecord
 
   # コース時間は最低１つ必要
   def require_at_least_one_course
+    # binding.pry
     errors.add(:activity_courses, "を1つ以上作成して下さい") if self.activity_courses.blank?
   end
 

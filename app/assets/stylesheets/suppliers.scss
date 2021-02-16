@@ -28,7 +28,10 @@ a.org_edit_btn {
 }
 
 input.need_submit {
-  background: #e04e4e !important;
+  background: #0994ff !important;
+  border: solid 1px #0994ff !important;
+  color: #fff !important;
+  opacity: 1.0 !important;
 }
 // 事業者thankyou メール===========================
 .static_pages.short_messages_box {
@@ -74,7 +77,6 @@ input.need_submit {
 }
 .supplier_show_help_btn {
     height: 60px;
-    /* width: 60px; */
     margin-right: 20px;
     display: flex;
     align-items: center;
@@ -118,24 +120,17 @@ input.need_submit {
 }
 
 table.info_list_table {
-  // width: 100%;
   font-size: 11px;
 }
 .supplier_show_content_inside table tr {
     border: none;
 }
-// table.info_list_table tr .td_front {
-//   width: 20%;
-// }
 th.supplier_show_info_title {
     font-size: 10px;
     color: #626262;
     text-align: end;
     white-space: nowrap;
-    /* background: gray; */
-    /* margin-right: 12px; */
-    /* border-radius: 15px; */
-    /* padding: 5px 15px; */
+
 }
 span.arrow_right svg {
     color: dimgrey;
@@ -600,7 +595,6 @@ a.disable {
 }
 .nested-fields {
   display: flex;
-  // align-items: center;
 }
 .agefrom, .ageto {
   width: 13%;
@@ -733,30 +727,26 @@ input.date_select {
   }
 }
 
-.activity_activate_btn_box,
-.activity_delete_btn_box {
-  margin: 20px 5px;
-}
-.activate_btn_box div {
-  display: flex;
-  align-items: unset;
-}
 .activity_delete_btn_box svg {
   color: #949494;
   margin-right: 0px;
 }
-.activity_delete_btn_box a {
-  color: gray;
-}
+
 .activity_image_items {
   display: flex;
   margin-bottom: 0;
   flex-direction: row;
+  width: calc(58.1vw - 70px);
 }
 .activity_image_item {
-  width: 24%;
-  margin-right: 1%;
+  width: calc((58.1vw - 70px) / 4 - 10px);
+  height: calc((58.1vw - 70px) / 4 - 10px);
+  margin: 0 5px;
   margin-bottom: 0;
+}
+.activity_image_box_inside {
+  width: 100%;
+  height: 100%;
 }
 .activity_image_box_inside:hover {
   cursor: pointer;
@@ -764,7 +754,8 @@ input.date_select {
 }
 
 .activity_image_box_inside img {
-  width: 100%;
+  width: calc((58.1vw - 70px) / 4 - 10px);
+  height: calc((58.1vw - 70px) / 4 - 10px);
   object-fit: cover;
   border-radius: 6px;
 }
