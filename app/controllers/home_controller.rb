@@ -56,6 +56,8 @@ class HomeController < ApplicationController
         end
 
       end
+    else
+      @courses = nil
     end
   end
 
