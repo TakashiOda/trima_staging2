@@ -268,7 +268,7 @@ body.erb_body.add_padding_top {
 }
 
 .form_alert {
-  margin: 0px !important;
+  margin: 0px 0 15px!important;
   position: relative;
   top: 0;
   right: 0;
@@ -346,7 +346,7 @@ img.eyecatch_pc_image {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 18px;
+  margin-bottom: 28px;
   position: relative;
 }
 .form-group.password {
@@ -964,7 +964,7 @@ div#password_input_box {
   height: 100%;
 }
 .user_show_side {
-  width: 17%;
+  width: 20vw;
   padding: 20px 10px 30px 20px;
   min-height: 80vh !important;
 }
@@ -974,22 +974,23 @@ div#password_input_box {
 }
 .user_show_content {
   padding: 0px;
-  width: 83%;
+  width: 80vw;
   background: #eaeaea;
   min-height: 80vh !important;
   form {
-    padding: 0 20px;
+    // padding: 0 20px;
+    width: 80vw;
     .user_show_content_down {
       margin: 0px 0;
-      padding: 0px 0;
+      // padding: 0px 20px;
       display: flex;
-      width: 100%;
+      width: 80vw;
       .user_show_info_items_box {
-        width: 70%;
-        // padding: 10px;
-        padding: 10px 10px;
+        width: calc(58.1vw - 30px);
+        padding: 0 15px;
         section.form_section {
           background: #fff;
+          width: calc(58.1vw - 70px);
           padding: 15px 20px;
           margin-bottom: 25px;
           border-radius: 10px;
@@ -1477,18 +1478,15 @@ table td {
 
 
 .form_btns_box {
-  width: 25%;
-  padding: 10px 10px 20px 10px;
-  margin-right: 10px;
+  width: calc(24.9vw - 20px);
+  padding: 0 10px;
 }
 #form_btns {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 65px;
   background: #fff;
-  padding: 20px 15px 20px;
+  padding: 15px;
   border-radius: 7px;
   box-shadow: 0px 0px 7px -1px #b7b7b7;
+  margin-bottom: 20px
 }
 .activity_index_top_box a.add_btn {
   background: #2bb561;

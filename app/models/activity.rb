@@ -21,6 +21,10 @@ class Activity < ApplicationRecord
 
   # バリデーション *********************************************************
   validates  :name, presence: true, length: { maximum: 40, message: "体験名は最大40字までです" }
+  validates  :main_image, presence: true
+  validates  :second_image, presence: true
+  validates  :third_image, presence: true
+  validates  :fourth_image, presence: true
   validates  :description, presence: true, length: { maximum: 200, message: "体験紹介文は最大200字までです" }
   validates  :notes, length: { maximum: 500, message: "注意事項は最大500字までです" }
   validates  :activity_category_id, presence: true, inclusion: { in: 1..32, message: "が選択されていません" }
@@ -54,17 +58,17 @@ class Activity < ApplicationRecord
 
   validates  :meeting_spot1_japanese_address, length: { maximum: 80, message: "集合場所の住所は最大 %{count} 字までです" }
   validates  :meeting_spot1_japanese_description, length: { maximum: 200, message: "集合場所の詳細説明は最大 %{count} 字までです" }
-  validates :latitude , allow_blank: true,
+  validates :latitude,
             numericality: {
               greater_than_or_equal_to:  -90,
               less_than_or_equal_to:  90,
-              :message => '実施場所の緯度は-90から90までの数字で入力してください'
+              :message => '実施場所の緯度が未入力または不正な値です'
             }
-  validates :longitude , allow_blank: true,
+  validates :longitude,
             numericality: {
               greater_than_or_equal_to:  -180,
               less_than_or_equal_to:  180,
-              :message => '実施場所の経度は-90から90までの数字で入力してください'
+              :message => '実施場所の経度が未入力または不正な値です'
             }
 
   validate :limitedOpen_require_date
@@ -156,6 +160,7 @@ class Activity < ApplicationRecord
 
   # コース時間は最低１つ必要
   def require_at_least_one_course
+    # binding.pry
     errors.add(:activity_courses, "を1つ以上作成して下さい") if self.activity_courses.blank?
   end
 

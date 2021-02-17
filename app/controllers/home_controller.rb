@@ -1,7 +1,9 @@
 class HomeController < ApplicationController
   def index
     @top_activity = Activity.find(20)
-    @activities = Activity.all.order(created_at: :desc).limit(12)
+    @activities = Activity.all.where(is_approved: true).order(created_at: :desc).limit(12)
+    # @activities =  Activity.includes(activity_courses: :activity_stocks).references(:activity_courses).where("activity_courses.id IS NOT NULL")
+    # @activities =  Activity.left_joins(:activity_courses).select("activity_courses.*").where("activity_courses.id is null")
     @categories = ActivityCategory.all.limit(15)
   end
 

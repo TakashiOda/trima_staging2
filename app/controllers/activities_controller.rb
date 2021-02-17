@@ -44,6 +44,7 @@ class ActivitiesController < ApplicationController
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     @activity = @activity_business.activities.build
     @activity.activity_translations.build
+    @activity.activity_courses.build(start_time: Time.new(2000, 1, 1, 9, 0, 0, "+09:00") )
   end
 
   def create
@@ -375,7 +376,7 @@ class ActivitiesController < ApplicationController
                                       :detail_address, :longitude, :latitude,
                                       :meeting_spot1_japanese_address, :meeting_spot1_japanese_description,
                                       :meeting_spot1_longitude, :meeting_spot1_latitude,
-                                      :activity_minutes, :has_season_price,
+                                      :activity_minutes, :has_season_price, :has_different_ageprices,
                                       :normal_adult_price, :high_adult_price, :low_adult_price,
                                       :normal_middle_price, :high_middle_price, :low_middle_price,
                                       :normal_kids_price, :high_kids_price, :low_kids_price,

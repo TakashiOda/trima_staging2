@@ -28,7 +28,10 @@ a.org_edit_btn {
 }
 
 input.need_submit {
-  background: #e04e4e !important;
+  background: #0994ff !important;
+  border: solid 1px #0994ff !important;
+  color: #fff !important;
+  opacity: 1.0 !important;
 }
 // 事業者thankyou メール===========================
 .static_pages.short_messages_box {
@@ -74,7 +77,6 @@ input.need_submit {
 }
 .supplier_show_help_btn {
     height: 60px;
-    /* width: 60px; */
     margin-right: 20px;
     display: flex;
     align-items: center;
@@ -118,24 +120,17 @@ input.need_submit {
 }
 
 table.info_list_table {
-  // width: 100%;
   font-size: 11px;
 }
 .supplier_show_content_inside table tr {
     border: none;
 }
-// table.info_list_table tr .td_front {
-//   width: 20%;
-// }
 th.supplier_show_info_title {
     font-size: 10px;
     color: #626262;
     text-align: end;
     white-space: nowrap;
-    /* background: gray; */
-    /* margin-right: 12px; */
-    /* border-radius: 15px; */
-    /* padding: 5px 15px; */
+
 }
 span.arrow_right svg {
     color: dimgrey;
@@ -440,8 +435,29 @@ span.next {
 #user_edit_image_upload_btn:hover {
   cursor: pointer;
 }
-.activity_season_input_box,
+.openday_checkbox {
+    display: flex;
+    align-items: center;
+}
 .activity_openday_input_box {
+    width: 100%;
+    border: solid 1px lightgray;
+    padding: 10px 0;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-evenly;
+}
+.openday_checkbox input {
+    margin: 0 8px 0 0;
+    width: 18px;
+    height: 18px;
+}
+.openday_checkbox label {
+    line-height: 20px;
+    font-size: 14px;
+}
+.activity_season_input_box {
   display: flex;
   flex-wrap: wrap;
 }
@@ -453,20 +469,8 @@ span.next {
   width: 16.6%;
 }
 
-.activity_openday_input_box .form-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0px;
-  width: 14.28%;
-}
-.activity_season_input_box input[type=checkbox],
-.activity_openday_input_box input[type=checkbox] {
+.activity_season_input_box input[type=checkbox] {
   display: none;
-}
-.activity_openday_input_box input[type="checkbox"]:checked + label {
-  background: #22a0ff;
-  color: #ffffff;
 }
 .activity_season_input_box input[type="checkbox"]:checked + label {
   background: #22a0ff;
@@ -474,27 +478,18 @@ span.next {
 }
 
 
-.activity_season_input_box label,
-.activity_openday_input_box label {
+.activity_season_input_box label {
   padding: 5px 10px;
   text-align: center;
   background: #e8e8e8;
   user-select: none;
   width: 100%;
 }
-.activity_season_input_box label:hover,
-.activity_openday_input_box label:hover {
+.activity_season_input_box label:hover {
   background: #22a0ff52;
   color: #fff;
 }
-label.first_check_label {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-label.last_check_label {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
+
 .top_left_check_label {border-top-left-radius: 6px;}
 .top_right_check_label {border-top-right-radius: 6px;}
 .bottom_left_check_label {border-bottom-left-radius: 6px;}
@@ -531,6 +526,7 @@ div#courses .nested-fields .form-group {
 div#courses .nested-fields .form-group {
   align-items: center;
   margin-bottom: 6px;
+  margin-top: 2px;
 }
 a.remove_course_btn {
   background: #ef6c6c;
@@ -542,20 +538,15 @@ a.remove_course_btn {
 a.remove_course_btn span {
   padding: 0px 9px 0px 10px;
 }
-.course_table_head {
-  display: flex;
-  background: gainsboro;
-  color: #fff;
-  font-size: 14px;
-}
 .course_row1 {
-  width: 60%;
+  width: 15%;
 }
 
 .course_row2 {
-  width: 40%;
-  text-align: right;
-  padding-right: 10px;
+  width: 85%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 select.time_input {
   width: 70px;
@@ -564,9 +555,9 @@ select.time_input {
   padding: 5px 10px;
 }
 .course_row2.time_select {
-  padding: 5px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .links {
   text-align: center;
@@ -604,7 +595,6 @@ a.disable {
 }
 .nested-fields {
   display: flex;
-  // align-items: center;
 }
 .agefrom, .ageto {
   width: 13%;
@@ -673,7 +663,7 @@ div#ageprice div.nested-fields:first-child div.ageto span {
 .form-group.activity_season_radio {
     flex-direction: row;
     align-items: center;
-    height: 30px;
+    height: 60px;
     justify-content: space-between;
 }
 
@@ -692,6 +682,7 @@ div#activity_date_input_box {
 }
 .season_price_radio_items {
   display: flex;
+  margin: 5px 0;
   // width: 30%;
 }
 .season_price_radio_items input[type=radio],
@@ -736,30 +727,26 @@ input.date_select {
   }
 }
 
-.activity_activate_btn_box,
-.activity_delete_btn_box {
-  margin: 20px 5px;
-}
-.activate_btn_box div {
-  display: flex;
-  align-items: unset;
-}
 .activity_delete_btn_box svg {
   color: #949494;
   margin-right: 0px;
 }
-.activity_delete_btn_box a {
-  color: gray;
-}
+
 .activity_image_items {
   display: flex;
   margin-bottom: 0;
   flex-direction: row;
+  width: calc(58.1vw - 70px);
 }
 .activity_image_item {
-  width: 24%;
-  margin-right: 1%;
+  width: calc((58.1vw - 70px) / 4 - 10px);
+  height: calc((58.1vw - 70px) / 4 - 10px);
+  margin: 0 5px;
   margin-bottom: 0;
+}
+.activity_image_box_inside {
+  width: 100%;
+  height: 100%;
 }
 .activity_image_box_inside:hover {
   cursor: pointer;
@@ -767,7 +754,8 @@ input.date_select {
 }
 
 .activity_image_box_inside img {
-  width: 100%;
+  width: calc((58.1vw - 70px) / 4 - 10px);
+  height: calc((58.1vw - 70px) / 4 - 10px);
   object-fit: cover;
   border-radius: 6px;
 }
@@ -840,6 +828,7 @@ a.button.btn-link svg {
 // guides fields====================================
 .nested-fields {
   display: flex;
+  border-bottom: solid 1px lightgray;
 }
 .guide_item_left_box {
   width: 25%;

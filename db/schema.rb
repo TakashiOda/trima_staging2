@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_14_054123) do
+ActiveRecord::Schema.define(version: 2021_02_15_072153) do
 
   create_table "activities", force: :cascade do |t|
     t.string "name"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2021_02_14_054123) do
     t.boolean "stop_now", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "has_different_ageprices", default: false, null: false
     t.index ["activity_business_id"], name: "index_activities_on_activity_business_id"
     t.index ["april"], name: "index_activities_on_april"
     t.index ["area_id"], name: "index_activities_on_area_id"

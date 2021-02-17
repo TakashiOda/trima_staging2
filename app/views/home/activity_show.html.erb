@@ -155,21 +155,21 @@
                   </tr>
                   <tr>
                       <td>大人（中学生以上）</td>
-                      <td>¥<%= @activity.normal_adult_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.high_adult_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.low_adult_price.to_s(:delimited) %></td>
+                      <td>¥<%= @activity.normal_adult_price.to_s(:delimited) if @activity.normal_adult_price %></td>
+                      <td>¥<%= @activity.high_adult_price.to_s(:delimited) if @activity.high_adult_price %></td>
+                      <td>¥<%= @activity.low_adult_price.to_s(:delimited) if @activity.low_adult_price %></td>
                   </tr>
                   <tr>
                       <td>小学生</td>
-                      <td>¥<%= @activity.normal_middle_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.high_middle_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.low_middle_price.to_s(:delimited) %></td>
+                      <td>¥<%= @activity.normal_middle_price.to_s(:delimited) if @activity.normal_middle_price %></td>
+                      <td>¥<%= @activity.high_middle_price.to_s(:delimited) if @activity.high_middle_price %></td>
+                      <td>¥<%= @activity.low_middle_price.to_s(:delimited) if @activity.low_middle_price %></td>
                   </tr>
                   <tr>
                       <td>未就学児</td>
-                      <td>¥<%= @activity.normal_kids_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.high_kids_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.low_kids_price.to_s(:delimited) %></td>
+                      <td>¥<%= @activity.normal_kids_price.to_s(:delimited) if @activity.normal_kids_price %></td>
+                      <td>¥<%= @activity.high_kids_price.to_s(:delimited) if @activity.high_kids_price %></td>
+                      <td>¥<%= @activity.low_kids_price.to_s(:delimited) if @activity.low_kids_price %></td>
                   </tr>
                 </table>
               </div>
@@ -881,7 +881,7 @@
   .calendar_form {
     width: 900px;
     position: absolute;
-    top: 24px;
+    top: 0px;
     right: 0px;
     z-index: 100;
     padding: 50px 10px 20px 10px;
@@ -897,7 +897,7 @@
   table.stock_book_table {
     width: 100%;
     margin-top: 2px;
-    height: 300px;
+    height: 350px;
     display: block;
     overflow-y: scroll;
     border: solid 3px #0da7e5;
