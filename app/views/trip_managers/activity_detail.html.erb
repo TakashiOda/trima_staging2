@@ -480,7 +480,7 @@
                   <tr class="stock_book_table_tr_data">
                     <td class="stock_book_table_date_td"><%=next2_month_stock.date.strftime("%m/%d(#{wd[next2_month_stock.date.wday]})")%></td>
                     <% @courses.each_with_index do |course, indexB|%>
-                      <% if course.activity_stocks.find_by(date: next_month_stock.date) %>
+                      <% if course.activity_stocks.find_by(date: next2_month_stock.date) %>
                         <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0 %><%= next2_month_stock.season_price == "high" ? "high_season" : next2_month_stock.season_price == "low" ? "low_season" : "" %>">
                           <div class="inside_stock_td">
                             <div class="inside_stock_td_front">
