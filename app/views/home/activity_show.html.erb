@@ -130,11 +130,11 @@
       </section>
       <section class="activity_detail_basic_info_section">
         <div class="activity_detail_profile_info_inner">
-          <p>体験について</p>
+          <p class="activity_detail_profile_title">体験について</p>
           <p><%= !@activity.description.blank? ? @activity.description : '紹介文がありません' %></p>
         </div>
         <div class="activity_detail_profile_info_inner">
-          <p>持ち物・補足事項・注意点など</p>
+          <p class="activity_detail_profile_title">持ち物・補足事項・注意点など</p>
           <p><%= !@activity.notes.blank? ? @activity.notes : '補足事項はありません' %></p>
         </div>
       </section>
@@ -265,8 +265,6 @@
         </div>
         <%#= form_for(@book_activity, url: project_book_activity_create_path) do |form| %>
         <div class="no_user_activity_show">
-
-
           <div class="sidebar_form_inner_top">
             <div class="calendar_form_fix_field">
               <%#= form.label 'スケジュール' %>
