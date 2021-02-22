@@ -7,7 +7,6 @@
 <div class="supplier_activity_page_top">
   <div class="activity_index_top_box">
     <% if !@activity_business.nil? && @activity_business.is_approved %>
-    <%# if !@activity_business.nil? %>
       <h3><%= @activity_business.name %></h3>
       <%= link_to "体験を追加", new_supplier_activity_path(current_supplier), class: "add_btn" %>
     <% end %>

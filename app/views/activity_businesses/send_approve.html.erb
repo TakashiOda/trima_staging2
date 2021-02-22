@@ -1,10 +1,16 @@
 <%= form_for [@supplier, @activity_business], url: supplier_update_activity_business_path(current_supplier, @activity_business), method: :put do |form| %>
-<div class="form_title">
+<div class="form_title" style="padding: 10px 20px;">
   <h3>承認申請を送る</h3>
 </div>
-<div class="user_show_content_down">
-  <div class="user_show_info_items_box">
-    <section class="form_section">
+<div class="supplier_send_approve_box">
+  <div class="supplier_send_approve_box_inner">
+    <section class="form_section" style="width: 100%;">
+      <div class="form-group" style="margin-bottom: 0;">
+        <p class="send_approve_box_text">申請ボタンを押すと事業者アカウントの承認申請が送られます。</p>
+        <p class="send_approve_box_text">前のページにて全ての項目に「未入力」または「未設定マーク」が表示されていないことをご確認の上、承認ボタンを押してください</p>
+      </div>
+    </section>
+    <section class="form_section" style="width: 100%;">
       <div class="form-group">
         <%= hidden_field_tag 'input_type', 'send_approve' %>
         <%= form.hidden_field :status, value: "send_approve"  %>
@@ -16,3 +22,25 @@
   </div>
 </div>
 <% end %>
+
+<style lang="scss">
+.supplier_send_approve_box {
+  display: flex;
+  width: calc(80vw - 90px);
+  padding: 0 45px;
+}
+.supplier_send_approve_box_inner {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 50px;
+  background: #fff;
+  border-radius: 10px;
+}
+.send_approve_box_text {
+  font-size: 18px;
+  font-weight: bold;
+  color: gray;
+  margin: 0 0 5px;
+}
+</style>
