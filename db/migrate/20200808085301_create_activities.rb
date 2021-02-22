@@ -54,6 +54,7 @@ class CreateActivities < ActiveRecord::Migration[6.0]
 
       #　シーズン料金設定
       t.boolean :has_season_price, default: false
+      t.boolean :has_different_ageprices, default: false
       t.integer :normal_adult_price
       t.integer :high_adult_price
       t.integer :low_adult_price
