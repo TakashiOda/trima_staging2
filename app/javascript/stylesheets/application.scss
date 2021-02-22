@@ -27,6 +27,9 @@ $user-main-color: #2bb560;
 //19.
 //20.
 //=================================================
+// html {
+//   width: 100vw;
+// }
 .simple-calendar {
   margin-top: 30px;
   margin-bottom: 40px;
@@ -64,14 +67,14 @@ $user-main-color: #2bb560;
   .calendar_day_box {
     height: 65px;
   }
-  .day {}
-  .wday-0 {}
-  .wday-1 {}
-  .wday-2 {}
-  .wday-3 {}
-  .wday-4 {}
-  .wday-5 {}
-  .wday-6 {}
+  // .day {}
+  // .wday-0 {}
+  // .wday-1 {}
+  // .wday-2 {}
+  // .wday-3 {}
+  // .wday-4 {}
+  // .wday-5 {}
+  // .wday-6 {}
 
   .today {background: #fffab9;}
   .past {
@@ -80,7 +83,7 @@ $user-main-color: #2bb560;
   }
   .future {background: #fff;}
 
-  .start-date {}
+  // .start-date {}
 
   .prev-month {
     background: #d2d2d2;
@@ -90,8 +93,8 @@ $user-main-color: #2bb560;
     background: #d2d2d2;
     color: #b1b1b1;
   }
-  .current-month {}
-  .has-events {}
+  // .current-month {}
+  // .has-events {}
 
   .day_num {
     height: 30%;
@@ -222,6 +225,7 @@ a.disabled{
 .body_content {
   position: relative;
   width: 100%;
+  // width: 100vw;
   // min-height: 400px;
   margin-top: 56px;
 }
@@ -335,6 +339,7 @@ h3.trip_manager_page_title {
     margin: 0;
     padding: 0;
 }
+
 
 // lp
 img.eyecatch_pc_image {
@@ -524,7 +529,7 @@ a#header_current_supplier_link {
   background: #3e3e3e;
   padding: 20px 0px 15px;
   color: #fff;
-  width: 100%;
+  // width: 100vw;
 }
 .footer_contents {
   display: flex;
@@ -957,14 +962,13 @@ div#password_input_box {
   text-align: center;
 }
 
-//サイドバーありのUI************************************/
+//サイドバーありのUI************************************/ 
 .container.user_show.container-fluid {
   display: flex;
   margin-top: 56px;
-  height: 100%;
 }
 .user_show_side {
-  width: 20vw;
+  width: calc(20vw - 30px);
   padding: 20px 10px 30px 20px;
   min-height: 80vh !important;
 }
@@ -979,10 +983,9 @@ div#password_input_box {
   min-height: 80vh !important;
   form {
     // padding: 0 20px;
-    width: 80vw;
+    // width: 80vw;
     .user_show_content_down {
       margin: 0px 0;
-      // padding: 0px 20px;
       display: flex;
       width: 80vw;
       .user_show_info_items_box {
@@ -1031,13 +1034,17 @@ div#password_input_box {
   }
 }
 
+.user_show_inner_content {
+  padding: 20px 50px;
+  width: calc(80vw - 100px);
+}
 .supplier_activity_page_top {
   padding: 10px 40px 70px;
 }
 
 .user_show_main_content,
 .supplier_show_main_content {
-  width: 83%;
+  width: 80vw;
   background: #eaeaea;
   padding: 20px 0;
 }
@@ -1386,11 +1393,11 @@ span.form_supplement {
   .header_username {
     display: none;
   }
-  .user_show_content,
-  .supplier_show_main_content {
-    width: 100%;
-    padding: 0px;
-  }
+  // .user_show_content,
+  // .supplier_show_main_content {
+  //   width: 100%;
+  //   padding: 0px;
+  // }
 }
 
 /************************************************************

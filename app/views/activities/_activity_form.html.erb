@@ -494,11 +494,11 @@
         </div>
         <div id="form_btns">
           <div class="draft_btn_box">
-            <%= f.submit('下書き保存', name: "save_status",value: "下書き保存", class: 'btn-draft', id: "activity_form_draft_btn") %>
+            <%= f.submit('下書き保存', name: "save_status",value: "下書き保存", class: 'btn-draft', id: "activity_form_draft_btn", onClick: 'pressSubmit()') %>
             <% if action_name == "new" %>
-              <%= f.submit('公開', name: "save_status",value: "公開",class: 'btn-publish', id: "activity_form_submit_btn") %>
+              <%= f.submit('公開', name: "save_status",value: "公開",class: 'btn-publish', id: "activity_form_submit_btn", onClick: 'pressSubmit()') %>
             <% else %>
-              <%= f.submit('公開', name: "save_status",value: "公開",class: 'btn-publish', id: "activity_form_submit_btn") %>
+              <%= f.submit('公開', name: "save_status",value: "公開",class: 'btn-publish', id: "activity_form_submit_btn", onClick: 'pressSubmit()') %>
             <% end %>
           </div>
           <span class="side_btns_option_title">保存オプション</span>
@@ -812,7 +812,16 @@
       }
     }
     checkNoInput();
+    // const loading = document.getElementById('loading_box');
+    // setTimeout(function(){
+    //   loading.classList.add('hidden');
+    // }, 800);
   })();
+
+  // function pressSubmit() {
+  //   const loading = document.getElementById('loading_box');
+  //   loading.classList.remove('hidden');
+  // }
 
   function hasInput() {
     // const draftBtn = document.getElementById('activity_form_draft_btn');

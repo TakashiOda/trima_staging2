@@ -1,3 +1,9 @@
+<div id="loading_box" class="">
+  <div class="loading_inner">
+    <div class="loader"></div>
+    <p class="loading_text">読み込み中...</p>
+  </div>
+</div>
 <div class="supplier_activity_page_top">
   <div class="activity_index_top_box">
     <% if !@activity_business.nil? && @activity_business.is_approved %>
@@ -141,3 +147,12 @@
     width: 80%;
   }
 </style>
+
+<script type="text/javascript">
+  (window.onload = function() {
+    const loading = document.getElementById('loading_box');
+    setTimeout(function(){
+      loading.classList.add('hidden');
+    }, 800);
+  })();
+</script>

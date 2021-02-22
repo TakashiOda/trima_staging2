@@ -66,7 +66,7 @@
               <ul>
                 <li class="basic_info_item">
                   <i class="far fa-clock"></i>
-                  <span><%= @activity.activity_minutes %>時間</span>
+                  <span><%= @activity.activity_minutes if @activity.activity_minutes%>分</span>
                 </li>
                 <li class="basic_info_item">
                   <i class="fas fa-users"></i>
@@ -130,11 +130,11 @@
       </section>
       <section class="activity_detail_basic_info_section">
         <div class="activity_detail_profile_info_inner">
-          <p>体験について</p>
+          <p class="activity_detail_profile_title">体験について</p>
           <p><%= !@activity.description.blank? ? @activity.description : '紹介文がありません' %></p>
         </div>
         <div class="activity_detail_profile_info_inner">
-          <p>持ち物・補足事項・注意点など</p>
+          <p class="activity_detail_profile_title">持ち物・補足事項・注意点など</p>
           <p><%= !@activity.notes.blank? ? @activity.notes : '補足事項はありません' %></p>
         </div>
       </section>
@@ -150,27 +150,41 @@
                   <tr>
                     <th>年齢</th>
                     <th>通常料金</th>
-                    <th>ハイシーズン料金</th>
-                    <th>ローシーズン料金</th>
+                    <% if @activity.has_season_price %>
+                      <th>ハイシーズン料金</th>
+                      <th>ローシーズン料金</th>
+                    <% end %>
                   </tr>
                   <tr>
-                      <td>大人（中学生以上）</td>
+                      <% if @activity.normal_middle_price && @activity.normal_kids_price %>
+                        <td>大人（中学生以上）</td>
+                      <% else %>
+                        <td>一般（全年齢）</td>
+                      <% end %>
                       <td>¥<%= @activity.normal_adult_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.high_adult_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.low_adult_price.to_s(:delimited) %></td>
+                      <% if @activity.has_season_price %>
+                        <td>¥<%= @activity.high_adult_price.to_s(:delimited) if @activity.high_adult_price %></td>
+                        <td>¥<%= @activity.low_adult_price.to_s(:delimited) if @activity.low_adult_price %></td>
+                      <% end %>
                   </tr>
-                  <tr>
-                      <td>小学生</td>
-                      <td>¥<%= @activity.normal_middle_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.high_middle_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.low_middle_price.to_s(:delimited) %></td>
-                  </tr>
-                  <tr>
-                      <td>未就学児</td>
-                      <td>¥<%= @activity.normal_kids_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.high_kids_price.to_s(:delimited) %></td>
-                      <td>¥<%= @activity.low_kids_price.to_s(:delimited) %></td>
-                  </tr>
+                  <% if @activity.normal_middle_price && @activity.normal_kids_price %>
+                    <tr>
+                        <td>小学生</td>
+                        <td>¥<%= @activity.normal_middle_price.to_s(:delimited) if @activity.normal_middle_price %></td>
+                        <% if @activity.has_season_price %>
+                          <td>¥<%= @activity.high_middle_price.to_s(:delimited) if @activity.high_middle_price %></td>
+                          <td>¥<%= @activity.low_middle_price.to_s(:delimited) if @activity.low_middle_price %></td>
+                        <% end %>
+                    </tr>
+                    <tr>
+                        <td>未就学児</td>
+                        <td>¥<%= @activity.normal_kids_price.to_s(:delimited) if @activity.normal_kids_price %></td>
+                        <% if @activity.has_season_price %>
+                          <td>¥<%= @activity.high_kids_price.to_s(:delimited) if @activity.high_kids_price %></td>
+                          <td>¥<%= @activity.low_kids_price.to_s(:delimited) if @activity.low_kids_price %></td>
+                        <% end %>
+                    </tr>
+                  <% end %>
                 </table>
               </div>
             </div>
@@ -329,37 +343,50 @@
                   <tr class="stock_book_table_tr_data">
                     <td class="stock_book_table_date_td"><%=this_month_stock.date.strftime("%m/%d(#{wd[this_month_stock.date.wday]})")%></td>
                     <% @courses.each_with_index do |course, indexB|%>
-                      <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: this_month_stock.date).stock == 0 %><%= this_month_stock.season_price == "high" ? "high_season" : this_month_stock.season_price == "low" ? "low_season" : "" %>">
-                        <div class="inside_stock_td">
-                          <div class="inside_stock_td_front">
-                            <% if this_month_stock.season_price == "high" %>
-                              <span>¥<%= @activity.high_adult_price.to_s(:delimited)%></span>
-                            <% elsif this_month_stock.season_price == "low" %>
-                              <span>¥<%= @activity.low_adult_price.to_s(:delimited)%></span>
-                            <% else %>
-                              <span>¥<%= @activity.normal_adult_price.to_s(:delimited)%></span>
-                            <% end %>
+                      <% if course.activity_stocks.find_by(date: this_month_stock.date) %>
+                        <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: this_month_stock.date).stock == 0 %><%= this_month_stock.season_price == "high" ? "high_season" : this_month_stock.season_price == "low" ? "low_season" : "" %>">
+                          <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
+                              <% if this_month_stock.season_price == "high" %>
+                                <span>¥<%= @activity.high_adult_price.to_s(:delimited)%></span>
+                              <% elsif this_month_stock.season_price == "low" %>
+                                <span>¥<%= @activity.low_adult_price.to_s(:delimited)%></span>
+                              <% else %>
+                                <span>¥<%= @activity.normal_adult_price.to_s(:delimited)%></span>
+                              <% end %>
+                            </div>
+                            <div class="inside_stock_td_front">
+                              <% if course.activity_stocks.find_by(date: this_month_stock.date).stock == 0%>
+                                <span style="color:red;">SOLD OUT</span>
+                              <% else %>
+                                <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: this_month_stock.date).stock %><span style="font-size: 12px;">名</span>
+                              <% end %>
+                            </div>
+                            <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
+                              <%= hidden_field_tag "stock_#{indexA}", this_month_stock.date %>
+                              <%= hidden_field_tag "course_#{indexB}", course.start_time %>
+                              <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", this_month_stock.season_price %>
+                              <% thisMonthStock = course.activity_stocks.find_by(date: this_month_stock.date).stock %>
+                              <% if thisMonthStock != 0 %>
+                                <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= thisMonthStock %>, <%= course.id %>, <%= this_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
+                              <% else %>
+                                <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
+                              <% end %>
+                            </div>
                           </div>
-                          <div class="inside_stock_td_front">
-                            <% if course.activity_stocks.find_by(date: this_month_stock.date).stock == 0%>
+                        </td>
+                      <% else %>
+                        <td class="stock_book_table_course_stock_td no_stock">
+                          <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
                               <span style="color:red;">SOLD OUT</span>
-                            <% else %>
-                              <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: this_month_stock.date).stock %><span style="font-size: 12px;">名</span>
-                            <% end %>
-                          </div>
-                          <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
-                            <%= hidden_field_tag "stock_#{indexA}", this_month_stock.date %>
-                            <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                            <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", this_month_stock.season_price %>
-                            <% thisMonthStock = course.activity_stocks.find_by(date: this_month_stock.date).stock %>
-                            <% if thisMonthStock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= thisMonthStock %>, <%= course.id %>, <%= this_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
-                            <% else %>
+                            </div>
+                            <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
-                            <% end %>
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
+                      <% end %>
                     <% end %>
                   </tr>
                   <% end %>
@@ -389,28 +416,41 @@
                   <tr class="stock_book_table_tr_data">
                     <td class="stock_book_table_date_td"><%=next_month_stock.date.strftime("%m/%d(#{wd[next_month_stock.date.wday]})")%></td>
                     <% @courses.each_with_index do |course, indexB|%>
-                      <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next_month_stock.date).stock == 0 %><%= next_month_stock.season_price == "high" ? "high_season" : next_month_stock.season_price == "low" ? "low_season" : "" %>">
-                        <div class="inside_stock_td">
-                          <div class="inside_stock_td_front">
-                            <% if course.activity_stocks.find_by(date: next_month_stock.date).stock == 0%>
+                      <% if course.activity_stocks.find_by(date: next_month_stock.date) %>
+                        <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next_month_stock.date).stock == 0 %><%= next_month_stock.season_price == "high" ? "high_season" : next_month_stock.season_price == "low" ? "low_season" : "" %>">
+                          <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
+                              <% if course.activity_stocks.find_by(date: next_month_stock.date).stock == 0%>
+                                <span style="color:red;">SOLD OUT</span>
+                              <% else %>
+                                <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: next_month_stock.date).stock %><span style="font-size: 12px;">名</span>
+                              <% end %>
+                            </div>
+                            <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
+                              <%= hidden_field_tag "stock_#{indexA}", next_month_stock.date %>
+                              <%= hidden_field_tag "course_#{indexB}", course.start_time %>
+                              <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next_month_stock.season_price %>
+                              <% nextMonthStock = course.activity_stocks.find_by(date: next_month_stock.date).stock %>
+                              <% if nextMonthStock != 0 %>
+                                <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= nextMonthStock %>, <%= course.id %>, <%= next_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
+                              <% else %>
+                                <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
+                              <% end %>
+                            </div>
+                          </div>
+                        </td>
+                      <% else %>
+                        <td class="stock_book_table_course_stock_td no_stock">
+                          <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
                               <span style="color:red;">SOLD OUT</span>
-                            <% else %>
-                              <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: next_month_stock.date).stock %><span style="font-size: 12px;">名</span>
-                            <% end %>
-                          </div>
-                          <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
-                            <%= hidden_field_tag "stock_#{indexA}", next_month_stock.date %>
-                            <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                            <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next_month_stock.season_price %>
-                            <% nextMonthStock = course.activity_stocks.find_by(date: next_month_stock.date).stock %>
-                            <% if nextMonthStock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= nextMonthStock %>, <%= course.id %>, <%= next_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
-                            <% else %>
+                            </div>
+                            <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
-                            <% end %>
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
+                      <% end %>
                     <% end %>
                   </tr>
                   <% end %>
@@ -440,28 +480,41 @@
                   <tr class="stock_book_table_tr_data">
                     <td class="stock_book_table_date_td"><%=next2_month_stock.date.strftime("%m/%d(#{wd[next2_month_stock.date.wday]})")%></td>
                     <% @courses.each_with_index do |course, indexB|%>
-                      <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0 %><%= next2_month_stock.season_price == "high" ? "high_season" : next2_month_stock.season_price == "low" ? "low_season" : "" %>">
-                        <div class="inside_stock_td">
-                          <div class="inside_stock_td_front">
-                            <% if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0%>
+                      <% if course.activity_stocks.find_by(date: next_month_stock.date) %>
+                        <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0 %><%= next2_month_stock.season_price == "high" ? "high_season" : next2_month_stock.season_price == "low" ? "low_season" : "" %>">
+                          <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
+                              <% if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0%>
+                                <span style="color:red;">SOLD OUT</span>
+                              <% else %>
+                                <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: next2_month_stock.date).stock %><span style="font-size: 12px;">名</span>
+                              <% end %>
+                            </div>
+                            <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
+                              <%= hidden_field_tag "stock_#{indexA}", next2_month_stock.date %>
+                              <%= hidden_field_tag "course_#{indexB}", course.start_time %>
+                              <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next2_month_stock.season_price %>
+                              <% next2MonthStock = course.activity_stocks.find_by(date: next2_month_stock.date).stock %>
+                              <% if next2MonthStock != 0 %>
+                                <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next2MonthStock %>, <%= course.id %>, <%= next2_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
+                              <% else %>
+                                <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
+                              <% end %>
+                            </div>
+                          </div>
+                        </td>
+                      <% else %>
+                        <td class="stock_book_table_course_stock_td no_stock">
+                          <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
                               <span style="color:red;">SOLD OUT</span>
-                            <% else %>
-                              <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: next2_month_stock.date).stock %><span style="font-size: 12px;">名</span>
-                            <% end %>
-                          </div>
-                          <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
-                            <%= hidden_field_tag "stock_#{indexA}", next2_month_stock.date %>
-                            <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                            <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next2_month_stock.season_price %>
-                            <% next2MonthStock = course.activity_stocks.find_by(date: next2_month_stock.date).stock %>
-                            <% if next2MonthStock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next2MonthStock %>, <%= course.id %>, <%= next2_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
-                            <% else %>
+                            </div>
+                            <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
-                            <% end %>
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
+                      <% end %>
                     <% end %>
                   </tr>
                   <% end %>
@@ -491,28 +544,41 @@
                   <tr class="stock_book_table_tr_data">
                     <td class="stock_book_table_date_td"><%=next3_month_stock.date.strftime("%m/%d(#{wd[next3_month_stock.date.wday]})")%></td>
                     <% @courses.each_with_index do |course, indexB|%>
-                      <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next3_month_stock.date).stock == 0 %><%= next3_month_stock.season_price == "high" ? "high_season" : next3_month_stock.season_price == "low" ? "low_season" : "" %>">
-                        <div class="inside_stock_td">
-                          <div class="inside_stock_td_front">
-                            <% if course.activity_stocks.find_by(date: next3_month_stock.date).stock == 0%>
+                      <% if course.activity_stocks.find_by(date: next3_month_stock.date) %>
+                        <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next3_month_stock.date).stock == 0 %><%= next3_month_stock.season_price == "high" ? "high_season" : next3_month_stock.season_price == "low" ? "low_season" : "" %>">
+                          <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
+                              <% if course.activity_stocks.find_by(date: next3_month_stock.date).stock == 0%>
+                                <span style="color:red;">SOLD OUT</span>
+                              <% else %>
+                                <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: next3_month_stock.date).stock %><span style="font-size: 12px;">名</span>
+                              <% end %>
+                            </div>
+                            <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
+                              <%= hidden_field_tag "stock_#{indexA}", next3_month_stock.date %>
+                              <%= hidden_field_tag "course_#{indexB}", course.start_time %>
+                              <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next3_month_stock.season_price %>
+                              <% next3MonthStock = course.activity_stocks.find_by(date: next3_month_stock.date).stock %>
+                              <% if next3MonthStock != 0 %>
+                                <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next3MonthStock %>, <%= course.id %>, <%= next3_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
+                              <% else %>
+                                <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
+                              <% end %>
+                            </div>
+                          </div>
+                        </td>
+                      <% else %>
+                        <td class="stock_book_table_course_stock_td no_stock">
+                          <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
                               <span style="color:red;">SOLD OUT</span>
-                            <% else %>
-                              <span style="font-size: 12px;">残り</span><%= course.activity_stocks.find_by(date: next3_month_stock.date).stock %><span style="font-size: 12px;">名</span>
-                            <% end %>
-                          </div>
-                          <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
-                            <%= hidden_field_tag "stock_#{indexA}", next3_month_stock.date %>
-                            <%= hidden_field_tag "course_#{indexB}", course.start_time %>
-                            <%= hidden_field_tag "ageprice_#{indexA}_#{indexB}", next3_month_stock.season_price %>
-                            <% next3MonthStock = course.activity_stocks.find_by(date: next3_month_stock.date).stock %>
-                            <% if next3MonthStock != 0 %>
-                              <button id="<%= indexA %>_<%= indexB %>" onclick="selectStock(this, <%= next3MonthStock %>, <%= course.id %>, <%= next3_month_stock.id %>)" type="button" name="button" class="stock_select_btn">選択</button>
-                            <% else %>
+                            </div>
+                            <div class="inside_stock_td_back" id="<%= indexA %>_<%= indexB %>">
                               <button type="button" name="button" class="stock_select_btn disabled" disabled>選択</button>
-                            <% end %>
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
+                      <% end %>
                     <% end %>
                   </tr>
                   <% end %>
@@ -851,6 +917,15 @@
   .course_time {
     font-size: 15px;
     height: 20px;
+  }
+  p.activity_detail_profile_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    /* border-bottom: solid 4px #0ea7e6; */
+    background: #0ea7e6;
+    padding: 4px 15px;
+    border-radius: 25px;
   }
   /* カレンダー ***********************************/
   form#new_booked_activity {

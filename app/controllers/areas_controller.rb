@@ -1,5 +1,5 @@
 class AreasController < ApplicationController
-  before_action :authenticate_user!, only: [:edit, :update]
+  # before_action :authenticate_user!, only: [:edit, :update]
 
   def index
     @areas = Area.all

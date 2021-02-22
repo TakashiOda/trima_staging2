@@ -1,4 +1,6 @@
 class ActivityBusinessesController < ApplicationController
+  before_action :authenticate_supplier!, except: [:index]
+
   def index
   end
 

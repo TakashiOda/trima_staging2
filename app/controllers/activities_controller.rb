@@ -1,4 +1,6 @@
 class ActivitiesController < ApplicationController
+  before_action :authenticate_supplier!, except: [:index]
+  
   def index
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     if !@activity_business.nil?

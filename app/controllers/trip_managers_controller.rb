@@ -42,6 +42,7 @@ class TripManagersController < ApplicationController
       @booked = []
     end
   end
+
   def search_home
     @project = Project.find(params[:project_id])
     @owner = User.find(UserProject.find_by(project_id: params[:project_id], control_level: 0).user_id)
