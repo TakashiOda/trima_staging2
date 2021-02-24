@@ -27,9 +27,9 @@ $user-main-color: #2bb560;
 //19.
 //20.
 //=================================================
-// html {
-//   width: 100vw;
-// }
+html {
+  font-size: 62.5%;
+}
 .simple-calendar {
   margin-top: 30px;
   margin-bottom: 40px;
@@ -198,6 +198,7 @@ a {
   text-decoration: none;
   :hover {
     opacity: 0.75 !important;
+    cursor: pointer !important;
   }
 }
 a.disabled{
@@ -222,16 +223,23 @@ a.disabled{
 }
 
 //3.共通コンポーネント==================================
+
 .body_content {
   position: relative;
   width: 100%;
   // width: 100vw;
   // min-height: 400px;
   margin-top: 56px;
+  padding-bottom: 250px;
 }
 body.erb_body {
   margin: 0 !important;
   position: relative;
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  position: relative;
+  min-height: 100vh;
 }
 body.erb_body.add_padding_top {
   padding-top: 0px;
@@ -527,9 +535,16 @@ a#header_current_supplier_link {
 
 .footer_pc {
   background: #3e3e3e;
-  padding: 20px 0px 15px;
+  // padding: 20px 0px 15px;
   color: #fff;
-  // width: 100vw;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 100%;
 }
 .footer_contents {
   display: flex;
@@ -728,9 +743,9 @@ img.eyecatch_image_home {
     letter-spacing: 4px;
   }
   p {
-    font-size: 25px;
     margin: 0 0 10px;
-    line-height: 30px;
+    font-size: 2.0rem;
+    line-height: 1;
   }
 }
 .home_contents__top__bottom {
@@ -756,6 +771,9 @@ img.eyecatch_image_home {
   display: flex;
   justify-content: center;
   padding: 30px 11%;
+}
+.home_contents__itembox:last-of-type {
+  margin-bottom: 24px;
 }
 
 .itembox__inner {
@@ -968,7 +986,7 @@ div#password_input_box {
   margin-top: 56px;
 }
 .user_show_side {
-  width: calc(20vw - 30px);
+  width: 20%;
   padding: 20px 10px 30px 20px;
   min-height: 80vh !important;
 }
@@ -978,12 +996,10 @@ div#password_input_box {
 }
 .user_show_content {
   padding: 0px;
-  width: 80vw;
   background: #eaeaea;
   min-height: 80vh !important;
   form {
-    // padding: 0 20px;
-    // width: 80vw;
+
     .user_show_content_down {
       margin: 0px 0;
       display: flex;
@@ -1036,7 +1052,8 @@ div#password_input_box {
 
 .user_show_inner_content {
   padding: 20px 50px;
-  width: calc(80vw - 100px);
+  // width: calc(80vw - 100px);
+  width:calc(100% - 100px);
 }
 .supplier_activity_page_top {
   padding: 10px 40px 70px;
@@ -1044,7 +1061,7 @@ div#password_input_box {
 
 .user_show_main_content,
 .supplier_show_main_content {
-  width: 80vw;
+  width: 80%;
   background: #eaeaea;
   padding: 20px 0;
 }
