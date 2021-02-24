@@ -986,7 +986,6 @@ div#password_input_box {
   margin-top: 56px;
 }
 .user_show_side {
-  // width: calc(20vw - 30px);
   width: 20%;
   padding: 20px 10px 30px 20px;
   min-height: 80vh !important;
@@ -997,12 +996,10 @@ div#password_input_box {
 }
 .user_show_content {
   padding: 0px;
-  // width: 80vw;
   background: #eaeaea;
   min-height: 80vh !important;
   form {
-    // padding: 0 20px;
-    // width: 80vw;
+
     .user_show_content_down {
       margin: 0px 0;
       display: flex;
