@@ -75,7 +75,7 @@ class Activity < ApplicationRecord
   #　コース時間関連
   validate :require_at_least_one_course
   validate :require_upto_ten
-  validate :course_gap_less_than_activity_time
+  # validate :course_gap_less_than_activity_time
   validates :activity_courses, associated: true
   # 料金関連
   # validate :require_any_ageprice
@@ -108,27 +108,27 @@ class Activity < ApplicationRecord
     end
   end
 
-  #コースの間隔が体験時間より小さくなることは許容しない
-  def course_gap_less_than_activity_time
-    if activity_courses.size >= 2
-      start_times = []
-      activity_courses.each do |course|
-        fixDateTime = course.start_time.change(year: 2020, month: 1, day: 1)
-        start_times.push(fixDateTime)
-      end
-      sort_times = start_times.sort.reverse
-      too_short_time_errors = []
-      (sort_times.count - 1).times do |i|
-        gapMins = (sort_times[i] - sort_times[i+1]) / 60
-        if gapMins < activity_minutes
-          too_short_time_errors.push('error')
-        end
-      end
-      if too_short_time_errors.include?('error')
-        errors.add(:activity_courses, "の間隔は体験時間より大きくしてください")
-      end
-    end
-  end
+  # #コースの間隔が体験時間より小さくなることは許容しない
+  # def course_gap_less_than_activity_time
+  #   if activity_courses.size >= 2
+  #     start_times = []
+  #     activity_courses.each do |course|
+  #       fixDateTime = course.start_time.change(year: 2020, month: 1, day: 1)
+  #       start_times.push(fixDateTime)
+  #     end
+  #     sort_times = start_times.sort.reverse
+  #     too_short_time_errors = []
+  #     (sort_times.count - 1).times do |i|
+  #       gapMins = (sort_times[i] - sort_times[i+1]) / 60
+  #       if gapMins < activity_minutes
+  #         too_short_time_errors.push('error')
+  #       end
+  #     end
+  #     if too_short_time_errors.include?('error')
+  #       errors.add(:activity_courses, "の間隔は体験時間より大きくしてください")
+  #     end
+  #   end
+  # end
 
   # def must_have_low_price_if_has_season_price
   #   if self.activity_ageprices.size > 0 && self.has_season_price
