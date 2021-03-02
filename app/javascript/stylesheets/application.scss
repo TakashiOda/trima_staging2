@@ -230,16 +230,17 @@ a.disabled{
   // width: 100vw;
   // min-height: 400px;
   margin-top: 56px;
-  padding-bottom: 250px;
+  padding-bottom: 200px;
 }
 body.erb_body {
   margin: 0 !important;
   position: relative;
   font-size: 1.6rem;
-  letter-spacing: 0.05em;
   line-height: 1.6;
   position: relative;
   min-height: 100vh;
+  color: #444;
+  letter-spacing: 0.07em;
 }
 body.erb_body.add_padding_top {
   padding-top: 0px;
@@ -540,7 +541,7 @@ a#header_current_supplier_link {
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 250px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -571,8 +572,11 @@ a#header_current_supplier_link {
   }
 }
 .footer_copyright_box {
-  margin-top: 10px;
-  padding: 0 25px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 10px;
+  left: 25px;
 }
 .footer_copyright_box span {
   font-size: 10px;
@@ -984,6 +988,7 @@ div#password_input_box {
 .container.user_show.container-fluid {
   display: flex;
   margin-top: 56px;
+  position: relative;
 }
 .user_show_side {
   width: 20%;
@@ -998,8 +1003,10 @@ div#password_input_box {
   padding: 0px;
   background: #eaeaea;
   min-height: 80vh !important;
+  width: 100%;
+  padding: 10px;
+  position: relative;
   form {
-
     .user_show_content_down {
       margin: 0px 0;
       display: flex;
@@ -1018,10 +1025,12 @@ div#password_input_box {
       }
       .user_show_info_button_box {
         width: 30%;
-        padding: 10px 0 10px 20px;
+        // padding: 10px 0 10px 20px;
         height: 220px;
         position: sticky;
         top: 60px;
+        padding: 0;
+        // height: auto;
         .form_sidebtns_container {
           background: #fff;
           height: 100%;
@@ -1049,7 +1058,9 @@ div#password_input_box {
     }
   }
 }
-
+.form_title h3 {
+  padding: 0 12px 0 20px;
+}
 .user_show_inner_content {
   padding: 20px 50px;
   // width: calc(80vw - 100px);
@@ -1366,7 +1377,7 @@ span.form_supplement {
 
   .sign_up_in_page {
     width: 100%;
-    display: block;
+    display: flex;
   }
   .sign_up_in_page_front {
     display: none;
@@ -1399,6 +1410,7 @@ span.form_supplement {
 
   .footer_pc {
     display: none;
+    height: 200px;
   }
   .footer_contents {
     flex-direction: column;
