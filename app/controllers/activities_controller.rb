@@ -223,6 +223,7 @@ class ActivitiesController < ApplicationController
 
   def stock_edit_first_month
     @activity = Activity.find(params[:activity_id])
+    set_day_of_open_array(@activity)
     @courses = @activity.activity_courses
     if !@courses.blank?
       @latest_stock_date = ActivityStock.where(activity_course_id: @activity.activity_courses.first.id).order(:date).last.date
@@ -352,18 +353,21 @@ class ActivitiesController < ApplicationController
 
   def stock_edit_next_month
     @activity = Activity.find(params[:activity_id])
+    set_day_of_open_array(@activity)
     set_dates_all_year_and_limit_term_activity(@activity)
   end
 
 
   def stock_edit_next2_month
     @activity = Activity.find(params[:activity_id])
+    set_day_of_open_array(@activity)
     set_dates_all_year_and_limit_term_activity(@activity)
   end
 
 
   def stock_edit_next3_month
     @activity = Activity.find(params[:activity_id])
+    set_day_of_open_array(@activity)
     set_dates_all_year_and_limit_term_activity(@activity)
   end
 

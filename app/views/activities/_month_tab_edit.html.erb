@@ -55,9 +55,8 @@
     <%=link_to "#{(first_month_date >> 3).month}月", supplier_activity_edit_stocks_next3_month_path(current_supplier, @activity),class: "month_tab alert_link hidden #{'selected' if action_name == 'stock_edit_next3_month' || action_name == 'stock_new_next3_month'}", data: { confirm: '変更されています。保存せずに他の月に移動しますがよろしいですか?' } %>
   <% end %>
   <div class="form_big_title_questionIcon about_stock_term">
-    <i class="far fa-question-circle"></i>
     <p id="fukidashi_about_stock_term">
-      在庫は最大３ヶ月先の月末まで作成できます。
+      在庫は最大３ヶ月先の月末まで作成できます
     </p>
   </div>
 </div>
@@ -95,45 +94,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;
+    width: 240px;
+    margin: 0 10px;
   }
-
   #fukidashi_about_stock_term {
-    display: none;
-    width: 200px;
-    position: absolute;
-    bottom: 40px;
-    right: -87px;
-    z-index: 100;
-    padding: 16px;
+    display: block;
+    width: 100%;
+    text-align: center !important;
+    padding: 5px;
     border-radius: 5px;
-    background: #9e9e9eeb;
+    background: #ff8e8eeb;
     color: #fff;
     font-weight: bold;
-    font-size: 12px;
-  }
-  #fukidashi_about_stock_term:after {
-    position: absolute;
-    width: 0;
-    height: 0;
-    left: 100px;
-    right: 100px;
-    bottom: -20px;
-    margin-left: 10px;
-    border: solid transparent;
-    border-color: rgba(51, 204, 153, 0);
-    border-top-color: #9e9e9eeb;
-    border-width: 10px;
-    pointer-events: none;
-    content: " ";
-  }
-  .form_big_title_questionIcon.about_stock_term svg:hover + #fukidashi_about_stock_term {
-    display: block;
-  }
-  .form_big_title_questionIcon.about_stock_term svg {
-    margin: 0;
-    color: #0568b4;
-    width: 22px !important;
-    height: 22px !important;
+    font-size: 10px;
   }
 </style>

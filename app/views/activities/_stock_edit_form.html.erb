@@ -58,9 +58,13 @@
           <div class="date_list date_column">
             <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
             <% (@exist_stock_s_Date..@exist_stock_e_Date).each do |date| %>
-              <div class="date_item <%= wd[date.wday] == "土" ? "saturday" : wd[date.wday] == "日" ? "sunday" : ""%>">
-                <%= date.strftime("%Y年%m月%d日(#{wd[date.wday]})")%>
-              </div>
+              <% if @days_of_open.include?(date.wday) %>
+                <div class="date_item <%= wd[date.wday] == "土" ? "saturday" : wd[date.wday] == "日" ? "sunday" : ""%>">
+                  <%= date.strftime("%Y年%m月%d日(#{wd[date.wday]})")%>
+                </div>
+              <% else %>
+                <div class="date_item">定休日</div>
+              <% end %>
             <% end %>
           </div>
           <div class="stock_items">
@@ -71,21 +75,29 @@
                   <div class="form-group activity_stock_input_box" style="margin-bottom: 0;">
                     <%= stock.hidden_field :activity_id, value: @activity.id %>
                     <%= stock.hidden_field :date, :value => @exist_stock_dates[stock.index] %>
-                    <div class="stock_input_box">
-                      <%= stock.number_field :stock, min: 0, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
-                      <%#= stock.number_field :stock, min: 0, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
-                      <%#= stock.number_field :stock, min: 0, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
-                    </div>
-                    <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price %>
-                      <div class="season_input_box <%= stock.index %>">
-                        <%= stock.select :season_price,
-                          {'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'},
-                          {}, {onChange: 'changeSeasonPrice(this)', class: 'form-control'} %>
+                    <% if @days_of_open.include?(@exist_stock_dates[stock.index].wday) %>
+                      <div class="stock_input_box">
+                        <%= stock.number_field :stock, min: 0, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
+                        <%#= stock.number_field :stock, min: 0, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
+                        <%#= stock.number_field :stock, min: 0, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
                       </div>
+                      <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price %>
+                        <div class="season_input_box <%= stock.index %>">
+                          <%= stock.select :season_price,
+                            {'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'},
+                            {}, {onChange: 'changeSeasonPrice(this)', class: 'form-control'} %>
+                        </div>
+                      <% else %>
+                        <div class="season_input_box <%= stock.index %>">
+                          <%= stock.hidden_field :season_price %>
+                        </div>
+                      <% end %>
                     <% else %>
-                      <div class="season_input_box <%= stock.index %>">
-                        <%= stock.hidden_field :season_price %>
+                      <div class="stock_input_box">
+                        <input type="text" name="" value="" class="form-control stock_is_close" disabled="disabled" >
+                        <%= stock.hidden_field :stock %>
                       </div>
+                      <%= stock.hidden_field :season_price %>
                     <% end %>
                   </div>
                 <% end %>
@@ -98,19 +110,27 @@
                   <div class="form-group activity_stock_input_box" style="margin-bottom: 0;">
                     <%= stock.hidden_field :activity_id, value: @activity.id %>
                     <%= stock.hidden_field :date, :value => @exist_stock_dates[stock.index] %>
-                    <div class="stock_input_box">
-                      <%= stock.number_field :stock, min: 0, max: @activity.maximum_num, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
-                    </div>
-                    <%if @activity.activity_courses.count == (course.index + 1) %>
-                      <div class="season_input_box <%= stock.index %>">
-                        <%= stock.select :season_price,
-                          {'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'},
-                          {}, {onChange: 'changeSeasonPrice(this)', class: 'form-control'} %>
+                    <% if @days_of_open.include?(@exist_stock_dates[stock.index].wday) %>
+                      <div class="stock_input_box">
+                        <%= stock.number_field :stock, min: 0, max: @activity.maximum_num, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
                       </div>
+                      <%if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price%>
+                        <div class="season_input_box <%= stock.index %>">
+                          <%= stock.select :season_price,
+                            {'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'},
+                            {}, {onChange: 'changeSeasonPrice(this)', class: 'form-control'} %>
+                        </div>
+                      <% else %>
+                        <div class="season_input_box <%= stock.index %>">
+                          <%= stock.hidden_field :season_price %>
+                        </div>
+                      <% end %>
                     <% else %>
-                      <div class="season_input_box <%= stock.index %>">
+                        <div class="stock_input_box">
+                          <input type="text" name="" value="" class="form-control stock_is_close" disabled="disabled" >
+                          <%= stock.hidden_field :stock %>
+                        </div>
                         <%= stock.hidden_field :season_price %>
-                      </div>
                     <% end %>
                   </div>
                 <% end %>
@@ -123,7 +143,13 @@
           <div class="date_list date_column">
             <% wd = ["日", "月", "火", "水", "木", "金", "土"] %>
             <% (@s_Date..@e_Date).each do |date| %>
-              <div class="date_item <%= wd[date.wday] == "土" ? "saturday" : wd[date.wday] == "日" ? "sunday" : ""%>"><%= date.strftime("%Y年%m月%d日(#{wd[date.wday]})")%></div>
+              <% if @days_of_open.include?(date.wday) %>
+                <div class="date_item <%= wd[date.wday] == "土" ? "saturday" : wd[date.wday] == "日" ? "sunday" : ""%>">
+                  <%= date.strftime("%Y年%m月%d日(#{wd[date.wday]})")%>
+                </div>
+              <% else %>
+                <div class="date_item">定休日</div>
+              <% end %>
             <% end %>
           </div>
           <div class="stock_items">
@@ -137,19 +163,27 @@
                 <div class="form-group activity_stock_input_box" style="margin-bottom: 0;">
                   <%= stock.hidden_field :activity_id, value: @activity.id %>
                   <%= stock.hidden_field :date, :value => @dates[stock.index] %>
-                  <div class="stock_input_box">
-                    <%= stock.number_field :stock, min: 0, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
-                  </div>
-                  <% if @activity.activity_courses.count == (course.index + 1) %>
-                    <div class="season_input_box <%= stock.index %>">
-                      <%= stock.select :season_price,
-                        {'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'},
-                        {}, {onChange: 'changeSeasonPrice(this)', class: 'form-control'} %>
+                  <% if @days_of_open.include?(@dates[stock.index].wday) %>
+                    <div class="stock_input_box">
+                      <%= stock.number_field :stock, min: 0, class: 'form-control', oninput: 'compareNumWithMaximum(this)' %>
                     </div>
+                    <% if @activity.activity_courses.count == (course.index + 1) && @activity.has_season_price%>
+                      <div class="season_input_box <%= stock.index %>">
+                        <%= stock.select :season_price,
+                          {'通常料金': 'normal', 'ハイシーズン料金': 'high', 'ローシーズン料金': 'low'},
+                          {}, {onChange: 'changeSeasonPrice(this)', class: 'form-control'} %>
+                      </div>
+                    <% else %>
+                      <div class="season_input_box <%= stock.index %>">
+                        <%= stock.hidden_field :season_price %>
+                      </div>
+                    <% end %>
                   <% else %>
-                    <div class="season_input_box <%= stock.index %>">
-                      <%= stock.hidden_field :season_price %>
+                    <div class="stock_input_box">
+                      <input type="text" name="" value="" class="form-control stock_is_close" disabled="disabled" >
+                      <%= stock.hidden_field :stock %>
                     </div>
+                    <%= stock.hidden_field :season_price %>
                   <% end %>
                 </div>
               <% end %>
