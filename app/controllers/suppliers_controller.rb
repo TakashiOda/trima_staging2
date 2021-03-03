@@ -51,6 +51,11 @@ class SuppliersController < ApplicationController
     else
       @guides = []
     end
+    if @supplier_profile.representative_name && @supplier_profile.representative_kana && @supplier_profile.post_code && @supplier_profile.prefecture && @supplier_profile.prefecture_id && @supplier_profile.town && @supplier_profile.town_id && @supplier_profile.detail_address && @supplier_profile.phone
+      @suppliuer_info_input = true
+    else
+      @suppliuer_info_input = false
+    end
   end
 
   def edit
