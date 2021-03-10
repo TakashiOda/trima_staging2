@@ -4,20 +4,66 @@
         事業者登録のステップ
     </div>
     <section class="number-test">
-        <div class="number"><span class="<%= @suppliuer_info_input ? 'suppliuer_info_input_done' : ''%>">１</span></div>
-        <div class="arrowlong">
-            <div class="arrow"></div>
+        <div class="number">
+          <% if @suppliuer_info_input %>
+            <span class="suppliuer_info_input_done"><i class="fas fa-check"></i></span>
+          <% else %>
+            <span class="number_num">１</span>
+          <%end%>
         </div>
-        <div class="number"><span>２</span></div>
         <div class="arrowlong">
-            <div class="arrow"></div>
+            <div class="arrow <%='input_done_arrow' if @suppliuer_info_input %>"></div>
         </div>
-        <div class="number"><span>３</span></div>
+        <div class="number">
+          <% if @business_info_input %>
+            <span class="suppliuer_info_input_done"><i class="fas fa-check"></i></span>
+          <% else %>
+            <span class="number_num">２</span>
+          <% end %>
+        </div>
+        <div class="arrowlong">
+            <div class="arrow <%='input_done_arrow' if @business_info_input %>"></div>
+        </div>
+        <div class="number">
+          <% if !@activity_business.nil? && @activity_business.cansel_input_done && @activity_business.insurance_input_done %>
+            <span class="suppliuer_info_input_done"><i class="fas fa-check"></i></span>
+          <% else %>
+            <span class="number_num">３</span>
+          <% end %>
+        </div>
+        <div class="arrowlong">
+            <div class="arrow <%='input_done_arrow' if !@activity_business.nil? && @activity_business.cansel_input_done && @activity_business.insurance_input_done%>"></div>
+        </div>
+        <div class="number">
+          <% if !@activity_business.nil? && @activity_business.status == 'send_approve' && !@activity_business.is_approved %>
+            <span class="suppliuer_info_input_done"><i class="fas fa-check"></i></span>
+          <% else %>
+            <span class="number_num">４</span>
+          <% end %>
+        </div>
     </section>
     <div class="progress_bar_text_box">
-      <div class="step_title <%=@suppliuer_info_input ? 'input_done_title' : ''%>">契約者情報入力</div>
-      <div class="step_title">店舗情報入力</div>
-      <div class="step_title">承認申請</div>
+      <div class="step_title <%='input_done_title' if @suppliuer_info_input %>">契約者情報</div>
+      <div class="arrowlong">
+          <div class="arrow hidden"></div>
+      </div>
+      <div class="step_title <%='input_done_title' if @business_info_input %>">
+        店舗情報<br/>
+        ガイド情報
+      </div>
+      <div class="arrowlong">
+          <div class="arrow hidden"></div>
+      </div>
+      <div class="step_title <%='input_done_title' if !@activity_business.nil? && @activity_business.cansel_input_done && @activity_business.insurance_input_done %>">
+        キャンセル設定<br/>
+        保険情報
+      </div>
+      <div class="arrowlong">
+          <div class="arrow hidden"></div>
+      </div>
+      <div class="step_title <%= 'input_done_title' if !@activity_business.nil? && @activity_business.status == 'send_approve' && !@activity_business.is_approved %>">
+        承認申請
+      </div>
     </div>
   </div>
   <!--<div class="supplier_show_top_help_box">
@@ -118,7 +164,7 @@
     <%= link_to edit_supplier_path(current_supplier) do %>
       <div class="activity_business_info_item_title">
         <div class="title_front">
-          <i class="fas fa-user-circle"></i>アカウント情報
+          <i class="fas fa-user-circle"></i>契約者情報
         </div>
       </div>
       <div id="supplier_info_contents">
@@ -175,7 +221,7 @@
         <div class="activity_business_info_item_card">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-address-card"></i>プロフィール
+              <i class="fas fa-address-card"></i>店舗情報
             </div>
           </div>
           <div class="title_back2">
@@ -612,6 +658,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    margin: 5px 0 5px;
   }
   .progress_bar_box_title {
     width: 100%;
@@ -623,13 +670,15 @@
   }
   .step_title {
     font-size: 10px;
-    width: 16%;
+    width: 30%;
     height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #989898;
     font-weight: bold;
+    text-align: center;
+    line-height: 14px;
   }
   /* なっちゃんコード */
   .number-test {
@@ -640,7 +689,7 @@
   }
 
   .number-test .number {
-    width: 16%;
+    width: 30%;
     display: flex;
     justify-content: center;
     -ms-align-items: center;
@@ -660,7 +709,42 @@
     font-size: 16px;
   }
 
-  .number-test .arrowlong {
+  .arrowlong {
+    position: relative;
+    width: calc(26% - 20px);
+    padding: 0 10px;
+    height: 22px;
+  }
+
+  .arrowlong .arrow {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translate(0%, -50%);
+    width: calc(100% - 33px);
+    height: 8px;
+    padding: 0;
+    background-color: #eee;
+    border-radius: 1px;
+  }
+
+  .arrowlong .arrow::before {
+    position: absolute;
+    top: 50%;
+    right: -26px;
+    transform: translate(0,-50%);
+    content: '';
+    border: 13px solid transparent;
+    border-left: 13px solid #eee;
+    border-radius: 5px;
+  }
+  .arrow.input_done_arrow {
+    background: #d7f9d5;
+  }
+  .arrowlong .arrow.input_done_arrow::before {
+    border-left: 13px solid #d7f9d5 !important;
+  }
+  /* .number-test .arrowlong {
     position: relative;
     width: calc(26% - 20px);
     padding: 0 10px;
@@ -688,9 +772,16 @@
     border: 13px solid transparent;
     border-left: 13px solid #eee;
     border-radius: 5px;
-  }
+  } */
   .number span.suppliuer_info_input_done {
     background: #46d23f !important;
+  }
+  span.suppliuer_info_input_done svg {
+    margin: 0px;
+    color: white;
+  }
+  .step_title.input_done_title {
+    color: #46d23f;
   }
 </style>
 

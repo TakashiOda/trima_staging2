@@ -48,10 +48,15 @@ class SuppliersController < ApplicationController
     else
       @guides = []
     end
-    if @supplier_profile.representative_name && @supplier_profile.representative_kana && @supplier_profile.post_code && @supplier_profile.prefecture && @supplier_profile.town && @supplier_profile.town_id && @supplier_profile.detail_address && @supplier_profile.phone
+    if !@supplier_profile.nil? && @supplier_profile.representative_name && @supplier_profile.representative_kana && @supplier_profile.post_code && @supplier_profile.prefecture && @supplier_profile.town && @supplier_profile.detail_address && @supplier_profile.phone
       @suppliuer_info_input = true
     else
       @suppliuer_info_input = false
+    end
+    if !@activity_business.nil? && @activity_business.name && @activity_business.profile_text && !@activity_business.profile_image.blank? and !@guides.blank?
+      @business_info_input = true
+    else
+      @business_info_input = false
     end
   end
 
