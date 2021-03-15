@@ -1422,8 +1422,13 @@
     courseIdInput.value = courseId;
     const stockIdInput = document.getElementById('booked_activity_stock_id');
     stockIdInput.value = stockId;
+    close();
   }
 
+  function close() {
+    const calendarFrom = document.getElementById('activity_stock_calendar_form');
+    calendarFrom.classList.add('hidden');
+  }
   // function selectAllMembers(obj) {
   //   const isChecked = obj.checked;
   //   const checkboxes = document.getElementsByName('booked_activity[project_member_ids][]');

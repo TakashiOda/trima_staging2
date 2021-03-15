@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2021_03_10_073445) do
     t.date "start_date"
     t.date "end_date"
     t.boolean "has_season_price", default: false
+    t.boolean "has_different_ageprices", default: false
     t.integer "normal_adult_price"
     t.integer "high_adult_price"
     t.integer "low_adult_price"
@@ -76,7 +77,6 @@ ActiveRecord::Schema.define(version: 2021_03_10_073445) do
     t.boolean "stop_now", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "has_different_ageprices", default: false, null: false
     t.index ["activity_business_id"], name: "index_activities_on_activity_business_id"
     t.index ["april"], name: "index_activities_on_april"
     t.index ["area_id"], name: "index_activities_on_area_id"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(version: 2021_03_10_073445) do
   create_table "activity_courses", force: :cascade do |t|
     t.integer "activity_id", null: false
     t.time "start_time"
+    t.time "meet_time"
     t.index ["activity_id", "start_time"], name: "index_activity_courses_on_activity_id_and_start_time", unique: true
     t.index ["activity_id"], name: "index_activity_courses_on_activity_id"
   end

@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_supplier!, except: [:index]
-  
+
   def index
     @activity_business = ActivityBusiness.find_by(supplier_id: current_supplier.id)
     if !@activity_business.nil?
@@ -393,7 +393,7 @@ class ActivitiesController < ApplicationController
                                       :january, :febrary, :march, :april, :may, :june, :july,
                                       :august, :september, :october, :november, :december,
                                       :advertise_activate, :is_approved, :stop_now, :status, :rain_or_shine,
-                                      activity_courses_attributes: [:id, :activity_id, :start_time, :_destroy,
+                                      activity_courses_attributes: [:id, :activity_id, :start_time, :meet_time, :_destroy,
                                         activity_stocks_attributes: [:id, :activity_id, :date,
                                         :activity_course_id, :stock, :season_price]],
                                       activity_ageprices_attributes: [:id, :activity_id, :age_from,

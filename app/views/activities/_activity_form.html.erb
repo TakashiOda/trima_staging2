@@ -425,6 +425,9 @@
             <div class="course_row2">
               <span>開始時間</span>
             </div>
+            <div class="course_row3">
+              <span>集合時間</span>
+            </div>
           </div>
           <div id="courses">
             <%= f.fields_for :activity_courses do |t| %>
@@ -768,6 +771,20 @@
     background: #0994ff;
     height: 40px;
     border-radius: 6px;
+  }
+  .course_row1 {
+    width: 20%;
+  }
+  .course_row2 {
+    width: 30%;
+  }
+  .course_row3 {
+    width: 30%;
+  }
+  .course_row4 {
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
   }
 
 /* input#activity_form_draft_btn {

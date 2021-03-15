@@ -3,10 +3,14 @@
     <div class="guide_image_box_inside">
       <img id="guide_image_prev0" src="#" class="hidden " />
       <% if @activity_business.guides.any? && f.index.to_s =~ /^[0-9]+$/ && @activity_business.guides.offset(f.index).first %>
-        <%= image_tag @activity_business.guides.offset(f.index).first.avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
+        <% if !@activity_business.guides.offset(f.index).first.avatar.blank? %>
+          <%= image_tag @activity_business.guides.offset(f.index).first.avatar.to_s, class: 'guide_present_image', id: 'guide_present_image' %>
+        <% else %>
+          <%= image_tag "/images/no_avatar_image.png", class: 'guide_present_image', id: 'guide_present_image' %>
+          <%= f.hidden_field :avatar_cache %>
+        <% end %>
       <% else %>
         <%= image_tag 'default_images/no_avatar_image.png', class: 'guide_present_image', id: 'guide_present_image' %>
-        <%= f.hidden_field :avatar_cache %>
       <% end %>
       <div class="user_edit_image_upload_btn_box">
         <%= f.file_field :avatar, id: 'guide_image_input', class: 'guide_image_upload_btn',onchange: 'selectFile(this)', oninput: 'hasInput()' %>
@@ -53,6 +57,17 @@
     </div>
   </div>
 </div>
+
+<style>
+  .nested-fields {
+    position: relative;
+  }
+  .guide_item_right_box_right {
+    position: absolute;
+    top: -10px;
+    right: -8px;
+  }
+</style>
 
 <script>
   function guide_image_input_btn(obj) {

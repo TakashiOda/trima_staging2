@@ -1,4 +1,5 @@
 <div class="supplier_show_content_inside">
+  <% if @activity_business.nil? || (@activity_business.status != 'send_approve' && !@activity_business.is_approved) %>
   <div class="progress_bar_box">
     <div class="progress_bar_box_title">
         事業者登録のステップ
@@ -35,7 +36,7 @@
             <div class="arrow <%='input_done_arrow' if !@activity_business.nil? && @activity_business.cansel_input_done && @activity_business.insurance_input_done%>"></div>
         </div>
         <div class="number">
-          <% if !@activity_business.nil? && @activity_business.status == 'send_approve' && !@activity_business.is_approved %>
+          <% if !@activity_business.nil? && @activity_business.status == 'send_approve' && @activity_business.is_approved %>
             <span class="suppliuer_info_input_done"><i class="fas fa-check"></i></span>
           <% else %>
             <span class="number_num">４</span>
@@ -61,11 +62,12 @@
       <div class="arrowlong">
           <div class="arrow hidden"></div>
       </div>
-      <div class="step_title <%= 'input_done_title' if !@activity_business.nil? && @activity_business.status == 'send_approve' && !@activity_business.is_approved %>">
+      <div class="step_title <%= 'input_done_title' if !@activity_business.nil? && @activity_business.status == 'send_approve' && @activity_business.is_approved %>">
         承認申請
       </div>
     </div>
   </div>
+  <% end %>
   <!--<div class="supplier_show_top_help_box">
     <div class="supplier_show_help_btn" onclick="showHelp()">
       <i class="fas fa-question-circle"></i>ヘルプ
@@ -290,7 +292,11 @@
           <% if @guides.any? %>
           <ul class="supplier_show_guide_images">
             <% @guides.each do |guide| %>
-              <%= image_tag guide.avatar.to_s, class: 'supplier_show_guide_image' %>
+              <% if !guide.avatar.blank? %>
+                <%= image_tag guide.avatar.to_s, class: 'supplier_show_guide_image' %>
+              <% else %>
+                <%= image_tag "/images/no_avatar_image.png", class: 'supplier_show_guide_image' %>
+              <% end %>
             <% end %>
           </ul>
           <% end %>
