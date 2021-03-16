@@ -180,7 +180,11 @@
             <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
           </div>
           <div class="form_sidebtn">
-            <%= form.submit('更新する',class: 'button btn-submit', id: "biz_form_submit_btn") %>
+            <% if @activity_business.profile_input_done %>
+              <%= form.submit('更新する',class: 'button btn-submit', id: "biz_form_submit_btn") %>
+            <% else %>
+              <%= form.submit('登録する',class: 'button btn-submit', id: "biz_form_submit_btn") %>
+            <% end %>
           </div>
         </div>
       </div>

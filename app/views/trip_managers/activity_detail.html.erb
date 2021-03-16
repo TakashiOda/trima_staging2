@@ -196,25 +196,40 @@
               <div class="section_title">タイムテーブル</div>
             </div>
             <div class="activity_detail_basic_info_inner_biz_box about_guide">
-              <ul class="course_box">
-                  <% @courses.each_with_index do |course, index| %>
-                    <li class="course_item">
-                      <div class="course_item_num_box">
-                        <span><%= index + 1 %></span>
-                      </div>
-                      <div class="course_time"><%= course.start_time.strftime("%H:%M") %>〜</div>
-                    </li>
-                  <% end %>
-              </ul>
+              <table class="time_schedule">
+                <tr>
+                  <th class="time_schedule_column1">No.</th>
+                  <th class="time_schedule_column2">開始時間</th>
+                  <th class="time_schedule_column2">集合時間</th>
+                </tr>
+                <% @courses.each_with_index do |course, index| %>
+                  <tr>
+                    <td class="time_schedule_column1">
+                      <span><%= index + 1 %></span>
+                    </td>
+                    <td class="time_schedule_column2">
+                      <%= course.start_time.strftime("%H:%M") %>〜
+                    </td>
+                    <td class="time_schedule_column2">
+                      <%= course.meet_time.strftime("%H:%M") %>〜
+                    </td>
+                  </tr>
+                <% end %>
+              </table>
+
               <div class="holiday_table">
-                  <span>定休日</span>
-                  <span>
+                  <div class="holiday_table_title">定休日</div>
+                  <div>
+                  <% if @holidays.any? %>
                     <% wday = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"]%>
                     <% @holidays.each_with_index do |day_is_open, index|%>
-                      <span><%= "#{wday[index]}/" if !day_is_open %></span>
+                      <% if !day_is_open %>
+                        <span class="close_day"><%= wday[index]%></span>
+                      <% end %>
                     <% end %>
-                    <%= "なし" if @holidays.uniq.count == 1 && @holidays[0] == true %>
-                  </span>
+                  <% end %>
+                  <%= "なし" if @holidays.uniq.count == 1 && @holidays[0] == true %>
+                  </div>
               </div>
             </div>
           </div>
@@ -249,8 +264,8 @@
               <div class="guides_box">
                 <table class="cansel_table">
                   <tr>
-                    <td class="cansel_table_front_td">雨天時の対応：</td>
-                    <td><%= @activity.rain_or_shine ? '雨天決行' : '雨天中止' %></td>
+                    <td class="cansel_table_front_td">悪天候時の対応：</td>
+                    <td><%= @activity.rain_or_shine ? '多少の悪天候でも決行' : '悪天候時は中止' %></td>
                   </tr>
                   <tr>
                     <td class="cansel_table_front_td">キャンセル期限：</td>
@@ -347,12 +362,14 @@
                         <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: this_month_stock.date).stock == 0 %><%= this_month_stock.season_price == "high" ? "high_season" : this_month_stock.season_price == "low" ? "low_season" : "" %>">
                           <div class="inside_stock_td">
                             <div class="inside_stock_td_front">
-                              <% if this_month_stock.season_price == "high" %>
-                                <span>¥<%= @activity.high_adult_price.to_s(:delimited)%></span>
-                              <% elsif this_month_stock.season_price == "low" %>
-                                <span>¥<%= @activity.low_adult_price.to_s(:delimited)%></span>
-                              <% else %>
-                                <span>¥<%= @activity.normal_adult_price.to_s(:delimited)%></span>
+                              <% if course.activity_stocks.find_by(date: this_month_stock.date).stock > 0%>
+                                <% if this_month_stock.season_price == "high" %>
+                                  <span>¥<%= @activity.high_adult_price.to_s(:delimited)%></span>
+                                <% elsif this_month_stock.season_price == "low" %>
+                                  <span>¥<%= @activity.low_adult_price.to_s(:delimited)%></span>
+                                <% else %>
+                                  <span>¥<%= @activity.normal_adult_price.to_s(:delimited)%></span>
+                                <% end %>
                               <% end %>
                             </div>
                             <div class="inside_stock_td_front">
@@ -400,7 +417,7 @@
                     <% end %>
                   </tr>
                   <tr class="stock_book_table_tr_no_data">
-                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には予約できる体験はありません</td>
                   </tr>
                 </table>
               <% end %>
@@ -419,6 +436,17 @@
                       <% if course.activity_stocks.find_by(date: next_month_stock.date) %>
                         <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next_month_stock.date).stock == 0 %><%= next_month_stock.season_price == "high" ? "high_season" : next_month_stock.season_price == "low" ? "low_season" : "" %>">
                           <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
+                              <% if course.activity_stocks.find_by(date: next_month_stock.date).stock > 0%>
+                                <% if next_month_stock.season_price == "high" %>
+                                  <span>¥<%= @activity.high_adult_price.to_s(:delimited)%></span>
+                                <% elsif next_month_stock.season_price == "low" %>
+                                  <span>¥<%= @activity.low_adult_price.to_s(:delimited)%></span>
+                                <% else %>
+                                  <span>¥<%= @activity.normal_adult_price.to_s(:delimited)%></span>
+                                <% end %>
+                              <% end %>
+                            </div>
                             <div class="inside_stock_td_front">
                               <% if course.activity_stocks.find_by(date: next_month_stock.date).stock == 0%>
                                 <span style="color:red;">SOLD OUT</span>
@@ -464,7 +492,7 @@
                     <% end %>
                   </tr>
                   <tr class="stock_book_table_tr_no_data">
-                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には予約できる体験はありません</td>
                   </tr>
                 </table>
               <% end %>
@@ -483,6 +511,17 @@
                       <% if course.activity_stocks.find_by(date: next2_month_stock.date) %>
                         <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0 %><%= next2_month_stock.season_price == "high" ? "high_season" : next2_month_stock.season_price == "low" ? "low_season" : "" %>">
                           <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
+                              <% if course.activity_stocks.find_by(date: next2_month_stock.date).stock > 0%>
+                                <% if next2_month_stock.season_price == "high" %>
+                                  <span>¥<%= @activity.high_adult_price.to_s(:delimited)%></span>
+                                <% elsif next2_month_stock.season_price == "low" %>
+                                  <span>¥<%= @activity.low_adult_price.to_s(:delimited)%></span>
+                                <% else %>
+                                  <span>¥<%= @activity.normal_adult_price.to_s(:delimited)%></span>
+                                <% end %>
+                              <% end %>
+                            </div>
                             <div class="inside_stock_td_front">
                               <% if course.activity_stocks.find_by(date: next2_month_stock.date).stock == 0%>
                                 <span style="color:red;">SOLD OUT</span>
@@ -528,7 +567,7 @@
                     <% end %>
                   </tr>
                   <tr class="stock_book_table_tr_no_data">
-                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には予約できる体験はありません</td>
                   </tr>
                 </table>
               <% end %>
@@ -547,6 +586,17 @@
                       <% if course.activity_stocks.find_by(date: next3_month_stock.date) %>
                         <td class="stock_book_table_course_stock_td <%= "no_stock" if course.activity_stocks.find_by(date: next3_month_stock.date).stock == 0 %><%= next3_month_stock.season_price == "high" ? "high_season" : next3_month_stock.season_price == "low" ? "low_season" : "" %>">
                           <div class="inside_stock_td">
+                            <div class="inside_stock_td_front">
+                              <% if course.activity_stocks.find_by(date: next3_month_stock.date).stock > 0%>
+                                <% if next3_month_stock.season_price == "high" %>
+                                  <span>¥<%= @activity.high_adult_price.to_s(:delimited)%></span>
+                                <% elsif next3_month_stock.season_price == "low" %>
+                                  <span>¥<%= @activity.low_adult_price.to_s(:delimited)%></span>
+                                <% else %>
+                                  <span>¥<%= @activity.normal_adult_price.to_s(:delimited)%></span>
+                                <% end %>
+                              <% end %>
+                            </div>
                             <div class="inside_stock_td_front">
                               <% if course.activity_stocks.find_by(date: next3_month_stock.date).stock == 0%>
                                 <span style="color:red;">SOLD OUT</span>
@@ -592,7 +642,7 @@
                     <% end %>
                   </tr>
                   <tr class="stock_book_table_tr_no_data">
-                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には在庫がありません</td>
+                    <td class="stock_book_table_no_date_td" colspan="<%=@courses.size + 1%>">この月には予約できる体験はありません</td>
                   </tr>
                 </table>
               <% end %>
@@ -603,7 +653,11 @@
               <div class="participant_input_box">
                 <div class="participant_input_item">
                   <div class="participant_type">
-                    おとな(中学生以上)
+                    <% if @activity.normal_middle_price.nil? and @activity.normal_kids_price.nil?%>
+                      参加人数
+                    <% else %>
+                      おとな(中学生以上)
+                    <% end %>
                   </div>
                   <div class="input_btns">
                     <button type="button" class="participant_input_btn" onclick="decreaseParticipant('adult')">-</button>
@@ -614,6 +668,7 @@
                     <button type="button" class="participant_input_btn" onclick="increaseParticipant('adult')">+</button>
                   </div>
                 </div>
+                <% if !@activity.normal_middle_price.nil?%>
                 <div class="participant_input_item">
                   <div class="participant_type">
                     小学生
@@ -627,19 +682,22 @@
                     <button type="button" class="participant_input_btn" onclick="increaseParticipant('middle')">+</button>
                   </div>
                 </div>
-                <div class="participant_input_item">
-                  <div class="participant_type">
-                    小学生未満
-                  </div>
-                  <div class="input_btns">
-                    <button type="button" class="participant_input_btn" onclick="decreaseParticipant('kids')">-</button>
-                    <div class="num_display_box">
-                      <span class="participant_number" id="kids_age_num">0</span>
-                      <span class="participant_unit">名</span>
+              <% end %>
+                <% if !@activity.normal_kids_price.nil? and @activity.available_age <= 6%>
+                  <div class="participant_input_item">
+                    <div class="participant_type">
+                      小学生未満
                     </div>
-                    <button type="button" class="participant_input_btn" onclick="increaseParticipant('kids')">+</button>
+                    <div class="input_btns">
+                      <button type="button" class="participant_input_btn" onclick="decreaseParticipant('kids')">-</button>
+                      <div class="num_display_box">
+                        <span class="participant_number" id="kids_age_num">0</span>
+                        <span class="participant_unit">名</span>
+                      </div>
+                      <button type="button" class="participant_input_btn" onclick="increaseParticipant('kids')">+</button>
+                    </div>
                   </div>
-                </div>
+                <% end %>
                 <div class="participant_alert">
                   <div id="maximum_alert" class="hidden">
                     この日時の最大予約人数は<span id="maximum_alert_num"><%=@activity.maximum_num%></span>人です
@@ -887,21 +945,18 @@
     width: 25%;
     text-align: right;
   }
-  ul.course_box {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0;
+  table.time_schedule {
+    margin-bottom: 20px;
   }
-  li.course_item {
-    width: 50%;
-    margin-bottom: 10px;
+  .time_schedule_column1 {
+    width: 14%;
+    text-align: left;
   }
-  li.course_item {
-    width: 33%;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
+  .time_schedule_column2 {
+    width: 43%;
+    text-align: left;
   }
+
   .course_item_num_box {
     width: 20px;
     height: 20px;
@@ -922,12 +977,23 @@
     font-size: 20px;
     font-weight: bold;
     color: #ffffff;
-    /* border-bottom: solid 4px #0ea7e6; */
     background: #0ea7e6;
     padding: 4px 15px;
     border-radius: 25px;
   }
-  /* カレンダー ***********************************/
+  .holiday_table {
+    display: flex;
+  }
+  span.close_day {
+    background: antiquewhite;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+  .holiday_table_title {
+    margin-right: 10px;
+  }
+
+  /* カレンダー  */
   form#new_booked_activity {
     position: relative;
     position: relative;
@@ -1137,23 +1203,6 @@
     font-weight: bold;
     color: #0ba6e6;
   }
-  /* ul.sidebar__member_list_ul {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-  ul.sidebar__member_list_ul li {
-    display: flex;
-    align-items: center;
-    width: 50%;
-    opacity: 0.5;
-  }
-  img.member_image {
-    width: 42px;
-    border-radius: 50%;
-    margin-right: 7px;
-    opacity: 0.5;
-  } */
   /* サイドバー ***********************************/
   .activity_detail_sidebar_inner {
     padding: 20px 20px;
@@ -1221,7 +1270,6 @@
     width: 100%;
     margin-top: 10px;
     padding: 0 10px;
-    /* text-align: revert; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1422,7 +1470,7 @@
     courseIdInput.value = courseId;
     const stockIdInput = document.getElementById('booked_activity_stock_id');
     stockIdInput.value = stockId;
-    close();
+    // close();
   }
 
   function close() {
@@ -1508,12 +1556,21 @@
   // }
   function isAnyParticipant() {
     // 参加人数取得
+    let adultNum = 0;
+    let middleNum = 0;
+    let kidsNum = 0;
     const adultNumString = document.getElementById('adult_num');
-    const adultNum = parseInt(adultNumString.innerHTML);
+    adultNum = parseInt(adultNumString.innerHTML);
     const middleNumString = document.getElementById('middle_age_num');
-    const middleNum = parseInt(middleNumString.innerHTML);
+    // const middleNum = parseInt(middleNumString.innerHTML);
     const kidsNumString = document.getElementById('kids_age_num');
-    const kidsNum = parseInt(kidsNumString.innerHTML);
+    // const kidsNum = parseInt(kidsNumString.innerHTML);
+    if (middleNumString != null) {
+      middleNum = parseInt(middleNumString.innerHTML);
+    }
+    if (kidsNumString != null) {
+      kidsNum = parseInt(kidsNumString.innerHTML);
+    }
     const total = adultNum + middleNum + kidsNum;
     if (total > 0) {
       return true;
@@ -1529,13 +1586,20 @@
     const selectedSeason = hiddenSeasonForm.value;
 
     // 参加人数取得
+    let adultNum = 0;
+    let middleNum = 0;
+    let kidsNum = 0;
     const adultNumString = document.getElementById('adult_num');
-    const adultNum = parseInt(adultNumString.innerHTML);
+    adultNum = parseInt(adultNumString.innerHTML);
     const middleNumString = document.getElementById('middle_age_num');
-    const middleNum = parseInt(middleNumString.innerHTML);
     const kidsNumString = document.getElementById('kids_age_num');
-    const kidsNum = parseInt(kidsNumString.innerHTML);
-
+    if (middleNumString != null) {
+      middleNum = parseInt(middleNumString.innerHTML);
+    }
+    if (kidsNumString != null) {
+      kidsNum = parseInt(kidsNumString.innerHTML);
+    }
+    // console.log(middleNumString == null);
     // シーズンに基づく金額取得
     let adultPrice = 0;
     let middlePrice = 0;

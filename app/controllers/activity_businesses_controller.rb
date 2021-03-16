@@ -67,7 +67,6 @@ class ActivityBusinessesController < ApplicationController
       @activity_business.detail_address = nil
       @activity_business.building = nil
     end
-    binding.pry
     if params["input_type"] == "cansel_setting"
       @activity_business.cansel_input_done = true
       if @activity_business.save
