@@ -1,34 +1,73 @@
 <div class="supplier_show_content_inside">
+  <% if @activity_business.nil? || (@activity_business.status != 'send_approve' && !@activity_business.is_approved) %>
   <div class="progress_bar_box">
-    <%# <div class="progress_bar_text_box">
-      <div class="step_title">契約者情報入力</div>
-      <div class="step_title">店舗情報入力</div>
-      <div class="step_title">承認申請</div>
-    </div> %>
+    <div class="progress_bar_box_title">
+        事業者登録のステップ
+    </div>
     <section class="number-test">
-        <div class="number"><span>１</span></div>
-        <div class="arrowlong">
-            <div class="arrow"></div>
+        <div class="number">
+          <% if @suppliuer_info_input %>
+            <span class="suppliuer_info_input_done"><i class="fas fa-check"></i></span>
+          <% else %>
+            <span class="number_num">１</span>
+          <%end%>
         </div>
-        <div class="number"><span>２</span></div>
         <div class="arrowlong">
-            <div class="arrow"></div>
+            <div class="arrow <%='input_done_arrow' if @suppliuer_info_input %>"></div>
         </div>
-        <div class="number"><span>３</span></div>
+        <div class="number">
+          <% if @business_info_input %>
+            <span class="suppliuer_info_input_done"><i class="fas fa-check"></i></span>
+          <% else %>
+            <span class="number_num">２</span>
+          <% end %>
+        </div>
+        <div class="arrowlong">
+            <div class="arrow <%='input_done_arrow' if @business_info_input %>"></div>
+        </div>
+        <div class="number">
+          <% if !@activity_business.nil? && @activity_business.cansel_input_done && @activity_business.insurance_input_done %>
+            <span class="suppliuer_info_input_done"><i class="fas fa-check"></i></span>
+          <% else %>
+            <span class="number_num">３</span>
+          <% end %>
+        </div>
+        <div class="arrowlong">
+            <div class="arrow <%='input_done_arrow' if !@activity_business.nil? && @activity_business.cansel_input_done && @activity_business.insurance_input_done%>"></div>
+        </div>
+        <div class="number">
+          <% if !@activity_business.nil? && @activity_business.status == 'send_approve' && @activity_business.is_approved %>
+            <span class="suppliuer_info_input_done"><i class="fas fa-check"></i></span>
+          <% else %>
+            <span class="number_num">４</span>
+          <% end %>
+        </div>
     </section>
-    <!--<div class="progress_bar">
-      <div class="dots"></div>
-      <div class="bars"></div>
-      <div class="dots"></div>
-      <div class="bars"></div>
-      <div class="dots"></div>
-    </div>-->
     <div class="progress_bar_text_box">
-      <div class="step_title">契約者情報入力</div>
-      <div class="step_title">店舗情報入力</div>
-      <div class="step_title">承認申請</div>
+      <div class="step_title <%='input_done_title' if @suppliuer_info_input %>">契約者情報</div>
+      <div class="arrowlong">
+          <div class="arrow hidden"></div>
+      </div>
+      <div class="step_title <%='input_done_title' if @business_info_input %>">
+        店舗情報<br/>
+        ガイド情報
+      </div>
+      <div class="arrowlong">
+          <div class="arrow hidden"></div>
+      </div>
+      <div class="step_title <%='input_done_title' if !@activity_business.nil? && @activity_business.cansel_input_done && @activity_business.insurance_input_done %>">
+        キャンセル設定<br/>
+        保険情報
+      </div>
+      <div class="arrowlong">
+          <div class="arrow hidden"></div>
+      </div>
+      <div class="step_title <%= 'input_done_title' if !@activity_business.nil? && @activity_business.status == 'send_approve' && @activity_business.is_approved %>">
+        承認申請
+      </div>
     </div>
   </div>
+  <% end %>
   <!--<div class="supplier_show_top_help_box">
     <div class="supplier_show_help_btn" onclick="showHelp()">
       <i class="fas fa-question-circle"></i>ヘルプ
@@ -123,11 +162,11 @@
       <% end %>
     </div>
   </div>
-  <div class="supplier_info_box"><!--メインコンテンツorg-->
+  <div class="supplier_info_box">
     <%= link_to edit_supplier_path(current_supplier) do %>
       <div class="activity_business_info_item_title">
         <div class="title_front">
-          <i class="fas fa-user-circle"></i>アカウント情報
+          <i class="fas fa-user-circle"></i>契約者情報
         </div>
       </div>
       <div id="supplier_info_contents">
@@ -184,7 +223,7 @@
         <div class="activity_business_info_item_card">
           <div class="activity_business_info_item_title">
             <div class="title_front">
-              <i class="fas fa-address-card"></i>プロフィール
+              <i class="fas fa-address-card"></i>店舗情報
             </div>
           </div>
           <div class="title_back2">
@@ -253,7 +292,11 @@
           <% if @guides.any? %>
           <ul class="supplier_show_guide_images">
             <% @guides.each do |guide| %>
-              <%= image_tag guide.avatar.to_s, class: 'supplier_show_guide_image' %>
+              <% if !guide.avatar.blank? %>
+                <%= image_tag guide.avatar.to_s, class: 'supplier_show_guide_image' %>
+              <% else %>
+                <%= image_tag "/images/no_avatar_image.png", class: 'supplier_show_guide_image' %>
+              <% end %>
             <% end %>
           </ul>
           <% end %>
@@ -608,7 +651,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       padding: 15px;
   }
   .progress_bar {
@@ -618,99 +660,135 @@
     height: 40px;
     width: 100%;
   }
-  .dots {
-    width: 16px;
-    height: 16px;
-    background: #d0d0d0;
-    border-radius: 50%;
-    z-index: 10;
-  }
-  .bars {
-    background: #eee;
-    height: 10px;
-    width: 40%;
-    margin-left: -7px;
-    margin-right: -7px;
-  }
   .progress_bar_text_box {
-    width: 83%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    margin: 5px 0 5px;
+  }
+  .progress_bar_box_title {
+    width: 100%;
+    padding: 0px 15px;
+    margin-bottom: 15px;
+    color: #39a9c4;
+    font-size: 15px;
+    font-weight: bold;
   }
   .step_title {
     font-size: 10px;
-    width: 60px;
+    width: 30%;
     height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #6f6f6f;
+    color: #989898;
     font-weight: bold;
+    text-align: center;
+    line-height: 14px;
   }
   /* なっちゃんコード */
   .number-test {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
 
-    .number-test div {
-        flex: 1;
-        padding: 24px;
-    }
+  .number-test .number {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    -ms-align-items: center;
+    align-items: center;
+    font-size: 2.4rem;
+  }
 
-    .number-test .number {
-        display: flex;
-        justify-content: center;
-        -ms-align-items: center;
-        align-items: center;
-        font-size: 2.4rem;
-    }
+  .number-test .number span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background-color: #d0d0d0;
+    color: #fff;
+    font-size: 16px;
+  }
 
-    .number-test .number span {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 30px;
-        height: 30px;
-        border-radius: 100%;
-        background-color: #d0d0d0;
-        color: #fff;
-        font-size: 16px;
-    }
+  .arrowlong {
+    position: relative;
+    width: calc(26% - 20px);
+    padding: 0 10px;
+    height: 22px;
+  }
 
-    .number-test .arrowshort {
-        font-size: 3.6rem;
-        color: #0cc;
-    }
+  .arrowlong .arrow {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translate(0%, -50%);
+    width: calc(100% - 33px);
+    height: 8px;
+    padding: 0;
+    background-color: #eee;
+    border-radius: 1px;
+  }
 
-    .number-test .arrowlong {
-        position: relative;
-    }
+  .arrowlong .arrow::before {
+    position: absolute;
+    top: 50%;
+    right: -26px;
+    transform: translate(0,-50%);
+    content: '';
+    border: 13px solid transparent;
+    border-left: 13px solid #eee;
+    border-radius: 5px;
+  }
+  .arrow.input_done_arrow {
+    background: #d7f9d5;
+  }
+  .arrowlong .arrow.input_done_arrow::before {
+    border-left: 13px solid #d7f9d5 !important;
+  }
+  /* .number-test .arrowlong {
+    position: relative;
+    width: calc(26% - 20px);
+    padding: 0 10px;
+    height: 22px;
+  }
 
-    .number-test .arrowlong .arrow {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: 8px;
-        padding: 0;
-        background-color: #eee;
-    }
+  .number-test .arrowlong .arrow {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translate(0%, -50%);
+    width: calc(100% - 33px);
+    height: 8px;
+    padding: 0;
+    background-color: #eee;
+    border-radius: 1px;
+  }
 
-    .number-test .arrowlong .arrow::before {
-        position: absolute;
-        top: 50%;
-        right: -44px;
-        transform: translate(0,-50%);
-        content: '';
-        border: 13px solid transparent;
-        border-left: 32px solid #eee;
-        border-radius: 5px;
-    }
+  .number-test .arrowlong .arrow::before {
+    position: absolute;
+    top: 50%;
+    right: -26px;
+    transform: translate(0,-50%);
+    content: '';
+    border: 13px solid transparent;
+    border-left: 13px solid #eee;
+    border-radius: 5px;
+  } */
+  .number span.suppliuer_info_input_done {
+    background: #46d23f !important;
+  }
+  span.suppliuer_info_input_done svg {
+    margin: 0px;
+    color: white;
+  }
+  .step_title.input_done_title {
+    color: #46d23f;
+  }
 </style>
 
 <script type="text/javascript">

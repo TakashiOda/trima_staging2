@@ -425,6 +425,9 @@
             <div class="course_row2">
               <span>開始時間</span>
             </div>
+            <div class="course_row3">
+              <span>集合時間</span>
+            </div>
           </div>
           <div id="courses">
             <%= f.fields_for :activity_courses do |t| %>
@@ -441,15 +444,15 @@
           <h3><i class="fas fa-cloud-rain"></i>悪天候時について</h3>
         </div>
         <div class="form-group">
-          <%= f.label "雨天時の開催設定" %>
+          <%= f.label "悪天候時の開催設定" %>
           <div class="radio_items rain_or_shine_radio">
             <div class="radio_item">
               <%= f.radio_button :rain_or_shine, :false, oninput: 'hasInput()' %>
-              <%= f.label :rain_or_shine, "雨天中止", {value: :false} %>
+              <%= f.label :rain_or_shine, "悪天候の際は中止", {value: :false} %>
             </div>
             <div class="radio_item">
               <%= f.radio_button :rain_or_shine, :true, oninput: 'hasInput()' %>
-              <%= f.label :rain_or_shine, "雨天決行", {value: :true} %>
+              <%= f.label :rain_or_shine, "多少の悪天候でも決行", {value: :true} %>
             </div>
           </div>
         </div>
@@ -768,6 +771,20 @@
     background: #0994ff;
     height: 40px;
     border-radius: 6px;
+  }
+  .course_row1 {
+    width: 20%;
+  }
+  .course_row2 {
+    width: 30%;
+  }
+  .course_row3 {
+    width: 30%;
+  }
+  .course_row4 {
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
   }
 
 /* input#activity_form_draft_btn {

@@ -66,7 +66,11 @@
           <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
         </div>
         <div class="form_sidebtn">
-          <%= form.submit('更新する',class: 'button btn-submit', id: "supplier_form_submit_btn") %>
+          <% if @supplier.profile_set_done %>
+            <%= form.submit('更新する',class: 'button btn-submit', id: "supplier_form_submit_btn") %>
+          <% else %>
+            <%= form.submit('登録する',class: 'button btn-submit', id: "supplier_form_submit_btn") %>
+          <% end %>
         </div>
       </div>
     </div>
@@ -93,7 +97,6 @@
     $('#supplier_address_get_btn').on('click', () => {
       const code = $('#supplier_address_post_code').val();
       $.ajax({
-        // url: "http://zipcloud.ibsnet.co.jp/api/search?zipcode=" + $('#supplier_address_post_code').val(),
         url: `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${code}`,
         dataType: 'jsonp',
       }).done((data) => {

@@ -1,13 +1,13 @@
 <%= form_for [@supplier, @activity_business], url: supplier_update_activity_business_path(current_supplier, @activity_business), method: :put do |form| %>
   <div class="form_title">
-    <h3>体験事業の情報を編集</h3>
+    <h3>店舗情報を編集</h3>
   </div>
   <%= render 'layouts/error_messages', model: form.object %>
   <div class="user_show_content_down">
     <div class="user_show_info_items_box">
       <section class="form_section">
         <div class="form_big_title">
-          <h3>体験事業の基本情報</h3>
+          <h3>店舗の基本情報</h3>
         </div>
         <div class="user_edit_image_container">
           <div class="form-group user_edit_image_box">
@@ -116,7 +116,7 @@
           <div class="radio_items">
             <div class="radio_item on">
               <%= form.radio_button :apply_suuplier_address, :true, onClick: "applySupplierAddress(this)", oninput: 'hasInput()' %>
-              <%= form.label :apply_suuplier_address, "アカウント登録住所と同じ", {value: :true, style: "display: inline-block;"} %>
+              <%= form.label :apply_suuplier_address, "契約者情報の住所と同じ", {value: :true, style: "display: inline-block;"} %>
             </div>
             <div class="radio_item off">
               <%= form.radio_button :apply_suuplier_address, :false, onClick: "hasOwnSupplierAddress(this)", oninput: 'hasInput()' %>
@@ -127,57 +127,24 @@
         <div id="address_box" class="<%= "hidden" if @activity_business.apply_suuplier_address %>">
           <div class="form-group">
             <div class="form-group">
-              <%= form.label "郵便番号（ハイフンあり・半角）" %>
-              <%= form.text_field :post_code, class: "form-control", oninput: 'hasInput()' %>
+              <%= form.label "郵便番号（ハイフンなし・半角）" %>
+              <div class="post_code_box">
+                <span>〒</span>
+                <%= form.text_field :post_code, size: 7, max: 7, id: "supplier_address_post_code",class: "form-control", oninput: 'hasInput()'%>
+                <button type="button" name="button" id="supplier_address_get_btn">住所検索</button>
+              </div>
             </div>
             <div class="form-group">
               <%= form.label "都道府県" %>
-              <%= form.select :prefecture_id, {'北海道': 1}, { include_blank: false}, { class: 'form-control' } %>
+              <%= form.text_field :prefecture, id: "supplier_pref", class: "form-control", oninput: 'hasInput()', onchange: 'prefectureChange()' %>
             </div>
             <div class="form-group">
-              <%= form.label "エリア" %>
-              <%= form.collection_select :area_id, Area.all, :id, :local_name, {}, class: "form-control", id: 'area_input', onChange: 'hasChangeArea(this)' %>
-            </div>
-            <div class="form-group town_box">
-              <%= form.hidden_field :town_id, id: 'hidden_town_field' %>
               <%= form.label "市区町村" %>
-              <div id="area_1" class="town_select">
-                <%= collection_select :town_name, :name, Town.where(area_id: 1), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_2" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 2), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_3" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 3), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_4" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 4), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_5" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 5), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_6" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 6), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_7" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 7), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_8" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 8), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_9" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 9), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_10" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 10), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
-              <div id="area_11" class="town_select hidden">
-                <%= collection_select :town_name, :name, Town.where(area_id: 11), :id, :jp_name, {prompt: "市区町村を選択"}, class: "form-control", oninput: 'hasSelectTown(this)' %>
-              </div>
+              <%= form.text_field :town, id: "supplier_city", class: "form-control", oninput: 'hasInput()' %>
             </div>
             <div class="form-group">
               <%= form.label "以降の住所" %>
-              <%= form.text_field :detail_address, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
+              <%= form.text_field :detail_address, id: "supplier_address", minlength: 3, maxlength: 100, class: "form-control", oninput: 'hasInput()' %>
             </div>
             <div class="form-group">
               <%= form.label "建物名・部屋番号など" %>
@@ -190,7 +157,7 @@
           <div class="radio_items">
             <div class="radio_item on">
               <%= form.radio_button :apply_suuplier_phone, :true, onClick: "applySupplierPhone(this)", oninput: 'hasInput()' %>
-              <%= form.label :apply_suuplier_phone, "アカウント登録電話番号と同じ", {value: :true, style: "display: inline-block;"} %>
+              <%= form.label :apply_suuplier_phone, "契約者情報の電話番号と同じ", {value: :true, style: "display: inline-block;"} %>
             </div>
             <div class="radio_item off">
               <%= form.radio_button :apply_suuplier_phone, :false, onClick: "hasOwnSupplierPhone(this)", oninput: 'hasInput()' %>
@@ -213,7 +180,11 @@
             <%= link_to "キャンセル", supplier_path(current_supplier), class: "button btn-cansel" %>
           </div>
           <div class="form_sidebtn">
-            <%= form.submit('更新する',class: 'button btn-submit', id: "biz_form_submit_btn") %>
+            <% if @activity_business.profile_input_done %>
+              <%= form.submit('更新する',class: 'button btn-submit', id: "biz_form_submit_btn") %>
+            <% else %>
+              <%= form.submit('登録する',class: 'button btn-submit', id: "biz_form_submit_btn") %>
+            <% end %>
           </div>
         </div>
       </div>
@@ -729,5 +700,50 @@ div#guides .nested-fields {
     const targetTownSelectBox = document.getElementById('hidden_town_field');
     targetTownSelectBox.value = obj.value;
   }
+
+  function post_code3() {
+    const code3 = document.querySelector('#post_code_input3').value;
+    const hiddenPostCode = document.querySelector('#hidden_post_code');
+    hiddenPostCode.value = code3;
+  }
+
+  </script>
+
+  <script>
+    $(function(){
+      $('#supplier_address_get_btn').on('click', () => {
+        const code = $('#supplier_address_post_code').val();
+        $.ajax({
+          url: `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${code}`,
+          dataType: 'jsonp',
+        }).done((data) => {
+          if (data.results) {
+            getData(data.results[0]);
+          } else {
+            alert('該当データが見つかりません');
+          }
+        }).fail((data) => {
+          alert('通信に失敗しました');
+        });
+      });
+
+      function getData(data) {
+        $('#supplier_pref').val(data.address1);
+        $('#supplier_city').val(data.address2);
+        $('#supplier_address').val(data.address3);
+      }
+
+      $("#supplier_address_post_code").keydown(function() {
+        if( event.keyCode == 13 ) {
+          $("#supplier_address_get_btn").click();
+        }
+      });
+
+      $('form').on('keypress', e => {
+        if (e.keyCode == 13) {
+            return false;
+        }
+      });
+    });
 
   </script>
